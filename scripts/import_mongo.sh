@@ -1,7 +1,14 @@
 #!/bin/bash
 set -e
 
-MONGO_URI=$1
+# use given first argument as MONGO_URI if starting with mongodb://
+if [[ $1 == mongodb://* ]]
+then
+    MONGO_URI=$1
+else
+    MONGO_URI=mongodb://127.0.0.1:27017/annotator
+fi
+echo ${MONGO_URI}
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
