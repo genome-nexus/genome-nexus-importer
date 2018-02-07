@@ -9,7 +9,7 @@
 #
 # or if using file remotely:
 #
-# bash <(curl https://raw.githubusercontent.com/genome-nexus/genome-nexus-importer/tree/master/scripts/download_files_from_github_url.sh) https://github.com/genome-nexus/genome-nexus-importer/tree/master/export
+# bash <(curl https://raw.githubusercontent.com/genome-nexus/genome-nexus-importer/master/scripts/download_files_from_github_url.sh) https://github.com/genome-nexus/genome-nexus-importer/tree/master/export
 
 # halt on error
 set -e
