@@ -33,11 +33,11 @@ mkdir -p export
 cd export
 
 for f in $EXPORT_FILES; do
-    curl -O https://raw.githubusercontent.com/$f;
+    curl -GLO "https://github.com/$f" -d 'raw=true'
 done
 
 cd ..
 mkdir scripts
 cd scripts
-curl -O $GITHUB_EXPORT_URL/../scripts/import_mongo.sh
+curl -GLO "${GITHUB_EXPORT_URL/tree/blob}/../scripts/import_mongo.sh" -d 'raw=true'
 echo $TMPDIR
