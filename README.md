@@ -36,7 +36,7 @@ Gene stable ID, Transcript stable Id, Protein stable Id, Gene name, Pfam domain 
 6. Copy over the downoaded file to replace [pfamA.txt](pfamA.txt).
 
 ##### Ensembl endpoint 
-. Go to Biomart ([grch37.ensembl.org/biomart/martview](grch37.ensembl.org/biomart/martview)) page on the Ensemble website.
+1. Go to Biomart ([grch37.ensembl.org/biomart/martview](grch37.ensembl.org/biomart/martview)) page on the Ensemble website.
 2. Select `Ensemble Genes` from the `Database` dropdown menu.
 3. Select `Human Genes` from the `Dataset` dropdown menu.
 4. Click on `Attributes`, and select these ones:
@@ -46,5 +46,6 @@ Gene stable ID, Transcript stable Id, HGNC Symbol, HGNC ID
 
 ### Download and transform data
 ```
-make all # takes about 1h40m from scratch
+cd data
+make all # takes about 30m from scratch
 ```
