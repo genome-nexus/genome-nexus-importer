@@ -44,6 +44,10 @@ Gene stable ID, Transcript stable Id, HGNC Symbol, HGNC ID
 5. Click on `Results`, and export all results to a `TSV` file.
 6. Copy over the downoaded file to replace [ensembl_biomart_geneids_grch37.p13.txt](ensembl_biomart_geneids_grch37.p13.txt).
 
+### Change curl commands
+Some data is downloaded automatically through curl commands see
+[data/Makefile](data/Makefile). Change those if you want to change the data.
+
 ### Download and transform data
 ```
 cd data
