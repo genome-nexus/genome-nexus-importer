@@ -24,11 +24,12 @@ def get_overrides_transcript(overrides_tables, ensembl_table, hgnc_symbol):
 def get_ensembl_canonical_transcript_id(ensembl_table, hgnc_symbol):
     """Get canonical transcript id with largest protein length or if there is
     no such thing, pick biggest gene id"""
-    gene_rows = ensembl_table[ensembl_table.hgnc_symbol == hgnc_symbol]
-    if len(gene_rows) == 0:
-        return np.nan
-    elif len(gene_rows) == 1:
-        return gene_rows.gene_stable_id.values[0]
+    gene_rows = ensembl_table.ix[ensembl_table.hgnc_symbol]
+    if gene_rows.ndim == 1:
+        if len(gene_rows) == 0:
+            return np.nan
+        if len(gene_rows) == 1:
+            return gene_rows.gene_stable_id.values[0]
     else:
         return gene_rows.sort_values('is_canonical protein_length gene_stable_id'.split(), ascending=False).transcript_stable_id.values[0]
 
@@ -58,6 +59,7 @@ def main():
     # create hgnc_symbol to gene id mapping
     # TODO: run this for all genes instead of just cancer genes
     all_hugo_symbols = [g for g in list(set(tsv.hgnc_symbol.unique()).union(set(cgs)).union(set(hugos))) if not pd.isnull(g)]
+    tsv = tsv.set_index('hgnc_symbol')
     one_transcript_per_hugo_symbol = pd.Series(all_hugo_symbols).apply(lambda x:
         pd.Series(
             [
