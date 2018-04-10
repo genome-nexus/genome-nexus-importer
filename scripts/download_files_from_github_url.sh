@@ -28,7 +28,7 @@ $CHMOD -t ${TMPDIR}
 $CHMOD g+rwX -R ${TMPDIR}
 cd $TMPDIR
 
-EXPORT_FILES=$(curl "$GITHUB_EXPORT_URL" | grep -oE "/genome-nexus[^ ]*(.txt|.json|.json.gz)")
+EXPORT_FILES=$(curl "$GITHUB_EXPORT_URL" | grep -oE '/genome-nexus[^ "]*(.txt|.json|.json.gz)')
 mkdir -p export
 cd export
 
