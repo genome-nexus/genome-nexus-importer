@@ -109,6 +109,13 @@ def main():
     syns = set(itertools.chain.from_iterable(syns))
     previous_symbols = hgnc.previous_symbols.str.split(",").dropna().apply(lambda l: [s.strip() for s in l])
     previous_symbols = set(itertools.chain.from_iterable(previous_symbols))
+
+    # there is overlap between approved_symbols, synonyms and previous symbols
+    # therefore use logic in above order when querying
+    # assert(len(syns.intersection(previous_symbols)) == 0) #329
+    # assert(len(set(hugos).intersection(syns)) == 0) # 495
+    # assert(len(set(hugos).intersection(previous_symbols)) == 0) #227
+
     # all cancer genes and hugo symbols in ensembl data dump should be
     # contained in hgnc approved symbols and synonyms
     # c12orf9 is only in sanger's cancer gene census and has been withdrawn
