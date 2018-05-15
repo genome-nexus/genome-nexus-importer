@@ -24,3 +24,4 @@ import() {
 import ensembl.biomart_transcripts <(gunzip -c ${DIR}/../export/ensembl_biomart_transcripts.json.gz) '--type json'
 import ensembl.canonical_transcript_per_hgnc ${DIR}/../export/ensembl_biomart_canonical_transcripts_per_hgnc.txt '--type tsv --headerline'
 import pfam.domain ${DIR}/../export/pfamA.txt '--type tsv --headerline'
+import hotspot.mutation ${DIR}/../export/hotspots_v2_and_3d.txt '--type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
