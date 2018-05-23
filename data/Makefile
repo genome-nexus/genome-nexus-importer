@@ -26,7 +26,7 @@ hgnc.txt: 20180321_hgnc_symbols.txt
 # vcf2maf canonical transcripts
 VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/v1.6.16
 isoform_overrides_uniprot.txt:
-	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_uniprot' | sed 's/^#//' > $@
+	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_uniprot_from_biomart_91' | sed 's/^#//' > $@
 
 isoform_overrides_at_mskcc.txt:
 	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_at_mskcc' | sed 's/^#//' | sed 's/dmp_refseq_id/refseq_id/' | sed 's/isoform_override/enst_id/g' > $@
