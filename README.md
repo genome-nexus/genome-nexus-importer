@@ -23,7 +23,6 @@ import files from [export/](export/):
 #### Ensembl Biomart
 
 ##### PFAM endpoint
-
 Ensembl Biomart file is required by the PFAM endpoint. In order to download this file
 follow these steps:
 
@@ -33,7 +32,7 @@ follow these steps:
 4. Click on `Attributes`, and select these ones:
 Gene stable ID, Transcript stable Id, Protein stable Id, Gene name, Pfam domain ID, Pfam domain start, Pfam domain end.
 5. Click on `Results`, and export all results to a `TSV` file.
-6. Copy over the downoaded file to replace [pfamA.txt](pfamA.txt).
+6. Copy over the downloaded file to replace [pfamA.txt](pfamA.txt).
 
 ##### Ensembl endpoint 
 1. Go to Biomart ([grch37.ensembl.org/biomart/martview](grch37.ensembl.org/biomart/martview)) page on the Ensemble website.
@@ -42,7 +41,15 @@ Gene stable ID, Transcript stable Id, Protein stable Id, Gene name, Pfam domain 
 4. Click on `Attributes`, and select these ones:
 Gene stable ID, Transcript stable Id, HGNC Symbol, HGNC ID
 5. Click on `Results`, and export all results to a `TSV` file.
-6. Copy over the downoaded file to replace [ensembl_biomart_geneids_grch37.p13.txt](ensembl_biomart_geneids_grch37.p13.txt).
+6. Copy over the downloaded file to replace [ensembl_biomart_geneids_grch37.p13.txt](ensembl_biomart_geneids_grch37.p13.txt).
+
+##### Exon information in Ensembl endpoint
+1. Go to Ensembl FTP site ([ftp://ftp.ensembl.org/pub/grch37/](ftp://ftp.ensembl.org/pub/grch37/))
+2. Click desired Ensembl Release
+3. Click `gff3`
+4. Click `homo_sapiens`
+5. Click Homo_sapiens.GRCh37.[release#].gff3.gz and download will start. Currently the file from release 87 is used. The GFF file is not updated in every Ensembl release. Therefore, in the latest release (ftp://ftp.ensembl.org/pub/grch37/release-91/gff3/homo_sapiens/) the GFF file is still from release 87.
+7. Copy the zipped file to replace `Homo_sapiens.GRCh37.gff3.gz` in the data folder
 
 ### Change curl commands
 Some data is downloaded automatically through curl commands see
