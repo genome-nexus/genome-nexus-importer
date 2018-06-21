@@ -10,17 +10,17 @@ import unittest
 import difflib
 import os
 import transform_gff_to_tsv_for_exon_info_from_ensembl
+import gzip
+
 
 class TransformTestCase(unittest.TestCase):
-
     """Superclass for testcases that test the transformation steps.
     """
 
     def assertFileGenerated(self, tmp_file_name, expected_file_name):
         """Assert that a file has been generated with the expected contents."""
         self.assertTrue(os.path.exists(tmp_file_name))
-        with open(tmp_file_name, 'rU') as out_file, \
-            open(expected_file_name, 'rU') as ref_file:
+        with gzip.open(tmp_file_name, 'rU') as out_file, gzip.open(expected_file_name, 'rU') as ref_file:
             base_filename = os.path.basename(tmp_file_name)
             base_input = os.path.basename(expected_file_name)
             diff_result = difflib.context_diff(
@@ -41,10 +41,10 @@ class TransformTestCase(unittest.TestCase):
         """Test pfam TSV to internal data structure transformation"""
         # TODO
 
-    def test_exon_transformation_step(self):
-        """Test exon gff to internal data structure transformation"""
+    def test_gff_to_tsv(self):
+        """Test transcript info gff to internal data structure transformation"""
         # Build up arguments and run
-        out_file_name = 'test_files/exon_information/ensembl_exon_info.txt~'
-        gff_input_file_name = 'test_files/exon_information/sub_Homo_Sapiens.gff3.gz'
+        out_file_name = 'test_files/transform_gff_to_tsv/ensembl_transcript_info.txt.gz~'
+        gff_input_file_name = 'test_files/transform_gff_to_tsv/sub_Homo_Sapiens.gff3.gz'
         transform_gff_to_tsv_for_exon_info_from_ensembl.transform_gff_to_tsv(gff_input_file_name, out_file_name)
-        self.assertFileGenerated(out_file_name,'test_files/exon_information/ensembl_exon_info.txt')
+        self.assertFileGenerated(out_file_name, 'test_files/transform_gff_to_tsv/ensembl_transcript_info.txt.gz')

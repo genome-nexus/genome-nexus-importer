@@ -23,7 +23,6 @@ import files from [export/](export/):
 #### Ensembl Biomart
 
 ##### PFAM endpoint
-
 Ensembl Biomart file is required by the PFAM endpoint. In order to download this file
 follow these steps:
 
@@ -33,7 +32,7 @@ follow these steps:
 4. Click on `Attributes`, and select these ones:
 Gene stable ID, Transcript stable Id, Protein stable Id, Gene name, Pfam domain ID, Pfam domain start, Pfam domain end.
 5. Click on `Results`, and export all results to a `TSV` file.
-6. Copy over the downoaded file to replace [pfamA.txt](pfamA.txt).
+6. Copy over the downloaded file to replace [pfamA.txt](pfamA.txt).
 
 ##### Ensembl endpoint 
 1. Go to Biomart ([grch37.ensembl.org/biomart/martview](grch37.ensembl.org/biomart/martview)) page on the Ensemble website.
@@ -42,7 +41,7 @@ Gene stable ID, Transcript stable Id, Protein stable Id, Gene name, Pfam domain 
 4. Click on `Attributes`, and select these ones:
 Gene stable ID, Transcript stable Id, HGNC Symbol, HGNC ID
 5. Click on `Results`, and export all results to a `TSV` file.
-6. Copy over the downoaded file to replace [ensembl_biomart_geneids_grch37.p13.txt](ensembl_biomart_geneids_grch37.p13.txt).
+6. Copy over the downloaded file to replace [ensembl_biomart_geneids_grch37.p13.txt](ensembl_biomart_geneids_grch37.p13.txt).
 
 ### Change curl commands
 Some data is downloaded automatically through curl commands see

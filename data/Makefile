@@ -6,13 +6,16 @@ ensembl_biomart_geneids_grch37.p13.transcript_info.txt: ensembl_biomart_geneids_
 ensembl_biomart_transcripts.txt: ensembl_biomart_geneids_grch37.p13.transcript_info.txt
 	csvcut -tc transcript_stable_id,gene_stable_id,hgnc_symbol,protein_stable_id,protein_length $< | csvsort -c transcript_stable_id,gene_stable_id,protein_stable_id,protein_length | uniq | csvformat -T > $@
 
+# Currently the file from release 87 is used. The GFF file is not updated in every Ensembl release. Therefore, in the latest release (ftp://ftp.ensembl.org/pub/grch37/release-91/gff3/homo_sapiens/) the GFF file is still from release 87.
 Homo_sapiens.GRCh37.gff3.gz:
 	curl ftp://ftp.ensembl.org/pub/grch37/release-91/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz > $@
 
-ensembl_exon_info.txt: Homo_sapiens.GRCh37.gff3.gz
-	cd ../scripts && python transform_gff_to_tsv_for_exon_info_from_ensembl.py ../data/$< > ../data/$@
+# Generate ensembl transcript info containing exons and UTRs (input & output file in script)
+ensembl_transcript_info.txt.gz: Homo_sapiens.GRCh37.gff3.gz
+	cd ../scripts && python transform_gff_to_tsv_for_exon_info_from_ensembl.py ../data/$<
 
-ensembl_biomart_transcripts.json.gz: ensembl_biomart_transcripts.txt ensembl_biomart_pfam_grch37.p13.txt ensembl_exon_info.txt
+# Add HGNC symbols, exons, UTRs and PFAM domains to Ensembl Transcript
+ensembl_biomart_transcripts.json.gz: ensembl_biomart_transcripts.txt ensembl_transcript_info.txt.gz ensembl_biomart_pfam_grch37.p13.txt
 	cd ../scripts && python add_domains_hugo_exon_info_to_ensembl_transcript.py $(foreach file,$^,../data/$(file)) | gzip -c > ../data/$@
 
 # give default/canonical geneid/transcript based on given hugo symbol takes
