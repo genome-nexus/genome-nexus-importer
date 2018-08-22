@@ -55,6 +55,10 @@ if __name__ == "__main__":
     parser.add_argument("hotspots_2d", default="../data/hotspots/v2_multi_type_residue.txt", type=str, help="2D cancerhotspots data file")
     parser.add_argument("hotspots_3d", default="../data/hotspots/3d_hotspots.txt", type=str, help="3D cancerhotspots data file")
     parser.add_argument("--removed_hotspots", default=None, type=str, help='Output removed hotspots')
+    parser.add_argument("--override_unassigned_transcript_id_2d_hotspots", default=None, required=True, type=str,
+                        help='Override transcript_id field for 2d hotspots without assignment')
+    parser.add_argument("--override_unassigned_transcript_id_3d_hotspots", default=None, required=True, type=str,
+                        help='Override transcript_id field for 3d hotspots without assignment')
     args = parser.parse_args()
 
 
@@ -68,8 +72,6 @@ if __name__ == "__main__":
     # add type column
     hotspots_3d['type'] = '3d'
 
-
-
     hotspots = pd.concat([hotspots_2d, hotspots_3d])
     assert(len(hotspots) == len(hotspots_2d) + len(hotspots_3d))
 
@@ -78,6 +80,28 @@ if __name__ == "__main__":
         hotspots[c + "_count"] = h_counts[c]
     for c in h_counts.columns[:-1]:
         hotspots[c+"_fraction"] = h_counts[c] / h_counts["total"]
+
+    # fill in transcript id for those without an assignment (uses mskcc transcript overrides)
+    if args.override_unassigned_transcript_id_2d_hotspots:
+        hotspots2_overrides = pd.read_csv(args.override_unassigned_transcript_id_2d_hotspots, sep="\t").set_index("hugo_symbol")
+        hotspots2_without_transcript_id = ((hotspots.type != "3d") & pd.isnull(hotspots.transcript_id))
+        hotspots.loc[hotspots2_without_transcript_id, 'transcript_id'] = hotspots[hotspots2_without_transcript_id]["hugo_symbol"].apply(lambda x: hotspots2_overrides.loc[x])
+
+        # no unassigned hugo symbols should be left after assigning missing transcripts for hotspots v2
+        # (uses uniprot overrides)
+        hotspots2_without_transcript_id = ((hotspots.type != "3d") & pd.isnull(hotspots.transcript_id))
+        assert(hotspots2_without_transcript_id.sum() == 0)
+
+    # fill in transcript id for those without an assignment
+    if args.override_unassigned_transcript_id_3d_hotspots:
+        hotspots3d_overrides = pd.read_csv(args.override_unassigned_transcript_id_3d_hotspots, sep="\t").set_index("hugo_symbol")
+        hotspots3d_without_transcript_id = ((hotspots.type == "3d") & pd.isnull(hotspots.transcript_id))
+        hotspots.loc[hotspots3d_without_transcript_id, 'transcript_id'] = hotspots[hotspots3d_without_transcript_id]["hugo_symbol"].apply(lambda x: hotspots3d_overrides.loc[x])
+
+
+        # no unassigned hugo symbols should be left after assigning missing transcripts for hotspots v2
+        hotspots3d_without_transcript_id = ((hotspots.type != "3d") & pd.isnull(hotspots.transcript_id))
+        assert(hotspots3d_without_transcript_id.sum() == 0)
     
     remove_hotspots = (hotspots.type == "single residue") & ((hotspots.trunc_fraction > .75) | (hotspots.missense_count.isin([0,1])))
     # removing 120 hotspots

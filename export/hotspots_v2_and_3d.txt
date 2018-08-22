@@ -479,7 +479,7 @@ VHL	V74	V:7	74				D:5|V:1|G:1	8.08917220235343e-05	0.000554684648130705	8.089172
 DICER1	D1810	D:9	1810				A:1|V:2|H:1|Y:2|N:3	8.224501363519051e-05	8.450948052280458e-05	8.224501363519051e-05		9		lung:1|uterus:4|thyroid:1|bowel:2|skin:1		ENST00000343455	single residue	9.0	0.0	0.0	0.0	9.0	1.0	0.0	0.0	0.0
 PIK3CA	N107	N:6	107				S:3|I:2|N:1	8.25147220432943e-05	8.25147220432943e-05	0.216014434875453		6		lung:1|uterus:1|prostate:2|breast:2		ENST00000263967	single residue	6.0	0.0	0.0	0.0	6.0	1.0	0.0	0.0	0.0
 ASXL2	E330	E:10	330				Q:2|D:1|K:7	9.4223821280924e-05	0.9752501796538259	9.4223821280924e-05		10		bladder:8|brain:1|breast:1		ENST00000336112	single residue	10.0	0.0	0.0	0.0	10.0	1.0	0.0	0.0	0.0
-PAK7	M173	M:12	173				I:12	9.55412663311122e-05	0.10812615636918402	9.55412663311122e-05		12		unk:1|skin:11			single residue	12.0	0.0	0.0	0.0	12.0	1.0	0.0	0.0	0.0
+PAK7	M173	M:12	173				I:12	9.55412663311122e-05	0.10812615636918402	9.55412663311122e-05		12		unk:1|skin:11		ENST00000353224	single residue	12.0	0.0	0.0	0.0	12.0	1.0	0.0	0.0	0.0
 MAP2K2	F57	F:6	57				V:2|L:4	9.70235389918942e-05	9.70235389918942e-05	0.342986581081331		6		pancreas:1|skin:2|stomach:1|breast:1|head_neck:1		ENST00000262948	single residue	6.0	0.0	0.0	0.0	6.0	1.0	0.0	0.0	0.0
 IRF4	K123	K:3	123				R:3	9.971062120127241e-05	1.0	9.971062120127241e-05		3		blood:3		ENST00000380956	single residue	3.0	0.0	0.0	0.0	3.0	1.0	0.0	0.0	0.0
 PIM1	S97	S:10	97				R:2|S:3|T:1|N:4	0.000100262103792936	0.000388596903271533	0.000100262103792936		10		lymph:9|blood:1		ENST00000373509	single residue	10.0	0.0	0.0	0.0	10.0	1.0	0.0	0.0	0.0
@@ -1068,17 +1068,17 @@ PTEN	N48		48	2.0	1d5r_A(0.0)	Cluster-exclusive	I:1|K:1				0.0	2	2.0	brca:1|prad:
 PTEN	A121		121	2.0	1d5r_A(0.0)	Cluster-exclusive	T:1				0.0	1	1.0	lgg:1		ENST00000371953	3d									
 PTEN	A126		126	2.0	1d5r_A(0.0)	Hotspot-linked	S:1|D:2|V:1|G:1				0.0	5	5.0	brca:1|stad:1|gbm:1|ucs:1|ucec:1		ENST00000371953	3d									
 PTEN	R159		159	2.0	1d5r_A(0.0)	Hotspot-linked	S:1|K:1				0.0	2	1.0	gbm:2		ENST00000371953	3d									
-PTPN11	A72		72	3.0	2shp_A(0.0)	Hotspot	T:3|D:2|V:2				0.0	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	3.0	2shp_A(0.0)	Hotspot	A:2|G:1|K:4				0.0	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	F285		285	3.0	2shp_A(0.0)	Hotspot-linked	S:1|V:1				0.0	2	2.0	all:1|gbm:1			3d									
-PTPN11	N308		308	3.0	2shp_A(0.0)	Hotspot-linked	S:1|D:1				0.0	2	2.0	gbm:1|lgg:1			3d									
-PTPN11	S502		502	3.0	2shp_A(0.0)	Hotspot-linked	P:1|L:1				0.0	2	2.0	gbm:1|laml:1			3d									
-PTPN11	M504		504	3.0	2shp_A(0.0)	Hotspot-linked	I:1				0.0	1	1.0	luad:1			3d									
-PTPN11	Q506		506	3.0	2shp_A(0.0)	Hotspot-linked	P:1				0.0	1	1.0	skcm:1			3d									
-PTPN11	T507		507	3.0	2shp_A(0.0)	Hotspot-linked	K:2				0.0	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	3.0	2shp_A(0.0)	Hotspot	E:1|H:3|L:3				0.0	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
-PTPN11	F71		71	4.0	4dgp_A(0.0)	Hotspot-linked	L:3				0.0	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	I282		282	4.0	4dgp_A(0.0)	Hotspot-linked	M:1				0.0	1	1.0	gbm:1			3d									
+PTPN11	A72		72	3.0	2shp_A(0.0)	Hotspot	T:3|D:2|V:2				0.0	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	3.0	2shp_A(0.0)	Hotspot	A:2|G:1|K:4				0.0	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	F285		285	3.0	2shp_A(0.0)	Hotspot-linked	S:1|V:1				0.0	2	2.0	all:1|gbm:1		ENST00000351677	3d									
+PTPN11	N308		308	3.0	2shp_A(0.0)	Hotspot-linked	S:1|D:1				0.0	2	2.0	gbm:1|lgg:1		ENST00000351677	3d									
+PTPN11	S502		502	3.0	2shp_A(0.0)	Hotspot-linked	P:1|L:1				0.0	2	2.0	gbm:1|laml:1		ENST00000351677	3d									
+PTPN11	M504		504	3.0	2shp_A(0.0)	Hotspot-linked	I:1				0.0	1	1.0	luad:1		ENST00000351677	3d									
+PTPN11	Q506		506	3.0	2shp_A(0.0)	Hotspot-linked	P:1				0.0	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	3.0	2shp_A(0.0)	Hotspot-linked	K:2				0.0	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	3.0	2shp_A(0.0)	Hotspot	E:1|H:3|L:3				0.0	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
+PTPN11	F71		71	4.0	4dgp_A(0.0)	Hotspot-linked	L:3				0.0	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	I282		282	4.0	4dgp_A(0.0)	Hotspot-linked	M:1				0.0	1	1.0	gbm:1		ENST00000351677	3d									
 ITGA1	Q303		303	5.0	1pt6_B(0.0)	Cluster-exclusive	E:1				0.0	1	1.0	prad:1		ENST00000282588	3d									
 ITGA1	R304		304	5.0	1pt6_B(0.0)	Cluster-exclusive	Q:1				0.0	1	1.0	gbm:1		ENST00000282588	3d									
 ITGA1	S306		306	5.0	1pt6_B(0.0)	Cluster-exclusive	F:1				0.0	1	1.0	skcm:1		ENST00000282588	3d									
@@ -1089,19 +1089,19 @@ ITGA1	H338		338	5.0	1pt6_B(0.0)	Cluster-exclusive	P:1				0.0	1	1.0	paad:1		ENST0
 ITGA1	F339		339	5.0	1pt6_B(0.0)	Cluster-exclusive	L:1				0.0	1	1.0	coadread:1		ENST00000282588	3d									
 ITGA1	R358		358	5.0	1pt6_B(0.0)	Cluster-exclusive	S:1				0.0	1	1.0	hnsc:1		ENST00000282588	3d									
 ITGA1	A364		364	5.0	1pt6_B(0.0)	Cluster-exclusive	S:1				0.0	1	1.0	luad:1		ENST00000282588	3d									
-HIST1H3H	A2		2	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	S:1|V:1|G:1				0.0	3	3.0	acc:1|brca:1|mmyl:1			3d									
-HIST1H3H	T4		4	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	A:1				0.0	1	1.0	lusm:1			3d									
-HIST1H3H	K5		5	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	M:1				0.0	1	1.0	hnsc:1			3d									
-HIST1H3H	Q6		6	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	H:2				0.0	2	2.0	hnsc:1|luad:1			3d									
-HIST1H4K	S2		2	8.0	4m38_E(0.0)	Cluster-exclusive	C:1				0.0	1	1.0	prad:1			3d									
-HIST1H4K	G3		3	8.0	4m38_E(0.0)	Cluster-exclusive	A:1				0.0	1	1.0	esca:1			3d									
-HIST1H4K	G5		5	8.0	4m38_E(0.0)	Cluster-exclusive	S:1				0.0	1	1.0	luad:1			3d									
-HIST1H4J	G3		3	9.0	4m38_E(0.0)	Cluster-exclusive	S:1				0.0	1	1.0	lihc:1			3d									
-HIST1H4J	R4		4	9.0	4m38_E(0.0)	Cluster-exclusive	G:1				0.0	1	1.0	thca:1			3d									
-HIST1H4J	G5		5	9.0	4m38_E(0.0)	Cluster-exclusive	D:1				0.0	1	1.0	lihc:1			3d									
-HIST1H4L	S2		2	10.0	4m38_E(0.0)	Cluster-exclusive	C:1				0.0	1	1.0	esca:1			3d									
-HIST1H4L	G3		3	10.0	4m38_E(0.0)	Cluster-exclusive	E:1				0.0	1	1.0	skcm:1			3d									
-HIST1H4L	R4		4	10.0	4m38_E(0.0)	Cluster-exclusive	C:1				0.0	1	1.0	brca:1			3d									
+HIST1H3H	A2		2	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	S:1|V:1|G:1				0.0	3	3.0	acc:1|brca:1|mmyl:1		ENST00000369163	3d									
+HIST1H3H	T4		4	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	A:1				0.0	1	1.0	lusm:1		ENST00000369163	3d									
+HIST1H3H	K5		5	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	M:1				0.0	1	1.0	hnsc:1		ENST00000369163	3d									
+HIST1H3H	Q6		6	6.0	3uee_D(0.0);3uef_B(0.0);3uee_B(0.0);3o37_H(0.069);3o37_G(0.0713);3zvy_D(0.0);3zvy_C(0.0);3o37_F(0.0703);2kft_B(0.0225);3o37_E(0.0677)	Cluster-exclusive	H:2				0.0	2	2.0	hnsc:1|luad:1		ENST00000369163	3d									
+HIST1H4K	S2		2	8.0	4m38_E(0.0)	Cluster-exclusive	C:1				0.0	1	1.0	prad:1		ENST00000357549	3d									
+HIST1H4K	G3		3	8.0	4m38_E(0.0)	Cluster-exclusive	A:1				0.0	1	1.0	esca:1		ENST00000357549	3d									
+HIST1H4K	G5		5	8.0	4m38_E(0.0)	Cluster-exclusive	S:1				0.0	1	1.0	luad:1		ENST00000357549	3d									
+HIST1H4J	G3		3	9.0	4m38_E(0.0)	Cluster-exclusive	S:1				0.0	1	1.0	lihc:1		ENST00000355057	3d									
+HIST1H4J	R4		4	9.0	4m38_E(0.0)	Cluster-exclusive	G:1				0.0	1	1.0	thca:1		ENST00000355057	3d									
+HIST1H4J	G5		5	9.0	4m38_E(0.0)	Cluster-exclusive	D:1				0.0	1	1.0	lihc:1		ENST00000355057	3d									
+HIST1H4L	S2		2	10.0	4m38_E(0.0)	Cluster-exclusive	C:1				0.0	1	1.0	esca:1		ENST00000355981	3d									
+HIST1H4L	G3		3	10.0	4m38_E(0.0)	Cluster-exclusive	E:1				0.0	1	1.0	skcm:1		ENST00000355981	3d									
+HIST1H4L	R4		4	10.0	4m38_E(0.0)	Cluster-exclusive	C:1				0.0	1	1.0	brca:1		ENST00000355981	3d									
 SPOP	Y87		87	12.0	3hqm_B(0.0055);3ivb_A(0.0059);3hqi_B(1.0E-4);3hqm_A(0.0035);3hql_B(0.0058);3hql_A(0.0048);2cr2_A(0.0091);3hsv_A(0.0041);3hsv_B(0.0065);3hu6_A(4.0E-4);3hu6_B(1.0E-4);4o1v_A(0.004);3ivq_B(0.0051);3ivq_A(0.0043);3hqi_A(2.0E-4);3hqh_A(0.0059);3ivv_A(0.0052)	Hotspot	S:2|C:1|N:2				0.0001	5	1.0	prad:5		ENST00000347630	3d									
 SPOP	F102		102	12.0	3hqm_B(0.0055);3ivb_A(0.0059);3hqi_B(1.0E-4);3hqm_A(0.0035);3hql_B(0.0058);3hql_A(0.0048);2cr2_A(0.0091);3hsv_A(0.0041);3hsv_B(0.0065);3hu6_A(4.0E-4);3hu6_B(1.0E-4);4o1v_A(0.004);3ivq_B(0.0051);3ivq_A(0.0043);3hqi_A(2.0E-4);3hqh_A(0.0059);3ivv_A(0.0052)	Hotspot	C:2|V:2|L:1				0.0001	5	1.0	prad:5		ENST00000347630	3d									
 SPOP	F125		125	12.0	3hqm_B(0.0055);3ivb_A(0.0059);3hqi_B(1.0E-4);3hqm_A(0.0035);3hql_B(0.0058);3hql_A(0.0048);2cr2_A(0.0091);3hsv_A(0.0041);3hsv_B(0.0065);3hu6_A(4.0E-4);3hu6_B(1.0E-4);4o1v_A(0.004);3ivq_B(0.0051);3ivq_A(0.0043);3hqi_A(2.0E-4);3hqh_A(0.0059);3ivv_A(0.0052)	Hotspot-linked	L:1				0.0001	1	1.0	prad:1		ENST00000347630	3d									
@@ -1193,7 +1193,7 @@ STIM1	S116		116	29.0	2k60_A(0.0011)	Cluster-exclusive	N:1				0.0011	1	1.0	gbm:1	
 PTEN	C71		71	30.0	1d5r_A(0.0013)	Hotspot-linked	Y:3				0.0013	3	2.0	gbm:2|ucec:1		ENST00000371953	3d									
 BRAF	D594		594	31.0	4wo5_A(0.0013)	Hotspot	G:6|H:1|N:5				0.0013	12	9.0	acc:1|mmyl:2|coadread:1|cll:1|blca:1|hnsc:1|skcm:1|lgg:1|luad:3		ENST00000288602	3d									
 BRAF	K601		601	31.0	4wo5_A(0.0013)	Hotspot	T:1|E:12|N:2				0.0013	15	7.0	prad:1|cll:1|stad:2|thca:1|skcm:6|ucec:1|luad:3		ENST00000288602	3d									
-PTPN11	T468		468	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	M:5				0.0013	5	3.0	coadread:1|stad:2|skcm:2			3d									
+PTPN11	T468		468	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	M:5				0.0013	5	3.0	coadread:1|stad:2|skcm:2		ENST00000351677	3d									
 BRAF	N581		581	33.0	4dbn_B(0.0014)	Hotspot	S:7|T:2|H:1|I:1				0.0014	11	6.0	mmyl:1|coadread:1|ov:1|skcm:4|kirp:1|luad:3		ENST00000288602	3d									
 SMAD4	H92		92	34.0	3qsv_C(0.0017);3qsv_D(0.002);3qsv_A(0.0015)	Cluster-exclusive	Y:1				0.0015	1	1.0	cesc:1		ENST00000342988	3d									
 SMAD4	L109		109	34.0	3qsv_C(0.0017);3qsv_D(0.002);3qsv_A(0.0015)	Cluster-exclusive	Q:1|R:1				0.0015	2	2.0	brca:1|paad:1		ENST00000342988	3d									
@@ -1205,9 +1205,9 @@ SMAD4	Y131		131	34.0	3qsv_C(0.0017);3qsv_D(0.002);3qsv_A(0.0015)	Cluster-exclusi
 SMAD4	H132		132	34.0	3qsv_C(0.0017);3qsv_D(0.002);3qsv_A(0.0015)	Cluster-exclusive	Y:2				0.0015	2	1.0	brca:2		ENST00000342988	3d									
 SMAD4	Y133		133	34.0	3qsv_C(0.0017);3qsv_D(0.002);3qsv_A(0.0015)	Cluster-exclusive	N:1				0.0015	1	1.0	blca:1		ENST00000342988	3d									
 SMAD4	E134		134	34.0	3qsv_C(0.0017);3qsv_D(0.002);3qsv_A(0.0015)	Cluster-exclusive	K:1				0.0015	1	1.0	coadread:1		ENST00000342988	3d									
-PTPN11	G60		60	35.0	2shp_A(0.0016)	Hotspot-linked	V:1				0.0016	1	1.0	laml:1			3d									
-PTPN11	D61		61	35.0	2shp_A(0.0016)	Hotspot-linked	Y:1|N:1				0.0016	2	2.0	laml:1|nbl:1			3d									
-PTPN11	R512		512	35.0	2shp_A(0.0016)	Hotspot-linked	Q:1				0.0016	1	1.0	coadread:1			3d									
+PTPN11	G60		60	35.0	2shp_A(0.0016)	Hotspot-linked	V:1				0.0016	1	1.0	laml:1		ENST00000351677	3d									
+PTPN11	D61		61	35.0	2shp_A(0.0016)	Hotspot-linked	Y:1|N:1				0.0016	2	2.0	laml:1|nbl:1		ENST00000351677	3d									
+PTPN11	R512		512	35.0	2shp_A(0.0016)	Hotspot-linked	Q:1				0.0016	1	1.0	coadread:1		ENST00000351677	3d									
 SMAD4	D351		351	37.0	1dd1_C(0.0038);1g88_C(0.0045);1g88_B(0.0022);1dd1_B(0.0017)	Hotspot	A:1|G:3|H:2|Y:2				0.0017	8	6.0	paad:2|coadread:2|prad:1|stad:1|esca:1|luad:1		ENST00000342988	3d									
 SMAD4	G352		352	37.0	1dd1_C(0.0038);1g88_C(0.0045);1g88_B(0.0022);1dd1_B(0.0017)	Hotspot-linked	A:1|R:1				0.0017	2	2.0	coadread:1|stad:1		ENST00000342988	3d									
 SMAD4	Y353		353	37.0	1dd1_C(0.0038);1g88_C(0.0045);1g88_B(0.0022);1dd1_B(0.0017)	Hotspot-linked	N:1				0.0017	1	1.0	prad:1		ENST00000342988	3d									
@@ -1257,12 +1257,12 @@ HRAS	T58		58	44.0	3tgp_A(0.0045);6q21_D(0.0024)	Hotspot-linked	I:1				0.0024	1	1
 HRAS	A59		59	44.0	3tgp_A(0.0045);6q21_D(0.0024)	Hotspot-linked	T:1				0.0024	1	1.0	ucec:1		ENST00000311189	3d									
 HRAS	G60		60	44.0	3tgp_A(0.0045);6q21_D(0.0024)	Hotspot-linked	S:1				0.0024	1	1.0	coadread:1		ENST00000311189	3d									
 HRAS	Q61		61	44.0	3tgp_A(0.0045);6q21_D(0.0024)	Hotspot	R:19|H:2|K:10|L:9				0.0024	40	9.0	brca:1|prad:2|thca:14|blca:8|hnsc:6|skcm:3|lusc:2|cscc:3|luad:1		ENST00000311189	3d									
-PTPN11	E69		69	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot-linked	D:1|K:3				0.0025	4	3.0	coadread:2|gbm:1|pias:1			3d									
+PTPN11	E69		69	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot-linked	D:1|K:3				0.0025	4	3.0	coadread:2|gbm:1|pias:1		ENST00000351677	3d									
 PPP2R1A	T145		145	47.0	4i5n_D(0.0027)	Hotspot-linked	P:1				0.0027	1	1.0	ov:1		ENST00000322088	3d									
-AMY1C	H314		314	48.0	4gqq_A(0.0027)	Cluster-exclusive	Y:1				0.0027	1	1.0	coadread:1			3d									
-AMY1C	S326		326	48.0	4gqq_A(0.0027)	Cluster-exclusive	Y:1				0.0027	1	1.0	luad:1			3d									
-AMY1C	I327		327	48.0	4gqq_A(0.0027)	Cluster-exclusive	T:1				0.0027	1	1.0	luad:1			3d									
-AMY1C	D332		332	48.0	4gqq_A(0.0027)	Cluster-exclusive	N:1				0.0027	1	1.0	lusc:1			3d									
+AMY1C	H314		314	48.0	4gqq_A(0.0027)	Cluster-exclusive	Y:1				0.0027	1	1.0	coadread:1		ENST00000370079	3d									
+AMY1C	S326		326	48.0	4gqq_A(0.0027)	Cluster-exclusive	Y:1				0.0027	1	1.0	luad:1		ENST00000370079	3d									
+AMY1C	I327		327	48.0	4gqq_A(0.0027)	Cluster-exclusive	T:1				0.0027	1	1.0	luad:1		ENST00000370079	3d									
+AMY1C	D332		332	48.0	4gqq_A(0.0027)	Cluster-exclusive	N:1				0.0027	1	1.0	lusc:1		ENST00000370079	3d									
 FBXW7	S426		426	49.0	2ovr_B(0.0028);2ovq_B(0.0035);2ovp_B(0.0053)	Hotspot-linked	L:1				0.0028	1	1.0	blca:1		ENST00000281708	3d									
 FBXW7	V464		464	49.0	2ovr_B(0.0028);2ovq_B(0.0035);2ovp_B(0.0053)	Hotspot-linked	E:1				0.0028	1	1.0	luad:1		ENST00000281708	3d									
 FBXW7	R465		465	49.0	2ovr_B(0.0028);2ovq_B(0.0035);2ovp_B(0.0053)	Hotspot	P:1|C:33|G:1|H:26|L:1				0.0028	62	14.0	acc:1|brca:2|coadread:23|cll:1|esca:1|ucs:7|hnsc:2|ov:1|lusc:1|stad:10|mbl:1|ucec:7|cesc:4|luad:1		ENST00000281708	3d									
@@ -1315,10 +1315,10 @@ NGFR	D75		75	60.0	1sg1_X(0.0037);3ij2_Y(0.0042);3ij2_X(0.0039);3buk_C(0.0044)	Cl
 NGFR	P85		85	60.0	1sg1_X(0.0037);3ij2_Y(0.0042);3ij2_X(0.0039);3buk_C(0.0044)	Cluster-exclusive	L:2				0.0037	2	2.0	mbl:1|skcm:1		ENST00000172229	3d									
 NGFR	D104		104	60.0	1sg1_X(0.0037);3ij2_Y(0.0042);3ij2_X(0.0039);3buk_C(0.0044)	Cluster-exclusive	N:2				0.0037	2	2.0	acc:1|luad:1		ENST00000172229	3d									
 BRAF	L485		485	61.0	3d4q_B(0.0058);3d4q_A(0.0063);3ppj_A(0.0043);3ppk_A(0.004)	Hotspot-linked	S:1|Y:1				0.004	2	2.0	skcm:1|luad:1		ENST00000288602	3d									
-AKR7L	M85		85	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	I:1|L:1				0.004	2	2.0	brca:1|lgg:1			3d									
-AKR7L	S87		87	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	L:1				0.004	1	1.0	cscc:1			3d									
-AKR7L	A88		88	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	T:1				0.004	1	1.0	stad:1			3d									
-AKR7L	A123		123	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	V:2				0.004	2	2.0	ucec:1|cscc:1			3d									
+AKR7L	M85		85	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	I:1|L:1				0.004	2	2.0	brca:1|lgg:1		ENST00000420396	3d									
+AKR7L	S87		87	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	L:1				0.004	1	1.0	cscc:1		ENST00000420396	3d									
+AKR7L	A88		88	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	T:1				0.004	1	1.0	stad:1		ENST00000420396	3d									
+AKR7L	A123		123	62.0	2clp_I(0.004);2bp1_A(0.0043);2clp_A(0.0042)	Cluster-exclusive	V:2				0.004	2	2.0	ucec:1|cscc:1		ENST00000420396	3d									
 CSF1	F67		67	63.0	3uez_H(0.0066);4fa8_E(0.0081);3uf2_H(0.0062);3uf2_G(0.0066);3uf2_F(0.0077);3uf2_E(0.0052);3uf2_D(0.0071);3uf2_C(0.0065);3uf2_B(0.0091);4fa8_F(0.0068);3uf2_A(0.0058);4fa8_G(0.004);3uez_G(0.0063);3uez_F(0.0042);3uf2_J(0.0054);3uf2_I(0.0062)	Cluster-exclusive	S:1				0.004	1	1.0	paad:1		ENST00000329608	3d									
 CSF1	F69		69	63.0	3uez_H(0.0066);4fa8_E(0.0081);3uf2_H(0.0062);3uf2_G(0.0066);3uf2_F(0.0077);3uf2_E(0.0052);3uf2_D(0.0071);3uf2_C(0.0065);3uf2_B(0.0091);4fa8_F(0.0068);3uf2_A(0.0058);4fa8_G(0.004);3uez_G(0.0063);3uez_F(0.0042);3uf2_J(0.0054);3uf2_I(0.0062)	Cluster-exclusive	L:1				0.004	1	1.0	coadread:1		ENST00000329608	3d									
 CSF1	D71		71	63.0	3uez_H(0.0066);4fa8_E(0.0081);3uf2_H(0.0062);3uf2_G(0.0066);3uf2_F(0.0077);3uf2_E(0.0052);3uf2_D(0.0071);3uf2_C(0.0065);3uf2_B(0.0091);4fa8_F(0.0068);3uf2_A(0.0058);4fa8_G(0.004);3uez_G(0.0063);3uez_F(0.0042);3uf2_J(0.0054);3uf2_I(0.0062)	Cluster-exclusive	H:1				0.004	1	1.0	brca:1		ENST00000329608	3d									
@@ -1422,10 +1422,10 @@ PTEN	I101		101	90.0	1d5r_A(0.0065)	Hotspot-linked	T:1				0.0065	1	1.0	gbm:1		ENS
 PTEN	F104		104	90.0	1d5r_A(0.0065)	Hotspot-linked	I:1				0.0065	1	1.0	brca:1		ENST00000371953	3d									
 PTEN	C105		105	90.0	1d5r_A(0.0065)	Hotspot-linked	R:1|G:1|W:1|Y:2				0.0065	5	3.0	gbm:2|skcm:2|lgg:1		ENST00000371953	3d									
 PTEN	Y138		138	90.0	1d5r_A(0.0065)	Hotspot-linked	C:1				0.0065	1	1.0	ucec:1		ENST00000371953	3d									
-HIST1H4L	A84		84	94.0	1hio_D(0.0065)	Cluster-exclusive	T:1				0.0065	1	1.0	coadread:1			3d									
-HIST1H4L	M85		85	94.0	1hio_D(0.0065)	Cluster-exclusive	I:1				0.0065	1	1.0	brca:1			3d									
-HIST1H4L	D86		86	94.0	1hio_D(0.0065)	Cluster-exclusive	N:1				0.0065	1	1.0	blca:1			3d									
-HIST1H4L	V88		88	94.0	1hio_D(0.0065)	Cluster-exclusive	I:1				0.0065	1	1.0	mmyl:1			3d									
+HIST1H4L	A84		84	94.0	1hio_D(0.0065)	Cluster-exclusive	T:1				0.0065	1	1.0	coadread:1		ENST00000355981	3d									
+HIST1H4L	M85		85	94.0	1hio_D(0.0065)	Cluster-exclusive	I:1				0.0065	1	1.0	brca:1		ENST00000355981	3d									
+HIST1H4L	D86		86	94.0	1hio_D(0.0065)	Cluster-exclusive	N:1				0.0065	1	1.0	blca:1		ENST00000355981	3d									
+HIST1H4L	V88		88	94.0	1hio_D(0.0065)	Cluster-exclusive	I:1				0.0065	1	1.0	mmyl:1		ENST00000355981	3d									
 ZNF98	F349		349	95.0	1g0y_R(0.0065);1itb_B(0.0071)	Cluster-exclusive	L:1				0.0065	1	1.0	ucec:1		ENST00000357774	3d									
 ZNF98	K351		351	95.0	1g0y_R(0.0065);1itb_B(0.0071)	Cluster-exclusive	I:1				0.0065	1	1.0	stad:1		ENST00000357774	3d									
 ZNF98	C352		352	95.0	1g0y_R(0.0065);1itb_B(0.0071)	Cluster-exclusive	Y:1				0.0065	1	1.0	hnsc:1		ENST00000357774	3d									
@@ -1596,10 +1596,10 @@ CACNA1E	E1112		1112	132.0	3eg9_A(0.0101);3egx_A(0.009);3egd_A(0.0115);2nut_A(0.0
 CACNA1E	K1113		1113	132.0	3eg9_A(0.0101);3egx_A(0.009);3egd_A(0.0115);2nut_A(0.0099);3efo_A(0.0103);2nup_A(0.0101)	Cluster-exclusive	N:1				0.009000000000000001	1	1.0	ucec:1		ENST00000367573	3d									
 CACNA1E	Q1116		1116	132.0	3eg9_A(0.0101);3egx_A(0.009);3egd_A(0.0115);2nut_A(0.0099);3efo_A(0.0103);2nup_A(0.0101)	Cluster-exclusive	K:1				0.009000000000000001	1	1.0	lihc:1		ENST00000367573	3d									
 CACNA1E	K1117		1117	132.0	3eg9_A(0.0101);3egx_A(0.009);3egd_A(0.0115);2nut_A(0.0099);3efo_A(0.0103);2nup_A(0.0101)	Cluster-exclusive	N:1				0.009000000000000001	1	1.0	coadread:1		ENST00000367573	3d									
-HIST1H2AE	A70		70	134.0	1hio_A(0.0093)	Cluster-exclusive	T:1				0.0093	1	1.0	blca:1			3d									
-HIST1H2AE	R72		72	134.0	1hio_A(0.0093)	Cluster-exclusive	S:1				0.0093	1	1.0	mbl:1			3d									
-HIST1H2AE	D73		73	134.0	1hio_A(0.0093)	Cluster-exclusive	N:1				0.0093	1	1.0	stad:1			3d									
-HIST1H2AE	N74		74	134.0	1hio_A(0.0093)	Cluster-exclusive	I:1				0.0093	1	1.0	luad:1			3d									
+HIST1H2AE	A70		70	134.0	1hio_A(0.0093)	Cluster-exclusive	T:1				0.0093	1	1.0	blca:1		ENST00000303910	3d									
+HIST1H2AE	R72		72	134.0	1hio_A(0.0093)	Cluster-exclusive	S:1				0.0093	1	1.0	mbl:1		ENST00000303910	3d									
+HIST1H2AE	D73		73	134.0	1hio_A(0.0093)	Cluster-exclusive	N:1				0.0093	1	1.0	stad:1		ENST00000303910	3d									
+HIST1H2AE	N74		74	134.0	1hio_A(0.0093)	Cluster-exclusive	I:1				0.0093	1	1.0	luad:1		ENST00000303910	3d									
 ITGA4	G53		53	135.0	3v4v_C(0.0124);3v4v_A(0.0139);3v4p_C(0.0104);3v4p_A(0.0095)	Cluster-exclusive	V:1				0.0095	1	1.0	stad:1		ENST00000397033	3d									
 ITGA4	L427		427	135.0	3v4v_C(0.0124);3v4v_A(0.0139);3v4p_C(0.0104);3v4p_A(0.0095)	Cluster-exclusive	V:1				0.0095	1	1.0	skcm:1		ENST00000397033	3d									
 ITGA4	S428		428	135.0	3v4v_C(0.0124);3v4v_A(0.0139);3v4p_C(0.0104);3v4p_A(0.0095)	Cluster-exclusive	T:1				0.0095	1	1.0	luad:1		ENST00000397033	3d									
@@ -1624,14 +1624,14 @@ MDGA2	E449		449	139.0	3k71_B(0.0114);3k72_B(0.0101);3k6s_B(0.0098)	Cluster-exclu
 MDGA2	S451		451	139.0	3k71_B(0.0114);3k72_B(0.0101);3k6s_B(0.0098)	Cluster-exclusive	L:1				0.0098	1	1.0	skcm:1		ENST00000399232	3d									
 MDGA2	G458		458	139.0	3k71_B(0.0114);3k72_B(0.0101);3k6s_B(0.0098)	Cluster-exclusive	E:1				0.0098	1	1.0	skcm:1		ENST00000399232	3d									
 MDGA2	T460		460	139.0	3k71_B(0.0114);3k72_B(0.0101);3k6s_B(0.0098)	Cluster-exclusive	A:1				0.0098	1	1.0	lusc:1		ENST00000399232	3d									
-TUBA3D	V181		181	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	M:2				0.0103	2	2.0	paad:1|luad:1			3d									
-TUBA3D	V182		182	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	M:1				0.0103	1	1.0	hnsc:1			3d									
-TUBA3D	H393		393	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	D:1				0.0103	1	1.0	luad:1			3d									
-TUBA3D	D396		396	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	N:2				0.0103	2	2.0	coadread:1|skcm:1			3d									
-TUBA3D	M398		398	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	V:1				0.0103	1	1.0	stad:1			3d									
-TUBA3D	Y399		399	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	S:1				0.0103	1	1.0	luad:1			3d									
-TUBA3D	R402		402	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	Q:1				0.0103	1	1.0	luad:1			3d									
-TUBA3D	A403		403	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	S:1				0.0103	1	1.0	npc:1			3d									
+TUBA3D	V181		181	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	M:2				0.0103	2	2.0	paad:1|luad:1		ENST00000321253	3d									
+TUBA3D	V182		182	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	M:1				0.0103	1	1.0	hnsc:1		ENST00000321253	3d									
+TUBA3D	H393		393	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	D:1				0.0103	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	D396		396	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	N:2				0.0103	2	2.0	coadread:1|skcm:1		ENST00000321253	3d									
+TUBA3D	M398		398	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	V:1				0.0103	1	1.0	stad:1		ENST00000321253	3d									
+TUBA3D	Y399		399	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	S:1				0.0103	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	R402		402	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	Q:1				0.0103	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	A403		403	141.0	3edl_F(0.0117);4i4t_C(0.0383);4i55_C(0.0368);4i50_C(0.0383);3du7_C(0.0138);4i4t_A(0.0302);4i55_A(0.0383);1sa0_C(0.0115);3du7_A(0.012);4iij_A(0.0392);4ihj_A(0.0393);1sa0_A(0.0103);4iij_C(0.0388);4i50_A(0.0422);4ihj_C(0.0388);1z2b_C(0.0151);1z2b_A(0.014);3e22_A(0.0117)	Cluster-exclusive	S:1				0.0103	1	1.0	npc:1		ENST00000321253	3d									
 IGFBP3	S140		140	142.0	1rx0_A(0.0111);1rx0_C(0.0103)	Cluster-exclusive	L:1				0.0103	1	1.0	coadread:1		ENST00000275521	3d									
 IGFBP3	R144		144	142.0	1rx0_A(0.0111);1rx0_C(0.0103)	Cluster-exclusive	C:1|H:1				0.0103	2	2.0	coadread:1|ucec:1		ENST00000275521	3d									
 IGFBP3	A146		146	142.0	1rx0_A(0.0111);1rx0_C(0.0103)	Cluster-exclusive	T:1				0.0103	1	1.0	ucec:1		ENST00000275521	3d									
@@ -1745,11 +1745,11 @@ CDKN2C	E99		99	165.0	1bu9_A(0.0127)	Cluster-exclusive	K:1				0.0127	1	1.0	lusc:1
 SRP9	A25		25	166.0	1e8s_A(0.0127)	Cluster-exclusive	T:1				0.0127	1	1.0	kirc:1		ENST00000304786	3d									
 SRP9	R26		26	166.0	1e8s_A(0.0127)	Cluster-exclusive	H:1				0.0127	1	1.0	stad:1		ENST00000304786	3d									
 SRP9	D44		44	166.0	1e8s_A(0.0127)	Cluster-exclusive	V:1				0.0127	1	1.0	paad:1		ENST00000304786	3d									
-HBA2	P115		115	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	S:1				0.0128	1	1.0	cscc:1			3d									
-HBA2	H123		123	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	Y:1				0.0128	1	1.0	hnsc:1			3d									
-HBA2	S125		125	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	F:1				0.0128	1	1.0	luad:1			3d									
-HBA2	L126		126	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	M:1				0.0128	1	1.0	hnsc:1			3d									
-HBA2	D127		127	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	Y:1				0.0128	1	1.0	brca:1			3d									
+HBA2	P115		115	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	S:1				0.0128	1	1.0	cscc:1		ENST00000251595	3d									
+HBA2	H123		123	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	Y:1				0.0128	1	1.0	hnsc:1		ENST00000251595	3d									
+HBA2	S125		125	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	F:1				0.0128	1	1.0	luad:1		ENST00000251595	3d									
+HBA2	L126		126	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	M:1				0.0128	1	1.0	hnsc:1		ENST00000251595	3d									
+HBA2	D127		127	168.0	2h35_A(0.0135);2h35_C(0.0128)	Cluster-exclusive	Y:1				0.0128	1	1.0	brca:1		ENST00000251595	3d									
 RGPD3	N1670		1670	169.0	3bbp_D(0.0164);3bbp_E(0.0129)	Cluster-exclusive	K:1				0.0129	1	1.0	ucec:1		ENST00000409886	3d									
 RGPD3	G1671		1671	169.0	3bbp_D(0.0164);3bbp_E(0.0129)	Cluster-exclusive	D:1				0.0129	1	1.0	cscc:1		ENST00000409886	3d									
 RGPD3	R1674		1674	169.0	3bbp_D(0.0164);3bbp_E(0.0129)	Cluster-exclusive	Q:1				0.0129	1	1.0	skcm:1		ENST00000409886	3d									
@@ -1863,9 +1863,9 @@ SETBP1	K939		939	193.0	2x4r_A(0.0175);3ffc_F(0.0608);3ffc_A(0.0616);3qdj_A(0.017
 SETBP1	R942		942	193.0	2x4r_A(0.0175);3ffc_F(0.0608);3ffc_A(0.0616);3qdj_A(0.0173);1agb_A(0.0518);3ln5_A(0.0629);1s9y_A(0.0186);1i7r_A(0.0179);1agd_A(0.0624);3ft3_A(0.0663);2gt9_A(0.0203);1s9w_A(0.021);3gsn_H(0.0192);3gsv_A(0.0661);3o3d_A(0.0217);3gsx_A(0.0205);1t1y_A(0.019);1agf_A(0.0837);3mr9_A(0.0193);4jqv_A(0.0623);2f54_A(0.0203);1ao7_A(0.0187);3gsr_A(0.019);1hhh_A(0.0159);3mrr_A(0.0159);3sjv_A(0.0444);3v5k_A(0.0166);3mrn_A(0.0223);3hpj_A(0.0211);3mrp_A(0.0649);3mrj_A(0.0657);3mrl_A(0.0184);3bvn_A(0.0561);3bgm_A(0.0184);3mrf_A(0.0161);2av7_A(0.0174);3mrh_A(0.0169);1duz_A(0.0187);3mrb_A(0.0637);2c7u_A(0.0154);3mrd_A(0.0176);2av1_A(0.0204);3bh8_A(0.0207);1qsf_A(0.018);1mi5_A(0.0529);1i7u_A(0.0171);3sko_A(0.0634);3ft2_A(0.0606);3skm_A(0.0585);3d25_A(0.0203);3utt_A(0.023);3ln4_A(0.064);1agc_A(0.0615);1s9x_A(0.0187);3ft4_A(0.0702);3gsu_A(0.0694);1bd2_A(0.0192);3gsw_A(0.0201);1i1f_A(0.0183);1age_A(0.0558);1qrn_A(0.0182);1m05_A(0.0564);3bhb_A(0.0147);3gso_A(0.0188);3to2_A(0.0172);3gsq_A(0.0211);1hhg_A(0.0235);3bxn_A(0.0611);3mro_A(0.059);3mrq_A(0.0189);3mrk_A(0.0217);3mrm_A(0.0582);3h9s_A(0.0183);3mrg_A(0.019);3mri_A(0.0156);3mrc_A(0.0211);4k7f_A(0.0658);3mre_A(0.016);1t20_A(0.0198);2j8u_A(0.0178);3spv_A(0.062);3hla_A(0.0622);1i1y_A(0.0189);1qse_A(0.022)	Cluster-exclusive	Q:1|W:1				0.0147	2	2.0	coadread:1|skcm:1		ENST00000282030	3d									
 SETBP1	S944		944	193.0	2x4r_A(0.0175);3ffc_F(0.0608);3ffc_A(0.0616);3qdj_A(0.0173);1agb_A(0.0518);3ln5_A(0.0629);1s9y_A(0.0186);1i7r_A(0.0179);1agd_A(0.0624);3ft3_A(0.0663);2gt9_A(0.0203);1s9w_A(0.021);3gsn_H(0.0192);3gsv_A(0.0661);3o3d_A(0.0217);3gsx_A(0.0205);1t1y_A(0.019);1agf_A(0.0837);3mr9_A(0.0193);4jqv_A(0.0623);2f54_A(0.0203);1ao7_A(0.0187);3gsr_A(0.019);1hhh_A(0.0159);3mrr_A(0.0159);3sjv_A(0.0444);3v5k_A(0.0166);3mrn_A(0.0223);3hpj_A(0.0211);3mrp_A(0.0649);3mrj_A(0.0657);3mrl_A(0.0184);3bvn_A(0.0561);3bgm_A(0.0184);3mrf_A(0.0161);2av7_A(0.0174);3mrh_A(0.0169);1duz_A(0.0187);3mrb_A(0.0637);2c7u_A(0.0154);3mrd_A(0.0176);2av1_A(0.0204);3bh8_A(0.0207);1qsf_A(0.018);1mi5_A(0.0529);1i7u_A(0.0171);3sko_A(0.0634);3ft2_A(0.0606);3skm_A(0.0585);3d25_A(0.0203);3utt_A(0.023);3ln4_A(0.064);1agc_A(0.0615);1s9x_A(0.0187);3ft4_A(0.0702);3gsu_A(0.0694);1bd2_A(0.0192);3gsw_A(0.0201);1i1f_A(0.0183);1age_A(0.0558);1qrn_A(0.0182);1m05_A(0.0564);3bhb_A(0.0147);3gso_A(0.0188);3to2_A(0.0172);3gsq_A(0.0211);1hhg_A(0.0235);3bxn_A(0.0611);3mro_A(0.059);3mrq_A(0.0189);3mrk_A(0.0217);3mrm_A(0.0582);3h9s_A(0.0183);3mrg_A(0.019);3mri_A(0.0156);3mrc_A(0.0211);4k7f_A(0.0658);3mre_A(0.016);1t20_A(0.0198);2j8u_A(0.0178);3spv_A(0.062);3hla_A(0.0622);1i1y_A(0.0189);1qse_A(0.022)	Cluster-exclusive	R:1|N:1				0.0147	2	2.0	stad:1|skcm:1		ENST00000282030	3d									
 SETBP1	R948		948	193.0	2x4r_A(0.0175);3ffc_F(0.0608);3ffc_A(0.0616);3qdj_A(0.0173);1agb_A(0.0518);3ln5_A(0.0629);1s9y_A(0.0186);1i7r_A(0.0179);1agd_A(0.0624);3ft3_A(0.0663);2gt9_A(0.0203);1s9w_A(0.021);3gsn_H(0.0192);3gsv_A(0.0661);3o3d_A(0.0217);3gsx_A(0.0205);1t1y_A(0.019);1agf_A(0.0837);3mr9_A(0.0193);4jqv_A(0.0623);2f54_A(0.0203);1ao7_A(0.0187);3gsr_A(0.019);1hhh_A(0.0159);3mrr_A(0.0159);3sjv_A(0.0444);3v5k_A(0.0166);3mrn_A(0.0223);3hpj_A(0.0211);3mrp_A(0.0649);3mrj_A(0.0657);3mrl_A(0.0184);3bvn_A(0.0561);3bgm_A(0.0184);3mrf_A(0.0161);2av7_A(0.0174);3mrh_A(0.0169);1duz_A(0.0187);3mrb_A(0.0637);2c7u_A(0.0154);3mrd_A(0.0176);2av1_A(0.0204);3bh8_A(0.0207);1qsf_A(0.018);1mi5_A(0.0529);1i7u_A(0.0171);3sko_A(0.0634);3ft2_A(0.0606);3skm_A(0.0585);3d25_A(0.0203);3utt_A(0.023);3ln4_A(0.064);1agc_A(0.0615);1s9x_A(0.0187);3ft4_A(0.0702);3gsu_A(0.0694);1bd2_A(0.0192);3gsw_A(0.0201);1i1f_A(0.0183);1age_A(0.0558);1qrn_A(0.0182);1m05_A(0.0564);3bhb_A(0.0147);3gso_A(0.0188);3to2_A(0.0172);3gsq_A(0.0211);1hhg_A(0.0235);3bxn_A(0.0611);3mro_A(0.059);3mrq_A(0.0189);3mrk_A(0.0217);3mrm_A(0.0582);3h9s_A(0.0183);3mrg_A(0.019);3mri_A(0.0156);3mrc_A(0.0211);4k7f_A(0.0658);3mre_A(0.016);1t20_A(0.0198);2j8u_A(0.0178);3spv_A(0.062);3hla_A(0.0622);1i1y_A(0.0189);1qse_A(0.022)	Cluster-exclusive	S:1|C:1|H:1				0.0147	3	3.0	stad:1|hnsc:1|luad:1		ENST00000282030	3d									
-ERBB2IP	E463		463	194.0	3iyg_E(0.0147)	Cluster-exclusive	Q:1|K:1				0.0147	2	2.0	skcm:1|cesc:1			3d									
-ERBB2IP	D465		465	194.0	3iyg_E(0.0147)	Cluster-exclusive	G:1|Y:1				0.0147	2	2.0	blca:1|lihc:1			3d									
-ERBB2IP	E466		466	194.0	3iyg_E(0.0147)	Cluster-exclusive	K:2				0.0147	2	2.0	brca:1|blca:1			3d									
+ERBB2IP	E463		463	194.0	3iyg_E(0.0147)	Cluster-exclusive	Q:1|K:1				0.0147	2	2.0	skcm:1|cesc:1		ENST00000284037	3d									
+ERBB2IP	D465		465	194.0	3iyg_E(0.0147)	Cluster-exclusive	G:1|Y:1				0.0147	2	2.0	blca:1|lihc:1		ENST00000284037	3d									
+ERBB2IP	E466		466	194.0	3iyg_E(0.0147)	Cluster-exclusive	K:2				0.0147	2	2.0	brca:1|blca:1		ENST00000284037	3d									
 HIC2	H551		551	195.0	2vcv_A(0.0406);3ik9_B(0.0187);2vct_A(0.0242);3zfb_B(0.0172);1pkz_A(0.0189);3zfb_A(0.0186);3ik9_F(0.0199);1pkz_B(0.0181);3i6a_A(0.0211);1k3l_B(0.0153);1k3l_A(0.0148);1usb_B(0.0162);1gsf_A(0.0195);1usb_A(0.0203);1pkw_A(0.0179);3u6v_B(0.0177);1gsd_A(0.0185);1k3y_A(0.0186);4hj2_A(0.0165);4hj2_B(0.019);4acs_A(0.0225);1pl1_A(0.0184)	Cluster-exclusive	R:1				0.0148	1	1.0	kirc:1		ENST00000407464	3d									
 HIC2	F561		561	195.0	2vcv_A(0.0406);3ik9_B(0.0187);2vct_A(0.0242);3zfb_B(0.0172);1pkz_A(0.0189);3zfb_A(0.0186);3ik9_F(0.0199);1pkz_B(0.0181);3i6a_A(0.0211);1k3l_B(0.0153);1k3l_A(0.0148);1usb_B(0.0162);1gsf_A(0.0195);1usb_A(0.0203);1pkw_A(0.0179);3u6v_B(0.0177);1gsd_A(0.0185);1k3y_A(0.0186);4hj2_A(0.0165);4hj2_B(0.019);4acs_A(0.0225);1pl1_A(0.0184)	Cluster-exclusive	L:1				0.0148	1	1.0	lihc:1		ENST00000407464	3d									
 HIC2	A562		562	195.0	2vcv_A(0.0406);3ik9_B(0.0187);2vct_A(0.0242);3zfb_B(0.0172);1pkz_A(0.0189);3zfb_A(0.0186);3ik9_F(0.0199);1pkz_B(0.0181);3i6a_A(0.0211);1k3l_B(0.0153);1k3l_A(0.0148);1usb_B(0.0162);1gsf_A(0.0195);1usb_A(0.0203);1pkw_A(0.0179);3u6v_B(0.0177);1gsd_A(0.0185);1k3y_A(0.0186);4hj2_A(0.0165);4hj2_B(0.019);4acs_A(0.0225);1pl1_A(0.0184)	Cluster-exclusive	T:1				0.0148	1	1.0	paad:1		ENST00000407464	3d									
@@ -1897,10 +1897,10 @@ EGFR	K261		261	203.0	3njp_B(0.0682);4kro_A(0.0767);3njp_A(0.0768);1yy9_A(0.072);
 EGFR	T263		263	203.0	3njp_B(0.0682);4kro_A(0.0767);3njp_A(0.0768);1yy9_A(0.072);1mox_A(0.019);1ivo_B(0.0161);1mox_B(0.0186);1nql_A(0.0726);3qwq_A(0.0769);1ivo_A(0.017)	Hotspot-linked	P:2				0.0161	2	2.0	gbm:1|lgg:1		ENST00000275493	3d									
 EGFR	C264		264	203.0	3njp_B(0.0682);4kro_A(0.0767);3njp_A(0.0768);1yy9_A(0.072);1mox_A(0.019);1ivo_B(0.0161);1mox_B(0.0186);1nql_A(0.0726);3qwq_A(0.0769);1ivo_A(0.017)	Hotspot-linked	Y:1				0.0161	1	1.0	skcm:1		ENST00000275493	3d									
 EGFR	A289		289	203.0	3njp_B(0.0682);4kro_A(0.0767);3njp_A(0.0768);1yy9_A(0.072);1mox_A(0.019);1ivo_B(0.0161);1mox_B(0.0186);1nql_A(0.0726);3qwq_A(0.0769);1ivo_A(0.017)	Hotspot	D:3|T:6|V:17|I:1|N:1				0.0161	28	3.0	gbm:24|hnsc:1|lgg:3		ENST00000275493	3d									
-RQCD1	L82		82	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot-linked	F:1				0.0161	1	1.0	ucec:1			3d									
-RQCD1	S87		87	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot	P:3|C:3				0.0161	6	5.0	prad:1|stad:1|blca:1|skcm:2|lihc:1			3d									
-RQCD1	N88		88	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot-linked	Y:1|K:1				0.0161	2	2.0	ov:1|skcm:1			3d									
-RQCD1	P131		131	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot	S:1|L:13				0.0161	14	1.0	skcm:14			3d									
+RQCD1	L82		82	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot-linked	F:1				0.0161	1	1.0	ucec:1		ENST00000273064	3d									
+RQCD1	S87		87	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot	P:3|C:3				0.0161	6	5.0	prad:1|stad:1|blca:1|skcm:2|lihc:1		ENST00000273064	3d									
+RQCD1	N88		88	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot-linked	Y:1|K:1				0.0161	2	2.0	ov:1|skcm:1		ENST00000273064	3d									
+RQCD1	P131		131	204.0	4ct6_B(0.0166);4ct7_B(0.0162);4cru_B(0.0272);2fv2_C(0.0167);4crv_B(0.0184);2fv2_D(0.0184);2fv2_A(0.0182);2fv2_B(0.0161)	Hotspot	S:1|L:13				0.0161	14	1.0	skcm:14		ENST00000273064	3d									
 ACLY	I6		6	205.0	3mwe_A(0.0174);3mwd_A(0.0162);3pff_A(0.0228)	Cluster-exclusive	V:1				0.0162	1	1.0	luad:1		ENST00000352035	3d									
 ACLY	S7		7	205.0	3mwe_A(0.0174);3mwd_A(0.0162);3pff_A(0.0228)	Cluster-exclusive	L:1				0.0162	1	1.0	skcm:1		ENST00000352035	3d									
 ACLY	E8		8	205.0	3mwe_A(0.0174);3mwd_A(0.0162);3pff_A(0.0228)	Cluster-exclusive	Q:1|K:1				0.0162	2	2.0	blca:1|cesc:1		ENST00000352035	3d									
@@ -1912,7 +1912,7 @@ EEF1A1	L27		27	206.0	1ijf_A(0.0162);1ije_A(0.0173);1f60_A(0.0184);1g7c_A(0.0174)
 EEF1A1	I28		28	206.0	1ijf_A(0.0162);1ije_A(0.0173);1f60_A(0.0184);1g7c_A(0.0174);2b7b_A(0.0195);2b7c_A(0.0176)	Cluster-exclusive	V:1				0.0162	1	1.0	lgg:1		ENST00000309268	3d									
 EEF1A1	Y29		29	206.0	1ijf_A(0.0162);1ije_A(0.0173);1f60_A(0.0184);1g7c_A(0.0174);2b7b_A(0.0195);2b7c_A(0.0176)	Cluster-exclusive	C:1				0.0162	1	1.0	hnsc:1		ENST00000309268	3d									
 EEF1A1	I34		34	206.0	1ijf_A(0.0162);1ije_A(0.0173);1f60_A(0.0184);1g7c_A(0.0174);2b7b_A(0.0195);2b7c_A(0.0176)	Cluster-exclusive	M:1				0.0162	1	1.0	luad:1		ENST00000309268	3d									
-PTPN11	L262		262	207.0	4h34_A(0.0163)	Hotspot-linked	F:1				0.0163	1	1.0	skcm:1			3d									
+PTPN11	L262		262	207.0	4h34_A(0.0163)	Hotspot-linked	F:1				0.0163	1	1.0	skcm:1		ENST00000351677	3d									
 NOTCH1	A2019		2019	210.0	2qc9_B(0.0615);2f8y_B(0.0823);1ymp_A(0.0164);1yyh_B(0.0517);3nbn_B(0.0381);2he0_A(0.0568);2f8x_K(0.0648);2f8y_A(0.0734);3v79_K(0.0627);3nbn_E(0.0433);2qc9_A(0.0455)	Cluster-exclusive	P:1				0.0164	1	1.0	luad:1		ENST00000277541	3d									
 NOTCH1	D2020		2020	210.0	2qc9_B(0.0615);2f8y_B(0.0823);1ymp_A(0.0164);1yyh_B(0.0517);3nbn_B(0.0381);2he0_A(0.0568);2f8x_K(0.0648);2f8y_A(0.0734);3v79_K(0.0627);3nbn_E(0.0433);2qc9_A(0.0455)	Cluster-exclusive	H:1				0.0164	1	1.0	lusc:1		ENST00000277541	3d									
 NOTCH1	V2021		2021	210.0	2qc9_B(0.0615);2f8y_B(0.0823);1ymp_A(0.0164);1yyh_B(0.0517);3nbn_B(0.0381);2he0_A(0.0568);2f8x_K(0.0648);2f8y_A(0.0734);3v79_K(0.0627);3nbn_E(0.0433);2qc9_A(0.0455)	Cluster-exclusive	I:1				0.0164	1	1.0	lymbc:1		ENST00000277541	3d									
@@ -1941,12 +1941,12 @@ NFE2L2	T80		80	216.0	2flu_P(0.0229);4ifl_P(0.017)	Hotspot	P:2|A:2|R:2|K:3				0.0
 NFE2L2	G81		81	216.0	2flu_P(0.0229);4ifl_P(0.017)	Hotspot	C:2|S:3|D:2|V:3				0.017	10	7.0	brca:1|hnsc:1|lihc:2|ucec:1|lusc:3|kirc:1|kirp:1		ENST00000397062	3d									
 NFE2L2	E82		82	216.0	2flu_P(0.0229);4ifl_P(0.017)	Hotspot	A:2|Q:1|D:7|G:1				0.017	11	7.0	blca:1|lihc:3|ucec:2|cesc:1|kirc:1|luad:2|kirp:1		ENST00000397062	3d									
 RHOA	I23		23	217.0	3lwn_A(0.0228);3lwn_B(0.0219);2gco_B(0.0191);3lw8_A(0.0178);1lb1_F(0.024);3lw8_B(0.0208);2gcn_A(0.0171);3lw8_C(0.0203);3lw8_D(0.0204);2gco_A(0.0196);1lb1_H(0.0225);1lb1_B(0.0233);1lb1_D(0.021);1dpf_A(0.021);4xh9_E(0.0225);4xh9_B(0.0201);1ftn_A(0.0212);2rgn_C(0.0212);4d0n_A(0.0201);3lxr_A(0.0214);2rgn_F(0.0181);1xcg_B(0.0204);3t06_B(0.0179);3t06_F(0.0208);3tvd_A(0.0185);1xcg_F(0.0211);1x86_D(0.0232);1x86_B(0.0201);1x86_H(0.0199);1cc0_C(0.0181);1x86_F(0.021);1cc0_A(0.0195)	Hotspot-linked	R:1				0.0171	1	1.0	lymbc:1		ENST00000418115	3d									
-FMNL3	R280		280	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	Q:1|L:1				0.0173	2	2.0	blca:1|cscc:1			3d									
-FMNL3	G281		281	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	R:1				0.0173	1	1.0	kirc:1			3d									
-FMNL3	G282		282	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	C:1				0.0173	1	1.0	ucec:1			3d									
-FMNL3	E284		284	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	K:1				0.0173	1	1.0	coadread:1			3d									
-FMNL3	L287		287	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	F:2				0.0173	2	1.0	skcm:2			3d									
-FMNL3	A288		288	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	T:1				0.0173	1	1.0	hnsc:1			3d									
+FMNL3	R280		280	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	Q:1|L:1				0.0173	2	2.0	blca:1|cscc:1		ENST00000335154	3d									
+FMNL3	G281		281	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	R:1				0.0173	1	1.0	kirc:1		ENST00000335154	3d									
+FMNL3	G282		282	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	C:1				0.0173	1	1.0	ucec:1		ENST00000335154	3d									
+FMNL3	E284		284	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	K:1				0.0173	1	1.0	coadread:1		ENST00000335154	3d									
+FMNL3	L287		287	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	F:2				0.0173	2	1.0	skcm:2		ENST00000335154	3d									
+FMNL3	A288		288	218.0	3ghg_A(0.0197);3ghg_J(0.0173)	Cluster-exclusive	T:1				0.0173	1	1.0	hnsc:1		ENST00000335154	3d									
 CD300C	S38		38	222.0	2q87_B(0.0177);2q87_C(0.0183)	Cluster-exclusive	F:1				0.0177	1	1.0	skcm:1		ENST00000330793	3d									
 TTK	D566		566	223.0	3dbq_A(0.0224);4bi0_A(0.0203);4bi2_A(0.0187);3wyx_A(0.0209);4c4e_A(0.0251);4c4f_A(0.024);2x9e_A(0.0178);2zmd_A(0.0184)	Cluster-exclusive	G:1				0.0178	1	1.0	lusc:1		ENST00000369798	3d									
 TTK	E571		571	223.0	3dbq_A(0.0224);4bi0_A(0.0203);4bi2_A(0.0187);3wyx_A(0.0209);4c4e_A(0.0251);4c4f_A(0.024);2x9e_A(0.0178);2zmd_A(0.0184)	Cluster-exclusive	K:4				0.0178	4	4.0	coadread:1|hnsc:1|skcm:1|ucec:1		ENST00000369798	3d									
@@ -2010,11 +2010,11 @@ IQUB	V145		145	240.0	2daf_A(0.0194)	Cluster-exclusive	L:1				0.0194	1	1.0	lusm:1
 IQUB	E201		201	240.0	2daf_A(0.0194)	Cluster-exclusive	K:1				0.0194	1	1.0	cscc:1		ENST00000324698	3d									
 IQUB	G141		141	241.0	2daf_A(0.0194)	Cluster-exclusive	A:1				0.0194	1	1.0	hnsc:1		ENST00000324698	3d									
 IQUB	D220		220	241.0	2daf_A(0.0194)	Cluster-exclusive	H:1				0.0194	1	1.0	hnsc:1		ENST00000324698	3d									
-ZNF777	R541		541	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	C:1				0.0195	1	1.0	paad:1			3d									
-ZNF777	G542		542	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	S:1				0.0195	1	1.0	brca:1			3d									
-ZNF777	R566		566	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	H:2				0.0195	2	1.0	coadread:2			3d									
-ZNF777	H568		568	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	Y:1				0.0195	1	1.0	stad:1			3d									
-ZNF777	R584		584	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	W:2				0.0195	2	2.0	blca:1|skcm:1			3d									
+ZNF777	R541		541	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	C:1				0.0195	1	1.0	paad:1		ENST00000247930	3d									
+ZNF777	G542		542	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	S:1				0.0195	1	1.0	brca:1		ENST00000247930	3d									
+ZNF777	R566		566	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	H:2				0.0195	2	1.0	coadread:2		ENST00000247930	3d									
+ZNF777	H568		568	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	Y:1				0.0195	1	1.0	stad:1		ENST00000247930	3d									
+ZNF777	R584		584	243.0	1xwd_C(0.0195);4ay9_X(0.0246)	Cluster-exclusive	W:2				0.0195	2	2.0	blca:1|skcm:1		ENST00000247930	3d									
 CNTN2	G391		391	245.0	1cs6_A(0.0196)	Cluster-exclusive	S:1				0.0196	1	1.0	ucec:1		ENST00000331830	3d									
 CNTN2	A406		406	245.0	1cs6_A(0.0196)	Cluster-exclusive	V:1				0.0196	1	1.0	ucs:1		ENST00000331830	3d									
 CNTN2	A408		408	245.0	1cs6_A(0.0196)	Cluster-exclusive	T:1				0.0196	1	1.0	stad:1		ENST00000331830	3d									
@@ -2246,7 +2246,7 @@ DCN	P220		220	303.0	1xec_A(0.027);1xku_A(0.03);1xcd_A(0.0272)	Cluster-exclusive	
 DCN	P221		221	303.0	1xec_A(0.027);1xku_A(0.03);1xcd_A(0.0272)	Cluster-exclusive	S:2|H:1				0.027000000000000003	3	2.0	skcm:2|ucec:1		ENST00000052754	3d									
 DCN	S222		222	303.0	1xec_A(0.027);1xku_A(0.03);1xcd_A(0.0272)	Cluster-exclusive	F:2				0.027000000000000003	2	2.0	hnsc:1|skcm:1		ENST00000052754	3d									
 DCN	T224		224	303.0	1xec_A(0.027);1xku_A(0.03);1xcd_A(0.0272)	Cluster-exclusive	M:3				0.027000000000000003	3	3.0	coadread:1|stad:1|lgg:1		ENST00000052754	3d									
-HIST1H3H	R9		9	304.0	2kwk_B(0.027)	Cluster-exclusive	G:1				0.027000000000000003	1	1.0	ov:1			3d									
+HIST1H3H	R9		9	304.0	2kwk_B(0.027)	Cluster-exclusive	G:1				0.027000000000000003	1	1.0	ov:1		ENST00000369163	3d									
 MAPK1	P319		319	306.0	4gsb_A(0.0271)	Hotspot-linked	S:1				0.0271	1	1.0	skcm:1		ENST00000215832	3d									
 ECT2L	K203		203	307.0	4l7e_A(0.0287);4l7e_B(0.0335);4l1j_B(0.0338);4l7w_A(0.0271);3hlt_C(0.0599);4l1j_A(0.0317);4dmb_A(0.0287);4dmb_B(0.0314);3hlt_A(0.0719)	Cluster-exclusive	N:1				0.0271	1	1.0	coadread:1		ENST00000367682	3d									
 ECT2L	V204		204	307.0	4l7e_A(0.0287);4l7e_B(0.0335);4l1j_B(0.0338);4l7w_A(0.0271);3hlt_C(0.0599);4l1j_A(0.0317);4dmb_A(0.0287);4dmb_B(0.0314);3hlt_A(0.0719)	Cluster-exclusive	A:1				0.0271	1	1.0	skcm:1		ENST00000367682	3d									
@@ -2429,8 +2429,8 @@ SNRNP200	A846		846	350.0	3lu8_A(0.0323)	Cluster-exclusive	S:1				0.0323	1	1.0	uc
 SNRNP200	D848		848	350.0	3lu8_A(0.0323)	Cluster-exclusive	G:1				0.0323	1	1.0	skcm:1		ENST00000323853	3d									
 SNRNP200	H873		873	350.0	3lu8_A(0.0323)	Cluster-exclusive	Y:1				0.0323	1	1.0	blca:1		ENST00000323853	3d									
 SNRNP200	G874		874	350.0	3lu8_A(0.0323)	Cluster-exclusive	W:1				0.0323	1	1.0	skcm:1		ENST00000323853	3d									
-HIST1H4L	D69		69	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	H:1|N:1				0.0328	2	2.0	blca:1|luad:1			3d									
-HIST1H4L	T72		72	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	A:1				0.0328	1	1.0	stad:1			3d									
+HIST1H4L	D69		69	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	H:1|N:1				0.0328	2	2.0	blca:1|luad:1		ENST00000355981	3d									
+HIST1H4L	T72		72	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	A:1				0.0328	1	1.0	stad:1		ENST00000355981	3d									
 NRAS	D33		33	354.0	1aa9_A(0.033)	Hotspot-linked	H:1				0.033	1	1.0	ucec:1		ENST00000369535	3d									
 SDC3	S82		82	356.0	3mv7_A(0.0331)	Cluster-exclusive	L:1				0.0331	1	1.0	skcm:1		ENST00000339394	3d									
 SDC3	S84		84	356.0	3mv7_A(0.0331)	Cluster-exclusive	L:1				0.0331	1	1.0	coadread:1		ENST00000339394	3d									
@@ -2488,12 +2488,12 @@ TOPBP1	C197		197	371.0	2xnk_A(0.0348);2xnk_C(0.0423);2xnk_D(0.0404)	Cluster-excl
 TOPBP1	L201		201	371.0	2xnk_A(0.0348);2xnk_C(0.0423);2xnk_D(0.0404)	Cluster-exclusive	F:1|V:1				0.0348	2	2.0	stad:1|gbm:1		ENST00000260810	3d									
 TOPBP1	G202		202	371.0	2xnk_A(0.0348);2xnk_C(0.0423);2xnk_D(0.0404)	Cluster-exclusive	R:1				0.0348	1	1.0	cll:1		ENST00000260810	3d									
 TOPBP1	H225		225	371.0	2xnk_A(0.0348);2xnk_C(0.0423);2xnk_D(0.0404)	Cluster-exclusive	R:1				0.0348	1	1.0	brca:1		ENST00000260810	3d									
-DOT1L	L111		111	373.0	4wvl_A(0.035)	Cluster-exclusive	M:1				0.035	1	1.0	stad:1			3d									
-DOT1L	Y115		115	373.0	4wvl_A(0.035)	Cluster-exclusive	N:1				0.035	1	1.0	blca:1			3d									
-DOT1L	S118		118	373.0	4wvl_A(0.035)	Cluster-exclusive	L:1				0.035	1	1.0	stad:1			3d									
-DOT1L	V119		119	373.0	4wvl_A(0.035)	Cluster-exclusive	L:1				0.035	1	1.0	mbl:1			3d									
-DOT1L	P122		122	373.0	4wvl_A(0.035)	Cluster-exclusive	R:1				0.035	1	1.0	kirp:1			3d									
-DOT1L	G137		137	373.0	4wvl_A(0.035)	Cluster-exclusive	R:1				0.035	1	1.0	coadread:1			3d									
+DOT1L	L111		111	373.0	4wvl_A(0.035)	Cluster-exclusive	M:1				0.035	1	1.0	stad:1		ENST00000398665	3d									
+DOT1L	Y115		115	373.0	4wvl_A(0.035)	Cluster-exclusive	N:1				0.035	1	1.0	blca:1		ENST00000398665	3d									
+DOT1L	S118		118	373.0	4wvl_A(0.035)	Cluster-exclusive	L:1				0.035	1	1.0	stad:1		ENST00000398665	3d									
+DOT1L	V119		119	373.0	4wvl_A(0.035)	Cluster-exclusive	L:1				0.035	1	1.0	mbl:1		ENST00000398665	3d									
+DOT1L	P122		122	373.0	4wvl_A(0.035)	Cluster-exclusive	R:1				0.035	1	1.0	kirp:1		ENST00000398665	3d									
+DOT1L	G137		137	373.0	4wvl_A(0.035)	Cluster-exclusive	R:1				0.035	1	1.0	coadread:1		ENST00000398665	3d									
 VCL	N217		217	375.0	3rf3_A(0.0669);3rf3_B(0.0649);3tj6_A(0.0352);2ibf_A(0.0407);2hsq_A(0.0382);1ydi_A(0.036);2gdc_A(0.0365);1rke_A(0.0404);3zdl_A(0.0364);1xwj_A(0.0368);1zw3_A(0.0373);3s90_A(0.0422)	Cluster-exclusive	S:1				0.0352	1	1.0	ucec:1		ENST00000211998	3d									
 MTOR	A1459		1459	376.0	4jsp_B(0.0358);4jsp_A(0.0357);4jsn_B(0.0402);4jsn_A(0.0378);4jsx_B(0.0366);4jsx_A(0.036);4jsv_B(0.04);4jsv_A(0.0402);4jt6_B(0.0383);4jt5_B(0.0353);4jt6_A(0.0381);4jt5_A(0.0359)	Hotspot-linked	P:1				0.0353	1	1.0	kirc:1		ENST00000361445	3d									
 MTOR	L1460		1460	376.0	4jsp_B(0.0358);4jsp_A(0.0357);4jsn_B(0.0402);4jsn_A(0.0378);4jsx_B(0.0366);4jsx_A(0.036);4jsv_B(0.04);4jsv_A(0.0402);4jt6_B(0.0383);4jt5_B(0.0353);4jt6_A(0.0381);4jt5_A(0.0359)	Hotspot-linked	P:2				0.0353	2	1.0	kirc:2		ENST00000361445	3d									
@@ -2947,14 +2947,14 @@ C3	A482		482	490.0	3l5n_A(0.0479)	Cluster-exclusive	T:3				0.0479	3	1.0	stad:3		
 C3	E484		484	490.0	3l5n_A(0.0479)	Cluster-exclusive	D:1|K:1				0.0479	2	2.0	brca:1|skcm:1		ENST00000245907	3d									
 C3	R508		508	490.0	3l5n_A(0.0479)	Cluster-exclusive	Q:1|L:1				0.0479	2	2.0	hnsc:1|skcm:1		ENST00000245907	3d									
 C3	D513		513	490.0	3l5n_A(0.0479)	Cluster-exclusive	N:1				0.0479	1	1.0	skcm:1		ENST00000245907	3d									
-HIST1H4E	K92		92	491.0	1hio_D(0.0481)	Cluster-exclusive	N:1				0.0481	1	1.0	coadread:1			3d									
-HIST1H4E	R93		93	491.0	1hio_D(0.0481)	Cluster-exclusive	T:3				0.0481	3	3.0	hnsc:1|lusc:1|cesc:1			3d									
-HIST1H4E	G95		95	491.0	1hio_D(0.0481)	Cluster-exclusive	R:1|E:1				0.0481	2	2.0	hnsc:1|skcm:1			3d									
-HIST2H3D	K123		123	492.0	1hio_C(0.0481)	Cluster-exclusive	N:1				0.0481	1	1.0	brca:1			3d									
-HIST2H3D	D124		124	492.0	1hio_C(0.0481)	Cluster-exclusive	Y:1				0.0481	1	1.0	brca:1			3d									
-HIST2H3D	I125		125	492.0	1hio_C(0.0481)	Cluster-exclusive	V:1				0.0481	1	1.0	hnsc:1			3d									
-HIST2H3D	L127		127	492.0	1hio_C(0.0481)	Cluster-exclusive	F:1				0.0481	1	1.0	coadread:1			3d									
-HIST2H3D	R130		130	493.0	1hio_C(0.0481)	Cluster-exclusive	C:1				0.0481	1	1.0	brca:1			3d									
+HIST1H4E	K92		92	491.0	1hio_D(0.0481)	Cluster-exclusive	N:1				0.0481	1	1.0	coadread:1		ENST00000360441	3d									
+HIST1H4E	R93		93	491.0	1hio_D(0.0481)	Cluster-exclusive	T:3				0.0481	3	3.0	hnsc:1|lusc:1|cesc:1		ENST00000360441	3d									
+HIST1H4E	G95		95	491.0	1hio_D(0.0481)	Cluster-exclusive	R:1|E:1				0.0481	2	2.0	hnsc:1|skcm:1		ENST00000360441	3d									
+HIST2H3D	K123		123	492.0	1hio_C(0.0481)	Cluster-exclusive	N:1				0.0481	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	D124		124	492.0	1hio_C(0.0481)	Cluster-exclusive	Y:1				0.0481	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	I125		125	492.0	1hio_C(0.0481)	Cluster-exclusive	V:1				0.0481	1	1.0	hnsc:1		ENST00000331491	3d									
+HIST2H3D	L127		127	492.0	1hio_C(0.0481)	Cluster-exclusive	F:1				0.0481	1	1.0	coadread:1		ENST00000331491	3d									
+HIST2H3D	R130		130	493.0	1hio_C(0.0481)	Cluster-exclusive	C:1				0.0481	1	1.0	brca:1		ENST00000331491	3d									
 PRELID1	Q24		24	494.0	2hgs_A(0.0483)	Cluster-exclusive	K:1				0.0483	1	1.0	kirc:1		ENST00000303204	3d									
 PRELID1	S52		52	494.0	2hgs_A(0.0483)	Cluster-exclusive	F:1				0.0483	1	1.0	skcm:1		ENST00000303204	3d									
 PRELID1	R53		53	494.0	2hgs_A(0.0483)	Cluster-exclusive	Q:1				0.0483	1	1.0	prad:1		ENST00000303204	3d									
@@ -3012,8 +3012,8 @@ EIF1AX	G9		9	509.0	1d7q_A(0.0494)	Cluster-exclusive	R:1|D:3				0.0494	4	2.0	thca
 EIF1AX	K10		10	509.0	1d7q_A(0.0494)	Cluster-exclusive	E:2				0.0494	2	2.0	skcm:1|lgg:1		ENST00000379607	3d									
 EIF1AX	R12		12	509.0	1d7q_A(0.0494)	Cluster-exclusive	G:1				0.0494	1	1.0	skcm:1		ENST00000379607	3d									
 EIF1AX	R13		13	509.0	1d7q_A(0.0494)	Cluster-exclusive	H:3				0.0494	3	2.0	ucec:2|lgg:1		ENST00000379607	3d									
-TUBA3D	H406		406	510.0	4ffb_A(0.0494)	Cluster-exclusive	Q:1				0.0494	1	1.0	luad:1			3d									
-TUBA3D	E415		415	510.0	4ffb_A(0.0494)	Cluster-exclusive	K:1				0.0494	1	1.0	stad:1			3d									
+TUBA3D	H406		406	510.0	4ffb_A(0.0494)	Cluster-exclusive	Q:1				0.0494	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	E415		415	510.0	4ffb_A(0.0494)	Cluster-exclusive	K:1				0.0494	1	1.0	stad:1		ENST00000321253	3d									
 HGFAC	P453		453	511.0	1yc0_A(0.0918);1ybw_B(0.0546);1ybw_A(0.0495)	Cluster-exclusive	S:1				0.0495	1	1.0	skcm:1		ENST00000382774	3d									
 HGFAC	P454		454	511.0	1yc0_A(0.0918);1ybw_B(0.0546);1ybw_A(0.0495)	Cluster-exclusive	S:1|L:1				0.0495	2	2.0	skcm:1|cscc:1		ENST00000382774	3d									
 HGFAC	R455		455	511.0	1yc0_A(0.0918);1ybw_B(0.0546);1ybw_A(0.0495)	Cluster-exclusive	T:1				0.0495	1	1.0	luad:1		ENST00000382774	3d									
@@ -3132,8 +3132,8 @@ MAP2K5	I21		21	546.0	2npt_C(0.0649);2o2v_A(0.0523);2npt_A(0.0593)	Cluster-exclus
 MAP2K5	A28		28	546.0	2npt_C(0.0649);2o2v_A(0.0523);2npt_A(0.0593)	Cluster-exclusive	T:1				0.0523	1	1.0	coadread:1		ENST00000178640	3d									
 MAP2K5	D30		30	546.0	2npt_C(0.0649);2o2v_A(0.0523);2npt_A(0.0593)	Cluster-exclusive	G:1				0.0523	1	1.0	lihc:1		ENST00000178640	3d									
 MAP2K5	P101		101	546.0	2npt_C(0.0649);2o2v_A(0.0523);2npt_A(0.0593)	Cluster-exclusive	S:1				0.0523	1	1.0	ucec:1		ENST00000178640	3d									
-PTPN11	P33		33	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	S:1|L:1				0.0526	2	2.0	skcm:1|cscc:1			3d									
-PTPN11	M82		82	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	V:1				0.0526	1	1.0	luad:1			3d									
+PTPN11	P33		33	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	S:1|L:1				0.0526	2	2.0	skcm:1|cscc:1		ENST00000351677	3d									
+PTPN11	M82		82	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	V:1				0.0526	1	1.0	luad:1		ENST00000351677	3d									
 CCL7	Q24		24	549.0	1ncv_A(0.0529)	Cluster-exclusive	H:1				0.0529	1	1.0	nbl:1		ENST00000378569	3d									
 IL18R1	K134		134	550.0	3wo3_J(0.053);3wo3_H(0.0656);3wo3_F(0.0642);3wo3_D(0.0638);3wo4_B(0.0599);3wo3_B(0.0625)	Cluster-exclusive	Q:1|T:1				0.053	2	2.0	lihc:1|ucec:1		ENST00000233957	3d									
 IL18R1	F135		135	550.0	3wo3_J(0.053);3wo3_H(0.0656);3wo3_F(0.0642);3wo3_D(0.0638);3wo4_B(0.0599);3wo3_B(0.0625)	Cluster-exclusive	I:3				0.053	3	1.0	coadread:3		ENST00000233957	3d									
@@ -3194,9 +3194,9 @@ C2ORF16	P1104		1104	570.0	1rh2_A(0.0544)	Cluster-exclusive	T:1				0.0544	1	1.0	l
 C2ORF16	Q1053		1053	571.0	1rh2_A(0.0544)	Cluster-exclusive	H:1				0.0544	1	1.0	lusc:1		ENST00000408964	3d									
 C2ORF16	S1054		1054	571.0	1rh2_A(0.0544)	Cluster-exclusive	R:1				0.0544	1	1.0	lusc:1		ENST00000408964	3d									
 C2ORF16	D1055		1055	571.0	1rh2_A(0.0544)	Cluster-exclusive	N:1				0.0544	1	1.0	skcm:1		ENST00000408964	3d									
-HIST4H4	A34		34	572.0	1hio_D(0.0544)	Cluster-exclusive	V:1				0.0544	1	1.0	hnsc:1			3d									
-HIST4H4	R37		37	572.0	1hio_D(0.0544)	Cluster-exclusive	C:1				0.0544	1	1.0	ov:1			3d									
-HIST4H4	R40		40	572.0	1hio_D(0.0544)	Cluster-exclusive	Q:1				0.0544	1	1.0	ov:1			3d									
+HIST4H4	A34		34	572.0	1hio_D(0.0544)	Cluster-exclusive	V:1				0.0544	1	1.0	hnsc:1		ENST00000539745	3d									
+HIST4H4	R37		37	572.0	1hio_D(0.0544)	Cluster-exclusive	C:1				0.0544	1	1.0	ov:1		ENST00000539745	3d									
+HIST4H4	R40		40	572.0	1hio_D(0.0544)	Cluster-exclusive	Q:1				0.0544	1	1.0	ov:1		ENST00000539745	3d									
 RXRA	R426		426	573.0	3a9e_A(0.0545);3r2a_C(0.0591)	Hotspot-linked	H:1				0.0545	1	1.0	hnsc:1		ENST00000481739	3d									
 RXRA	S427		427	573.0	3a9e_A(0.0545);3r2a_C(0.0591)	Hotspot	F:11|Y:3				0.0545	14	3.0	paad:1|blca:12|lihc:1		ENST00000481739	3d									
 RXRA	G429		429	573.0	3a9e_A(0.0545);3r2a_C(0.0591)	Hotspot-linked	V:1				0.0545	1	1.0	luad:1		ENST00000481739	3d									
@@ -3244,10 +3244,10 @@ EGR3	D346		346	593.0	1a1g_A(0.0641);1p47_B(0.0569);1a1f_A(0.0684)	Cluster-exclus
 EGR3	K349		349	593.0	1a1g_A(0.0641);1p47_B(0.0569);1a1f_A(0.0684)	Cluster-exclusive	E:1				0.0569	1	1.0	lihc:1		ENST00000317216	3d									
 EGR3	H351		351	593.0	1a1g_A(0.0641);1p47_B(0.0569);1a1f_A(0.0684)	Cluster-exclusive	R:1				0.0569	1	1.0	lihc:1		ENST00000317216	3d									
 EGR3	K353		353	593.0	1a1g_A(0.0641);1p47_B(0.0569);1a1f_A(0.0684)	Cluster-exclusive	E:1				0.0569	1	1.0	coadread:1		ENST00000317216	3d									
-HIST1H3E	A2		2	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	V:1				0.057	1	1.0	ucec:1			3d									
-HIST1H3E	T4		4	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	S:1				0.057	1	1.0	luad:1			3d									
-HIST1H3E	Q6		6	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	H:1				0.057	1	1.0	acc:1			3d									
-HIST1H3E	T7		7	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	A:1				0.057	1	1.0	stad:1			3d									
+HIST1H3E	A2		2	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	V:1				0.057	1	1.0	ucec:1		ENST00000360408	3d									
+HIST1H3E	T4		4	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	S:1				0.057	1	1.0	luad:1		ENST00000360408	3d									
+HIST1H3E	Q6		6	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	H:1				0.057	1	1.0	acc:1		ENST00000360408	3d									
+HIST1H3E	T7		7	595.0	4hsu_C(0.057);4gu0_E(0.0604)	Cluster-exclusive	A:1				0.057	1	1.0	stad:1		ENST00000360408	3d									
 CDK2	Q113		113	597.0	3s0o_A(0.0572);1pf8_A(0.066)	Cluster-exclusive	H:1				0.0572	1	1.0	coadread:1		ENST00000266970	3d									
 CDK2	C118		118	597.0	3s0o_A(0.0572);1pf8_A(0.066)	Cluster-exclusive	F:1				0.0572	1	1.0	luad:1		ENST00000266970	3d									
 CDK2	H121		121	597.0	3s0o_A(0.0572);1pf8_A(0.066)	Cluster-exclusive	Y:1				0.0572	1	1.0	cscc:1		ENST00000266970	3d									
@@ -3481,9 +3481,9 @@ CEP164	N326		326	656.0	2w1c_A(0.0733);4dee_A(0.065)	Cluster-exclusive	Y:1				0.0
 CEP164	V328		328	656.0	2w1c_A(0.0733);4dee_A(0.065)	Cluster-exclusive	G:1				0.065	1	1.0	skcm:1		ENST00000278935	3d									
 CEP164	P334		334	656.0	2w1c_A(0.0733);4dee_A(0.065)	Cluster-exclusive	S:1				0.065	1	1.0	skcm:1		ENST00000278935	3d									
 CEP164	H232		232	657.0	2w1g_A(0.0665);4jaj_A(0.0716);2w1c_A(0.0733);4dee_A(0.065)	Cluster-exclusive	R:1				0.065	1	1.0	esca:1		ENST00000278935	3d									
-HIST1H4K	A90		90	658.0	3r45_B(0.0653)	Cluster-exclusive	T:1				0.0653	1	1.0	ov:1			3d									
-HIST1H4K	G95		95	658.0	3r45_B(0.0653)	Cluster-exclusive	S:1				0.0653	1	1.0	skcm:1			3d									
-HIST1H4K	R96		96	658.0	3r45_B(0.0653)	Cluster-exclusive	C:1				0.0653	1	1.0	lusc:1			3d									
+HIST1H4K	A90		90	658.0	3r45_B(0.0653)	Cluster-exclusive	T:1				0.0653	1	1.0	ov:1		ENST00000357549	3d									
+HIST1H4K	G95		95	658.0	3r45_B(0.0653)	Cluster-exclusive	S:1				0.0653	1	1.0	skcm:1		ENST00000357549	3d									
+HIST1H4K	R96		96	658.0	3r45_B(0.0653)	Cluster-exclusive	C:1				0.0653	1	1.0	lusc:1		ENST00000357549	3d									
 PDXP	P169		169	659.0	2p27_A(0.0724);2cft_A(0.0712);2cfs_A(0.0681);2p69_A(0.0709);2cfr_A(0.0709);2oyc_A(0.0653)	Cluster-exclusive	L:1				0.0653	1	1.0	lusc:1		ENST00000215904	3d									
 PDXP	E170		170	659.0	2p27_A(0.0724);2cft_A(0.0712);2cfs_A(0.0681);2p69_A(0.0709);2cfr_A(0.0709);2oyc_A(0.0653)	Cluster-exclusive	A:1				0.0653	1	1.0	stad:1		ENST00000215904	3d									
 PDXP	L172		172	659.0	2p27_A(0.0724);2cft_A(0.0712);2cfs_A(0.0681);2p69_A(0.0709);2cfr_A(0.0709);2oyc_A(0.0653)	Cluster-exclusive	Q:1				0.0653	1	1.0	luad:1		ENST00000215904	3d									
@@ -3677,7 +3677,7 @@ IL6ST	N258		258	708.0	1p9m_A(0.0717);1i1r_A(0.0807)	Cluster-exclusive	S:2				0.0
 IL6ST	S279		279	708.0	1p9m_A(0.0717);1i1r_A(0.0807)	Cluster-exclusive	C:1|F:1				0.0717	2	2.0	brca:1|skcm:1		ENST00000336909	3d									
 IL6ST	C301		301	708.0	1p9m_A(0.0717);1i1r_A(0.0807)	Cluster-exclusive	G:1				0.0717	1	1.0	skcm:1		ENST00000336909	3d									
 IL6ST	N223		223	709.0	1p9m_A(0.0717)	Cluster-exclusive	S:1|Y:1				0.0717	2	2.0	kirc:1|luad:1		ENST00000336909	3d									
-AMY1C	F330		330	713.0	1b2y_A(0.0916);2cpu_A(0.0931);3ole_A(0.0951);3old_A(0.0981);1kb3_A(0.0944);4gqq_A(0.097);1kbk_A(0.0902);4gqr_A(0.0952);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);3bay_A(0.0913);1xd0_A(0.0851);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);3ij7_A(0.0896);1xh1_A(0.0885);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);3bai_A(0.0903);1u33_A(0.0923);1mfu_A(0.0986);3bak_A(0.0943);2qmk_A(0.0959);3baj_A(0.0824);1u30_A(0.0939);1c8q_A(0.0988);1jxj_A(0.0972);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);1xcx_A(0.0892);3cpu_A(0.092);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	V:1				0.0723	1	1.0	skcm:1			3d									
+AMY1C	F330		330	713.0	1b2y_A(0.0916);2cpu_A(0.0931);3ole_A(0.0951);3old_A(0.0981);1kb3_A(0.0944);4gqq_A(0.097);1kbk_A(0.0902);4gqr_A(0.0952);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);3bay_A(0.0913);1xd0_A(0.0851);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);3ij7_A(0.0896);1xh1_A(0.0885);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);3bai_A(0.0903);1u33_A(0.0923);1mfu_A(0.0986);3bak_A(0.0943);2qmk_A(0.0959);3baj_A(0.0824);1u30_A(0.0939);1c8q_A(0.0988);1jxj_A(0.0972);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);1xcx_A(0.0892);3cpu_A(0.092);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	V:1				0.0723	1	1.0	skcm:1		ENST00000370079	3d									
 CUL1	P419		419	714.0	3rtr_G(0.0724);1ldj_A(0.0898)	Cluster-exclusive	L:1				0.0724	1	1.0	skcm:1		ENST00000325222	3d									
 CUL1	E420		420	714.0	3rtr_G(0.0724);1ldj_A(0.0898)	Cluster-exclusive	K:1				0.0724	1	1.0	blca:1		ENST00000325222	3d									
 CUL1	V461		461	714.0	3rtr_G(0.0724);1ldj_A(0.0898)	Cluster-exclusive	G:1				0.0724	1	1.0	luad:1		ENST00000325222	3d									
@@ -3708,8 +3708,8 @@ UBE2E2	R88		88	720.0	1y6l_A(0.0732);1y6l_B(0.078);1y6l_C(0.0762);3bzh_A(0.0764)	
 UBE2E2	T90		90	720.0	1y6l_A(0.0732);1y6l_B(0.078);1y6l_C(0.0762);3bzh_A(0.0764)	Cluster-exclusive	S:1				0.0732	1	1.0	lusc:1		ENST00000396703	3d									
 UBE2E2	F105		105	720.0	1y6l_A(0.0732);1y6l_B(0.078);1y6l_C(0.0762);3bzh_A(0.0764)	Cluster-exclusive	S:1				0.0732	1	1.0	kirc:1		ENST00000396703	3d									
 UBE2E2	R124		124	720.0	1y6l_A(0.0732);1y6l_B(0.078);1y6l_C(0.0762);3bzh_A(0.0764)	Cluster-exclusive	L:1				0.0732	1	1.0	luad:1		ENST00000396703	3d									
-HIST2H3D	D107		107	721.0	4ld9_A(0.0732)	Cluster-exclusive	H:1				0.0732	1	1.0	luad:1			3d									
-HIST2H3D	T119		119	721.0	4ld9_A(0.0732)	Cluster-exclusive	A:1				0.0732	1	1.0	lihc:1			3d									
+HIST2H3D	D107		107	721.0	4ld9_A(0.0732)	Cluster-exclusive	H:1				0.0732	1	1.0	luad:1		ENST00000331491	3d									
+HIST2H3D	T119		119	721.0	4ld9_A(0.0732)	Cluster-exclusive	A:1				0.0732	1	1.0	lihc:1		ENST00000331491	3d									
 SMURF2	K38		38	722.0	3pyc_A(0.0732)	Cluster-exclusive	E:1				0.0732	1	1.0	lihc:1		ENST00000262435	3d									
 SMURF2	D42		42	722.0	3pyc_A(0.0732)	Cluster-exclusive	H:1				0.0732	1	1.0	cesc:1		ENST00000262435	3d									
 SMURF2	T76		76	722.0	3pyc_A(0.0732)	Cluster-exclusive	M:1				0.0732	1	1.0	hnsc:1		ENST00000262435	3d									
@@ -3725,7 +3725,7 @@ CENPA	A129		129	725.0	3r45_A(0.0734)	Cluster-exclusive	T:1				0.0734	1	1.0	stad:
 CENPA	R130		130	725.0	3r45_A(0.0734)	Cluster-exclusive	Q:1|W:1|L:1				0.0734	3	2.0	lgg:1|luad:2		ENST00000335756	3d									
 CENPA	R133		133	725.0	3r45_A(0.0734)	Cluster-exclusive	W:1|L:1				0.0734	2	2.0	skcm:1|luad:1		ENST00000335756	3d									
 CENPA	G138		138	725.0	3r45_A(0.0734)	Cluster-exclusive	R:1				0.0734	1	1.0	cscc:1		ENST00000335756	3d									
-PTPN11	I463		463	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	L:1				0.0735	1	1.0	ucec:1			3d									
+PTPN11	I463		463	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	L:1				0.0735	1	1.0	ucec:1		ENST00000351677	3d									
 ING2	G227		227	727.0	1wes_A(0.0737)	Cluster-exclusive	R:1				0.0737	1	1.0	coadread:1		ENST00000302327	3d									
 ING2	P249		249	727.0	1wes_A(0.0737)	Cluster-exclusive	S:1				0.0737	1	1.0	skcm:1		ENST00000302327	3d									
 ING2	W253		253	727.0	1wes_A(0.0737)	Cluster-exclusive	C:2				0.0737	2	2.0	hnsc:1|ov:1		ENST00000302327	3d									
@@ -4041,10 +4041,10 @@ CREBBP	I416		416	815.0	1l8c_A(0.0847)	Cluster-exclusive	V:1				0.0847	1	1.0	skcm
 CCT3	R237		237	816.0	3iyg_G(0.0847)	Cluster-exclusive	C:1|H:2				0.0847	3	3.0	brca:1|prad:1|esca:1		ENST00000295688	3d									
 CCT3	P287		287	816.0	3iyg_G(0.0847)	Cluster-exclusive	S:1				0.0847	1	1.0	lihc:1		ENST00000295688	3d									
 CCT3	D288		288	816.0	3iyg_G(0.0847)	Cluster-exclusive	N:1				0.0847	1	1.0	luad:1		ENST00000295688	3d									
-HIST1H3G	R43		43	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	C:1|H:1|L:1				0.0852	3	3.0	brca:1|paad:1|prad:1			3d									
-HIST1H3G	P44		44	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	T:1|L:1				0.0852	2	2.0	brca:1|luad:1			3d									
-HIST1H3G	G45		45	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	V:1				0.0852	1	1.0	hnsc:1			3d									
-HIST1H3G	T46		46	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	N:1				0.0852	1	1.0	luad:1			3d									
+HIST1H3G	R43		43	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	C:1|H:1|L:1				0.0852	3	3.0	brca:1|paad:1|prad:1		ENST00000305910	3d									
+HIST1H3G	P44		44	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	T:1|L:1				0.0852	2	2.0	brca:1|luad:1		ENST00000305910	3d									
+HIST1H3G	G45		45	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	V:1				0.0852	1	1.0	hnsc:1		ENST00000305910	3d									
+HIST1H3G	T46		46	818.0	4h9s_B(0.0852);4h9n_A(0.0998)	Cluster-exclusive	N:1				0.0852	1	1.0	luad:1		ENST00000305910	3d									
 ATP7A	M497		497	819.0	1gxd_A(0.0853);1gxd_B(0.0903);1eak_A(0.0899)	Cluster-exclusive	I:1				0.0853	1	1.0	brca:1		ENST00000341514	3d									
 ATP7A	R508		508	819.0	1gxd_A(0.0853);1gxd_B(0.0903);1eak_A(0.0899)	Cluster-exclusive	W:1				0.0853	1	1.0	blca:1		ENST00000341514	3d									
 ATP7A	R512		512	819.0	1gxd_A(0.0853);1gxd_B(0.0903);1eak_A(0.0899)	Cluster-exclusive	W:2|L:1				0.0853	3	3.0	mbl:1|skcm:1|luad:1		ENST00000341514	3d									
@@ -4135,7 +4135,7 @@ EIF4A2	E389		389	841.0	1lq8_G(0.0875)	Cluster-exclusive	Q:1|K:1				0.0875	2	2.0	
 MLST8	R221		221	842.0	4lla_A(0.0876)	Cluster-exclusive	H:1				0.0876	1	1.0	gbm:1		ENST00000397124	3d									
 MLST8	A223		223	842.0	4lla_A(0.0876)	Cluster-exclusive	T:2				0.0876	2	2.0	coadread:1|stad:1		ENST00000397124	3d									
 MLST8	R248		248	842.0	4lla_A(0.0876)	Cluster-exclusive	M:1				0.0876	1	1.0	ucec:1		ENST00000397124	3d									
-PTPN11	K55		55	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	N:1				0.0879	1	1.0	ucec:1			3d									
+PTPN11	K55		55	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	N:1				0.0879	1	1.0	ucec:1		ENST00000351677	3d									
 ANXA6	A605		605	846.0	1avc_A(0.0881)	Cluster-exclusive	T:1				0.0881	1	1.0	ucec:1		ENST00000354546	3d									
 ANXA6	D606		606	846.0	1avc_A(0.0881)	Cluster-exclusive	E:1|G:1				0.0881	2	2.0	stad:1|lusc:1		ENST00000354546	3d									
 ANXA6	K607		607	846.0	1avc_A(0.0881)	Cluster-exclusive	T:1				0.0881	1	1.0	coadread:1		ENST00000354546	3d									
@@ -4196,7 +4196,7 @@ CTLA4	V69		69	866.0	2x44_D(0.0907)	Cluster-exclusive	F:1				0.0907	1	1.0	luad:1	
 CTLA4	M91		91	866.0	2x44_D(0.0907)	Cluster-exclusive	T:1|I:1				0.0907	2	2.0	stad:1|skcm:1		ENST00000302823	3d									
 CTLA4	S107		107	866.0	2x44_D(0.0907)	Cluster-exclusive	Y:1				0.0907	1	1.0	luad:1		ENST00000302823	3d									
 CTLA4	G109		109	866.0	2x44_D(0.0907)	Cluster-exclusive	R:2				0.0907	2	1.0	cscc:2		ENST00000302823	3d									
-HIST2H3D	R135		135	867.0	1hq3_C(0.0907)	Cluster-exclusive	Q:1				0.0907	1	1.0	stad:1			3d									
+HIST2H3D	R135		135	867.0	1hq3_C(0.0907)	Cluster-exclusive	Q:1				0.0907	1	1.0	stad:1		ENST00000331491	3d									
 ZSCAN16	R37		37	868.0	1e07_A(0.0907)	Cluster-exclusive	M:1				0.0907	1	1.0	hnsc:1		ENST00000340487	3d									
 ZSCAN16	P53		53	868.0	1e07_A(0.0907)	Cluster-exclusive	H:1				0.0907	1	1.0	ucec:1		ENST00000340487	3d									
 ZSCAN16	G54		54	868.0	1e07_A(0.0907)	Cluster-exclusive	E:1				0.0907	1	1.0	ucec:1		ENST00000340487	3d									
@@ -4271,11 +4271,11 @@ IRF3	L268		268	891.0	3a77_C(0.0927);3a77_B(0.099)	Cluster-exclusive	M:1				0.092
 IRF3	G270		270	891.0	3a77_C(0.0927);3a77_B(0.099)	Cluster-exclusive	W:1				0.0927	1	1.0	prad:1		ENST00000309877	3d									
 CASP7	R87		87	894.0	1k86_B(0.0932);3r5k_A(0.0965);4jr1_A(0.0956);4hqr_B(0.0933);1kmc_A(0.0975);1kmc_B(0.0977);1i4o_A(0.0987);4jr1_B(0.0941);3r5k_B(0.0928)	Cluster-exclusive	Q:1				0.0928	1	1.0	coadread:1		ENST00000345633	3d									
 SRP9	Y18		18	895.0	4uyk_A(0.0928)	Cluster-exclusive					0.0928	1				ENST00000304786	3d									
-ESYT2	D825		825	896.0	2dmg_A(0.0934)	Cluster-exclusive	Y:1				0.0934	1	1.0	luad:1			3d									
-ESYT2	T841		841	896.0	2dmg_A(0.0934)	Cluster-exclusive	M:1				0.0934	1	1.0	coadread:1			3d									
-ESYT2	V844		844	896.0	2dmg_A(0.0934)	Cluster-exclusive	I:1				0.0934	1	1.0	ucec:1			3d									
-ESYT2	N848		848	896.0	2dmg_A(0.0934)	Cluster-exclusive	S:1				0.0934	1	1.0	coadread:1			3d									
-ESYT2	G850		850	896.0	2dmg_A(0.0934)	Cluster-exclusive	R:1				0.0934	1	1.0	hnsc:1			3d									
+ESYT2	D825		825	896.0	2dmg_A(0.0934)	Cluster-exclusive	Y:1				0.0934	1	1.0	luad:1		ENST00000251527	3d									
+ESYT2	T841		841	896.0	2dmg_A(0.0934)	Cluster-exclusive	M:1				0.0934	1	1.0	coadread:1		ENST00000251527	3d									
+ESYT2	V844		844	896.0	2dmg_A(0.0934)	Cluster-exclusive	I:1				0.0934	1	1.0	ucec:1		ENST00000251527	3d									
+ESYT2	N848		848	896.0	2dmg_A(0.0934)	Cluster-exclusive	S:1				0.0934	1	1.0	coadread:1		ENST00000251527	3d									
+ESYT2	G850		850	896.0	2dmg_A(0.0934)	Cluster-exclusive	R:1				0.0934	1	1.0	hnsc:1		ENST00000251527	3d									
 RAB30	T23		23	897.0	2ew1_A(0.0935)	Cluster-exclusive	S:1|M:1				0.0935	2	2.0	skcm:1|lusc:1		ENST00000260056	3d									
 RAB30	R27		27	897.0	2ew1_A(0.0935)	Cluster-exclusive	G:1				0.0935	1	1.0	brca:1		ENST00000260056	3d									
 RAB30	F34		34	897.0	2ew1_A(0.0935)	Cluster-exclusive	S:1				0.0935	1	1.0	prad:1		ENST00000260056	3d									
@@ -4310,10 +4310,10 @@ SLFNL1	V371		371	908.0	2j0a_A(0.0944)	Cluster-exclusive	G:1				0.0944	1	1.0	brca
 SLFNL1	G374		374	908.0	2j0a_A(0.0944)	Cluster-exclusive	D:1				0.0944	1	1.0	cesc:1		ENST00000302946	3d									
 SLFNL1	K379		379	908.0	2j0a_A(0.0944)	Cluster-exclusive	M:1				0.0944	1	1.0	lihc:1		ENST00000302946	3d									
 SLFNL1	E386		386	908.0	2j0a_A(0.0944)	Cluster-exclusive	K:1				0.0944	1	1.0	cscc:1		ENST00000302946	3d									
-HIST1H3B	V102		102	910.0	1hio_C(0.0945)	Cluster-exclusive	E:1				0.0945	1	1.0	mmyl:1			3d									
-HIST1H3B	L104		104	910.0	1hio_C(0.0945)	Cluster-exclusive	F:1				0.0945	1	1.0	brca:1			3d									
-HIST1H3B	F105		105	910.0	1hio_C(0.0945)	Cluster-exclusive	L:2				0.0945	2	1.0	coadread:2			3d									
-HIST1H3B	E106		106	910.0	1hio_C(0.0945)	Cluster-exclusive	K:3				0.0945	3	3.0	hnsc:1|cscc:1|luad:1			3d									
+HIST1H3B	V102		102	910.0	1hio_C(0.0945)	Cluster-exclusive	E:1				0.0945	1	1.0	mmyl:1		ENST00000244661	3d									
+HIST1H3B	L104		104	910.0	1hio_C(0.0945)	Cluster-exclusive	F:1				0.0945	1	1.0	brca:1		ENST00000244661	3d									
+HIST1H3B	F105		105	910.0	1hio_C(0.0945)	Cluster-exclusive	L:2				0.0945	2	1.0	coadread:2		ENST00000244661	3d									
+HIST1H3B	E106		106	910.0	1hio_C(0.0945)	Cluster-exclusive	K:3				0.0945	3	3.0	hnsc:1|cscc:1|luad:1		ENST00000244661	3d									
 TNFSF18	L118		118	911.0	2r32_A(0.0947)	Cluster-exclusive	V:1				0.0947	1	1.0	ov:1		ENST00000404377	3d									
 TNFSF18	I119		119	911.0	2r32_A(0.0947)	Cluster-exclusive	F:1				0.0947	1	1.0	skcm:1		ENST00000404377	3d									
 TNFSF18	G159		159	911.0	2r32_A(0.0947)	Cluster-exclusive	E:2				0.0947	2	1.0	skcm:2		ENST00000404377	3d									
@@ -4390,15 +4390,15 @@ DDX3X	G530		530	926.0	2i4i_A(0.0972)	Cluster-exclusive	A:1				0.0972	1	1.0	mbl:1
 DDX3X	T532		532	926.0	2i4i_A(0.0972)	Cluster-exclusive	A:1|M:1				0.0972	2	2.0	skcm:1|cesc:1		ENST00000399959	3d									
 DDX3X	R534		534	926.0	2i4i_A(0.0972)	Cluster-exclusive	S:2|C:1|H:1				0.0972	4	2.0	stad:1|mbl:3		ENST00000399959	3d									
 RBBP7	F367		367	928.0	2xu7_A(0.0972)	Cluster-exclusive	C:1				0.0972	1	1.0	coadread:1		ENST00000380087	3d									
-HIST1H3C	A30		30	929.0	1eqz_C(0.0973)	Hotspot-linked	P:1				0.0973	1	1.0	brca:1			3d									
-HIST1H3C	P31		31	929.0	1eqz_C(0.0973)	Hotspot-linked	S:1|L:2				0.0973	3	2.0	skcm:1|luad:2			3d									
-HIST1H3C	K37		37	929.0	1eqz_C(0.0973)	Hotspot	M:5				0.0973	5	2.0	hnsc:4|skcm:1			3d									
-HIST1H3C	P39		39	929.0	1eqz_C(0.0973)	Hotspot-linked	H:1				0.0973	1	1.0	ucs:1			3d									
-HIST1H3C	R41		41	929.0	1eqz_C(0.0973)	Hotspot-linked	C:2				0.0973	2	2.0	brca:1|luad:1			3d									
-HIST1H2BI	E77		77	930.0	3an2_D(0.0975)	Cluster-exclusive	Q:1|K:4				0.0975	5	4.0	blca:1|ucec:1|cesc:1|luad:2			3d									
-HIST1H2BI	R80		80	930.0	3an2_D(0.0975)	Cluster-exclusive	C:1|S:2				0.0975	3	2.0	ov:1|skcm:2			3d									
-HIST1H2BI	T89		89	930.0	3an2_D(0.0975)	Cluster-exclusive	N:1				0.0975	1	1.0	blca:1			3d									
-HIST1H2BI	E94		94	930.0	3an2_D(0.0975)	Cluster-exclusive	Q:1|D:1				0.0975	2	2.0	lusc:1|luad:1			3d									
+HIST1H3C	A30		30	929.0	1eqz_C(0.0973)	Hotspot-linked	P:1				0.0973	1	1.0	brca:1		ENST00000540144	3d									
+HIST1H3C	P31		31	929.0	1eqz_C(0.0973)	Hotspot-linked	S:1|L:2				0.0973	3	2.0	skcm:1|luad:2		ENST00000540144	3d									
+HIST1H3C	K37		37	929.0	1eqz_C(0.0973)	Hotspot	M:5				0.0973	5	2.0	hnsc:4|skcm:1		ENST00000540144	3d									
+HIST1H3C	P39		39	929.0	1eqz_C(0.0973)	Hotspot-linked	H:1				0.0973	1	1.0	ucs:1		ENST00000540144	3d									
+HIST1H3C	R41		41	929.0	1eqz_C(0.0973)	Hotspot-linked	C:2				0.0973	2	2.0	brca:1|luad:1		ENST00000540144	3d									
+HIST1H2BI	E77		77	930.0	3an2_D(0.0975)	Cluster-exclusive	Q:1|K:4				0.0975	5	4.0	blca:1|ucec:1|cesc:1|luad:2		ENST00000377733	3d									
+HIST1H2BI	R80		80	930.0	3an2_D(0.0975)	Cluster-exclusive	C:1|S:2				0.0975	3	2.0	ov:1|skcm:2		ENST00000377733	3d									
+HIST1H2BI	T89		89	930.0	3an2_D(0.0975)	Cluster-exclusive	N:1				0.0975	1	1.0	blca:1		ENST00000377733	3d									
+HIST1H2BI	E94		94	930.0	3an2_D(0.0975)	Cluster-exclusive	Q:1|D:1				0.0975	2	2.0	lusc:1|luad:1		ENST00000377733	3d									
 CFHR3	M38		38	931.0	2ic4_A(0.0976)	Cluster-exclusive	I:1				0.0976	1	1.0	blca:1		ENST00000367425	3d									
 CFHR3	R39		39	931.0	2ic4_A(0.0976)	Cluster-exclusive	C:1				0.0976	1	1.0	stad:1		ENST00000367425	3d									
 CFHR3	R40		40	931.0	2ic4_A(0.0976)	Cluster-exclusive	T:1|K:1				0.0976	2	2.0	stad:1|luad:1		ENST00000367425	3d									
@@ -4409,17 +4409,17 @@ SOX9	K166		166	933.0	4euw_A(0.0977)	Cluster-exclusive	N:1				0.0977	1	1.0	hnsc:1
 SOX9	K167		167	933.0	4euw_A(0.0977)	Cluster-exclusive	T:1				0.0977	1	1.0	luad:1		ENST00000245479	3d									
 SOX9	D168		168	933.0	4euw_A(0.0977)	Cluster-exclusive	G:1				0.0977	1	1.0	coadread:1		ENST00000245479	3d									
 SOX9	Y172		172	933.0	4euw_A(0.0977)	Cluster-exclusive	H:1				0.0977	1	1.0	coadread:1		ENST00000245479	3d									
-ESYT2	N531		531	934.0	4gl7_A(0.0978)	Cluster-exclusive	T:1|H:1				0.0978	2	2.0	coadread:1|lymbc:1			3d									
-ESYT2	P532		532	934.0	4gl7_A(0.0978)	Cluster-exclusive	S:1				0.0978	1	1.0	cscc:1			3d									
-ESYT2	S584		584	934.0	4gl7_A(0.0978)	Cluster-exclusive	F:1				0.0978	1	1.0	skcm:1			3d									
-ESYT2	L588		588	934.0	4gl7_A(0.0978)	Cluster-exclusive	P:1				0.0978	1	1.0	coadread:1			3d									
-ESYT2	L592		592	934.0	4gl7_A(0.0978)	Cluster-exclusive	I:1				0.0978	1	1.0	coadread:1			3d									
-ESYT2	R606		606	934.0	4gl7_A(0.0978)	Cluster-exclusive	H:1				0.0978	1	1.0	coadread:1			3d									
-HIST1H2BE	R73		73	935.0	3ayw_D(0.0981)	Cluster-exclusive	H:2				0.0981	2	2.0	paad:1|hnsc:1			3d									
-HIST1H2BE	E77		77	935.0	3ayw_D(0.0981)	Cluster-exclusive	K:1				0.0981	1	1.0	stad:1			3d									
-HIST1H2BE	A78		78	935.0	3ayw_D(0.0981)	Cluster-exclusive	T:1				0.0981	1	1.0	blca:1			3d									
-HIST1H2BE	S79		79	935.0	3ayw_D(0.0981)	Cluster-exclusive	F:1				0.0981	1	1.0	skcm:1			3d									
-HIST1H2BE	G105		105	935.0	3ayw_D(0.0981)	Cluster-exclusive	R:1				0.0981	1	1.0	blca:1			3d									
+ESYT2	N531		531	934.0	4gl7_A(0.0978)	Cluster-exclusive	T:1|H:1				0.0978	2	2.0	coadread:1|lymbc:1		ENST00000251527	3d									
+ESYT2	P532		532	934.0	4gl7_A(0.0978)	Cluster-exclusive	S:1				0.0978	1	1.0	cscc:1		ENST00000251527	3d									
+ESYT2	S584		584	934.0	4gl7_A(0.0978)	Cluster-exclusive	F:1				0.0978	1	1.0	skcm:1		ENST00000251527	3d									
+ESYT2	L588		588	934.0	4gl7_A(0.0978)	Cluster-exclusive	P:1				0.0978	1	1.0	coadread:1		ENST00000251527	3d									
+ESYT2	L592		592	934.0	4gl7_A(0.0978)	Cluster-exclusive	I:1				0.0978	1	1.0	coadread:1		ENST00000251527	3d									
+ESYT2	R606		606	934.0	4gl7_A(0.0978)	Cluster-exclusive	H:1				0.0978	1	1.0	coadread:1		ENST00000251527	3d									
+HIST1H2BE	R73		73	935.0	3ayw_D(0.0981)	Cluster-exclusive	H:2				0.0981	2	2.0	paad:1|hnsc:1		ENST00000356530	3d									
+HIST1H2BE	E77		77	935.0	3ayw_D(0.0981)	Cluster-exclusive	K:1				0.0981	1	1.0	stad:1		ENST00000356530	3d									
+HIST1H2BE	A78		78	935.0	3ayw_D(0.0981)	Cluster-exclusive	T:1				0.0981	1	1.0	blca:1		ENST00000356530	3d									
+HIST1H2BE	S79		79	935.0	3ayw_D(0.0981)	Cluster-exclusive	F:1				0.0981	1	1.0	skcm:1		ENST00000356530	3d									
+HIST1H2BE	G105		105	935.0	3ayw_D(0.0981)	Cluster-exclusive	R:1				0.0981	1	1.0	blca:1		ENST00000356530	3d									
 WRN	D971		971	936.0	1d3l_A(0.0987)	Cluster-exclusive	V:1				0.0987	1	1.0	skcm:1		ENST00000298139	3d									
 WRN	I972		972	936.0	1d3l_A(0.0987)	Cluster-exclusive	M:1				0.0987	1	1.0	ucs:1		ENST00000298139	3d									
 WRN	L973		973	936.0	1d3l_A(0.0987)	Cluster-exclusive	F:1				0.0987	1	1.0	luad:1		ENST00000298139	3d									
@@ -4454,26 +4454,26 @@ PTEN	H123		123	2.0	1d5r_A(0.0)	Hotspot-linked	D:2|Y:3|L:1				0.0	6	6.0	brca:1|gb
 PTEN	C124		124	2.0	1d5r_A(0.0)	Hotspot-linked	R:1|S:1|G:1				0.0	3	2.0	brca:2|ucec:1		ENST00000371953	3d									
 PTEN	G127		127	2.0	1d5r_A(0.0)	Hotspot-linked	R:3|E:1|V:1				0.0	5	3.0	stad:1|skcm:1|ucec:3		ENST00000371953	3d									
 PTEN	T131		131	2.0	1d5r_A(0.0)	Hotspot-linked	A:1				0.0	1	1.0	gbm:1		ENST00000371953	3d									
-PTPN11	A72		72	4.0	4dgp_A(0.0)	Hotspot	T:3|D:2|V:2				0.0	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	4.0	4dgp_A(0.0)	Hotspot	A:2|G:1|K:4				0.0	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	Q506		506	4.0	4dgp_A(0.0)	Hotspot-linked	P:1				0.0	1	1.0	skcm:1			3d									
-PTPN11	T507		507	4.0	4dgp_A(0.0)	Hotspot-linked	K:2				0.0	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	4.0	4dgp_A(0.0)	Hotspot	E:1|H:3|L:3				0.0	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
-HIST1H3H	A2		2	7.0	3uii_P(0.0);3uik_P(0.0);3uii_Q(0.0);3uik_Q(0.0);3uef_D(0.0)	Cluster-exclusive	S:1|V:1|G:1				0.0	3	3.0	acc:1|brca:1|mmyl:1			3d									
-HIST1H3H	T4		4	7.0	3uii_P(0.0);3uik_P(0.0);3uii_Q(0.0);3uik_Q(0.0);3uef_D(0.0)	Cluster-exclusive	A:1				0.0	1	1.0	lusm:1			3d									
-HIST1H3H	K5		5	7.0	3uii_P(0.0);3uik_P(0.0);3uii_Q(0.0);3uik_Q(0.0);3uef_D(0.0)	Cluster-exclusive	M:1				0.0	1	1.0	hnsc:1			3d									
-HIST1H4J	R4		4	11.0	4m38_F(0.0)	Cluster-exclusive	G:1				0.0	1	1.0	thca:1			3d									
-HIST1H4J	G5		5	11.0	4m38_F(0.0)	Cluster-exclusive	D:1				0.0	1	1.0	lihc:1			3d									
+PTPN11	A72		72	4.0	4dgp_A(0.0)	Hotspot	T:3|D:2|V:2				0.0	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	4.0	4dgp_A(0.0)	Hotspot	A:2|G:1|K:4				0.0	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	Q506		506	4.0	4dgp_A(0.0)	Hotspot-linked	P:1				0.0	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	4.0	4dgp_A(0.0)	Hotspot-linked	K:2				0.0	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	4.0	4dgp_A(0.0)	Hotspot	E:1|H:3|L:3				0.0	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
+HIST1H3H	A2		2	7.0	3uii_P(0.0);3uik_P(0.0);3uii_Q(0.0);3uik_Q(0.0);3uef_D(0.0)	Cluster-exclusive	S:1|V:1|G:1				0.0	3	3.0	acc:1|brca:1|mmyl:1		ENST00000369163	3d									
+HIST1H3H	T4		4	7.0	3uii_P(0.0);3uik_P(0.0);3uii_Q(0.0);3uik_Q(0.0);3uef_D(0.0)	Cluster-exclusive	A:1				0.0	1	1.0	lusm:1		ENST00000369163	3d									
+HIST1H3H	K5		5	7.0	3uii_P(0.0);3uik_P(0.0);3uii_Q(0.0);3uik_Q(0.0);3uef_D(0.0)	Cluster-exclusive	M:1				0.0	1	1.0	hnsc:1		ENST00000369163	3d									
+HIST1H4J	R4		4	11.0	4m38_F(0.0)	Cluster-exclusive	G:1				0.0	1	1.0	thca:1		ENST00000355057	3d									
+HIST1H4J	G5		5	11.0	4m38_F(0.0)	Cluster-exclusive	D:1				0.0	1	1.0	lihc:1		ENST00000355057	3d									
 SPOP	Y87		87	13.0	3ivb_A(0.0059);3hqm_B(0.0055);3hqi_B(1.0E-4);3hqm_A(0.0035);3hql_B(0.0058);3hql_A(0.0048);3hsv_A(0.0041);3hsv_B(0.0065);3hu6_A(4.0E-4);3hu6_B(1.0E-4);3ivq_B(0.0051);4o1v_A(0.004);3ivq_A(0.0043);3hqi_A(2.0E-4);3hqh_A(0.0059);3ivv_A(0.0052)	Hotspot	S:2|C:1|N:2				0.0001	5	1.0	prad:5		ENST00000347630	3d									
 SPOP	W131		131	13.0	3ivb_A(0.0059);3hqm_B(0.0055);3hqi_B(1.0E-4);3hqm_A(0.0035);3hql_B(0.0058);3hql_A(0.0048);3hsv_A(0.0041);3hsv_B(0.0065);3hu6_A(4.0E-4);3hu6_B(1.0E-4);3ivq_B(0.0051);4o1v_A(0.004);3ivq_A(0.0043);3hqi_A(2.0E-4);3hqh_A(0.0059);3ivv_A(0.0052)	Hotspot	R:1|S:1|C:1|G:4				0.0001	7	2.0	prad:6|ucec:1		ENST00000347630	3d									
 SPOP	F133		133	13.0	3ivb_A(0.0059);3hqm_B(0.0055);3hqi_B(1.0E-4);3hqm_A(0.0035);3hql_B(0.0058);3hql_A(0.0048);3hsv_A(0.0041);3hsv_B(0.0065);3hu6_A(4.0E-4);3hu6_B(1.0E-4);3ivq_B(0.0051);4o1v_A(0.004);3ivq_A(0.0043);3hqi_A(2.0E-4);3hqh_A(0.0059);3ivv_A(0.0052)	Hotspot	S:3|C:4|V:4|I:2|L:9				0.0001	22	1.0	prad:22		ENST00000347630	3d									
-PTPN11	F71		71	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	L:3				0.0001	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot	T:3|D:2|V:2				0.0001	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot	A:2|G:1|K:4				0.0001	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	I282		282	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	M:1				0.0001	1	1.0	gbm:1			3d									
-PTPN11	Q506		506	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	P:1				0.0001	1	1.0	skcm:1			3d									
-PTPN11	T507		507	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	K:2				0.0001	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot	E:1|H:3|L:3				0.0001	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
+PTPN11	F71		71	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	L:3				0.0001	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot	T:3|D:2|V:2				0.0001	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot	A:2|G:1|K:4				0.0001	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	I282		282	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	M:1				0.0001	1	1.0	gbm:1		ENST00000351677	3d									
+PTPN11	Q506		506	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	P:1				0.0001	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot-linked	K:2				0.0001	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	14.0	4dgp_A(1.0E-4);4h1o_A(3.0E-4);4gwf_B(2.0E-4);4gwf_A(1.0E-4);2shp_A(5.0E-4);4dgx_A(3.0E-4)	Hotspot	E:1|H:3|L:3				0.0001	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
 PTEN	D24		24	15.0	1d5r_A(1.0E-4)	Cluster-exclusive	E:1|V:1|G:1|H:1|N:1				0.0001	5	4.0	brca:1|stad:2|ucs:1|ucec:1		ENST00000371953	3d									
 PTEN	L25		25	15.0	1d5r_A(1.0E-4)	Cluster-exclusive	V:1|F:2				0.0001	3	2.0	gbm:2|lgg:1		ENST00000371953	3d									
 PTEN	I33		33	15.0	1d5r_A(1.0E-4)	Cluster-exclusive	S:1				0.0001	1	1.0	ucec:1		ENST00000371953	3d									
@@ -4545,22 +4545,22 @@ BRAF	G466		466	31.0	4wo5_A(0.0013)	Hotspot	A:1|E:6|V:10				0.0013	17	6.0	mmyl:4|
 BRAF	S467		467	31.0	4wo5_A(0.0013)	Hotspot-linked	L:2				0.0013	2	1.0	skcm:2		ENST00000288602	3d									
 BRAF	G469		469	31.0	4wo5_A(0.0013)	Hotspot	A:9|R:3|S:1|E:2|V:6				0.0013	21	8.0	mmyl:3|coadread:1|prad:2|blca:1|skcm:4|lusc:1|luad:8|cscc:1		ENST00000288602	3d									
 BRAF	G596		596	31.0	4wo5_A(0.0013)	Hotspot	R:2|S:1|D:1|V:1				0.0013	5	4.0	mmyl:1|gbm:1|blca:1|luad:2		ENST00000288602	3d									
-PTPN11	A72		72	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot	T:3|D:2|V:2				0.0013	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	S502		502	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	P:1|L:1				0.0013	2	2.0	gbm:1|laml:1			3d									
-PTPN11	Q506		506	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	P:1				0.0013	1	1.0	skcm:1			3d									
-PTPN11	T507		507	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	K:2				0.0013	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot	E:1|H:3|L:3				0.0013	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
+PTPN11	A72		72	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot	T:3|D:2|V:2				0.0013	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	S502		502	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	P:1|L:1				0.0013	2	2.0	gbm:1|laml:1		ENST00000351677	3d									
+PTPN11	Q506		506	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	P:1				0.0013	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot-linked	K:2				0.0013	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	32.0	4dgp_A(0.0027);4h1o_A(0.0027);4gwf_B(0.0028);4gwf_A(0.0013);2shp_A(0.0044);4dgx_A(0.0028)	Hotspot	E:1|H:3|L:3				0.0013	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
 BRAF	G466		466	33.0	4dbn_B(0.0014)	Hotspot	A:1|E:6|V:10				0.0014	17	6.0	mmyl:4|coadread:1|hnsc:1|skcm:3|lusc:1|luad:7		ENST00000288602	3d									
 BRAF	D594		594	33.0	4dbn_B(0.0014)	Hotspot	G:6|H:1|N:5				0.0014	12	9.0	acc:1|mmyl:2|coadread:1|cll:1|blca:1|hnsc:1|skcm:1|lgg:1|luad:3		ENST00000288602	3d									
 BRAF	F595		595	33.0	4dbn_B(0.0014)	Hotspot-linked	L:1				0.0014	1	1.0	blca:1		ENST00000288602	3d									
 BRAF	G596		596	33.0	4dbn_B(0.0014)	Hotspot	R:2|S:1|D:1|V:1				0.0014	5	4.0	mmyl:1|gbm:1|blca:1|luad:2		ENST00000288602	3d									
 BRAF	L597		597	33.0	4dbn_B(0.0014)	Hotspot	Q:2|R:1|S:1				0.0014	4	3.0	mmyl:1|prad:1|skcm:2		ENST00000288602	3d									
 BRAF	K601		601	33.0	4dbn_B(0.0014)	Hotspot	T:1|E:12|N:2				0.0014	15	7.0	prad:1|cll:1|stad:2|thca:1|skcm:6|ucec:1|luad:3		ENST00000288602	3d									
-PTPN11	A72		72	35.0	2shp_A(0.0016)	Hotspot	T:3|D:2|V:2				0.0016	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	T468		468	35.0	2shp_A(0.0016)	Hotspot-linked	M:5				0.0016	5	3.0	coadread:1|stad:2|skcm:2			3d									
-PTPN11	Q506		506	35.0	2shp_A(0.0016)	Hotspot-linked	P:1				0.0016	1	1.0	skcm:1			3d									
-PTPN11	T507		507	35.0	2shp_A(0.0016)	Hotspot-linked	K:2				0.0016	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	35.0	2shp_A(0.0016)	Hotspot	E:1|H:3|L:3				0.0016	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
+PTPN11	A72		72	35.0	2shp_A(0.0016)	Hotspot	T:3|D:2|V:2				0.0016	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	T468		468	35.0	2shp_A(0.0016)	Hotspot-linked	M:5				0.0016	5	3.0	coadread:1|stad:2|skcm:2		ENST00000351677	3d									
+PTPN11	Q506		506	35.0	2shp_A(0.0016)	Hotspot-linked	P:1				0.0016	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	35.0	2shp_A(0.0016)	Hotspot-linked	K:2				0.0016	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	35.0	2shp_A(0.0016)	Hotspot	E:1|H:3|L:3				0.0016	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
 BRAF	G464		464	36.0	4g9r_B(0.0017);1uwj_A(0.0021);4g9r_A(0.0026)	Hotspot-linked	V:2				0.0017	2	2.0	lusc:1|luad:1		ENST00000288602	3d									
 BRAF	G466		466	36.0	4g9r_B(0.0017);1uwj_A(0.0021);4g9r_A(0.0026)	Hotspot	A:1|E:6|V:10				0.0017	17	6.0	mmyl:4|coadread:1|hnsc:1|skcm:3|lusc:1|luad:7		ENST00000288602	3d									
 BRAF	S467		467	36.0	4g9r_B(0.0017);1uwj_A(0.0021);4g9r_A(0.0026)	Hotspot-linked	L:2				0.0017	2	1.0	skcm:2		ENST00000288602	3d									
@@ -4576,10 +4576,10 @@ PPP2R1A	R183		183	43.0	2pf4_B(0.0033);2pf4_A(0.0028);2nyl_A(0.0033);3dw8_D(0.002
 PPP2R1A	Q217		217	43.0	2pf4_B(0.0033);2pf4_A(0.0028);2nyl_A(0.0033);3dw8_D(0.0025);2npp_A(0.0023);3dw8_A(0.0025);2nym_A(0.0033);2nym_D(0.0031);2nyl_D(0.0037);2pkg_B(0.003);2npp_D(0.0038);2iae_A(0.0032);2pf4_C(0.003)	Hotspot-linked	K:1				0.0023	1	1.0	ucs:1		ENST00000322088	3d									
 PPP2R1A	S219		219	43.0	2pf4_B(0.0033);2pf4_A(0.0028);2nyl_A(0.0033);3dw8_D(0.0025);2npp_A(0.0023);3dw8_A(0.0025);2nym_A(0.0033);2nym_D(0.0031);2nyl_D(0.0037);2pkg_B(0.003);2npp_D(0.0038);2iae_A(0.0032);2pf4_C(0.003)	Hotspot-linked	L:3				0.0023	3	2.0	ucs:2|cscc:1		ENST00000322088	3d									
 PPP2R1A	V220		220	43.0	2pf4_B(0.0033);2pf4_A(0.0028);2nyl_A(0.0033);3dw8_D(0.0025);2npp_A(0.0023);3dw8_A(0.0025);2nym_A(0.0033);2nym_D(0.0031);2nyl_D(0.0037);2pkg_B(0.003);2npp_D(0.0038);2iae_A(0.0032);2pf4_C(0.003)	Hotspot-linked	M:1				0.0023	1	1.0	ucec:1		ENST00000322088	3d									
-PTPN11	D61		61	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot-linked	Y:1|N:1				0.0025	2	2.0	laml:1|nbl:1			3d									
-PTPN11	F71		71	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot-linked	L:3				0.0025	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot	T:3|D:2|V:2				0.0025	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot	A:2|G:1|K:4				0.0025	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
+PTPN11	D61		61	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot-linked	Y:1|N:1				0.0025	2	2.0	laml:1|nbl:1		ENST00000351677	3d									
+PTPN11	F71		71	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot-linked	L:3				0.0025	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot	T:3|D:2|V:2				0.0025	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	45.0	1ayc_A(0.003);4je4_A(0.0025);3tl0_A(0.0025)	Hotspot	A:2|G:1|K:4				0.0025	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
 TP53	R273		273	46.0	3exl_A(0.0027);3exj_B(0.0036)	Hotspot	P:4|C:119|S:5|H:103|L:22				0.0027	253	24.0	acc:1|brca:20|paad:12|mmyl:1|coadread:30|cll:3|esca:14|ucs:4|blca:3|hnsc:19|laml:1|ov:25|hgg:4|lihc:3|lusc:6|lgg:47|lusm:3|prad:4|stad:19|gbm:7|mbl:1|skcm:1|ucec:9|luad:16		ENST00000269305	3d									
 TP53	C275		275	46.0	3exl_A(0.0027);3exj_B(0.0036)	Hotspot	R:1|S:4|F:10|Y:15				0.0027	30	16.0	acc:1|mmyl:1|brca:1|paad:1|coadread:3|cll:1|esca:1|blca:1|hnsc:3|ov:4|lihc:2|lgg:2|kich:1|gbm:2|skcm:2|luad:4		ENST00000269305	3d									
 TP53	A276		276	46.0	3exl_A(0.0027);3exj_B(0.0036)	Hotspot-linked	P:3|D:2|G:1				0.0027	6	6.0	brca:1|esca:1|hnsc:1|ov:1|lihc:1|luad:1		ENST00000269305	3d									
@@ -4705,12 +4705,12 @@ SYT14	L411		411	80.0	3hhc_B(0.0052)	Cluster-exclusive	V:1				0.0052	1	1.0	brca:1
 SYT14	E412		412	80.0	3hhc_B(0.0052)	Cluster-exclusive	Q:1|D:1				0.0052	2	2.0	esca:1|luad:1		ENST00000472886	3d									
 SYT14	G414		414	80.0	3hhc_B(0.0052)	Cluster-exclusive	D:1				0.0052	1	1.0	cscc:1		ENST00000472886	3d									
 SYT14	S415		415	80.0	3hhc_B(0.0052)	Cluster-exclusive	A:1				0.0052	1	1.0	ov:1		ENST00000472886	3d									
-PTPN11	G60		60	82.0	4h1o_A(0.0054)	Hotspot-linked	V:1				0.0054	1	1.0	laml:1			3d									
-PTPN11	A72		72	82.0	4h1o_A(0.0054)	Hotspot	T:3|D:2|V:2				0.0054	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	T468		468	82.0	4h1o_A(0.0054)	Hotspot-linked	M:5				0.0054	5	3.0	coadread:1|stad:2|skcm:2			3d									
-PTPN11	T507		507	82.0	4h1o_A(0.0054)	Hotspot-linked	K:2				0.0054	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	82.0	4h1o_A(0.0054)	Hotspot	E:1|H:3|L:3				0.0054	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
-PTPN11	R512		512	82.0	4h1o_A(0.0054)	Hotspot-linked	Q:1				0.0054	1	1.0	coadread:1			3d									
+PTPN11	G60		60	82.0	4h1o_A(0.0054)	Hotspot-linked	V:1				0.0054	1	1.0	laml:1		ENST00000351677	3d									
+PTPN11	A72		72	82.0	4h1o_A(0.0054)	Hotspot	T:3|D:2|V:2				0.0054	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	T468		468	82.0	4h1o_A(0.0054)	Hotspot-linked	M:5				0.0054	5	3.0	coadread:1|stad:2|skcm:2		ENST00000351677	3d									
+PTPN11	T507		507	82.0	4h1o_A(0.0054)	Hotspot-linked	K:2				0.0054	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	82.0	4h1o_A(0.0054)	Hotspot	E:1|H:3|L:3				0.0054	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
+PTPN11	R512		512	82.0	4h1o_A(0.0054)	Hotspot-linked	Q:1				0.0054	1	1.0	coadread:1		ENST00000351677	3d									
 ZNF98	L362		362	83.0	1y6n_R(0.0057);1lqs_R(0.007);1lqs_S(0.0055);1j7v_R(0.0057)	Cluster-exclusive	F:1				0.0055	1	1.0	hnsc:1		ENST00000357774	3d									
 ZNF98	S363		363	83.0	1y6n_R(0.0057);1lqs_R(0.007);1lqs_S(0.0055);1j7v_R(0.0057)	Cluster-exclusive	F:1				0.0055	1	1.0	skcm:1		ENST00000357774	3d									
 ZNF98	H364		364	83.0	1y6n_R(0.0057);1lqs_R(0.007);1lqs_S(0.0055);1j7v_R(0.0057)	Cluster-exclusive	Y:1				0.0055	1	1.0	skcm:1		ENST00000357774	3d									
@@ -4790,18 +4790,18 @@ PTEN	K128		128	101.0	1d5r_A(0.0069)	Hotspot-linked	Q:2|N:3				0.0069	5	5.0	brca:
 PTEN	G129		129	101.0	1d5r_A(0.0069)	Hotspot-linked	R:1|E:2|V:2				0.0069	5	4.0	prad:1|gbm:1|ucec:2|lusc:1		ENST00000371953	3d									
 PTEN	T131		131	101.0	1d5r_A(0.0069)	Hotspot-linked	A:1				0.0069	1	1.0	gbm:1		ENST00000371953	3d									
 PTEN	R159		159	101.0	1d5r_A(0.0069)	Hotspot-linked	S:1|K:1				0.0069	2	1.0	gbm:2		ENST00000371953	3d									
-PTPN11	A72		72	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot	T:3|D:2|V:2				0.0074	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot	A:2|G:1|K:4				0.0074	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	F285		285	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	S:1|V:1				0.0074	2	2.0	all:1|gbm:1			3d									
-PTPN11	S502		502	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	P:1|L:1				0.0074	2	2.0	gbm:1|laml:1			3d									
-PTPN11	M504		504	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	I:1				0.0074	1	1.0	luad:1			3d									
-PTPN11	Q506		506	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	P:1				0.0074	1	1.0	skcm:1			3d									
-PTPN11	T507		507	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	K:2				0.0074	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	E69		69	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot-linked	D:1|K:3				0.0074	4	3.0	coadread:2|gbm:1|pias:1			3d									
-PTPN11	F71		71	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot-linked	L:3				0.0074	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot	T:3|D:2|V:2				0.0074	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot	A:2|G:1|K:4				0.0074	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	I282		282	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot-linked	M:1				0.0074	1	1.0	gbm:1			3d									
+PTPN11	A72		72	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot	T:3|D:2|V:2				0.0074	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot	A:2|G:1|K:4				0.0074	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	F285		285	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	S:1|V:1				0.0074	2	2.0	all:1|gbm:1		ENST00000351677	3d									
+PTPN11	S502		502	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	P:1|L:1				0.0074	2	2.0	gbm:1|laml:1		ENST00000351677	3d									
+PTPN11	M504		504	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	I:1				0.0074	1	1.0	luad:1		ENST00000351677	3d									
+PTPN11	Q506		506	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	P:1				0.0074	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	104.0	4dgp_A(0.0109);4h1o_A(0.0097);4h34_A(0.009);4gwf_B(0.0087);4gwf_A(0.0074);4dgx_A(0.01)	Hotspot-linked	K:2				0.0074	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	E69		69	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot-linked	D:1|K:3				0.0074	4	3.0	coadread:2|gbm:1|pias:1		ENST00000351677	3d									
+PTPN11	F71		71	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot-linked	L:3				0.0074	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot	T:3|D:2|V:2				0.0074	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot	A:2|G:1|K:4				0.0074	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	I282		282	105.0	4dgp_A(0.0109);4h1o_A(0.0097);4gwf_B(0.0087);4h34_A(0.009);4gwf_A(0.0074);2shp_A(0.012);4dgx_A(0.01)	Hotspot-linked	M:1				0.0074	1	1.0	gbm:1		ENST00000351677	3d									
 TP53	V173		173	107.0	2mej_B(0.0075)	Hotspot	A:2|E:1|G:2|L:15|M:12				0.0075	32	15.0	acc:1|brca:4|paad:2|coadread:2|esca:1|hnsc:7|ov:2|hgg:1|lihc:1|lgg:3|lusm:1|stad:2|skcm:1|ucec:1|luad:3		ENST00000269305	3d									
 TP53	R174		174	107.0	2mej_B(0.0075)	Hotspot-linked	S:1|W:2|K:1				0.0075	4	1.0	lihc:4		ENST00000269305	3d									
 TP53	R175		175	107.0	2mej_B(0.0075)	Hotspot	C:4|G:7|H:143				0.0075	154	22.0	brca:18|npc:1|paad:9|coadread:36|cll:1|esca:12|ucs:2|blca:4|hnsc:16|ov:16|gbc:1|hgg:2|lihc:1|lusc:3|lgg:4|prad:3|stad:11|gbm:7|mbl:1|skcm:1|ucec:2|luad:3		ENST00000269305	3d									
@@ -4980,10 +4980,10 @@ BRAF	D594		594	180.0	2fb8_B(0.0153);2fb8_A(0.0162);3prf_A(0.014);4h58_A(0.0153);
 BRAF	F595		595	180.0	2fb8_B(0.0153);2fb8_A(0.0162);3prf_A(0.014);4h58_A(0.0153);4mnf_B(0.0164);4mnf_A(0.015)	Hotspot-linked	L:1				0.013999999999999999	1	1.0	blca:1		ENST00000288602	3d									
 BRAF	G596		596	180.0	2fb8_B(0.0153);2fb8_A(0.0162);3prf_A(0.014);4h58_A(0.0153);4mnf_B(0.0164);4mnf_A(0.015)	Hotspot	R:2|S:1|D:1|V:1				0.013999999999999999	5	4.0	mmyl:1|gbm:1|blca:1|luad:2		ENST00000288602	3d									
 BRAF	L597		597	180.0	2fb8_B(0.0153);2fb8_A(0.0162);3prf_A(0.014);4h58_A(0.0153);4mnf_B(0.0164);4mnf_A(0.015)	Hotspot	Q:2|R:1|S:1				0.013999999999999999	4	3.0	mmyl:1|prad:1|skcm:2		ENST00000288602	3d									
-PTPN11	E69		69	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot-linked	D:1|K:3				0.0142	4	3.0	coadread:2|gbm:1|pias:1			3d									
-PTPN11	F71		71	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot-linked	L:3				0.0142	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot	T:3|D:2|V:2				0.0142	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot	A:2|G:1|K:4				0.0142	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
+PTPN11	E69		69	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot-linked	D:1|K:3				0.0142	4	3.0	coadread:2|gbm:1|pias:1		ENST00000351677	3d									
+PTPN11	F71		71	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot-linked	L:3				0.0142	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot	T:3|D:2|V:2				0.0142	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	187.0	1ayd_A(0.0157);1aya_A(0.0158);1ayb_A(0.0153);3tkz_A(0.0142)	Hotspot	A:2|G:1|K:4				0.0142	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
 PIK3R1	D560		560	188.0	4ovu_B(0.0205);4a55_B(0.019);3hiz_B(0.0142)	Hotspot-linked	G:2|H:2|N:1				0.0142	5	4.0	gbm:2|hnsc:1|lgg:1|luad:1		ENST00000521381	3d									
 PIK3R1	N564		564	188.0	4ovu_B(0.0205);4a55_B(0.019);3hiz_B(0.0142)	Hotspot	D:6				0.0142	6	4.0	coadread:2|skcm:1|ucec:1|lgg:2		ENST00000521381	3d									
 PIK3R1	S565		565	188.0	4ovu_B(0.0205);4a55_B(0.019);3hiz_B(0.0142)	Hotspot-linked	R:1|N:1				0.0142	2	2.0	coadread:1|ov:1		ENST00000521381	3d									
@@ -5031,17 +5031,17 @@ ITGA4	R454		454	201.0	4irz_A(0.0159)	Cluster-exclusive	W:2|L:1				0.0159	3	2.0	s
 ITGA4	S455		455	201.0	4irz_A(0.0159)	Cluster-exclusive	Y:1				0.0159	1	1.0	cesc:1		ENST00000397033	3d									
 ITGA4	S457		457	201.0	4irz_A(0.0159)	Cluster-exclusive	P:1|F:1				0.0159	2	2.0	ucec:1|cesc:1		ENST00000397033	3d									
 ITGA4	A458		458	201.0	4irz_A(0.0159)	Cluster-exclusive	P:1				0.0159	1	1.0	luad:1		ENST00000397033	3d									
-PTPN11	F71		71	207.0	4h34_A(0.0163)	Hotspot-linked	L:3				0.0163	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	207.0	4h34_A(0.0163)	Hotspot	T:3|D:2|V:2				0.0163	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	207.0	4h34_A(0.0163)	Hotspot	A:2|G:1|K:4				0.0163	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	Q506		506	207.0	4h34_A(0.0163)	Hotspot-linked	P:1				0.0163	1	1.0	skcm:1			3d									
-PTPN11	T507		507	207.0	4h34_A(0.0163)	Hotspot-linked	K:2				0.0163	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	F71		71	208.0	4h34_A(0.0163)	Hotspot-linked	L:3				0.0163	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	208.0	4h34_A(0.0163)	Hotspot	T:3|D:2|V:2				0.0163	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	208.0	4h34_A(0.0163)	Hotspot	A:2|G:1|K:4				0.0163	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	I282		282	208.0	4h34_A(0.0163)	Hotspot-linked	M:1				0.0163	1	1.0	gbm:1			3d									
-PTPN11	Q506		506	208.0	4h34_A(0.0163)	Hotspot-linked	P:1				0.0163	1	1.0	skcm:1			3d									
-PTPN11	T507		507	208.0	4h34_A(0.0163)	Hotspot-linked	K:2				0.0163	2	2.0	gbm:1|nbl:1			3d									
+PTPN11	F71		71	207.0	4h34_A(0.0163)	Hotspot-linked	L:3				0.0163	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	207.0	4h34_A(0.0163)	Hotspot	T:3|D:2|V:2				0.0163	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	207.0	4h34_A(0.0163)	Hotspot	A:2|G:1|K:4				0.0163	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	Q506		506	207.0	4h34_A(0.0163)	Hotspot-linked	P:1				0.0163	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	207.0	4h34_A(0.0163)	Hotspot-linked	K:2				0.0163	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	F71		71	208.0	4h34_A(0.0163)	Hotspot-linked	L:3				0.0163	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	208.0	4h34_A(0.0163)	Hotspot	T:3|D:2|V:2				0.0163	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	208.0	4h34_A(0.0163)	Hotspot	A:2|G:1|K:4				0.0163	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	I282		282	208.0	4h34_A(0.0163)	Hotspot-linked	M:1				0.0163	1	1.0	gbm:1		ENST00000351677	3d									
+PTPN11	Q506		506	208.0	4h34_A(0.0163)	Hotspot-linked	P:1				0.0163	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	208.0	4h34_A(0.0163)	Hotspot-linked	K:2				0.0163	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
 UQCRFS1	F265		265	209.0	1qcr_E(0.0163)	Cluster-exclusive	L:1				0.0163	1	1.0	ucec:1		ENST00000304863	3d									
 UQCRFS1	M270		270	209.0	1qcr_E(0.0163)	Cluster-exclusive	V:1				0.0163	1	1.0	hnsc:1		ENST00000304863	3d									
 UQCRFS1	V271		271	209.0	1qcr_E(0.0163)	Cluster-exclusive	A:1				0.0163	1	1.0	stad:1		ENST00000304863	3d									
@@ -5308,10 +5308,10 @@ STIM1	D78		78	282.0	2k60_A(0.0241)	Cluster-exclusive	G:1				0.0241	1	1.0	skcm:1	
 STIM1	D82		82	282.0	2k60_A(0.0241)	Cluster-exclusive	N:1				0.0241	1	1.0	cscc:1		ENST00000300737	3d									
 STIM1	V83		83	282.0	2k60_A(0.0241)	Cluster-exclusive	A:1				0.0241	1	1.0	skcm:1		ENST00000300737	3d									
 STIM1	S116		116	282.0	2k60_A(0.0241)	Cluster-exclusive	N:1				0.0241	1	1.0	gbm:1		ENST00000300737	3d									
-TUBA3D	D396		396	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	N:2				0.0244	2	2.0	coadread:1|skcm:1			3d									
-TUBA3D	M398		398	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	V:1				0.0244	1	1.0	stad:1			3d									
-TUBA3D	Y399		399	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	S:1				0.0244	1	1.0	luad:1			3d									
-TUBA3D	R402		402	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	Q:1				0.0244	1	1.0	luad:1			3d									
+TUBA3D	D396		396	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	N:2				0.0244	2	2.0	coadread:1|skcm:1		ENST00000321253	3d									
+TUBA3D	M398		398	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	V:1				0.0244	1	1.0	stad:1		ENST00000321253	3d									
+TUBA3D	Y399		399	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	S:1				0.0244	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	R402		402	284.0	4aqv_A(0.0245);4aqw_A(0.0244)	Cluster-exclusive	Q:1				0.0244	1	1.0	luad:1		ENST00000321253	3d									
 SPOP	Y87		87	287.0	2cr2_A(0.025)	Hotspot	S:2|C:1|N:2				0.025	5	1.0	prad:5		ENST00000347630	3d									
 SPOP	F104		104	287.0	2cr2_A(0.025)	Hotspot-linked	S:1|I:1				0.025	2	2.0	mmyl:1|prad:1		ENST00000347630	3d									
 SPOP	M117		117	287.0	2cr2_A(0.025)	Hotspot-linked	V:4				0.025	4	3.0	ucs:1|ucec:2|cesc:1		ENST00000347630	3d									
@@ -5358,10 +5358,10 @@ PIK3R1	L570		570	301.0	4ovu_B(0.0319);4l2y_B(0.0268);2v1y_B(0.0388);4l1b_B(0.029
 PIK3R1	Q572		572	301.0	4ovu_B(0.0319);4l2y_B(0.0268);2v1y_B(0.0388);4l1b_B(0.0295)	Hotspot-linked	R:1				0.0268	1	1.0	ucec:1		ENST00000521381	3d									
 PIK3R1	L573		573	301.0	4ovu_B(0.0319);4l2y_B(0.0268);2v1y_B(0.0388);4l1b_B(0.0295)	Hotspot-linked	P:3				0.0268	3	3.0	gbm:1|ucec:1|lymbc:1		ENST00000521381	3d									
 PIK3R1	R574		574	301.0	4ovu_B(0.0319);4l2y_B(0.0268);2v1y_B(0.0388);4l1b_B(0.0295)	Hotspot-linked	T:1|I:2				0.0268	3	3.0	coadread:1|ucec:1|cesc:1		ENST00000521381	3d									
-HIST1H3H	A2		2	304.0	2kwk_B(0.027)	Cluster-exclusive	S:1|V:1|G:1				0.027000000000000003	3	3.0	acc:1|brca:1|mmyl:1			3d									
-HIST1H3H	T4		4	304.0	2kwk_B(0.027)	Cluster-exclusive	A:1				0.027000000000000003	1	1.0	lusm:1			3d									
-HIST1H3H	K5		5	304.0	2kwk_B(0.027)	Cluster-exclusive	M:1				0.027000000000000003	1	1.0	hnsc:1			3d									
-HIST1H3H	Q6		6	304.0	2kwk_B(0.027)	Cluster-exclusive	H:2				0.027000000000000003	2	2.0	hnsc:1|luad:1			3d									
+HIST1H3H	A2		2	304.0	2kwk_B(0.027)	Cluster-exclusive	S:1|V:1|G:1				0.027000000000000003	3	3.0	acc:1|brca:1|mmyl:1		ENST00000369163	3d									
+HIST1H3H	T4		4	304.0	2kwk_B(0.027)	Cluster-exclusive	A:1				0.027000000000000003	1	1.0	lusm:1		ENST00000369163	3d									
+HIST1H3H	K5		5	304.0	2kwk_B(0.027)	Cluster-exclusive	M:1				0.027000000000000003	1	1.0	hnsc:1		ENST00000369163	3d									
+HIST1H3H	Q6		6	304.0	2kwk_B(0.027)	Cluster-exclusive	H:2				0.027000000000000003	2	2.0	hnsc:1|luad:1		ENST00000369163	3d									
 BRAF	G466		466	305.0	2fb8_A(0.0271);3prf_B(0.0271);4h58_C(0.0289);3prf_A(0.0274)	Hotspot	A:1|E:6|V:10				0.0271	17	6.0	mmyl:4|coadread:1|hnsc:1|skcm:3|lusc:1|luad:7		ENST00000288602	3d									
 BRAF	S467		467	305.0	2fb8_A(0.0271);3prf_B(0.0271);4h58_C(0.0289);3prf_A(0.0274)	Hotspot-linked	L:2				0.0271	2	1.0	skcm:2		ENST00000288602	3d									
 BRAF	G469		469	305.0	2fb8_A(0.0271);3prf_B(0.0271);4h58_C(0.0289);3prf_A(0.0274)	Hotspot	A:9|R:3|S:1|E:2|V:6				0.0271	21	8.0	mmyl:3|coadread:1|prad:2|blca:1|skcm:4|lusc:1|luad:8|cscc:1		ENST00000288602	3d									
@@ -5474,10 +5474,10 @@ KDM5C	F92		92	346.0	2yqe_A(0.0319)	Cluster-exclusive	L:1				0.0319	1	1.0	ucec:1	
 KDM5C	W93		93	346.0	2yqe_A(0.0319)	Cluster-exclusive	L:1				0.0319	1	1.0	kirp:1		ENST00000375401	3d									
 KDM5C	P163		163	346.0	2yqe_A(0.0319)	Cluster-exclusive	S:1				0.0319	1	1.0	stad:1		ENST00000375401	3d									
 KDM5C	Q168		168	346.0	2yqe_A(0.0319)	Cluster-exclusive	L:1				0.0319	1	1.0	lusc:1		ENST00000375401	3d									
-HIST1H4L	A84		84	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	T:1				0.0328	1	1.0	coadread:1			3d									
-HIST1H4L	M85		85	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	I:1				0.0328	1	1.0	brca:1			3d									
-HIST1H4L	D86		86	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	N:1				0.0328	1	1.0	blca:1			3d									
-HIST1H4L	V88		88	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	I:1				0.0328	1	1.0	mmyl:1			3d									
+HIST1H4L	A84		84	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	T:1				0.0328	1	1.0	coadread:1		ENST00000355981	3d									
+HIST1H4L	M85		85	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	I:1				0.0328	1	1.0	brca:1		ENST00000355981	3d									
+HIST1H4L	D86		86	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	N:1				0.0328	1	1.0	blca:1		ENST00000355981	3d									
+HIST1H4L	V88		88	351.0	3an2_B(0.0328);3an2_F(0.0662)	Cluster-exclusive	I:1				0.0328	1	1.0	mmyl:1		ENST00000355981	3d									
 TP53	C238		238	352.0	2fej_A(0.0329)	Hotspot	R:3|S:3|F:12|G:1|Y:15				0.0329	34	17.0	brca:4|paad:2|mmyl:1|coadread:3|cll:1|esca:2|ucs:2|blca:1|hnsc:3|ov:4|lihc:1|lgg:1|stad:1|gbm:4|ucec:2|cesc:1|luad:1		ENST00000269305	3d									
 TP53	N239		239	352.0	2fej_A(0.0329)	Hotspot	S:8|D:6|T:1				0.0329	15	12.0	brca:1|coadread:1|kich:1|prad:1|stad:1|ucs:1|hnsc:2|ov:1|lihc:1|ucec:2|kirc:1|luad:2		ENST00000269305	3d									
 TP53	S240		240	352.0	2fej_A(0.0329)	Hotspot-linked	R:1|G:2				0.0329	3	2.0	coadread:1|ucec:2		ENST00000269305	3d									
@@ -5725,11 +5725,11 @@ DNAJC6	C251		251	442.0	3n0a_A(0.0428)	Cluster-exclusive	F:1				0.0428	1	1.0	luad
 DNAJC6	R252		252	442.0	3n0a_A(0.0428)	Cluster-exclusive	C:2|S:1|H:2				0.0428	5	4.0	coadread:1|stad:2|lusc:1|cscc:1		ENST00000395325	3d									
 DNAJC6	R278		278	442.0	3n0a_A(0.0428)	Cluster-exclusive	H:1				0.0428	1	1.0	gbm:1		ENST00000395325	3d									
 DNAJC6	H302		302	442.0	3n0a_A(0.0428)	Cluster-exclusive	Y:1				0.0428	1	1.0	skcm:1		ENST00000395325	3d									
-PTPN11	F71		71	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot-linked	L:3				0.0432	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot	T:3|D:2|V:2				0.0432	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot	A:2|G:1|K:4				0.0432	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	L262		262	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot-linked	F:1				0.0432	1	1.0	skcm:1			3d									
-PTPN11	Q506		506	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot-linked	P:1				0.0432	1	1.0	skcm:1			3d									
+PTPN11	F71		71	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot-linked	L:3				0.0432	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot	T:3|D:2|V:2				0.0432	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot	A:2|G:1|K:4				0.0432	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	L262		262	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot-linked	F:1				0.0432	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	Q506		506	444.0	4dgp_A(0.0558);4h1o_A(0.0495);4gwf_B(0.0432);4gwf_A(0.0436);2shp_A(0.0697);4dgx_A(0.0566)	Hotspot-linked	P:1				0.0432	1	1.0	skcm:1		ENST00000351677	3d									
 ZNF548	A238		238	446.0	2roc_A(0.0432)	Cluster-exclusive	T:1|V:1				0.0432	2	2.0	paad:1|coadread:1		ENST00000366197	3d									
 ZNF548	C286		286	446.0	2roc_A(0.0432)	Cluster-exclusive	R:1				0.0432	1	1.0	blca:1		ENST00000366197	3d									
 ZNF548	K288		288	446.0	2roc_A(0.0432)	Cluster-exclusive	E:1				0.0432	1	1.0	luad:1		ENST00000366197	3d									
@@ -5765,11 +5765,11 @@ ITGA4	S455		455	471.0	4irz_A(0.0462)	Cluster-exclusive	Y:1				0.0462	1	1.0	cesc:
 ITGA4	S457		457	471.0	4irz_A(0.0462)	Cluster-exclusive	P:1|F:1				0.0462	2	2.0	ucec:1|cesc:1		ENST00000397033	3d									
 ITGA4	A458		458	471.0	4irz_A(0.0462)	Cluster-exclusive	P:1				0.0462	1	1.0	luad:1		ENST00000397033	3d									
 ITGA4	V459		459	471.0	4irz_A(0.0462)	Cluster-exclusive	D:1				0.0462	1	1.0	brca:1		ENST00000397033	3d									
-PTPN11	A72		72	472.0	4h34_A(0.0463)	Hotspot	T:3|D:2|V:2				0.0463	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	472.0	4h34_A(0.0463)	Hotspot	A:2|G:1|K:4				0.0463	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
-PTPN11	S502		502	472.0	4h34_A(0.0463)	Hotspot-linked	P:1|L:1				0.0463	2	2.0	gbm:1|laml:1			3d									
-PTPN11	Q506		506	472.0	4h34_A(0.0463)	Hotspot-linked	P:1				0.0463	1	1.0	skcm:1			3d									
-PTPN11	T507		507	472.0	4h34_A(0.0463)	Hotspot-linked	K:2				0.0463	2	2.0	gbm:1|nbl:1			3d									
+PTPN11	A72		72	472.0	4h34_A(0.0463)	Hotspot	T:3|D:2|V:2				0.0463	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	472.0	4h34_A(0.0463)	Hotspot	A:2|G:1|K:4				0.0463	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
+PTPN11	S502		502	472.0	4h34_A(0.0463)	Hotspot-linked	P:1|L:1				0.0463	2	2.0	gbm:1|laml:1		ENST00000351677	3d									
+PTPN11	Q506		506	472.0	4h34_A(0.0463)	Hotspot-linked	P:1				0.0463	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	472.0	4h34_A(0.0463)	Hotspot-linked	K:2				0.0463	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
 EP300	Y1397		1397	473.0	4bhw_B(0.0464);4bhw_A(0.0493)	Hotspot-linked	D:1				0.0464	1	1.0	ucec:1		ENST00000263253	3d									
 EP300	L1398		1398	473.0	4bhw_B(0.0464);4bhw_A(0.0493)	Hotspot-linked	P:1				0.0464	1	1.0	lusc:1		ENST00000263253	3d									
 EP300	D1399		1399	473.0	4bhw_B(0.0464);4bhw_A(0.0493)	Hotspot	Y:2|N:16				0.0464	18	6.0	esca:2|blca:2|hnsc:6|mbl:1|lusc:2|cesc:5		ENST00000263253	3d									
@@ -5791,13 +5791,13 @@ TP53	R273		273	477.0	4lof_A(0.0467)	Hotspot	P:4|C:119|S:5|H:103|L:22				0.0467	2
 TP53	V274		274	477.0	4lof_A(0.0467)	Hotspot	A:4|D:5|F:7|G:4|L:1				0.0467	21	11.0	brca:3|paad:2|coadread:2|prad:1|lusm:1|stad:1|ov:2|skcm:1|lihc:3|lgg:1|luad:4		ENST00000269305	3d									
 TP53	C275		275	477.0	4lof_A(0.0467)	Hotspot	R:1|S:4|F:10|Y:15				0.0467	30	16.0	acc:1|mmyl:1|brca:1|paad:1|coadread:3|cll:1|esca:1|blca:1|hnsc:3|ov:4|lihc:2|lgg:2|kich:1|gbm:2|skcm:2|luad:4		ENST00000269305	3d									
 TP53	D281		281	477.0	4lof_A(0.0467)	Hotspot	P:1|A:1|E:4|V:4|G:1|H:2|Y:8|N:7				0.0467	28	16.0	brca:3|mmyl:1|paad:1|cll:1|ucs:1|blca:1|hnsc:1|ov:4|lihc:1|lusc:1|stad:1|gbm:3|nbl:1|ucec:1|kirc:1|luad:6		ENST00000269305	3d									
-TUBA3D	V181		181	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	M:2				0.0467	2	2.0	paad:1|luad:1			3d									
-TUBA3D	V182		182	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	M:1				0.0467	1	1.0	hnsc:1			3d									
-TUBA3D	D396		396	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	N:2				0.0467	2	2.0	coadread:1|skcm:1			3d									
-TUBA3D	M398		398	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	V:1				0.0467	1	1.0	stad:1			3d									
-TUBA3D	Y399		399	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	S:1				0.0467	1	1.0	luad:1			3d									
-TUBA3D	R402		402	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	Q:1				0.0467	1	1.0	luad:1			3d									
-TUBA3D	A403		403	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	S:1				0.0467	1	1.0	npc:1			3d									
+TUBA3D	V181		181	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	M:2				0.0467	2	2.0	paad:1|luad:1		ENST00000321253	3d									
+TUBA3D	V182		182	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	M:1				0.0467	1	1.0	hnsc:1		ENST00000321253	3d									
+TUBA3D	D396		396	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	N:2				0.0467	2	2.0	coadread:1|skcm:1		ENST00000321253	3d									
+TUBA3D	M398		398	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	V:1				0.0467	1	1.0	stad:1		ENST00000321253	3d									
+TUBA3D	Y399		399	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	S:1				0.0467	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	R402		402	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	Q:1				0.0467	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	A403		403	478.0	4hna_A(0.0728);3hkb_C(0.0653);3hke_A(0.0651);4f6r_A(0.0768);4f61_C(0.064);3ut5_A(0.0652);1sa1_C(0.0578);4drx_C(0.0671);3j1t_B(0.0467);4drx_A(0.066);1sa1_A(0.0637);3ut5_C(0.0604);3hkb_A(0.068);3hkc_A(0.0614);4f61_A(0.0699);2xrp_B(0.0648);3ryf_A(0.0652);3ryc_C(0.0674);3ryc_A(0.0657);4eb6_C(0.0489);3ryh_C(0.0666);3ryi_C(0.0727);3ryf_C(0.0671);3ryh_A(0.0622);3ryi_A(0.0715);4atu_B(0.0655);3e22_C(0.0553);4abo_B(0.0681);4atx_B(0.0631);4eb6_A(0.0586)	Cluster-exclusive	S:1				0.0467	1	1.0	npc:1		ENST00000321253	3d									
 KRAS	A11		11	480.0	3kkm_A(0.0525);1iaq_A(0.0498);3k9l_B(0.0483);3rsl_A(0.0481);3k9l_C(0.0501);2rge_A(0.0489);3lo5_E(0.0471);3k9l_A(0.0481);2rgg_A(0.051);3lo5_A(0.0469);1iaq_C(0.0506);3con_A(0.0542)	Hotspot-linked	T:1				0.0469	1	1.0	paad:1		ENST00000256078	3d									
 KRAS	G12		12	480.0	3kkm_A(0.0525);1iaq_A(0.0498);3k9l_B(0.0483);3rsl_A(0.0481);3k9l_C(0.0501);2rge_A(0.0489);3lo5_E(0.0471);3k9l_A(0.0481);2rgg_A(0.051);3lo5_A(0.0469);1iaq_C(0.0506);3con_A(0.0542)	Hotspot	A:43|R:71|C:115|S:23|D:255|V:227|F:1				0.0469	735	21.0	brca:6|paad:289|mmyl:9|npc:1|coadread:151|esca:3|ucs:7|thca:1|blca:5|laml:3|ov:6|lihc:1|kirp:2|prad:1|stad:14|gbm:2|skcm:2|ucec:36|cesc:7|mds:1|luad:188		ENST00000256078	3d									
 KRAS	G13		13	480.0	3kkm_A(0.0525);1iaq_A(0.0498);3k9l_B(0.0483);3rsl_A(0.0481);3k9l_C(0.0501);2rge_A(0.0489);3lo5_E(0.0471);3k9l_A(0.0481);2rgg_A(0.051);3lo5_A(0.0469);1iaq_C(0.0506);3con_A(0.0542)	Hotspot	A:1|R:1|C:12|D:75|V:2				0.0469	91	10.0	mmyl:9|paad:2|coadread:38|cll:2|stad:10|laml:1|lihc:1|ucec:9|cesc:2|luad:17		ENST00000256078	3d									
@@ -5811,8 +5811,8 @@ PLEKHA6	F82		82	487.0	2yry_A(0.0474)	Cluster-exclusive	L:3				0.0474	3	3.0	prad:
 PLEKHA6	V83		83	487.0	2yry_A(0.0474)	Cluster-exclusive	I:1				0.0474	1	1.0	hnsc:1		ENST00000272203	3d									
 PLEKHA6	F90		90	487.0	2yry_A(0.0474)	Cluster-exclusive	L:1				0.0474	1	1.0	esca:1		ENST00000272203	3d									
 PLEKHA6	Y92		92	487.0	2yry_A(0.0474)	Cluster-exclusive	C:1				0.0474	1	1.0	luad:1		ENST00000272203	3d									
-HIST2H3D	D124		124	493.0	1hio_C(0.0481)	Cluster-exclusive	Y:1				0.0481	1	1.0	brca:1			3d									
-HIST2H3D	L127		127	493.0	1hio_C(0.0481)	Cluster-exclusive	F:1				0.0481	1	1.0	coadread:1			3d									
+HIST2H3D	D124		124	493.0	1hio_C(0.0481)	Cluster-exclusive	Y:1				0.0481	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	L127		127	493.0	1hio_C(0.0481)	Cluster-exclusive	F:1				0.0481	1	1.0	coadread:1		ENST00000331491	3d									
 THRA	R284		284	495.0	3jzb_A(0.0484);3ilz_A(0.0489);3hzf_A(0.0577);2h77_A(0.053);2h79_A(0.0497)	Cluster-exclusive	P:1				0.0484	1	1.0	luad:1		ENST00000264637	3d									
 THRA	K288		288	495.0	3jzb_A(0.0484);3ilz_A(0.0489);3hzf_A(0.0577);2h77_A(0.053);2h79_A(0.0497)	Cluster-exclusive	E:1				0.0484	1	1.0	ucec:1		ENST00000264637	3d									
 THRA	V294		294	495.0	3jzb_A(0.0484);3ilz_A(0.0489);3hzf_A(0.0577);2h77_A(0.053);2h79_A(0.0497)	Cluster-exclusive	I:2				0.0484	2	1.0	stad:2		ENST00000264637	3d									
@@ -5852,10 +5852,10 @@ BRAF	N581		581	507.0	3pri_A(0.049);3pri_B(0.0534);3prf_B(0.0497);4h58_B(0.0508)	
 BRAF	D594		594	507.0	3pri_A(0.049);3pri_B(0.0534);3prf_B(0.0497);4h58_B(0.0508)	Hotspot	G:6|H:1|N:5				0.049	12	9.0	acc:1|mmyl:2|coadread:1|cll:1|blca:1|hnsc:1|skcm:1|lgg:1|luad:3		ENST00000288602	3d									
 BRAF	F595		595	507.0	3pri_A(0.049);3pri_B(0.0534);3prf_B(0.0497);4h58_B(0.0508)	Hotspot-linked	L:1				0.049	1	1.0	blca:1		ENST00000288602	3d									
 BRAF	G596		596	507.0	3pri_A(0.049);3pri_B(0.0534);3prf_B(0.0497);4h58_B(0.0508)	Hotspot	R:2|S:1|D:1|V:1				0.049	5	4.0	mmyl:1|gbm:1|blca:1|luad:2		ENST00000288602	3d									
-TUBA3D	M398		398	510.0	4ffb_A(0.0494)	Cluster-exclusive	V:1				0.0494	1	1.0	stad:1			3d									
-TUBA3D	Y399		399	510.0	4ffb_A(0.0494)	Cluster-exclusive	S:1				0.0494	1	1.0	luad:1			3d									
-TUBA3D	R402		402	510.0	4ffb_A(0.0494)	Cluster-exclusive	Q:1				0.0494	1	1.0	luad:1			3d									
-TUBA3D	A403		403	510.0	4ffb_A(0.0494)	Cluster-exclusive	S:1				0.0494	1	1.0	npc:1			3d									
+TUBA3D	M398		398	510.0	4ffb_A(0.0494)	Cluster-exclusive	V:1				0.0494	1	1.0	stad:1		ENST00000321253	3d									
+TUBA3D	Y399		399	510.0	4ffb_A(0.0494)	Cluster-exclusive	S:1				0.0494	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	R402		402	510.0	4ffb_A(0.0494)	Cluster-exclusive	Q:1				0.0494	1	1.0	luad:1		ENST00000321253	3d									
+TUBA3D	A403		403	510.0	4ffb_A(0.0494)	Cluster-exclusive	S:1				0.0494	1	1.0	npc:1		ENST00000321253	3d									
 PIK3R1	Y452		452	512.0	4ovu_B(0.0764);4l2y_B(0.0707);4l23_B(0.0687);4l1b_B(0.0695);4waf_B(0.0497)	Cluster-exclusive	C:2|H:1|N:1				0.0497	4	3.0	esca:1|hnsc:1|ucec:2		ENST00000521381	3d									
 PIK3R1	Q572		572	512.0	4ovu_B(0.0764);4l2y_B(0.0707);4l23_B(0.0687);4l1b_B(0.0695);4waf_B(0.0497)	Hotspot-linked	R:1				0.0497	1	1.0	ucec:1		ENST00000521381	3d									
 PIK3R1	L573		573	512.0	4ovu_B(0.0764);4l2y_B(0.0707);4l23_B(0.0687);4l1b_B(0.0695);4waf_B(0.0497)	Hotspot-linked	P:3				0.0497	3	3.0	gbm:1|ucec:1|lymbc:1		ENST00000521381	3d									
@@ -5919,10 +5919,10 @@ RHOA	N41		41	533.0	1z2c_A(0.051);1kmq_A(0.0711);1tx4_B(0.0709);3kz1_F(0.0648);3k
 RHOA	Y42		42	533.0	1z2c_A(0.051);1kmq_A(0.0711);1tx4_B(0.0709);3kz1_F(0.0648);3kz1_E(0.0683);2gcp_A(0.0626);3msx_A(0.072);1ow3_B(0.0631);1cxz_A(0.0631);1s1c_B(0.0688);1a2b_A(0.0595);1s1c_A(0.0679)	Hotspot	C:7|S:2|F:1|I:1				0.051	11	3.0	stad:9|hnsc:1|lymbc:1		ENST00000418115	3d									
 RHOA	L57		57	533.0	1z2c_A(0.051);1kmq_A(0.0711);1tx4_B(0.0709);3kz1_F(0.0648);3kz1_E(0.0683);2gcp_A(0.0626);3msx_A(0.072);1ow3_B(0.0631);1cxz_A(0.0631);1s1c_B(0.0688);1a2b_A(0.0595);1s1c_A(0.0679)	Hotspot-linked	V:4				0.051	4	1.0	stad:4		ENST00000418115	3d									
 RHOA	D59		59	533.0	1z2c_A(0.051);1kmq_A(0.0711);1tx4_B(0.0709);3kz1_F(0.0648);3kz1_E(0.0683);2gcp_A(0.0626);3msx_A(0.072);1ow3_B(0.0631);1cxz_A(0.0631);1s1c_B(0.0688);1a2b_A(0.0595);1s1c_A(0.0679)	Hotspot-linked	G:1|Y:1|N:1				0.051	3	3.0	prad:1|stad:1|luad:1		ENST00000418115	3d									
-HBA2	H123		123	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	Y:1				0.0512	1	1.0	hnsc:1			3d									
-HBA2	S125		125	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	F:1				0.0512	1	1.0	luad:1			3d									
-HBA2	L126		126	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	M:1				0.0512	1	1.0	hnsc:1			3d									
-HBA2	D127		127	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	Y:1				0.0512	1	1.0	brca:1			3d									
+HBA2	H123		123	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	Y:1				0.0512	1	1.0	hnsc:1		ENST00000251595	3d									
+HBA2	S125		125	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	F:1				0.0512	1	1.0	luad:1		ENST00000251595	3d									
+HBA2	L126		126	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	M:1				0.0512	1	1.0	hnsc:1		ENST00000251595	3d									
+HBA2	D127		127	537.0	1aj9_A(0.0968);1z8u_D(0.0592);1abw_A(0.0647);1z8u_B(0.063);3d7o_A(0.0992);1c7d_A(0.0606);1aby_A(0.062);1c7c_A(0.0567);4ij2_A(0.0973);1jy7_C(0.0962);1lft_A(0.099);1qi8_A(0.096);1yff_C(0.0983);2w72_A(0.09);2w72_C(0.0996);1a9w_C(0.0958);1jy7_P(0.0972);1jy7_W(0.0996);1jy7_U(0.0947);1uiw_E(0.0979);1o1j_A(0.0512);1o1i_A(0.0975);1uiw_C(0.0972);1o1l_A(0.0524);1uiw_A(0.0934);1hbs_E(0.0951);1o1n_A(0.0513);1o1m_A(0.0527);1o1p_A(0.064);3ia3_B(0.0587);1y01_B(0.0949);4ij2_C(0.0925);3ia3_D(0.0572);1r1x_A(0.0989);1j7s_A(0.0969);4n7n_I(0.0977)	Cluster-exclusive	Y:1				0.0512	1	1.0	brca:1		ENST00000251595	3d									
 KEAP1	R415		415	538.0	3wn7_A(0.0513)	Cluster-exclusive	C:1|H:1				0.0513	2	1.0	luad:2		ENST00000171111	3d									
 KEAP1	G429		429	538.0	3wn7_A(0.0513)	Cluster-exclusive	S:1|V:1				0.0513	2	2.0	hnsc:1|luad:1		ENST00000171111	3d									
 KEAP1	G430		430	538.0	3wn7_A(0.0513)	Cluster-exclusive	V:1				0.0513	1	1.0	luad:1		ENST00000171111	3d									
@@ -5951,9 +5951,9 @@ SMAD4	P130		130	547.0	3qsv_A(0.0524)	Cluster-exclusive	L:1				0.0524	1	1.0	paad:
 SMAD4	Y131		131	547.0	3qsv_A(0.0524)	Cluster-exclusive	C:1				0.0524	1	1.0	paad:1		ENST00000342988	3d									
 SMAD4	H132		132	547.0	3qsv_A(0.0524)	Cluster-exclusive	Y:2				0.0524	2	1.0	brca:2		ENST00000342988	3d									
 SMAD4	Y133		133	547.0	3qsv_A(0.0524)	Cluster-exclusive	N:1				0.0524	1	1.0	blca:1		ENST00000342988	3d									
-PTPN11	E69		69	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	D:1|K:3				0.0526	4	3.0	coadread:2|gbm:1|pias:1			3d									
-PTPN11	F71		71	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	L:3				0.0526	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot	T:3|D:2|V:2				0.0526	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
+PTPN11	E69		69	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	D:1|K:3				0.0526	4	3.0	coadread:2|gbm:1|pias:1		ENST00000351677	3d									
+PTPN11	F71		71	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot-linked	L:3				0.0526	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	548.0	4fr4_D(0.0556);4fr4_C(0.0526);4fr4_E(0.0539);4fr4_B(0.0572);4fr4_A(0.0539)	Hotspot	T:3|D:2|V:2				0.0526	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
 CCL7	R53		53	549.0	1ncv_A(0.0529)	Cluster-exclusive	K:2				0.0529	2	2.0	skcm:1|cscc:1		ENST00000378569	3d									
 CCL7	R61		61	549.0	1ncv_A(0.0529)	Cluster-exclusive	W:3				0.0529	3	2.0	coadread:2|skcm:1		ENST00000378569	3d									
 CCL7	A63		63	549.0	1ncv_A(0.0529)	Cluster-exclusive	D:1				0.0529	1	1.0	gbm:1		ENST00000378569	3d									
@@ -5968,10 +5968,10 @@ PIK3R1	L573		573	551.0	3hiz_B(0.0532)	Hotspot-linked	P:3				0.0532	3	3.0	gbm:1|u
 PIK3R1	R574		574	551.0	3hiz_B(0.0532)	Hotspot-linked	T:1|I:2				0.0532	3	3.0	coadread:1|ucec:1|cesc:1		ENST00000521381	3d									
 PIK3R1	T576		576	551.0	3hiz_B(0.0532)	Cluster-exclusive	M:1				0.0532	1	1.0	esca:1		ENST00000521381	3d									
 PIK3R1	R577		577	551.0	3hiz_B(0.0532)	Cluster-exclusive	G:1				0.0532	1	1.0	lihc:1		ENST00000521381	3d									
-PTPN11	D61		61	552.0	4je4_A(0.0533)	Hotspot-linked	Y:1|N:1				0.0533	2	2.0	laml:1|nbl:1			3d									
-PTPN11	F71		71	552.0	4je4_A(0.0533)	Hotspot-linked	L:3				0.0533	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	552.0	4je4_A(0.0533)	Hotspot	T:3|D:2|V:2				0.0533	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	E76		76	552.0	4je4_A(0.0533)	Hotspot	A:2|G:1|K:4				0.0533	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1			3d									
+PTPN11	D61		61	552.0	4je4_A(0.0533)	Hotspot-linked	Y:1|N:1				0.0533	2	2.0	laml:1|nbl:1		ENST00000351677	3d									
+PTPN11	F71		71	552.0	4je4_A(0.0533)	Hotspot-linked	L:3				0.0533	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	552.0	4je4_A(0.0533)	Hotspot	T:3|D:2|V:2				0.0533	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	E76		76	552.0	4je4_A(0.0533)	Hotspot	A:2|G:1|K:4				0.0533	7	5.0	mmyl:2|coadread:2|nbl:1|lusc:1|pias:1		ENST00000351677	3d									
 FGF9	G80		80	553.0	1ihk_A(0.0533)	Cluster-exclusive	D:1				0.0533	1	1.0	stad:1		ENST00000382353	3d									
 FGF9	T81		81	553.0	1ihk_A(0.0533)	Cluster-exclusive	S:1				0.0533	1	1.0	hnsc:1		ENST00000382353	3d									
 FGF9	I82		82	553.0	1ihk_A(0.0533)	Cluster-exclusive	V:1				0.0533	1	1.0	luad:1		ENST00000382353	3d									
@@ -6264,10 +6264,10 @@ PTEN	T131		131	642.0	1d5r_A(0.063)	Hotspot-linked	A:1				0.063	1	1.0	gbm:1		ENST
 PTEN	I135		135	642.0	1d5r_A(0.063)	Hotspot-linked	K:1				0.063	1	1.0	brca:1		ENST00000371953	3d									
 PTEN	Y155		155	642.0	1d5r_A(0.063)	Hotspot-linked	C:2				0.063	2	2.0	ucs:1|ucec:1		ENST00000371953	3d									
 PTEN	R159		159	642.0	1d5r_A(0.063)	Hotspot-linked	S:1|K:1				0.063	2	1.0	gbm:2		ENST00000371953	3d									
-HIST1H3H	A2		2	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	S:1|V:1|G:1				0.0639	3	3.0	acc:1|brca:1|mmyl:1			3d									
-HIST1H3H	T4		4	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	A:1				0.0639	1	1.0	lusm:1			3d									
-HIST1H3H	Q6		6	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	H:2				0.0639	2	2.0	hnsc:1|luad:1			3d									
-HIST1H3H	R9		9	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	G:1				0.0639	1	1.0	ov:1			3d									
+HIST1H3H	A2		2	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	S:1|V:1|G:1				0.0639	3	3.0	acc:1|brca:1|mmyl:1		ENST00000369163	3d									
+HIST1H3H	T4		4	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	A:1				0.0639	1	1.0	lusm:1		ENST00000369163	3d									
+HIST1H3H	Q6		6	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	H:2				0.0639	2	2.0	hnsc:1|luad:1		ENST00000369163	3d									
+HIST1H3H	R9		9	649.0	4hsu_C(0.0639);4gu0_E(0.0715)	Cluster-exclusive	G:1				0.0639	1	1.0	ov:1		ENST00000369163	3d									
 ACACA	T138		138	650.0	2hjw_A(0.064)	Cluster-exclusive	I:1				0.064	1	1.0	nbl:1		ENST00000613687	3d									
 ACACA	S173		173	650.0	2hjw_A(0.064)	Cluster-exclusive	C:1				0.064	1	1.0	ucs:1		ENST00000613687	3d									
 TP53	C238		238	653.0	2bip_A(0.0645);2biq_A(0.0685)	Hotspot	R:3|S:3|F:12|G:1|Y:15				0.0645	34	17.0	brca:4|paad:2|mmyl:1|coadread:3|cll:1|esca:2|ucs:2|blca:1|hnsc:3|ov:4|lihc:1|lgg:1|stad:1|gbm:4|ucec:2|cesc:1|luad:1		ENST00000269305	3d									
@@ -6338,11 +6338,11 @@ MAP2K1	F53		53	692.0	3sls_A(0.0698)	Hotspot	V:1|I:1|L:4				0.0698	6	4.0	coadread
 MAP2K1	Q56		56	692.0	3sls_A(0.0698)	Hotspot-linked	P:1				0.0698	1	1.0	luad:1		ENST00000307102	3d									
 MAP2K1	K57		57	692.0	3sls_A(0.0698)	Hotspot	T:3|N:7				0.0698	10	6.0	prad:1|stad:1|dlbc:1|hnsc:1|skcm:2|luad:4		ENST00000307102	3d									
 MAP2K1	G128		128	692.0	3sls_A(0.0698)	Hotspot-linked	D:2|V:1				0.0698	3	2.0	coadread:2|luad:1		ENST00000307102	3d									
-PTPN11	T468		468	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	M:5				0.0698	5	3.0	coadread:1|stad:2|skcm:2			3d									
-PTPN11	S502		502	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	P:1|L:1				0.0698	2	2.0	gbm:1|laml:1			3d									
-PTPN11	Q506		506	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	P:1				0.0698	1	1.0	skcm:1			3d									
-PTPN11	T507		507	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	K:2				0.0698	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot	E:1|H:3|L:3				0.0698	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
+PTPN11	T468		468	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	M:5				0.0698	5	3.0	coadread:1|stad:2|skcm:2		ENST00000351677	3d									
+PTPN11	S502		502	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	P:1|L:1				0.0698	2	2.0	gbm:1|laml:1		ENST00000351677	3d									
+PTPN11	Q506		506	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	P:1				0.0698	1	1.0	skcm:1		ENST00000351677	3d									
+PTPN11	T507		507	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot-linked	K:2				0.0698	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	693.0	3o5x_A(0.0698);3mow_A(0.0714)	Hotspot	E:1|H:3|L:3				0.0698	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
 SPOP	F102		102	696.0	2cr2_A(0.0705)	Hotspot	C:2|V:2|L:1				0.0705	5	1.0	prad:5		ENST00000347630	3d									
 SPOP	K103		103	696.0	2cr2_A(0.0705)	Hotspot-linked	N:1				0.0705	1	1.0	ucec:1		ENST00000347630	3d									
 SPOP	F104		104	696.0	2cr2_A(0.0705)	Hotspot-linked	S:1|I:1				0.0705	2	2.0	mmyl:1|prad:1		ENST00000347630	3d									
@@ -6390,31 +6390,31 @@ RHOA	N41		41	711.0	1z2c_A(0.0723);1tx4_B(0.0993);3kz1_F(0.0945);3kz1_E(0.0982);2
 RHOA	Y42		42	711.0	1z2c_A(0.0723);1tx4_B(0.0993);3kz1_F(0.0945);3kz1_E(0.0982);2gcp_A(0.0876);4f38_A(0.0805);1ow3_B(0.0913);1s1c_B(0.096);1a2b_A(0.0859);1cxz_A(0.0911);1s1c_A(0.0992)	Hotspot	C:7|S:2|F:1|I:1				0.0723	11	3.0	stad:9|hnsc:1|lymbc:1		ENST00000418115	3d									
 RHOA	L57		57	711.0	1z2c_A(0.0723);1tx4_B(0.0993);3kz1_F(0.0945);3kz1_E(0.0982);2gcp_A(0.0876);4f38_A(0.0805);1ow3_B(0.0913);1s1c_B(0.096);1a2b_A(0.0859);1cxz_A(0.0911);1s1c_A(0.0992)	Hotspot-linked	V:4				0.0723	4	1.0	stad:4		ENST00000418115	3d									
 RHOA	D59		59	711.0	1z2c_A(0.0723);1tx4_B(0.0993);3kz1_F(0.0945);3kz1_E(0.0982);2gcp_A(0.0876);4f38_A(0.0805);1ow3_B(0.0913);1s1c_B(0.096);1a2b_A(0.0859);1cxz_A(0.0911);1s1c_A(0.0992)	Hotspot-linked	G:1|Y:1|N:1				0.0723	3	3.0	prad:1|stad:1|luad:1		ENST00000418115	3d									
-AMY1C	S326		326	712.0	1b2y_A(0.0916);3ole_A(0.0951);2cpu_A(0.0931);1kb3_A(0.0944);3old_A(0.0981);4gqr_A(0.0952);1kbk_A(0.0902);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);1xd0_A(0.0851);3bay_A(0.0913);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);1xh1_A(0.0885);3ij7_A(0.0896);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);1mfu_A(0.0986);3bai_A(0.0903);1u33_A(0.0923);2qmk_A(0.0959);3bak_A(0.0943);3baj_A(0.0824);1u30_A(0.0939);1jxj_A(0.0972);1c8q_A(0.0988);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);3cpu_A(0.092);1xcx_A(0.0892);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	Y:1				0.0723	1	1.0	luad:1			3d									
-AMY1C	I327		327	712.0	1b2y_A(0.0916);3ole_A(0.0951);2cpu_A(0.0931);1kb3_A(0.0944);3old_A(0.0981);4gqr_A(0.0952);1kbk_A(0.0902);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);1xd0_A(0.0851);3bay_A(0.0913);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);1xh1_A(0.0885);3ij7_A(0.0896);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);1mfu_A(0.0986);3bai_A(0.0903);1u33_A(0.0923);2qmk_A(0.0959);3bak_A(0.0943);3baj_A(0.0824);1u30_A(0.0939);1jxj_A(0.0972);1c8q_A(0.0988);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);3cpu_A(0.092);1xcx_A(0.0892);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	T:1				0.0723	1	1.0	luad:1			3d									
-AMY1C	D332		332	712.0	1b2y_A(0.0916);3ole_A(0.0951);2cpu_A(0.0931);1kb3_A(0.0944);3old_A(0.0981);4gqr_A(0.0952);1kbk_A(0.0902);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);1xd0_A(0.0851);3bay_A(0.0913);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);1xh1_A(0.0885);3ij7_A(0.0896);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);1mfu_A(0.0986);3bai_A(0.0903);1u33_A(0.0923);2qmk_A(0.0959);3bak_A(0.0943);3baj_A(0.0824);1u30_A(0.0939);1jxj_A(0.0972);1c8q_A(0.0988);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);3cpu_A(0.092);1xcx_A(0.0892);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	N:1				0.0723	1	1.0	lusc:1			3d									
-AMY1C	I327		327	713.0	1b2y_A(0.0916);2cpu_A(0.0931);3ole_A(0.0951);3old_A(0.0981);1kb3_A(0.0944);4gqq_A(0.097);1kbk_A(0.0902);4gqr_A(0.0952);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);3bay_A(0.0913);1xd0_A(0.0851);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);3ij7_A(0.0896);1xh1_A(0.0885);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);3bai_A(0.0903);1u33_A(0.0923);1mfu_A(0.0986);3bak_A(0.0943);2qmk_A(0.0959);3baj_A(0.0824);1u30_A(0.0939);1c8q_A(0.0988);1jxj_A(0.0972);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);1xcx_A(0.0892);3cpu_A(0.092);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	T:1				0.0723	1	1.0	luad:1			3d									
-AMY1C	D332		332	713.0	1b2y_A(0.0916);2cpu_A(0.0931);3ole_A(0.0951);3old_A(0.0981);1kb3_A(0.0944);4gqq_A(0.097);1kbk_A(0.0902);4gqr_A(0.0952);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);3bay_A(0.0913);1xd0_A(0.0851);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);3ij7_A(0.0896);1xh1_A(0.0885);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);3bai_A(0.0903);1u33_A(0.0923);1mfu_A(0.0986);3bak_A(0.0943);2qmk_A(0.0959);3baj_A(0.0824);1u30_A(0.0939);1c8q_A(0.0988);1jxj_A(0.0972);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);1xcx_A(0.0892);3cpu_A(0.092);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	N:1				0.0723	1	1.0	lusc:1			3d									
+AMY1C	S326		326	712.0	1b2y_A(0.0916);3ole_A(0.0951);2cpu_A(0.0931);1kb3_A(0.0944);3old_A(0.0981);4gqr_A(0.0952);1kbk_A(0.0902);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);1xd0_A(0.0851);3bay_A(0.0913);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);1xh1_A(0.0885);3ij7_A(0.0896);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);1mfu_A(0.0986);3bai_A(0.0903);1u33_A(0.0923);2qmk_A(0.0959);3bak_A(0.0943);3baj_A(0.0824);1u30_A(0.0939);1jxj_A(0.0972);1c8q_A(0.0988);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);3cpu_A(0.092);1xcx_A(0.0892);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	Y:1				0.0723	1	1.0	luad:1		ENST00000370079	3d									
+AMY1C	I327		327	712.0	1b2y_A(0.0916);3ole_A(0.0951);2cpu_A(0.0931);1kb3_A(0.0944);3old_A(0.0981);4gqr_A(0.0952);1kbk_A(0.0902);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);1xd0_A(0.0851);3bay_A(0.0913);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);1xh1_A(0.0885);3ij7_A(0.0896);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);1mfu_A(0.0986);3bai_A(0.0903);1u33_A(0.0923);2qmk_A(0.0959);3bak_A(0.0943);3baj_A(0.0824);1u30_A(0.0939);1jxj_A(0.0972);1c8q_A(0.0988);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);3cpu_A(0.092);1xcx_A(0.0892);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	T:1				0.0723	1	1.0	luad:1		ENST00000370079	3d									
+AMY1C	D332		332	712.0	1b2y_A(0.0916);3ole_A(0.0951);2cpu_A(0.0931);1kb3_A(0.0944);3old_A(0.0981);4gqr_A(0.0952);1kbk_A(0.0902);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);1xd0_A(0.0851);3bay_A(0.0913);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);1xh1_A(0.0885);3ij7_A(0.0896);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);1mfu_A(0.0986);3bai_A(0.0903);1u33_A(0.0923);2qmk_A(0.0959);3bak_A(0.0943);3baj_A(0.0824);1u30_A(0.0939);1jxj_A(0.0972);1c8q_A(0.0988);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);3cpu_A(0.092);1xcx_A(0.0892);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	N:1				0.0723	1	1.0	lusc:1		ENST00000370079	3d									
+AMY1C	I327		327	713.0	1b2y_A(0.0916);2cpu_A(0.0931);3ole_A(0.0951);3old_A(0.0981);1kb3_A(0.0944);4gqq_A(0.097);1kbk_A(0.0902);4gqr_A(0.0952);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);3bay_A(0.0913);1xd0_A(0.0851);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);3ij7_A(0.0896);1xh1_A(0.0885);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);3bai_A(0.0903);1u33_A(0.0923);1mfu_A(0.0986);3bak_A(0.0943);2qmk_A(0.0959);3baj_A(0.0824);1u30_A(0.0939);1c8q_A(0.0988);1jxj_A(0.0972);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);1xcx_A(0.0892);3cpu_A(0.092);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	T:1				0.0723	1	1.0	luad:1		ENST00000370079	3d									
+AMY1C	D332		332	713.0	1b2y_A(0.0916);2cpu_A(0.0931);3ole_A(0.0951);3old_A(0.0981);1kb3_A(0.0944);4gqq_A(0.097);1kbk_A(0.0902);4gqr_A(0.0952);1u2y_A(0.0918);3olg_A(0.0908);3oli_A(0.0949);3blk_A(0.0982);1xd1_A(0.0933);1bsi_A(0.089);3bax_A(0.096);3bay_A(0.0913);1xd0_A(0.0851);3ij9_A(0.0927);3ij8_A(0.0922);1xh0_A(0.0876);3ij7_A(0.0896);1xh1_A(0.0885);1xh2_A(0.0856);1cpu_A(0.0951);3baw_A(0.094);3bai_A(0.0903);1u33_A(0.0923);1mfu_A(0.0986);3bak_A(0.0943);2qmk_A(0.0959);3baj_A(0.0824);1u30_A(0.0939);1c8q_A(0.0988);1jxj_A(0.0972);1hny_A(0.094);3blp_X(0.0964);1kbb_A(0.089);1xgz_A(0.0902);1xcx_A(0.0892);3cpu_A(0.092);1xcw_A(0.0916);1kgu_A(0.0964);1kgx_A(0.0834);1kgw_A(0.0723);2qv4_A(0.0938)	Cluster-exclusive	N:1				0.0723	1	1.0	lusc:1		ENST00000370079	3d									
 C10ORF71	S93		93	718.0	3bg3_B(0.0728);3bg3_A(0.0737)	Cluster-exclusive	L:1				0.0728	1	1.0	stad:1		ENST00000374144	3d									
 C10ORF71	W95		95	718.0	3bg3_B(0.0728);3bg3_A(0.0737)	Cluster-exclusive	L:1				0.0728	1	1.0	luad:1		ENST00000374144	3d									
 C10ORF71	A96		96	718.0	3bg3_B(0.0728);3bg3_A(0.0737)	Cluster-exclusive	V:3				0.0728	3	3.0	stad:1|ucec:1|luad:1		ENST00000374144	3d									
 C10ORF71	A97		97	718.0	3bg3_B(0.0728);3bg3_A(0.0737)	Cluster-exclusive	D:1				0.0728	1	1.0	luad:1		ENST00000374144	3d									
 C10ORF71	Q123		123	718.0	3bg3_B(0.0728);3bg3_A(0.0737)	Cluster-exclusive	H:1				0.0728	1	1.0	luad:1		ENST00000374144	3d									
-HIST2H3D	K123		123	721.0	4ld9_A(0.0732)	Cluster-exclusive	N:1				0.0732	1	1.0	brca:1			3d									
-HIST2H3D	D124		124	721.0	4ld9_A(0.0732)	Cluster-exclusive	Y:1				0.0732	1	1.0	brca:1			3d									
-HIST2H3D	I125		125	721.0	4ld9_A(0.0732)	Cluster-exclusive	V:1				0.0732	1	1.0	hnsc:1			3d									
-HIST2H3D	L127		127	721.0	4ld9_A(0.0732)	Cluster-exclusive	F:1				0.0732	1	1.0	coadread:1			3d									
+HIST2H3D	K123		123	721.0	4ld9_A(0.0732)	Cluster-exclusive	N:1				0.0732	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	D124		124	721.0	4ld9_A(0.0732)	Cluster-exclusive	Y:1				0.0732	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	I125		125	721.0	4ld9_A(0.0732)	Cluster-exclusive	V:1				0.0732	1	1.0	hnsc:1		ENST00000331491	3d									
+HIST2H3D	L127		127	721.0	4ld9_A(0.0732)	Cluster-exclusive	F:1				0.0732	1	1.0	coadread:1		ENST00000331491	3d									
 CACNA1E	E1108		1108	724.0	3egx_A(0.0733)	Cluster-exclusive	D:1				0.0733	1	1.0	coadread:1		ENST00000367573	3d									
 CACNA1E	E1109		1109	724.0	3egx_A(0.0733)	Cluster-exclusive	D:1				0.0733	1	1.0	luad:1		ENST00000367573	3d									
 CACNA1E	E1110		1110	724.0	3egx_A(0.0733)	Cluster-exclusive	D:1				0.0733	1	1.0	luad:1		ENST00000367573	3d									
 CACNA1E	E1112		1112	724.0	3egx_A(0.0733)	Cluster-exclusive	K:1				0.0733	1	1.0	skcm:1		ENST00000367573	3d									
 CACNA1E	K1113		1113	724.0	3egx_A(0.0733)	Cluster-exclusive	N:1				0.0733	1	1.0	ucec:1		ENST00000367573	3d									
 CACNA1E	Q1116		1116	724.0	3egx_A(0.0733)	Cluster-exclusive	K:1				0.0733	1	1.0	lihc:1		ENST00000367573	3d									
-PTPN11	G60		60	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	V:1				0.0735	1	1.0	laml:1			3d									
-PTPN11	D61		61	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	Y:1|N:1				0.0735	2	2.0	laml:1|nbl:1			3d									
-PTPN11	T468		468	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	M:5				0.0735	5	3.0	coadread:1|stad:2|skcm:2			3d									
-PTPN11	T507		507	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	K:2				0.0735	2	2.0	gbm:1|nbl:1			3d									
-PTPN11	Q510		510	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot	E:1|H:3|L:3				0.0735	7	4.0	all:1|gbm:2|laml:2|skcm:2			3d									
+PTPN11	G60		60	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	V:1				0.0735	1	1.0	laml:1		ENST00000351677	3d									
+PTPN11	D61		61	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	Y:1|N:1				0.0735	2	2.0	laml:1|nbl:1		ENST00000351677	3d									
+PTPN11	T468		468	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	M:5				0.0735	5	3.0	coadread:1|stad:2|skcm:2		ENST00000351677	3d									
+PTPN11	T507		507	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot-linked	K:2				0.0735	2	2.0	gbm:1|nbl:1		ENST00000351677	3d									
+PTPN11	Q510		510	726.0	4dgp_A(0.0934);4gwf_B(0.0735);4gwf_A(0.0765);4dgx_A(0.0963)	Hotspot	E:1|H:3|L:3				0.0735	7	4.0	all:1|gbm:2|laml:2|skcm:2		ENST00000351677	3d									
 MGAT1	A186		186	731.0	2am5_A(0.0783);2am4_A(0.0741);1foa_A(0.0786);2apc_A(0.076);2am3_A(0.0779);1fo8_A(0.0755);1fo9_A(0.0796)	Cluster-exclusive	E:1|V:1				0.0741	2	2.0	stad:1|lusc:1		ENST00000307826	3d									
 MGAT1	R187		187	731.0	2am5_A(0.0783);2am4_A(0.0741);1foa_A(0.0786);2apc_A(0.076);2am3_A(0.0779);1fo8_A(0.0755);1fo9_A(0.0796)	Cluster-exclusive	C:1|L:1				0.0741	2	2.0	ov:1|lihc:1		ENST00000307826	3d									
 MGAT1	R190		190	731.0	2am5_A(0.0783);2am4_A(0.0741);1foa_A(0.0786);2apc_A(0.076);2am3_A(0.0779);1fo8_A(0.0755);1fo9_A(0.0796)	Cluster-exclusive	S:1				0.0741	1	1.0	kirp:1		ENST00000307826	3d									
@@ -6650,10 +6650,10 @@ SERPINB3	T9		9	837.0	2zv6_C(0.0869);2zv6_A(0.099)	Cluster-exclusive	N:1				0.086
 SERPINB3	K10		10	837.0	2zv6_C(0.0869);2zv6_A(0.099)	Cluster-exclusive	N:1				0.0869	1	1.0	luad:1		ENST00000283752	3d									
 SERPINB3	F11		11	837.0	2zv6_C(0.0869);2zv6_A(0.099)	Cluster-exclusive	L:1				0.0869	1	1.0	coadread:1		ENST00000283752	3d									
 SERPINB3	P31		31	837.0	2zv6_C(0.0869);2zv6_A(0.099)	Cluster-exclusive	L:1				0.0869	1	1.0	luad:1		ENST00000283752	3d									
-PTPN11	E69		69	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	D:1|K:3				0.0879	4	3.0	coadread:2|gbm:1|pias:1			3d									
-PTPN11	F71		71	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	L:3				0.0879	3	3.0	laml:1|skcm:1|lgg:1			3d									
-PTPN11	A72		72	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot	T:3|D:2|V:2				0.0879	7	4.0	cll:2|laml:1|nbl:2|lgg:2			3d									
-PTPN11	M82		82	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	V:1				0.0879	1	1.0	luad:1			3d									
+PTPN11	E69		69	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	D:1|K:3				0.0879	4	3.0	coadread:2|gbm:1|pias:1		ENST00000351677	3d									
+PTPN11	F71		71	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	L:3				0.0879	3	3.0	laml:1|skcm:1|lgg:1		ENST00000351677	3d									
+PTPN11	A72		72	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot	T:3|D:2|V:2				0.0879	7	4.0	cll:2|laml:1|nbl:2|lgg:2		ENST00000351677	3d									
+PTPN11	M82		82	843.0	4fr4_D(0.0945);4fr4_C(0.0894);4fr4_E(0.0879);4fr4_B(0.0956);4fr4_A(0.0928)	Hotspot-linked	V:1				0.0879	1	1.0	luad:1		ENST00000351677	3d									
 LHX6	S141		141	844.0	1zw6_A(0.0929);621p_A(0.0987);4epw_A(0.0946);1gnq_A(0.1);4dsu_A(0.0984);3gft_B(0.0911);1bkd_R(0.0995);1nvu_Q(0.098);4lyj_A(0.0879);1nvv_Q(0.0998);1nvx_Q(0.0938);1lf5_A(0.0897);1nvv_R(0.0957);1xcm_A(0.0965);4epy_A(0.0966);1xd2_B(0.0948)	Cluster-exclusive	N:1				0.0879	1	1.0	coadread:1		ENST00000373755	3d									
 LHX6	D142		142	844.0	1zw6_A(0.0929);621p_A(0.0987);4epw_A(0.0946);1gnq_A(0.1);4dsu_A(0.0984);3gft_B(0.0911);1bkd_R(0.0995);1nvu_Q(0.098);4lyj_A(0.0879);1nvv_Q(0.0998);1nvx_Q(0.0938);1lf5_A(0.0897);1nvv_R(0.0957);1xcm_A(0.0965);4epy_A(0.0966);1xd2_B(0.0948)	Cluster-exclusive	Y:1|N:1				0.0879	2	2.0	acc:1|skcm:1		ENST00000373755	3d									
 LHX6	R145		145	844.0	1zw6_A(0.0929);621p_A(0.0987);4epw_A(0.0946);1gnq_A(0.1);4dsu_A(0.0984);3gft_B(0.0911);1bkd_R(0.0995);1nvu_Q(0.098);4lyj_A(0.0879);1nvv_Q(0.0998);1nvx_Q(0.0938);1lf5_A(0.0897);1nvv_R(0.0957);1xcm_A(0.0965);4epy_A(0.0966);1xd2_B(0.0948)	Cluster-exclusive	W:2				0.0879	2	2.0	coadread:1|gbm:1		ENST00000373755	3d									
@@ -6726,11 +6726,11 @@ BRAF	G596		596	864.0	3tv4_A(0.0907);4e4x_A(0.0926);3tv6_B(0.0964);4e4x_B(0.0974)
 BRAF	L597		597	864.0	3tv4_A(0.0907);4e4x_A(0.0926);3tv6_B(0.0964);4e4x_B(0.0974);4ehe_A(0.0957)	Hotspot	Q:2|R:1|S:1				0.0907	4	3.0	mmyl:1|prad:1|skcm:2		ENST00000288602	3d									
 BRAF	V600		600	864.0	3tv4_A(0.0907);4e4x_A(0.0926);3tv6_B(0.0964);4e4x_B(0.0974);4ehe_A(0.0957)	Hotspot	R:4|E:509|K:32				0.0907	545	10.0	mmyl:5|coadread:44|gbm:6|thca:237|hnsc:1|skcm:239|hgg:2|lgg:1|kirp:1|luad:9		ENST00000288602	3d									
 BRAF	K601		601	864.0	3tv4_A(0.0907);4e4x_A(0.0926);3tv6_B(0.0964);4e4x_B(0.0974);4ehe_A(0.0957)	Hotspot	T:1|E:12|N:2				0.0907	15	7.0	prad:1|cll:1|stad:2|thca:1|skcm:6|ucec:1|luad:3		ENST00000288602	3d									
-HIST2H3D	K123		123	867.0	1hq3_C(0.0907)	Cluster-exclusive	N:1				0.0907	1	1.0	brca:1			3d									
-HIST2H3D	D124		124	867.0	1hq3_C(0.0907)	Cluster-exclusive	Y:1				0.0907	1	1.0	brca:1			3d									
-HIST2H3D	I125		125	867.0	1hq3_C(0.0907)	Cluster-exclusive	V:1				0.0907	1	1.0	hnsc:1			3d									
-HIST2H3D	L127		127	867.0	1hq3_C(0.0907)	Cluster-exclusive	F:1				0.0907	1	1.0	coadread:1			3d									
-HIST2H3D	R130		130	867.0	1hq3_C(0.0907)	Cluster-exclusive	C:1				0.0907	1	1.0	brca:1			3d									
+HIST2H3D	K123		123	867.0	1hq3_C(0.0907)	Cluster-exclusive	N:1				0.0907	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	D124		124	867.0	1hq3_C(0.0907)	Cluster-exclusive	Y:1				0.0907	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	I125		125	867.0	1hq3_C(0.0907)	Cluster-exclusive	V:1				0.0907	1	1.0	hnsc:1		ENST00000331491	3d									
+HIST2H3D	L127		127	867.0	1hq3_C(0.0907)	Cluster-exclusive	F:1				0.0907	1	1.0	coadread:1		ENST00000331491	3d									
+HIST2H3D	R130		130	867.0	1hq3_C(0.0907)	Cluster-exclusive	C:1				0.0907	1	1.0	brca:1		ENST00000331491	3d									
 ZSCAN16	P53		53	869.0	1e07_A(0.0907)	Cluster-exclusive	H:1				0.0907	1	1.0	ucec:1		ENST00000340487	3d									
 ZSCAN16	G54		54	869.0	1e07_A(0.0907)	Cluster-exclusive	E:1				0.0907	1	1.0	ucec:1		ENST00000340487	3d									
 TP53	C135		135	870.0	2bip_A(0.0909);2biq_A(0.0926);4agn_A(0.0982);4agl_A(0.0988);2bin_A(0.0908)	Hotspot	R:3|S:2|F:9|W:2|G:1|Y:9				0.0908	26	12.0	acc:1|brca:5|paad:1|coadread:3|prad:2|stad:2|esca:5|blca:1|ov:2|lusc:1|lgg:1|luad:2		ENST00000269305	3d									
@@ -6807,16 +6807,16 @@ CTPS1	E237		237	890.0	4eaz_A(0.0927)	Cluster-exclusive	K:1				0.0927	1	1.0	brca:
 CTPS1	P238		238	890.0	4eaz_A(0.0927)	Cluster-exclusive	L:1				0.0927	1	1.0	cscc:1		ENST00000372616	3d									
 CTPS1	E239		239	890.0	4eaz_A(0.0927)	Cluster-exclusive	Q:1				0.0927	1	1.0	luad:1		ENST00000372616	3d									
 CTPS1	S300		300	890.0	4eaz_A(0.0927)	Cluster-exclusive	C:1				0.0927	1	1.0	luad:1		ENST00000372616	3d									
-HIST2H3D	K123		123	892.0	4h9s_B(0.0927)	Cluster-exclusive	N:1				0.0927	1	1.0	brca:1			3d									
-HIST2H3D	D124		124	892.0	4h9s_B(0.0927)	Cluster-exclusive	Y:1				0.0927	1	1.0	brca:1			3d									
-HIST2H3D	I125		125	892.0	4h9s_B(0.0927)	Cluster-exclusive	V:1				0.0927	1	1.0	hnsc:1			3d									
-HIST2H3D	L127		127	892.0	4h9s_B(0.0927)	Cluster-exclusive	F:1				0.0927	1	1.0	coadread:1			3d									
-HIST2H3D	R130		130	892.0	4h9s_B(0.0927)	Cluster-exclusive	C:1				0.0927	1	1.0	brca:1			3d									
-HIST2H3D	T119		119	893.0	4h9s_B(0.0927)	Cluster-exclusive	A:1				0.0927	1	1.0	lihc:1			3d									
-HIST2H3D	K123		123	893.0	4h9s_B(0.0927)	Cluster-exclusive	N:1				0.0927	1	1.0	brca:1			3d									
-HIST2H3D	D124		124	893.0	4h9s_B(0.0927)	Cluster-exclusive	Y:1				0.0927	1	1.0	brca:1			3d									
-HIST2H3D	I125		125	893.0	4h9s_B(0.0927)	Cluster-exclusive	V:1				0.0927	1	1.0	hnsc:1			3d									
-HIST2H3D	L127		127	893.0	4h9s_B(0.0927)	Cluster-exclusive	F:1				0.0927	1	1.0	coadread:1			3d									
+HIST2H3D	K123		123	892.0	4h9s_B(0.0927)	Cluster-exclusive	N:1				0.0927	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	D124		124	892.0	4h9s_B(0.0927)	Cluster-exclusive	Y:1				0.0927	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	I125		125	892.0	4h9s_B(0.0927)	Cluster-exclusive	V:1				0.0927	1	1.0	hnsc:1		ENST00000331491	3d									
+HIST2H3D	L127		127	892.0	4h9s_B(0.0927)	Cluster-exclusive	F:1				0.0927	1	1.0	coadread:1		ENST00000331491	3d									
+HIST2H3D	R130		130	892.0	4h9s_B(0.0927)	Cluster-exclusive	C:1				0.0927	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	T119		119	893.0	4h9s_B(0.0927)	Cluster-exclusive	A:1				0.0927	1	1.0	lihc:1		ENST00000331491	3d									
+HIST2H3D	K123		123	893.0	4h9s_B(0.0927)	Cluster-exclusive	N:1				0.0927	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	D124		124	893.0	4h9s_B(0.0927)	Cluster-exclusive	Y:1				0.0927	1	1.0	brca:1		ENST00000331491	3d									
+HIST2H3D	I125		125	893.0	4h9s_B(0.0927)	Cluster-exclusive	V:1				0.0927	1	1.0	hnsc:1		ENST00000331491	3d									
+HIST2H3D	L127		127	893.0	4h9s_B(0.0927)	Cluster-exclusive	F:1				0.0927	1	1.0	coadread:1		ENST00000331491	3d									
 CASP7	S231		231	894.0	1k86_B(0.0932);3r5k_A(0.0965);4jr1_A(0.0956);4hqr_B(0.0933);1kmc_A(0.0975);1kmc_B(0.0977);1i4o_A(0.0987);4jr1_B(0.0941);3r5k_B(0.0928)	Cluster-exclusive	L:2				0.0928	2	2.0	ucs:1|skcm:1		ENST00000345633	3d									
 CASP7	R233		233	894.0	1k86_B(0.0932);3r5k_A(0.0965);4jr1_A(0.0956);4hqr_B(0.0933);1kmc_A(0.0975);1kmc_B(0.0977);1i4o_A(0.0987);4jr1_B(0.0941);3r5k_B(0.0928)	Cluster-exclusive	W:1				0.0928	1	1.0	kirc:1		ENST00000345633	3d									
 CASP7	S234		234	894.0	1k86_B(0.0932);3r5k_A(0.0965);4jr1_A(0.0956);4hqr_B(0.0933);1kmc_A(0.0975);1kmc_B(0.0977);1i4o_A(0.0987);4jr1_B(0.0941);3r5k_B(0.0928)	Cluster-exclusive	N:1				0.0928	1	1.0	coadread:1		ENST00000345633	3d									
@@ -6874,9 +6874,9 @@ PPP2R1A	T145		145	922.0	4i5n_D(0.097)	Hotspot-linked	P:1				0.09699999999999999	
 PPP2R1A	S146		146	922.0	4i5n_D(0.097)	Hotspot-linked	L:3				0.09699999999999999	3	3.0	ucs:1|skcm:1|luad:1		ENST00000322088	3d									
 PPP2R1A	C148		148	922.0	4i5n_D(0.097)	Hotspot-linked	F:1				0.09699999999999999	1	1.0	luad:1		ENST00000322088	3d									
 PPP2R1A	R183		183	922.0	4i5n_D(0.097)	Hotspot	Q:4|W:14|G:1				0.09699999999999999	19	9.0	brca:1|coadread:5|prad:1|stad:1|ucs:3|hnsc:1|ov:3|ucec:2|luad:2		ENST00000322088	3d									
-AMY1C	H314		314	924.0	4gqq_A(0.097)	Cluster-exclusive	Y:1				0.09699999999999999	1	1.0	coadread:1			3d									
-AMY1C	S326		326	924.0	4gqq_A(0.097)	Cluster-exclusive	Y:1				0.09699999999999999	1	1.0	luad:1			3d									
-AMY1C	I327		327	924.0	4gqq_A(0.097)	Cluster-exclusive	T:1				0.09699999999999999	1	1.0	luad:1			3d									
+AMY1C	H314		314	924.0	4gqq_A(0.097)	Cluster-exclusive	Y:1				0.09699999999999999	1	1.0	coadread:1		ENST00000370079	3d									
+AMY1C	S326		326	924.0	4gqq_A(0.097)	Cluster-exclusive	Y:1				0.09699999999999999	1	1.0	luad:1		ENST00000370079	3d									
+AMY1C	I327		327	924.0	4gqq_A(0.097)	Cluster-exclusive	T:1				0.09699999999999999	1	1.0	luad:1		ENST00000370079	3d									
 RBBP7	E313		313	927.0	2xu7_A(0.0972)	Cluster-exclusive	K:2				0.0972	2	1.0	coadread:2		ENST00000380087	3d									
 RBBP7	S314		314	927.0	2xu7_A(0.0972)	Cluster-exclusive	Y:1				0.0972	1	1.0	ucec:1		ENST00000380087	3d									
 RBBP7	H315		315	927.0	2xu7_A(0.0972)	Cluster-exclusive	Y:1				0.0972	1	1.0	skcm:1		ENST00000380087	3d									
