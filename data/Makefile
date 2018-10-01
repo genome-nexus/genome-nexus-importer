@@ -12,11 +12,11 @@ Homo_sapiens.GRCh37.gff3.gz:
 
 # Generate ensembl transcript info containing exons and UTRs (input & output file in script)
 ensembl_transcript_info.txt.gz: Homo_sapiens.GRCh37.gff3.gz
-	cd ../scripts && python transform_gff_to_tsv_for_exon_info_from_ensembl.py ../data/$<
+	cd ../scripts && ./transform_gff_to_tsv_for_exon_info_from_ensembl.py ../data/$<
 
 # Add HGNC symbols, exons, UTRs and PFAM domains to Ensembl Transcript
-ensembl_biomart_transcripts.json.gz: ensembl_biomart_transcripts.txt ensembl_transcript_info.txt.gz ensembl_biomart_pfam_grch37.p13.txt
-	cd ../scripts && python add_domains_hugo_exon_info_to_ensembl_transcript.py $(foreach file,$^,../data/$(file)) | gzip -c > ../data/$@
+ensembl_biomart_transcripts.json.gz: ensembl_biomart_transcripts.txt ensembl_transcript_info.txt.gz ensembl_biomart_pfam_grch37.p13.txt ensembl_biomart_refseq_grch37.p13.txt
+	cd ../scripts && ./add_domains_hugo_refseq_exon_info_to_ensembl_transcript.py $(foreach file,$^,../data/$(file)) | gzip -c > ../data/$@
 
 # give default/canonical geneid/transcript based on given hugo symbol takes
 # about 50m to run (TODO: this can be easilty optimized)

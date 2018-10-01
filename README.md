@@ -43,6 +43,15 @@ Gene stable ID, Transcript stable Id, HGNC Symbol, HGNC ID
 5. Click on `Results`, and export all results to a `TSV` file.
 6. Copy over the downloaded file to replace [ensembl_biomart_geneids_grch37.p13.txt](ensembl_biomart_geneids_grch37.p13.txt).
 
+##### Ensembl endpoint RefSeq identifiers
+1. Go to Biomart ([grch37.ensembl.org/biomart/martview](grch37.ensembl.org/biomart/martview)) page on the Ensemble website.
+2. Select `Ensemble Genes` from the `Database` dropdown menu.
+3. Select `Human Genes` from the `Dataset` dropdown menu.
+4. Click on `Attributes`, and select these ones:
+Transcript stable Id, RefSeq mRNA ID
+5. Click on `Results`, and export all results to a `TSV` file.
+6. Copy over the downloaded file to replace [ensembl_biomart_refseq_grch37.p13.txt](ensembl_biomart_refseq_grch37.p13.txt).
+
 ### Change curl commands
 Some data is downloaded automatically through curl commands see
 [data/Makefile](data/Makefile). Change those if you want to change the data.
