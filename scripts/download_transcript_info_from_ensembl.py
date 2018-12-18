@@ -6,7 +6,8 @@ import os
 
 
 def request_transcript_ids(transcripts):
-    server = "http://grch37.rest.ensembl.org"
+    # Prepare API call
+    server = "https://rest.ensembl.org"
     ext = "/lookup/id"
     headers = {"Content-Type": "application/json", "Accept": "application/json"}
     transcripts_formatted = '", "'.join(transcripts)

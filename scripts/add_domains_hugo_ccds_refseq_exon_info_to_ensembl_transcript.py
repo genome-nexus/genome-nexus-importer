@@ -159,13 +159,13 @@ if __name__ == '__main__':
                         help="Ensembl transcript info extracted from GFF file")
 
     parser.add_argument("ensembl_biomart_pfam",
-                        default="../data/ensembl_biomart_pfam_grch37.p13.txt",
+                        default="../data/ensembl_biomart_pfam_grch38_ensembl92.txt",
                         help="Ensembl Biomart PFAM domain info")
     parser.add_argument("ensembl_biomart_refseq",
-                        default="../data/ensembl_biomart_refseq_grch37.p13.txt",
+                        default="../data/ensembl_biomart_refseq_grch38_ensembl92.txt",
                         help="Ensembl Biomart RefSeq info")
     parser.add_argument("ensembl_biomart_ccds",
-                        default="../data/ensembl_biomart_ccds_grch37.p13.txt",
+                        default="../data/ensembl_biomart_ccds_grch38_ensembl92.txt",
                         help="Ensembl Biomart CCDS info")
 
     args = parser.parse_args()

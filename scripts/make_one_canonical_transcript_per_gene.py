@@ -78,7 +78,7 @@ def ignore_certain_genes(x):
 
 def main():
     # input files
-    tsv = pd.read_csv("../data/ensembl_biomart_geneids_grch37.p13.transcript_info.txt", sep='\t', dtype={'is_canonical':bool})
+    tsv = pd.read_csv("../data/ensembl_biomart_geneids_grch38_ensembl92.transcript_info.txt", sep='\t', dtype={'is_canonical':bool})
     tsv = tsv.drop_duplicates()
     mskcc = pd.read_csv("../data/isoform_overrides_at_mskcc.txt", sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\

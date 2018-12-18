@@ -4,4 +4,10 @@
 data/ensembl_transcript_info.txt.gz
 data/Homo_sapiens.GRCh37.87.gff3.gz
 data/transcript_info/*
+data/hgnc.txt
+data/ensembl_biomart_geneids_*.transcript_info.txt
+data/ensembl_biomart_transcripts.txt
+data/ensembl_biomart_transcripts.json.gz
+data/ensembl_biomart_canonical_transcripts_per_hgnc.txt
+data/Homo_sapiens.*.gff3.gz
 scripts/.cache/
