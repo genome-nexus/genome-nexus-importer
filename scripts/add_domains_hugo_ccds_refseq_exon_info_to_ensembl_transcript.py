@@ -87,24 +87,40 @@ def add_nested_pfam_domains(transcripts, pfam_domains):
     transcripts["domains"] = transcripts.index.map(get_domain_for_transcript)
     return transcripts
 
-def add_refseq(transcripts, refseq):
+def add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides_mskcc):
     """Add one refseq id for each transcript. There can be multiple. Pick
     highest number transcript id in that case."""
     refseq.columns = [c.lower().replace(' ','_') for c in refseq.columns]
     refseq_grouped = refseq.groupby("transcript_stable_id")
 
     def get_refseq_for_transcript(x):
+        # use previously assigned uniprot refseq id
+        try:
+            override_refseq_id = isoform_overrides_uniprot.loc[x]['refseq_id']
+            if hasattr(override_refseq_id, 'split'):
+                return override_refseq_id.split('.')[0]
+        except KeyError:
+            pass
+
+        # use previously assigned mskcc refseq id
+        try:
+            override_refseq_id = isoform_overrides_mskcc.loc[x]['refseq_id']
+            if hasattr(override_refseq_id, 'split'):
+                return override_refseq_id.split('.')[0]
+        except KeyError:
+            pass
+
         try:
             # Fix for: https://github.com/pandas-dev/pandas/issues/9466
             # use groupby to get indices, loc is slow for non-unique
-            return refseq.iloc[refseq_grouped.groups[x]]['refseq_mrna_id'].sort_values(ascending=False).values[0]
+            refseqids = refseq.iloc[refseq_grouped.groups[x]]['refseq_mrna_id'].sort_values(ascending=False).values[0]
         except KeyError:
             return np.nan
 
     transcripts['refseq_mrna_id'] = transcripts.index.map(get_refseq_for_transcript)
     return transcripts
 
-def add_ccds(transcripts, ccds):
+def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_mskcc):
     """Add one ccds id for each transcript. There is only one per transcript."""
     ccds.columns = [c.lower().replace(' ','_') for c in ccds.columns]
     ccds = ccds[~pd.isnull(ccds["ccds_id"])]
@@ -114,6 +130,20 @@ def add_ccds(transcripts, ccds):
 
     def get_ccds_for_transcript(x):
         try:
+            override_ccdsid = isoform_overrides_uniprot.loc[x]['ccds_id']
+            if hasattr(override_ccdsid, 'split'):
+                return override_ccdsid.split('.')[0]
+        except KeyError:
+            pass
+
+        try:
+            override_ccdsid = isoform_overrides_mskcc.loc[x]['ccds_id']
+            if hasattr(override_ccdsid, 'split'):
+                return override_ccdsid.split('.')[0]
+        except KeyError:
+            pass
+
+        try:
             return ccds.loc[x].values[0]
         except KeyError:
             return np.nan
@@ -122,7 +152,7 @@ def add_ccds(transcripts, ccds):
     return transcripts
 
 
-def main(ensembl_biomart_transcripts, ensembl_transcript_info, ensembl_biomart_pfam, ensembl_biomart_refseq, ensembl_biomart_ccds):
+def main(ensembl_biomart_transcripts, ensembl_transcript_info, ensembl_biomart_pfam, ensembl_biomart_refseq, ensembl_biomart_ccds, isoform_overrides_uniprot, isoform_overrides_mskcc):
 
     # Read input and set index column
     transcripts = pd.read_csv(ensembl_biomart_transcripts, sep='\t')
@@ -132,11 +162,13 @@ def main(ensembl_biomart_transcripts, ensembl_transcript_info, ensembl_biomart_p
 
     # import refseq
     refseq = pd.read_csv(ensembl_biomart_refseq, sep="\t")
-    transcripts = add_refseq(transcripts, refseq)
+    isoform_overrides_uniprot = pd.read_csv(isoform_overrides_uniprot, sep="\t").set_index('enst_id')
+    isoform_overrides_mskcc = pd.read_csv(isoform_overrides_mskcc, sep="\t").set_index('enst_id')
+    transcripts = add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides_mskcc)
 
     # import ccds
     ccds = pd.read_csv(ensembl_biomart_ccds, sep="\t")
-    transcripts = add_ccds(transcripts, ccds)
+    transcripts = add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_mskcc)
 
     # Add nested HGNC, exons and PFAM domains
     transcripts = add_nested_hgnc(transcripts)
@@ -167,6 +199,12 @@ if __name__ == '__main__':
     parser.add_argument("ensembl_biomart_ccds",
                         default="../data/ensembl_biomart_ccds_grch37.p13.txt",
                         help="Ensembl Biomart CCDS info")
+    parser.add_argument("vcf2maf_isoform_overrides_uniprot",
+                        default="../data/isoform_overrides_uniprot.txt",
+                        help="VCF2MAF isoform uniprot assignments")
+    parser.add_argument("vcf2maf_isoform_overrides_mskcc",
+                        default="../data/isoform_overrides_at_mskcc.txt",
+                        help="VCF2MAF isoform mskcc assignments")
 
     args = parser.parse_args()
-    main(args.ensembl_biomart_transcripts, args.ensembl_transcript_info, args.ensembl_biomart_pfam, args.ensembl_biomart_refseq, args.ensembl_biomart_ccds)
+    main(args.ensembl_biomart_transcripts, args.ensembl_transcript_info, args.ensembl_biomart_pfam, args.ensembl_biomart_refseq, args.ensembl_biomart_ccds, args.vcf2maf_isoform_overrides_uniprot, args.vcf2maf_isoform_overrides_mskcc)

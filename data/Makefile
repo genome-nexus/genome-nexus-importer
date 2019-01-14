@@ -15,7 +15,7 @@ ensembl_transcript_info.txt.gz: Homo_sapiens.GRCh37.gff3.gz
 	cd ../scripts && ./transform_gff_to_tsv_for_exon_info_from_ensembl.py ../data/$<
 
 # Add HGNC symbols, exons, UTRs and PFAM domains to Ensembl Transcript
-ensembl_biomart_transcripts.json.gz: ensembl_biomart_transcripts.txt ensembl_transcript_info.txt.gz ensembl_biomart_pfam_grch37.p13.txt ensembl_biomart_refseq_grch37.p13.txt ensembl_biomart_ccds_grch37.p13.txt
+ensembl_biomart_transcripts.json.gz: ensembl_biomart_transcripts.txt ensembl_transcript_info.txt.gz ensembl_biomart_pfam_grch37.p13.txt ensembl_biomart_refseq_grch37.p13.txt ensembl_biomart_ccds_grch37.p13.txt isoform_overrides_uniprot.txt isoform_overrides_at_mskcc.txt
 	cd ../scripts && ./add_domains_hugo_ccds_refseq_exon_info_to_ensembl_transcript.py $(foreach file,$^,../data/$(file)) | gzip -c > ../data/$@
 
 # give default/canonical geneid/transcript based on given hugo symbol takes
