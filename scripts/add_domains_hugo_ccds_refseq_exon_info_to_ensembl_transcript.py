@@ -113,7 +113,7 @@ def add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides
         try:
             # Fix for: https://github.com/pandas-dev/pandas/issues/9466
             # use groupby to get indices, loc is slow for non-unique
-            refseqids = refseq.iloc[refseq_grouped.groups[x]]['refseq_mrna_id'].sort_values(ascending=False).values[0]
+            return refseq.iloc[refseq_grouped.groups[x]]['refseq_mrna_id'].sort_values(ascending=False).values[0]
         except KeyError:
             return np.nan
 
