@@ -11,10 +11,15 @@ app and the database: [genome
 nexus](https://github.com/genome-nexus/genome-nexus).
 
 ### Directly import to mongo database
-Run the script [scripts/import_mongo.sh](scripts/import_mongo.sh). It will
-import files from [export/](export/):
-```
-./scripts/import_mongo.sh mongodb://127.0.0.1:27017/annotator # change accordingly
+Run the script [scripts/import_mongo.sh](scripts/import_mongo.sh) to import processed data files into a running 
+database. When running this script, please specify:
+- mongo database address, for example `mongodb://127.0.0.1:27017/annotator`.
+- Reference Genome and Ensembl Release, for example `grch37_ensembl92` or `grch38_ensembl92`. Files are imported from 
+`data/<refgenome_ensemblversion>/export/`.
+
+Example:
+```bash
+./scripts/import_mongo.sh mongodb://127.0.0.1:27017/annotator grch37_ensembl92
 ```
 
 ## Update data
@@ -74,7 +79,7 @@ Transcript stable Id, CCDS ID
 6. Save the downloaded file as `ensembl_biomart_ccds.txt` in `data/<refgenome_ensemblversion>/input`.
 
 ## Download and transform data
-To run the pipeline that transforms all intermediate data, run the following. This takes _roughly one hour_ to complete.
+To run the pipeline that transforms all intermediate data, run the following. This takes _roughly two hours_ to complete.
 
 ```bash
 cd data
@@ -83,5 +88,6 @@ make all
 
 During this process, every transcript in `ensembl_biomart_geneids.txt` is assessed to be either canonical or not, by 
 querying the Ensembl REST API. This takes a while, because only 1000 transcripts can be queried at a time. Progress can 
-be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. The 
-length of `ensembl_biomart_geneids.txt` is about _224596_ so, the pipeline will save about _225_ of these files.
+be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. Gene 
+source file `ensembl_biomart_geneids.txt` contains about _224596_ transcripts, so the pipeline will save about _225_ 
+of these files.

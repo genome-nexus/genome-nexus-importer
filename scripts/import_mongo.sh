@@ -15,7 +15,7 @@ if [[ $2 == grch* ]]
 then
     REF_ENSEMBL_VERSION=$2
 else
-	REF_ENSEMBL_VERSION='grch37_ensembl92'
+    REF_ENSEMBL_VERSION='grch37_ensembl92'
 fi
 echo ${REF_ENSEMBL_VERSION}
 
