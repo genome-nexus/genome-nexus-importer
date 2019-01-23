@@ -11,12 +11,13 @@ fi
 echo ${MONGO_URI}
 
 # use second argument to specify reference genome and ensembl version
-if [[ $2 == grch* ]]
-then
+if [[ $2 == grch* ]]; then
     REF_ENSEMBL_VERSION=$2
-else
+# if the environment variable is empty, set a default
+elif [[ -z "$REF_ENSEMBL_VERSION" ]]; then
     REF_ENSEMBL_VERSION='grch37_ensembl92'
 fi
+# else assume it's correctly set
 echo ${REF_ENSEMBL_VERSION}
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

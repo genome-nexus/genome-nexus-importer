@@ -71,7 +71,7 @@ def ignore_rna_gene(x):
 def ignore_certain_genes(x):
     ignore_genes = {'fam25hp', 'rmrpp1', 'hla-as1', 'pramef16', 'arid4b-it1',
     'ctglf8p', 'htr4-it1', 'nicn1-as1', 'pramef3', 'c9orf38', 'tbc1d4-as1',
-    'rmrpp3', 'magi2-it1', 'rmrpp2', 'rmrpp4', 'ercc6-pgbd3', 'tbce-as1', 'hpvc1', 'fam231c'}
+    'rmrpp3', 'magi2-it1', 'rmrpp2', 'rmrpp4', 'ercc6-pgbd3', 'tbce-as1', 'hpvc1', 'fam231a', 'fam231b', 'fam231c', 'fam231d'}
 
     return set({i for i in x if i not in ignore_genes})
 
