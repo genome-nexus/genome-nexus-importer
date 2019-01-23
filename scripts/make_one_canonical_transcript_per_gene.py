@@ -49,7 +49,7 @@ def get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, hg
         raise(Exception("Unknown hugo symbol"))
 
     if hgnc_gene_rows.ndim == 1:
-        result = get_ensembl_canonical(ensembl_table[ensembl_table.gene_stable_id == hgnc_gene_rows.ensembl_id], field)
+        result = get_ensembl_canonical(ensembl_table[ensembl_table.gene_stable_id == hgnc_gene_rows.ensembl_gene_id], field)
         if pd.isnull(result):
             # use ensembl data to find canonical transcript if nan is found
             # there's actually 222 of these (see notebook)
@@ -71,56 +71,56 @@ def ignore_rna_gene(x):
 def ignore_certain_genes(x):
     ignore_genes = {'fam25hp', 'rmrpp1', 'hla-as1', 'pramef16', 'arid4b-it1',
     'ctglf8p', 'htr4-it1', 'nicn1-as1', 'pramef3', 'c9orf38', 'tbc1d4-as1',
-    'rmrpp3', 'magi2-it1', 'rmrpp2', 'rmrpp4', 'ercc6-pgbd3', 'tbce-as1'}
+    'rmrpp3', 'magi2-it1', 'rmrpp2', 'rmrpp4', 'ercc6-pgbd3', 'tbce-as1', 'hpvc1', 'fam231c'}
 
     return set({i for i in x if i not in ignore_genes})
 
 
 def main():
     # input files
-    tsv = pd.read_csv("../data/ensembl_biomart_geneids_grch37.p13.transcript_info.txt", sep='\t', dtype={'is_canonical':bool})
+    tsv = pd.read_csv(sys.argv[1], sep='\t', dtype={'is_canonical':bool})
     tsv = tsv.drop_duplicates()
-    mskcc = pd.read_csv("../data/isoform_overrides_at_mskcc.txt", sep='\t')\
+    mskcc = pd.read_csv("common_input/isoform_overrides_at_mskcc.txt", sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    uniprot = pd.read_csv("../data/isoform_overrides_uniprot.txt", sep='\t')\
+    uniprot = pd.read_csv("common_input/isoform_overrides_uniprot.txt", sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    custom = pd.read_csv("../data/isoform_overrides_genome_nexus.txt", sep='\t')\
+    custom = pd.read_csv("common_input/isoform_overrides_genome_nexus.txt", sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    hgnc = pd.read_csv('../data/hgnc.txt', sep='\t')
-    hgnc = hgnc[~hgnc.approved_symbol.str.endswith("withdrawn")].copy()
-    hugos = hgnc['approved_symbol'].unique()
-    hgnc = hgnc.set_index('approved_symbol')
+    hgnc = pd.read_csv('common_input/hgnc_complete_set_20190122.txt', sep='\t', dtype=object)
+    hgnc = hgnc[hgnc['name'] != 'entry withdrawn'].copy()
+    hugos = hgnc['symbol'].unique()
+    hgnc = hgnc.set_index('symbol')
     # assume each row has approved symbol
     assert(len(hugos) == len(hgnc))
 
     # only test the cancer genes for oddities (these are very important)
-    cgs = set(pd.read_csv('../data/oncokb_cancer_genes_list_20170926.txt',sep='\t')['Hugo Symbol'])
+    cgs = set(pd.read_csv('common_input/oncokb_cancer_genes_list_20170926.txt',sep='\t')['Hugo Symbol'])
     # each cancer gene stable id should have only one associated cancer gene symbol
     assert(tsv[tsv.hgnc_symbol.isin(cgs)].groupby('gene_stable_id').hgnc_symbol.nunique().sort_values().nunique() == 1)
     # each transcript stable id always belongs to only one gene stable id
     assert(tsv.groupby('transcript_stable_id').gene_stable_id.nunique().sort_values().nunique() == 1)
 
     # create hgnc_symbol to gene id mapping
-    # ignore hugo symbols from ensembl data dump (includes prev symbols and synonyms)
-    syns = hgnc.synonyms.str.split(",").dropna().apply(lambda l: [s.strip() for s in l])
+    # ignore hugo symbols from ensembl data dump (includes prev symbols and alias_symbol)
+    syns = hgnc.alias_symbol.str.strip('"').str.split("|").dropna()
     syns = set(itertools.chain.from_iterable(syns))
-    previous_symbols = hgnc.previous_symbols.str.split(",").dropna().apply(lambda l: [s.strip() for s in l])
-    previous_symbols = set(itertools.chain.from_iterable(previous_symbols))
+    prev_symbol = hgnc.prev_symbol.str.strip('"').str.split("|").dropna()
+    prev_symbol = set(itertools.chain.from_iterable(prev_symbol))
 
-    # there is overlap between approved_symbols, synonyms and previous symbols
+    # there is overlap between symbols, alias_symbol and previous symbols
     # therefore use logic in above order when querying
-    # assert(len(syns.intersection(previous_symbols)) == 0) #329
+    # assert(len(syns.intersection(prev_symbol)) == 0) #329
     # assert(len(set(hugos).intersection(syns)) == 0) # 495
-    # assert(len(set(hugos).intersection(previous_symbols)) == 0) #227
+    # assert(len(set(hugos).intersection(prev_symbol)) == 0) #227
 
     # all cancer genes and hugo symbols in ensembl data dump should be
-    # contained in hgnc approved symbols and synonyms
+    # contained in hgnc approved symbols and alias_symbol
     # c12orf9 is only in sanger's cancer gene census and has been withdrawn
-    assert(len(lowercase_set(set(cgs)) - set(['c12orf9']) - lowercase_set(set(hugos).union(syns).union(previous_symbols))) == 0)
-    no_symbols_in_hgnc = lowercase_set(tsv.hgnc_symbol.dropna().unique()) - lowercase_set(set(hugos).union(syns).union(previous_symbols))
+    assert(len(lowercase_set(set(cgs)) - set(['c12orf9']) - lowercase_set(set(hugos).union(syns).union(prev_symbol))) == 0)
+    no_symbols_in_hgnc = lowercase_set(tsv.hgnc_symbol.dropna().unique()) - lowercase_set(set(hugos).union(syns).union(prev_symbol))
     assert(len(ignore_certain_genes(ignore_rna_gene(no_symbols_in_hgnc))) == 0)
 
     tsv = tsv.set_index('hgnc_symbol')
@@ -151,9 +151,9 @@ def main():
     one_transcript_per_hugo_symbol.index.name = 'hgnc_symbol'
 
     # merge in other hgnc fields
-    merged = pd.merge(one_transcript_per_hugo_symbol.reset_index(), hgnc.reset_index(), left_on='hgnc_symbol', right_on='approved_symbol')
-    del merged['approved_symbol']
-    del merged['ensembl_id']
+    merged = pd.merge(one_transcript_per_hugo_symbol.reset_index(), hgnc.reset_index(), left_on='hgnc_symbol', right_on='symbol')
+    del merged['symbol']
+    del merged['ensembl_gene_id']
     merged.to_csv(sys.stdout, sep='\t', index=False)
 
 if __name__ == "__main__":

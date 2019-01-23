@@ -10,6 +10,15 @@ else
 fi
 echo ${MONGO_URI}
 
+# use second argument to specify reference genome and ensembl version
+if [[ $2 == grch* ]]
+then
+    REF_ENSEMBL_VERSION=$2
+else
+	REF_ENSEMBL_VERSION='grch37_ensembl92'
+fi
+echo ${REF_ENSEMBL_VERSION}
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 import() {
@@ -21,7 +30,7 @@ import() {
 }
 
 #TODO: get this config from some JSON file, so both bash and Java can read it
-import ensembl.biomart_transcripts <(gunzip -c ${DIR}/../export/ensembl_biomart_transcripts.json.gz) '--type json'
-import ensembl.canonical_transcript_per_hgnc ${DIR}/../export/ensembl_biomart_canonical_transcripts_per_hgnc.txt '--type tsv --headerline'
-import pfam.domain ${DIR}/../export/pfamA.txt '--type tsv --headerline'
-import hotspot.mutation ${DIR}/../export/hotspots_v2_and_3d.txt '--type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
+import ensembl.biomart_transcripts <(gunzip -c ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/ensembl_biomart_transcripts.json.gz) '--type json'
+import ensembl.canonical_transcript_per_hgnc ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt '--type tsv --headerline'
+import pfam.domain ${DIR}/data/${REF_ENSEMBL_VERSION}/export/pfamA.txt '--type tsv --headerline'
+import hotspot.mutation ${DIR}/data/${REF_ENSEMBL_VERSION}/export/hotspots_v2_and_3d.txt '--type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'

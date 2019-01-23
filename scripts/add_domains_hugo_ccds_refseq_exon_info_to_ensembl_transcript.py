@@ -4,7 +4,6 @@ info. Output resulting JSON"""
 
 import pandas as pd
 import numpy as np
-import argparse
 import sys
 
 
@@ -152,7 +151,14 @@ def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_msk
     return transcripts
 
 
-def main(ensembl_biomart_transcripts, ensembl_transcript_info, ensembl_biomart_pfam, ensembl_biomart_refseq, ensembl_biomart_ccds, isoform_overrides_uniprot, isoform_overrides_mskcc):
+def main():
+    ensembl_biomart_transcripts = sys.argv[1]
+    ensembl_transcript_info = sys.argv[2]
+    ensembl_biomart_pfam = sys.argv[3]
+    ensembl_biomart_refseq = sys.argv[4]
+    ensembl_biomart_ccds = sys.argv[5]
+    isoform_overrides_uniprot = sys.argv[6]
+    isoform_overrides_mskcc = sys.argv[7]
 
     # Read input and set index column
     transcripts = pd.read_csv(ensembl_biomart_transcripts, sep='\t')
@@ -180,31 +186,4 @@ def main(ensembl_biomart_transcripts, ensembl_transcript_info, ensembl_biomart_p
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description=__doc__,
-                                     formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("ensembl_biomart_transcripts",
-                        default="../data/ensembl_biomart_transcripts.txt",
-                        help="Ensembl Biomart Transcript info")
-
-    parser.add_argument("ensembl_transcript_info",
-                        default="../data/ensembl_transcript_info.txt.gz",
-                        help="Ensembl transcript info extracted from GFF file")
-
-    parser.add_argument("ensembl_biomart_pfam",
-                        default="../data/ensembl_biomart_pfam_grch37.p13.txt",
-                        help="Ensembl Biomart PFAM domain info")
-    parser.add_argument("ensembl_biomart_refseq",
-                        default="../data/ensembl_biomart_refseq_grch37.p13.txt",
-                        help="Ensembl Biomart RefSeq info")
-    parser.add_argument("ensembl_biomart_ccds",
-                        default="../data/ensembl_biomart_ccds_grch37.p13.txt",
-                        help="Ensembl Biomart CCDS info")
-    parser.add_argument("vcf2maf_isoform_overrides_uniprot",
-                        default="../data/isoform_overrides_uniprot.txt",
-                        help="VCF2MAF isoform uniprot assignments")
-    parser.add_argument("vcf2maf_isoform_overrides_mskcc",
-                        default="../data/isoform_overrides_at_mskcc.txt",
-                        help="VCF2MAF isoform mskcc assignments")
-
-    args = parser.parse_args()
-    main(args.ensembl_biomart_transcripts, args.ensembl_transcript_info, args.ensembl_biomart_pfam, args.ensembl_biomart_refseq, args.ensembl_biomart_ccds, args.vcf2maf_isoform_overrides_uniprot, args.vcf2maf_isoform_overrides_mskcc)
+    main()

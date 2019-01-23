@@ -11,7 +11,9 @@ import gzip
 import argparse
 
 
-def transform_gff_to_tsv(gff_file, tsv_file):
+def transform_gff_to_tsv(gff_file):
+    """Transform GFF3 file to TSV for exons and UTRs. Output is written to
+    stdout, as the Makefile wrapper expects. Input file is GFF3 file, see Makefile"""
 
     # Dataframe to append the transcript information
     transcript_info = pd.DataFrame(columns=['transcript_id', 'type', 'id', 'start', 'end', 'rank', 'strand', 'version'])
@@ -54,21 +56,9 @@ def transform_gff_to_tsv(gff_file, tsv_file):
 
     # By first appending it to a list and only adding it to a DF once, performance is greatly improved
     transcript_info = transcript_info.append(rows, ignore_index=True, sort=False)
-    transcript_info.to_csv(tsv_file, sep='\t', index=False, compression='gzip')
+    transcript_info.to_csv(sys.stdout, sep='\t', index=False)
     return
 
 
-def main(gff_file):
-    tsv_file = "../data/ensembl_transcript_info.txt.gz"
-    transform_gff_to_tsv(gff_file, tsv_file)
-
-
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Transform GFF3 file to TSV for exons and UTRs. Output is written to '
-                                                 'stdout, as the Makefile wrapper expects.')
-    parser.add_argument("gff_file",
-                        default="../data/Homo_sapiens.GRCh37.gff3.gz",
-                        help="Homo_sapiens.GRCh37.gff3.gz")
-    args = parser.parse_args()
-
-    main(args.gff_file)
+    transform_gff_to_tsv(sys.argv[1])
