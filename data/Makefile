@@ -1,6 +1,7 @@
 # Specify version, consistent with the folder in `data/` created for this version
 VERSION=grch37_ensembl92
-GFF3_URL=ftp://ftp.ensembl.org/pub/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.92.gff3.gz
+#GFF3_URL=ftp://ftp.ensembl.org/pub/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh38.92.gff3.gz
+GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz
 
 # Specify the URL prefix for vcf2maf to retrieve `isoform_overrides_uniprot.txt` and `isoform_overrides_at_mskcc.txt`
 VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/v1.6.16
