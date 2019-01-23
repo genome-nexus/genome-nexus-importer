@@ -91,3 +91,9 @@ querying the Ensembl REST API. This takes a while, because only 1000 transcripts
 be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. Gene 
 source file `ensembl_biomart_geneids.txt` contains about _224596_ transcripts, so the pipeline will save about _225_ 
 of these files.
+
+## Verify data
+To verify the pipeline ran data for the correct reference genome, you can verify the exon coordinates in
+`export/ensembl_biomart_transcripts.json.gz`. Select an Ensembl Exon ID, query it on Ensembl GRCh38 or GRCh37, select
+the gene, select transcript, and select 'Exons'. This will display all the exons of the transcript and their genomic
+coordinates.
