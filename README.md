@@ -13,13 +13,15 @@ nexus](https://github.com/genome-nexus/genome-nexus).
 ### Directly import to mongo database
 Run the script [scripts/import_mongo.sh](scripts/import_mongo.sh) to import processed data files into a running 
 database. When running this script, please specify:
-- mongo database address, for example `mongodb://127.0.0.1:27017/annotator`.
-- Reference Genome and Ensembl Release, for example `grch37_ensembl92` or `grch38_ensembl92`. Files are imported from 
+- `MONGO_URI`: Mongo database address, for example `mongodb://127.0.0.1:27017/annotator`.
+- `REF_ENSEMBL_VERSION`: Reference Genome and Ensembl Release, for example `grch37_ensembl92` or `grch38_ensembl92`. Files are imported from 
 `data/<refgenome_ensemblversion>/export/`.
 
 Example:
 ```bash
-./scripts/import_mongo.sh mongodb://127.0.0.1:27017/annotator grch37_ensembl92
+MONGO_URI="mongodb://127.0.0.1:27017/annotator"
+REF_ENSEMBL_VERSION="grch37_ensembl92"
+./scripts/import_mongo.sh
 ```
 
 ## Update data
