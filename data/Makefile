@@ -1,7 +1,8 @@
 # Specify version, consistent with the folder in `data/` created for this version
 VERSION=grch37_ensembl92
-#GFF3_URL=ftp://ftp.ensembl.org/pub/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh38.92.gff3.gz
 GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz
+# GFF3_URL=ftp://ftp.ensembl.org/pub/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh38.92.gff3.gz
+# GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/homo_sapiens/Homo_sapiens.GRCh38.95.gff3.gz
 
 # Specify the URL prefix for vcf2maf to retrieve `isoform_overrides_uniprot.txt` and `isoform_overrides_at_mskcc.txt`
 VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/v1.6.16
@@ -28,7 +29,7 @@ $(TMP_DIR)/ensembl_transcript_info.txt: $(TMP_DIR)/Homo_sapiens.gff3.gz
 
 # Add HGNC symbols, exons, UTRs and PFAM domains to Ensembl Transcript
 $(TMP_DIR)/ensembl_biomart_transcripts.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt
-	python3 ../scripts/add_domains_hugo_ccds_refseq_exon_info_to_ensembl_transcript.py $(foreach file,$^,$(file)) | gzip -c > $@
+	python3 ../scripts/add_domains_hugo_ccds_refseq_exon_info_to_ensembl_transcript.py $^ | gzip -c > $@
 
 # give default/canonical geneid/transcript based on given hugo symbol takes
 # about 50m to run (TODO: this can be easily optimized)
