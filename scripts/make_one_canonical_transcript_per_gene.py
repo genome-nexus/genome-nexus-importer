@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import pandas as pd
 import numpy as np
-import sys
 import itertools
+import argparse
 
 
 def get_overrides_transcript(overrides_tables, ensembl_table, hgnc_symbol, hgnc_canonical_genes):
@@ -76,20 +76,26 @@ def ignore_certain_genes(x):
     return set({i for i in x if i not in ignore_genes})
 
 
-def main():
+def main(ensembl_biomart_geneids_transcript_info,
+         hgnc_complete_set,
+         isoform_overrides_uniprot,
+         isoform_overrides_at_mskcc,
+         isoform_overrides_genome_nexus,
+         ensembl_biomart_canonical_transcripts_per_hgnc):
+
     # input files
-    tsv = pd.read_csv(sys.argv[1], sep='\t', dtype={'is_canonical':bool})
+    tsv = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t', dtype={'is_canonical':bool})
     tsv = tsv.drop_duplicates()
-    mskcc = pd.read_csv("common_input/isoform_overrides_at_mskcc.txt", sep='\t')\
+    uniprot = pd.read_csv(isoform_overrides_uniprot, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    uniprot = pd.read_csv("common_input/isoform_overrides_uniprot.txt", sep='\t')\
+    mskcc = pd.read_csv(isoform_overrides_at_mskcc, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    custom = pd.read_csv("common_input/isoform_overrides_genome_nexus.txt", sep='\t')\
+    custom = pd.read_csv(isoform_overrides_genome_nexus, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    hgnc = pd.read_csv('common_input/hgnc_complete_set_20190122.txt', sep='\t', dtype=object)
+    hgnc = pd.read_csv(hgnc_complete_set, sep='\t', dtype=object)
     hgnc = hgnc[hgnc['name'] != 'entry withdrawn'].copy()
     hugos = hgnc['symbol'].unique()
     hgnc = hgnc.set_index('symbol')
@@ -154,7 +160,28 @@ def main():
     merged = pd.merge(one_transcript_per_hugo_symbol.reset_index(), hgnc.reset_index(), left_on='hgnc_symbol', right_on='symbol')
     del merged['symbol']
     del merged['ensembl_gene_id']
-    merged.to_csv(sys.stdout, sep='\t', index=False)
+    merged.to_csv(ensembl_biomart_canonical_transcripts_per_hgnc, sep='\t', index=False)
+
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("ensembl_biomart_geneids_transcript_info",
+                        help="tmp/ensembl_biomart_geneids.transcript_info.txt")
+    parser.add_argument("hgnc_complete_set",
+                        help="common_input/hgnc_complete_set_20190122.txt")
+    parser.add_argument("isoform_overrides_uniprot",
+                        help="common_input/isoform_overrides_uniprot.txt")
+    parser.add_argument("isoform_overrides_at_mskcc",
+                        help="common_input/isoform_overrides_at_mskcc.txt")
+    parser.add_argument("isoform_overrides_genome_nexus",
+                        help="common_input/isoform_overrides_genome_nexus.txt")
+    parser.add_argument("ensembl_biomart_canonical_transcripts_per_hgnc",
+                        help="tmp/ensembl_biomart_canonical_transcripts_per_hgnc.txt")
+    args = parser.parse_args()
+
+    main(args.ensembl_biomart_geneids_transcript_info,
+         args.hgnc_complete_set,
+         args.isoform_overrides_uniprot,
+         args.isoform_overrides_at_mskcc,
+         args.isoform_overrides_genome_nexus,
+         args.ensembl_biomart_canonical_transcripts_per_hgnc)

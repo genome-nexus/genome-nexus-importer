@@ -4,7 +4,7 @@ info. Output resulting JSON"""
 
 import pandas as pd
 import numpy as np
-import sys
+import argparse
 
 
 def add_nested_hgnc(transcripts):
@@ -86,10 +86,11 @@ def add_nested_pfam_domains(transcripts, pfam_domains):
     transcripts["domains"] = transcripts.index.map(get_domain_for_transcript)
     return transcripts
 
+
 def add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides_mskcc):
     """Add one refseq id for each transcript. There can be multiple. Pick
     highest number transcript id in that case."""
-    refseq.columns = [c.lower().replace(' ','_') for c in refseq.columns]
+    refseq.columns = [c.lower().replace(' ', '_') for c in refseq.columns]
     refseq_grouped = refseq.groupby("transcript_stable_id")
 
     def get_refseq_for_transcript(x):
@@ -119,9 +120,10 @@ def add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides
     transcripts['refseq_mrna_id'] = transcripts.index.map(get_refseq_for_transcript)
     return transcripts
 
+
 def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_mskcc):
     """Add one ccds id for each transcript. There is only one per transcript."""
-    ccds.columns = [c.lower().replace(' ','_') for c in ccds.columns]
+    ccds.columns = [c.lower().replace(' ', '_') for c in ccds.columns]
     ccds = ccds[~pd.isnull(ccds["ccds_id"])]
     # assume each transcript has only one CCDS
     assert(any(ccds["transcript_stable_id"].duplicated()) == False)
@@ -151,14 +153,14 @@ def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_msk
     return transcripts
 
 
-def main():
-    ensembl_biomart_transcripts = sys.argv[1]
-    ensembl_transcript_info = sys.argv[2]
-    ensembl_biomart_pfam = sys.argv[3]
-    ensembl_biomart_refseq = sys.argv[4]
-    ensembl_biomart_ccds = sys.argv[5]
-    isoform_overrides_uniprot = sys.argv[6]
-    isoform_overrides_mskcc = sys.argv[7]
+def main(ensembl_biomart_transcripts,
+         ensembl_transcript_info,
+         ensembl_biomart_pfam,
+         ensembl_biomart_refseq,
+         ensembl_biomart_ccds,
+         isoform_overrides_uniprot,
+         isoform_overrides_mskcc,
+         ensembl_biomart_transcripts_json):
 
     # Read input and set index column
     transcripts = pd.read_csv(ensembl_biomart_transcripts, sep='\t')
@@ -182,8 +184,36 @@ def main():
     transcripts = add_nested_pfam_domains(transcripts, pfam_domains)
 
     # print records as json
-    transcripts.reset_index().to_json(sys.stdout, orient='records', lines=True)
+    transcripts.reset_index().to_json(ensembl_biomart_transcripts_json,
+                                      orient='records', lines=True, compression='gzip')
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("ensembl_biomart_transcripts",
+                        help="tmp/ensembl_biomart_transcripts.txt")
+    parser.add_argument("ensembl_transcript_info",
+                        help="tmp/ensembl_transcript_info.txt")
+    parser.add_argument("ensembl_biomart_pfam",
+                        help="input/ensembl_biomart_pfam.txt")
+    parser.add_argument("ensembl_biomart_refseq",
+                        help="input/ensembl_biomart_refseq.txt")
+    parser.add_argument("ensembl_biomart_ccds",
+                        help="input/ensembl_biomart_ccds.txt")
+    parser.add_argument("vcf2maf_isoform_overrides_uniprot",
+                        help="common_input/isoform_overrides_uniprot.txt")
+    parser.add_argument("vcf2maf_isoform_overrides_mskcc",
+                        help="common_input/isoform_overrides_at_mskcc.txt")
+    parser.add_argument("ensembl_biomart_transcripts_json",
+                        help="tmp/ensembl_biomart_transcripts.json.gz")
+
+    args = parser.parse_args()
+    main(args.ensembl_biomart_transcripts,
+         args.ensembl_transcript_info,
+         args.ensembl_biomart_pfam,
+         args.ensembl_biomart_refseq,
+         args.ensembl_biomart_ccds,
+         args.vcf2maf_isoform_overrides_uniprot,
+         args.vcf2maf_isoform_overrides_mskcc,
+         args.ensembl_biomart_transcripts_json)

@@ -102,7 +102,13 @@ cd data
 make all
 ```
 
-Please make sure you have the requirements in `requirements.txt` installed. If the pipeline crashes somewhere, for example when the Ensembl REST API is down, sometimes an empty file is created. To continue the pipeline, remove the empty file and run `make all` again.
+Please make sure you have the requirements in `requirements.txt` installed:
+```bash
+cd scripts
+pip install -r requirements.txt
+```
+
+If the pipeline crashes, for example when the Ensembl REST API is down, sometimes an empty file is created. To continue the pipeline, remove the empty file and run `make all` again.
 
 ##### Canonical transcripts
 During this process, every transcript in `ensembl_biomart_geneids.txt` is assessed to be either canonical or not, by 
