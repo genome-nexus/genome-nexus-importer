@@ -44,7 +44,7 @@ common_input/isoform_overrides_uniprot.txt:
 common_input/isoform_overrides_at_mskcc.txt:
 	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_at_mskcc' | sed 's/^#//' | sed 's/dmp_refseq_id/refseq_id/' | sed 's/isoform_override/enst_id/g' > $@
 
-all: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/hgnc_complete_set_20190122.txt common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt
+all: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt
 	cp $^ $(VERSION)/export/
 
 .PHONY: all
