@@ -47,7 +47,4 @@ common_input/isoform_overrides_at_mskcc.txt:
 all: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/hgnc_complete_set_20190122.txt common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt
 	cp $^ $(VERSION)/export/
 
-# all: $(TMP_DIR) $(TMP_DIR)/ensembl_biomart_geneids.transcript_info.txt $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/hgnc_complete_set_20190122.txt
-
-#.PHONY: all #export
 .PHONY: all
