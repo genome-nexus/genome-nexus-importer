@@ -86,7 +86,6 @@ def main(ensembl_biomart_geneids_transcript_info,
          isoform_overrides_at_mskcc,
          isoform_overrides_genome_nexus,
          ensembl_biomart_canonical_transcripts_per_hgnc):
-
     # input files
     transcript_info_df = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t', dtype={'is_canonical':bool})
     transcript_info_df = transcript_info_df.drop_duplicates()
@@ -103,6 +102,7 @@ def main(ensembl_biomart_geneids_transcript_info,
 
     # Convert new column names to old stable column names. If this is not done properly, Genome Nexus and any other
     # downstream applications break
+    # TODO: Update Genome Nexus to accept the latest HGNC column names so that remapping is not necessary.
     column_name_mapping = {'name': 'approved_name',
                            'symbol': 'approved_symbol',
                            'prev_symbol': 'previous_symbols',
@@ -153,6 +153,8 @@ def main(ensembl_biomart_geneids_transcript_info,
     # AATF has uniprot canonical transcript, not hgnc ensembl gene id, but
     # there are multiple in ensembl data dump
     # hugos = ['KRT18P53', 'NSD3', 'AATF']
+
+    # TODO Optimize this part, as this part takes most time
     one_transcript_per_hugo_symbol = pd.Series(hugos).apply(lambda x:
         pd.Series(
             [
@@ -178,6 +180,12 @@ def main(ensembl_biomart_geneids_transcript_info,
     merged = pd.merge(one_transcript_per_hugo_symbol.reset_index(), hgnc_df.reset_index(), left_on='hgnc_symbol', right_on='approved_symbol')
     del merged['approved_symbol']
     del merged['ensembl_gene_id']
+
+    # Replace '|' to ', ' to be in the correct format for Genome Nexus
+    # TODO: Update Genome Nexus to accept the latest HGNC format so that replacement is not necessary.
+    merged.replace({'\|': ', '}, inplace=True, regex=True)
+
+    # Write file
     merged.to_csv(ensembl_biomart_canonical_transcripts_per_hgnc, sep='\t', index=False)
 
 
