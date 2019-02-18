@@ -1,5 +1,7 @@
+*.iml
 *.idea
 *.pyc
 *.DS_Store
+venv/
 data/*/tmp
 scripts/.cache/
