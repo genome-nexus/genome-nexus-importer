@@ -6,12 +6,13 @@ version 3, or (at your option) any later version.
 """
 
 import pandas as pd
-import sys
 import gzip
 import argparse
 
 
-def transform_gff_to_tsv(gff_file, tsv_file):
+def main(homo_sapiens_gff3, ensembl_transcript_info):
+    """Transform GFF3 file to TSV for exons and UTRs. Output is written to
+    stdout, as the Makefile wrapper expects. Input file is GFF3 file, see Makefile"""
 
     # Dataframe to append the transcript information
     transcript_info = pd.DataFrame(columns=['transcript_id', 'type', 'id', 'start', 'end', 'rank', 'strand', 'version'])
@@ -19,7 +20,7 @@ def transform_gff_to_tsv(gff_file, tsv_file):
     rows = []
 
     # Open gff file and read lines, when line contains transcript information, extract this information
-    with gzip.open(gff_file, 'rt') as gff:
+    with gzip.open(homo_sapiens_gff3, 'rt') as gff:
         for line in gff:
             if line[0] != '#':
                 list_line = line.strip('\n').split('\t')
@@ -54,21 +55,16 @@ def transform_gff_to_tsv(gff_file, tsv_file):
 
     # By first appending it to a list and only adding it to a DF once, performance is greatly improved
     transcript_info = transcript_info.append(rows, ignore_index=True, sort=False)
-    transcript_info.to_csv(tsv_file, sep='\t', index=False, compression='gzip')
+    transcript_info.to_csv(ensembl_transcript_info, sep='\t', index=False)
     return
 
 
-def main(gff_file):
-    tsv_file = "../data/ensembl_transcript_info.txt.gz"
-    transform_gff_to_tsv(gff_file, tsv_file)
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Transform GFF3 file to TSV for exons and UTRs. Output is written to '
-                                                 'stdout, as the Makefile wrapper expects.')
-    parser.add_argument("gff_file",
-                        default="../data/Homo_sapiens.GRCh37.gff3.gz",
-                        help="Homo_sapiens.GRCh37.gff3.gz")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("homo_sapiens_gff3",
+                        help="tmp/Homo_sapiens.gff3.gz")
+    parser.add_argument("ensembl_transcript_info",
+                        help="tmp/ensembl_transcript_info.txt")
     args = parser.parse_args()
 
-    main(args.gff_file)
+    main(args.homo_sapiens_gff3, args.ensembl_transcript_info)

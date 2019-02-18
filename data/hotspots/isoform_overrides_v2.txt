@@ -1,2 +1,0 @@
-hugo_symbol	transcript_id
-PAK7	ENST00000353224

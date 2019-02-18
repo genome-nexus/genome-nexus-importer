@@ -1,6 +1,5 @@
 *.idea
 *.pyc
 *.DS_Store
-data/ensembl_transcript_info.txt.gz
-data/Homo_sapiens.GRCh37.87.gff3.gz
+data/*/tmp
 scripts/.cache/
