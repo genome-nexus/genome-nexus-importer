@@ -108,7 +108,7 @@ def main(ensembl_biomart_geneids_transcript_info,
                            'prev_symbol': 'previous_symbols',
                            'alias_symbol': 'synonyms',
                            'location': 'chromosome',
-                           'entrez_gene_id': 'entrez_id',
+                           'entrez_id': 'entrez_gene_id',
                            'ena': 'accession_numbers',
                            'refseq_accession': 'refseq_ids',
                            'uniprot_ids': 'uniprot_id'}
