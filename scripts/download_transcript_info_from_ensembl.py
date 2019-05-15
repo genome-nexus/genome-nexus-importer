@@ -101,6 +101,7 @@ def main(ensembl_biomart_geneids, ensembl_biomart_geneids_transcript_info):
 
     # Prepare transcript info table for merging
     transcript_info.reset_index(drop=True, inplace=True)
+    transcript_info['is_canonical'] = transcript_info['is_canonical'].astype(str)
     transcript_info['is_canonical'].fillna('0', inplace=True)
     transcript_info['is_canonical'].replace({'1.0': '1', '0.0': '0'}, inplace=True)
 

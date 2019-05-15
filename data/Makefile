@@ -5,7 +5,7 @@ VERSION=grch38_ensembl95
 GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/homo_sapiens/Homo_sapiens.GRCh38.95.gff3.gz
 
 # Specify the URL prefix for vcf2maf to retrieve `isoform_overrides_uniprot.txt` and `isoform_overrides_at_mskcc.txt`
-VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/v1.6.16
+VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/2b4cb6aefca4a46402d06beb3690d7e86cc1856e
 
 # dbPTM Base URL:
 DB_PTM_URL=http://dbptm.mbc.nctu.edu.tw/download/experiment
