@@ -95,12 +95,16 @@ Transcript stable Id, CCDS ID
 6. Save the downloaded file as `ensembl_biomart_ccds.txt` in `data/<refgenome_ensemblversion>/input`.
 
 ### Run data transformation pipeline
-To run the pipeline that transforms all intermediate data, run the following. This takes _roughly two hours_ to complete.
+To run the pipeline that transforms all intermediate data for one reference
+e.g. grch37_ensembl92, run the following. This takes _roughly two hours_ to complete.
 
 ```bash
 cd data
-make all
+make all VERSION=grch37_ensembl92 GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz
 ```
+
+To change the reference genome to build the data files for, change the
+`VERSION` and `GFF3_URL` variables accordingly (examples are in the Makefile).
 
 Please make sure you have the requirements in `requirements.txt` installed:
 ```bash
