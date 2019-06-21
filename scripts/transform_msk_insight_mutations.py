@@ -71,9 +71,9 @@ def main(input_somatic, input_germline):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("inputSomatic",
+    parser.add_argument("input_somatic",
                         help="insight/somatic_mutations_by_tumortype_merge_fixed.txt")
-    parser.add_argument("inputGermline",
+    parser.add_argument("input_germline",
                         help="insight/mutations_by_tumortype_merge.txt")
     args = parser.parse_args()
-    main(args.inputSomatic, args.inputGermline)
+    main(args.input_somatic, args.input_germline)
