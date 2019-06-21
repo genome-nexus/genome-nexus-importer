@@ -13,6 +13,10 @@ DB_PTM_URL=http://dbptm.mbc.nctu.edu.tw/download/experiment
 # This is the folder to store intermediate files
 TMP_DIR=$(VERSION)/tmp
 
+# Generate JSON content for msk-insight mutations
+insight/export/mutations.json.gz: insight/input/somatic_mutations_by_tumortype_merge_fixed.txt insight/input/mutations_by_tumortype_merge.txt
+	python3 ../scripts/transform_msk_insight_mutations.py $^ | gzip > $@
+
 # Fetch CCDS files
 common_input/CCDS2Sequence.current.txt:
 	curl ftp://ftp.ncbi.nlm.nih.gov/pub/CCDS/archive/22/CCDS2Sequence.current.txt > $@
