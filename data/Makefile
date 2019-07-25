@@ -14,7 +14,7 @@ DB_PTM_URL=http://dbptm.mbc.nctu.edu.tw/download/experiment
 TMP_DIR=$(VERSION)/tmp
 
 # Generate JSON content for msk-insight mutations
-insight/export/mutations.json.gz: insight/input/somatic_mutations_by_tumortype_merge_fixed.txt insight/input/mutations_by_tumortype_merge.txt
+insight/export/mutations.json.gz: insight/input/somatic_mutations_by_tumortype_merge_fixed.txt insight/input/mutations_by_tumortype_merge.txt insight/input/biallelic_by_tumortype_merge.txt insight/input/mutations_QCpass_by_tumortype_merge.txt
 	python3 ../scripts/transform_msk_insight_mutations.py $^ | gzip > $@
 
 # Fetch CCDS files
