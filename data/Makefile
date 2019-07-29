@@ -139,8 +139,8 @@ $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz: $(TMP_DIR)/ensembl_biomart
 $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20190122.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt common_input/isoform_overrides_genome_nexus.txt
 	python3 ../scripts/make_one_canonical_transcript_per_gene.py $^ $@
 
-# mouse version. A different script is called that selcet the canonicals based on Ensembl lookup.
-$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/mouse/MRK_ENSEMBL.rpt common_input/mouse/MGI_Gene_Model_Coord.rpt
+# mouse version. A different script is called that set the canonicals based on Ensembl lookup.
+$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/mouse/MRK_ENSEMBL.rpt common_input/mouse/MGI_Gene_Model_Coord.rpt
 	python3 ../scripts/make_canonical_transcript_mouse.py $^ $@
 
 # vcf2maf canonical transcripts
@@ -165,8 +165,8 @@ all: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/en
 	cp $^ $(VERSION)/export/
 
 # For mouse various steps of this Makefile are not applicable. Therefore this is a mouse specific recipe.
-mouse: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt
-	cp $^ $(VERSION)/export/
+mouse: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt
+	cp $^ $(VERSION)/export/ && mv $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_mgi.txt $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt && mv $(VERSION)/export/ensembl_biomart_transcripts_mouse.json.gz $(VERSION)/export/ensembl_biomart_transcripts.json.gz
 
 .PHONY: all
 

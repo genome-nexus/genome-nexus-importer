@@ -10,7 +10,7 @@ echo "MONGO_URI:" ${MONGO_URI}
 echo "REF_ENSEMBL_VERSION:" ${REF_ENSEMBL_VERSION}
 echo "SPECIES:" ${SPECIES}
 
-DIR=$(dirname "$0")
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 import() {
     collection=$1
@@ -31,8 +31,10 @@ import ensembl.canonical_transcript_per_hgnc ${DIR}/../data/${REF_ENSEMBL_VERSIO
 import pfam.domain ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/pfamA.txt '--type tsv --headerline'
 import ptm.experimental <(gunzip -c ${DIR}/../data/ptm/export/ptm.json.gz) '--type json'
 
-# Exit if species is not human as next import steps are human specific
-[[ "$SPECIES" == "homo_sapiens" ]] || echo "Not executing human-specific annotation steps. Exit." && exit
+# set -e causes exit if species is not homo_sapiens. Next import steps are human specific
+[[ "$SPECIES" == "homo_sapiens" ]]
+
+echo "Executing human-specific import steps"
 
 import hotspot.mutation ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/hotspots_v2_and_3d.txt '--type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
 import insight.mutation <(gunzip -c ${DIR}/../data/insight/export/mutations.json.gz) '--type json'
