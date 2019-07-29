@@ -10,7 +10,7 @@ import gzip
 import argparse
 
 
-def main(homo_sapiens_gff3, ensembl_transcript_info):
+def main(gff_file, ensembl_transcript_info):
     """Transform GFF3 file to TSV for exons and UTRs. Output is written to
     stdout, as the Makefile wrapper expects. Input file is GFF3 file, see Makefile"""
 
@@ -20,7 +20,7 @@ def main(homo_sapiens_gff3, ensembl_transcript_info):
     rows = []
 
     # Open gff file and read lines, when line contains transcript information, extract this information
-    with gzip.open(homo_sapiens_gff3, 'rt') as gff:
+    with gzip.open(gff_file, 'rt') as gff:
         for line in gff:
             if line[0] != '#':
                 list_line = line.strip('\n').split('\t')
@@ -61,10 +61,10 @@ def main(homo_sapiens_gff3, ensembl_transcript_info):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("homo_sapiens_gff3",
-                        help="tmp/Homo_sapiens.gff3.gz")
+    parser.add_argument("gff_file",
+                        help="tmp/annotations.gff3.gz")
     parser.add_argument("ensembl_transcript_info",
                         help="tmp/ensembl_transcript_info.txt")
     args = parser.parse_args()
 
-    main(args.homo_sapiens_gff3, args.ensembl_transcript_info)
+    main(args.gff_file, args.ensembl_transcript_info)
