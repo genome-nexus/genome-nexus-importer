@@ -48,7 +48,11 @@ To generated data for a different reference genome and Ensembl Release, follow t
 The `input` and `export` folders are tracked by Git, while the `tmp` folder contains the intermediate files and is not 
 tracked by Git.
 
-### 2. Manually download Ensembl BioMart files
+### 2. Download Ensembl BioMart files
+
+The data may be downloaded using the manual steps below, or automatically using the R script `scripts/retrieve_biomart_tables.R` (see below).
+
+#### 2.1 Manual download
 
 - GRCh37 / hg19: https://grch37.ensembl.org/biomart
 - GRCh38 / hg38: https://www.ensembl.org/biomart
@@ -94,13 +98,21 @@ Transcript stable Id, CCDS ID
 5. Click on `Results`, and export all results to a `TSV` file.
 6. Save the downloaded file as `ensembl_biomart_ccds.txt` in `data/<refgenome_ensemblversion>/input`.
 
-### Run data transformation pipeline
+#### 2.2 Downloading using `scripts/retrieve_biomart_tables.R`
+- Open the R script in your favorite editor
+- Make sure the `species` variable is assigned `"hsapiens"`
+- Adjust the `setwd` command to appropriate `data/<refgenome_ensemblversion>/input` location
+- Run the commands in an R shell
+
+### 3. Run data transformation pipeline
 To run the pipeline that transforms all intermediate data for one reference
 e.g. grch37_ensembl92, run the following. This takes _roughly two hours_ to complete.
 
 ```bash
 cd data
-make all VERSION=grch37_ensembl92 GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz
+make all \
+VERSION=grch37_ensembl92 \
+GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz
 ```
 
 To change the reference genome to build the data files for, change the
@@ -115,17 +127,21 @@ pip install -r requirements.txt
 If the pipeline crashes, for example when the Ensembl REST API is down, sometimes an empty file is created. To continue the pipeline, remove the empty file and run `make all` again.
 
 ##### Canonical transcripts
-During this process, every transcript in `ensembl_biomart_geneids.txt` is assessed to be either canonical or not, by 
-querying the Ensembl REST API. This takes a while, because only 1000 transcripts can be queried at a time. Progress can 
-be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. Gene 
-source file `ensembl_biomart_geneids.txt` contains about _224596_ transcripts, so the pipeline will save about _225_ 
-of these files.
+During this process, every transcript in `ensembl_biomart_geneids.txt` is assessed to be either canonical or not, by querying the Ensembl REST API. This takes a while, because a maximum of 1000 transcripts can be queried at a time. Progress can be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. Gene source file `ensembl_biomart_geneids.txt` contains about _224596_ transcripts, so the pipeline will save about _225_ of these files.
 
-### Verify data
+When the REST API is slow for whatever reason, the server can return a timeout error. When that happens, the `QSIZE` parameter can be used to reduce query size (e.g. to 100 transcripts at a time).
+```
+make all \
+VERSION=grch37_ensembl92 \
+GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz \
+QSIZE=100
+```
+
+### 4. Verify data
 To verify the pipeline ran data for the correct reference genome, you can verify the exon coordinates in
 `export/ensembl_biomart_transcripts.json.gz`. Select an Ensembl Exon ID, query it on Ensembl GRCh38 or GRCh37, select
 the gene, select transcript, and select 'Exons'. This will display all the exons of the transcript and their genomic
 coordinates.
 
-### Commit, Push and create Pull Request
+### 5. Commit, Push and create Pull Request
 When new data has been created, create a PR to Genome-Nexus to add this data to the master branch.

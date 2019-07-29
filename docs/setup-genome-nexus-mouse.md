@@ -7,10 +7,11 @@ There are several human-specific annotation tables, such as the cancer hotspots 
 ## Downloading Ensembl BioMart data
 Ensembl data must be downloaded from BioMart as a starting point for data annotation. The data may be downloaded using the described [manual steps](https://github.com/genome-nexus/genome-nexus-importer#2-manually-download-ensembl-biomart-files), or using the R script `scripts/retrieve_biomart_tables.R`.
 
-First make sure the directories are created. For this example we will use Ensembl 95.
+First make sure the directories are created and environment variables are set. For this example we will use Ensembl 95.
 ```
 cd ~/git/genome-nexus-importer
 export REF_ENSEMBL_GENOME=grcm38_ensembl95
+export SPECIES=mus_musculus
 
 mkdir -p data/${REF_ENSEMBL_GENOME}/input
 mkdir -p data/${REF_ENSEMBL_GENOME}/export
@@ -23,7 +24,7 @@ mkdir -p data/${REF_ENSEMBL_GENOME}/tmp
 -- Rename the columns `hgnc_symbol` and `hgnc_id` to `mgi_symbol` and `mgi_id`
 ##### If using the script `scripts/retrieve_biomart_tables.R` to download annotation tables:
 - Open the R script in your favorite editor
-- Make sure the `species` variable is set to `"mus_musculus"`
+- Make sure the `species` variable is assigned `"mmusculus"`
 - Adjust the `setwd` command to appropriate `data/<refgenome_ensemblversion>/input` location
 - Run the commands in an R shell
 

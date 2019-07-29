@@ -1,10 +1,11 @@
 library(biomaRt)
 
 # set working dir to the correct genome/version input dir
-setwd('data/grcm38_ensembl95/input/')
+setwd('data/grch37_ensembl92/input/')
+#setwd('data/grcm38_ensembl95/input/')
 
-species <- 'mmusculus'
-# species <- 'hsapiens'
+species <- 'hsapiens'
+#species <- 'mmusculus'
 
 # select mart
 # listEnsembl()
