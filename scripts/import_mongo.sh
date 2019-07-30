@@ -4,7 +4,7 @@ set -e
 # Set default if ENV variables are not set
 MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27017/annotator"}
 REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION:-"grch37_ensembl92"}
-SPECIES=${SPECIES-"homo_sapiens"}
+SPECIES=${SPECIES:-"homo_sapiens"}
 
 echo "MONGO_URI:" ${MONGO_URI}
 echo "REF_ENSEMBL_VERSION:" ${REF_ENSEMBL_VERSION}
