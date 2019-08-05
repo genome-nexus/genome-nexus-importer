@@ -70,7 +70,7 @@ To change the reference genome to build the data files for, change the
 
 If the pipeline crashes, for example when the Ensembl REST API is down, sometimes an empty file is created. To continue the pipeline, remove the empty file and run `make all` again.
 
-Additionally, mouse data can be processed to build a database for mouse. This is described [docs/setup-genome-nexus-mouse.md](here).
+Additionally, mouse data can be processed to build a database for mouse. This is described [here](docs/setup-genome-nexus-mouse.md).
 
 ##### Canonical transcripts
 During this process, every transcript in `data/<refgenome_ensemblversion>/input/ensembl_biomart_geneids.txt` is assessed to be either canonical or not, by querying the Ensembl REST API. This takes a while, because a maximum of 1000 transcripts can be queried at a time. Progress can be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. Gene source file `ensembl_biomart_geneids.txt` contains about _224596_ transcripts, so the pipeline will save about _225_ of these files.

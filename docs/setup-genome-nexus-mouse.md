@@ -20,7 +20,7 @@ make mouse \
 The QSIZE parameter was introduced because it takes significantly longer to query the Ensembl database for non-human species. When using a query size of 1000 genes at a time (default), timeout errors may occur. In the case of a timeout error, the QSIZE can be lowered.
 
 ## Directly importing data into MongoDB
-If you want to import data directly, as described [https://github.com/genome-nexus/genome-nexus-importer#using-the-mongo-database](here), please make sure to also set the `SPECIES` env variable to mus_musculus.
+If you want to import data directly, as described [here](https://github.com/genome-nexus/genome-nexus-importer#using-the-mongo-database), please make sure to also set the `SPECIES` env variable to mus_musculus.
 ```bash
 MONGO_URI="mongodb://127.0.0.1:27017/annotator"
 REF_ENSEMBL_VERSION="grcm38_ensembl95"
