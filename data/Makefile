@@ -1,16 +1,28 @@
-# Specify version, consistent with the folder in `data/` created for this version
-VERSION=grch38_ensembl95
-# VERSION=grcm38_ensembl95
-
+# The function of this Makefile is to link all the scripts of the Genome Nexus Importer.
+# Based on the Ensembl database version, it will download the nessecary datafiles and transforms them into the files imported by Genome Nexus MongoDB.
+# Required parameters for this Makefile are VERSION (e.g. grch37_ensembl95), and GFF3_URL (ftp Ensembl GFF3).
+#
+# Example command:
+# make all VERSION=grch38_ensembl95\
+# GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/homo_sapiens/Homo_sapiens.GRCh38.95.gff3.gz\
+# QSIZE=1000\
+# SPECIES=homo_sapiens
+#
+# The parameters QSIZE defines the size of the REST queries to Ensembl, and is not mandatory.
+# The parameter SPECIES defines the pipeline that is run, which is by default homo_sapiens. 
+# Setting SPECIES=mus_musculus will run the mouse data import pipeline which has a slightly different procedure.
+# For more information check out the files README.md and docs/setup-genome-nexus-mouse.md
+#
+# some previously used URLs
+# GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/homo_sapiens/Homo_sapiens.GRCh38.95.gff3.gz
 # GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh37.87.gff3.gz
 # GFF3_URL=ftp://ftp.ensembl.org/pub/release-92/gff3/homo_sapiens/Homo_sapiens.GRCh38.92.gff3.gz
 # GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/homo_sapiens/Homo_sapiens.GRCh38.95.gff3.gz
 # GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/mus_musculus/Mus_musculus.GRCm38.95.gff3.gz
-GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/homo_sapiens/Homo_sapiens.GRCh38.95.gff3.gz
+# ------------------------------------------------------------------------------------------------------------------
 
-# specify species
+# default species is homo_sapiens unless overridden [mus_musculus]
 SPECIES=homo_sapiens
-# SPECIES=mus_musculus
 
 # Specify the URL prefix for vcf2maf to retrieve `isoform_overrides_uniprot.txt` and `isoform_overrides_at_mskcc.txt`
 VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/2b4cb6aefca4a46402d06beb3690d7e86cc1856e
@@ -23,7 +35,6 @@ TMP_DIR=$(VERSION)/tmp
 
 # Ensembl REST query size. Lower this if Ensembl returns Timeout errors.
 QSIZE=1000
-
 
 # Generate JSON content for msk-insight mutations
 insight/export/mutations.json.gz: insight/input/somatic_mutations_by_tumortype_merge_fixed.txt insight/input/mutations_by_tumortype_merge.txt
@@ -145,7 +156,7 @@ $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt: $(TMP_DIR)/ensembl
 
 # vcf2maf canonical transcripts
 common_input/isoform_overrides_uniprot.txt:
-	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_uniprot_from_biomart_91' | sed 's/^#//' > $@
+	curl '$(VCF2MAF_RAW_URL)/d$(VERSION)/input $(VERSION)/export $(VERSION)/tmpata/isoform_overrides_uniprot_from_biomart_91' | sed 's/^#//' > $@
 
 common_input/isoform_overrides_at_mskcc.txt:
 	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_at_mskcc' | sed 's/^#//' | sed 's/dmp_refseq_id/refseq_id/' | sed 's/isoform_override/enst_id/g' > $@
@@ -161,13 +172,28 @@ common_input/mouse/MRK_ENSEMBL.rpt:
 common_input/mouse/MGI_Gene_Model_Coord.rpt:
 	wget http://www.informatics.jax.org/downloads/reports/MGI_Gene_Model_Coord.rpt -O $@
 
-all: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt
-	cp $^ $(VERSION)/export/
+$(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_geneids.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_pfam.txt:
+	Rscript --vanilla ../scripts/retrieve_biomart_tables.R $(SPECIES) $(VERSION)/input/
+
+# create directories if not extistent
+dirs: $(VERSION)/input $(VERSION)/export
+$(VERSION)/input $(VERSION)/export $(VERSION)/tmp:
+	mkdir -p $(VERSION)/input && mkdir -p $(VERSION)/export
+
+# check if variables are defined
+input:
+	@echo SPECIES
+	test $(SPECIES)
+	@echo GFF3_URL
+	test $(GFF3_URL)
+	@echo VERSION
+	test $(VERSION)
+
+all: input dirs $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt
+	cp $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt $(VERSION)/export/
 
 # For mouse various steps of this Makefile are not applicable. Therefore this is a mouse specific recipe.
-mouse: $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt
-	cp $^ $(VERSION)/export/ && mv $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_mgi.txt $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt && mv $(VERSION)/export/ensembl_biomart_transcripts_mouse.json.gz $(VERSION)/export/ensembl_biomart_transcripts.json.gz
+mouse: input dirs $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt
+	cp $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt $(VERSION)/export/ && mv $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_mgi.txt $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt && mv $(VERSION)/export/ensembl_biomart_transcripts_mouse.json.gz $(VERSION)/export/ensembl_biomart_transcripts.json.gz
 
-.PHONY: all
-
-.PHONY: mouse
+.PHONY: all mouse

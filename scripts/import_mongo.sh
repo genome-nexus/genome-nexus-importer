@@ -31,8 +31,8 @@ import ensembl.canonical_transcript_per_hgnc ${DIR}/../data/${REF_ENSEMBL_VERSIO
 import pfam.domain ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/pfamA.txt '--type tsv --headerline'
 import ptm.experimental <(gunzip -c ${DIR}/../data/ptm/export/ptm.json.gz) '--type json'
 
-# set -e causes exit if species is not homo_sapiens. Next import steps are human specific
-[[ "$SPECIES" == "homo_sapiens" ]]
+# Exit if species is not homo_sapiens. Next import steps are human specific
+[[ "$SPECIES" == "homo_sapiens" ]] || exit 0
 
 echo "Executing human-specific import steps"
 

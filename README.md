@@ -34,80 +34,30 @@ data/
 ```
 
 To generated data for a different reference genome and Ensembl Release, follow the instructions below.
-1. Create folders in Git repository
-2. Manually download Ensembl BioMart files
-3. Run data transformation pipeline
-4. Verify data
-5. Commit, Push and create Pull Request
+The main driver of the data loading pipeline is the Makefile found in `data/`. It will download relevant tables from Ensembl BioMart, Pfam, HGNC, and transforms to the proper format for MongoDB.
 
-### 1. Create folders in Git repository
-- `data/<refgenome_ensemblversion>/input`
-- `data/<refgenome_ensemblversion>/export`
-- `data/<refgenome_ensemblversion>/tmp`
+The Makefile will create and fill the directories
+- `data/<refgenome_ensemblversion>/input`: Input tables retrieved from Ensembl Biomart
+- `data/<refgenome_ensemblversion>/export`: Pipeline output, used by MongoDB.
+- `data/<refgenome_ensemblversion>/tmp`: Temp files.
 
 The `input` and `export` folders are tracked by Git, while the `tmp` folder contains the intermediate files and is not 
 tracked by Git.
 
-### 2. Download Ensembl BioMart files
+#### Dependencies
+There are few dependencies of this pipeline for either python or R.
+The python dependencies can be installed from the file `requirements.txt`:
+```bash
+cd scripts
+pip install -r requirements.txt
+```
+For R there is only the dependency on the biomaRt library.
+```bash
+R -e "source('https://bioconductor.org/biocLite.R'); biocLite('biomaRt')"
+```
 
-The data may be downloaded using the manual steps below, or automatically using the R script `scripts/retrieve_biomart_tables.R` (see below).
-
-#### 2.1 Manual download
-
-- GRCh37 / hg19: https://grch37.ensembl.org/biomart
-- GRCh38 / hg38: https://www.ensembl.org/biomart
-
-http://www.ensembl.org/Help/ArchiveList contains archived BioMart releases.
-
-##### PFAM endpoint
-Ensembl Biomart file is required by the PFAM endpoint. In order to download this file
-follow these steps:
-
-1. Go to the Ensemble BioMart website of the reference genome and Ensembl Release of interest.
-2. Select `Ensemble Genes` from the `Database` dropdown menu.
-3. Select `Human Genes` from the `Dataset` dropdown menu.
-4. Click on `Attributes`, and select these ones:
-Gene stable ID, Transcript stable Id, Protein stable Id, Gene name, Pfam domain ID, Pfam domain start, Pfam domain end.
-5. Click on `Results`, and export all results to a `TSV` file.
-6. Save the downloaded file as `ensembl_biomart_pfam.txt` in `data/<refgenome_ensemblversion>/input`.
-
-##### Ensembl endpoint 
-1. Go to the Ensemble BioMart website of the reference genome and Ensembl Release of interest.
-2. Select `Ensemble Genes` from the `Database` dropdown menu.
-3. Select `Human Genes` from the `Dataset` dropdown menu.
-4. Click on `Attributes`, and select these ones:
-Gene stable ID, Transcript stable Id, HGNC Symbol, HGNC ID
-5. Click on `Results`, and export all results to a `TSV` file.
-6. Save the downloaded file as `ensembl_biomart_geneids.txt` in `data/<refgenome_ensemblversion>/input`.
-
-##### Ensembl endpoint RefSeq identifiers
-1. Go to the Ensemble BioMart website of the reference genome and Ensembl Release of interest.
-2. Select `Ensemble Genes` from the `Database` dropdown menu.
-3. Select `Human Genes` from the `Dataset` dropdown menu.
-4. Click on `Attributes`, and select these ones:
-Transcript stable Id, RefSeq mRNA ID
-5. Click on `Results`, and export all results to a `TSV` file.
-6. Save the downloaded file as `ensembl_biomart_refseq.txt` in `data/<refgenome_ensemblversion>/input`.
-
-##### Ensembl endpoint CCDS identifiers
-1. Go to the Ensemble BioMart website of the reference genome and Ensembl Release of interest.
-2. Select `Ensemble Genes` from the `Database` dropdown menu.
-3. Select `Human Genes` from the `Dataset` dropdown menu.
-4. Click on `Attributes`, and select these ones:
-Transcript stable Id, CCDS ID
-5. Click on `Results`, and export all results to a `TSV` file.
-6. Save the downloaded file as `ensembl_biomart_ccds.txt` in `data/<refgenome_ensemblversion>/input`.
-
-#### 2.2 Downloading using `scripts/retrieve_biomart_tables.R`
-- Open the R script in your favorite editor
-- Make sure the `species` variable is assigned `"hsapiens"`
-- Adjust the `setwd` command to appropriate `data/<refgenome_ensemblversion>/input` location
-- Run the commands in an R shell
-
-### 3. Run data transformation pipeline
-To run the pipeline that transforms all intermediate data for one reference
-e.g. grch37_ensembl92, run the following. This takes _roughly two hours_ to complete.
-
+#### Running
+Run the import pipeline using the command below. This will take a few hours to complete.
 ```bash
 cd data
 make all \
@@ -118,16 +68,12 @@ GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapi
 To change the reference genome to build the data files for, change the
 `VERSION` and `GFF3_URL` variables accordingly (examples are in the Makefile).
 
-Please make sure you have the requirements in `requirements.txt` installed:
-```bash
-cd scripts
-pip install -r requirements.txt
-```
-
 If the pipeline crashes, for example when the Ensembl REST API is down, sometimes an empty file is created. To continue the pipeline, remove the empty file and run `make all` again.
 
+Additionally, mouse data can be processed to build a database for mouse. This is described [docs/setup-genome-nexus-mouse.md](here).
+
 ##### Canonical transcripts
-During this process, every transcript in `ensembl_biomart_geneids.txt` is assessed to be either canonical or not, by querying the Ensembl REST API. This takes a while, because a maximum of 1000 transcripts can be queried at a time. Progress can be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. Gene source file `ensembl_biomart_geneids.txt` contains about _224596_ transcripts, so the pipeline will save about _225_ of these files.
+During this process, every transcript in `data/<refgenome_ensemblversion>/input/ensembl_biomart_geneids.txt` is assessed to be either canonical or not, by querying the Ensembl REST API. This takes a while, because a maximum of 1000 transcripts can be queried at a time. Progress can be viewed by inspecting the temporary files created in  `data/<refgenome_ensemblversion>/tmp/transcript_info`. Gene source file `ensembl_biomart_geneids.txt` contains about _224596_ transcripts, so the pipeline will save about _225_ of these files.
 
 When the REST API is slow for whatever reason, the server can return a timeout error. When that happens, the `QSIZE` parameter can be used to reduce query size (e.g. to 100 transcripts at a time).
 ```
@@ -137,11 +83,11 @@ GFF3_URL=ftp://ftp.ensembl.org/pub/grch37/release-92/gff3/homo_sapiens/Homo_sapi
 QSIZE=100
 ```
 
-### 4. Verify data
+### Verify data
 To verify the pipeline ran data for the correct reference genome, you can verify the exon coordinates in
 `export/ensembl_biomart_transcripts.json.gz`. Select an Ensembl Exon ID, query it on Ensembl GRCh38 or GRCh37, select
 the gene, select transcript, and select 'Exons'. This will display all the exons of the transcript and their genomic
 coordinates.
 
-### 5. Commit, Push and create Pull Request
+### Commit, Push and create Pull Request
 When new data has been created, create a PR to Genome-Nexus to add this data to the master branch.

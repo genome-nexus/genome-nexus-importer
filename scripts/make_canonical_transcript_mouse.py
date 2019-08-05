@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+
+'''
+This mouse-specific script will determine the canonical transcript for each gene based on Ensembl 'is_canonical' annotation.
+If no unambiguous canonical transcript can be derived from the annotation, the longest protein will be used.
+Additionally, some dataframe reformatting is performed to resemble the human dataframe.
+'''
+
 import pandas as pd
 import argparse
 

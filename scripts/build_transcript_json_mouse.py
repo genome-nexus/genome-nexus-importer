@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+'''
+This is script specific for mouse, and inspired by 'scripts/add_domain_hugo_ccds_refseq_exon_info_to_ensembl_transcript.py'.
+The main difference is the fact that mouse transcripts don't have to be checked for the manual canonical-transcript overrides.
+That makes this code more straight-forward, as it only has to construct the proper datastructure for JSON formatting.
+A JSON file will be produced that holds for each gene its canonical transcript, cross-refs, exon and domain info.
+'''
+
 import pandas as pd
 import argparse
 
@@ -78,7 +85,7 @@ def main(ensembl_biomart_transcripts,
     exons_df = pd.read_csv(ensembl_transcript_info, sep='\t')
     pfam_df = pd.read_csv(ensembl_biomart_pfam, sep='\t')
 
-    #combined = combine_tables(transcripts, refseq, exons, pfam, ccds)
+    # collapse on transcript
     exons = exons_per_transcript(exons_df).sort_index()
     pfam = pfam_domains_per_transcript(pfam_df).sort_index()
 
