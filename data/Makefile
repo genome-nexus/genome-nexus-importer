@@ -156,7 +156,7 @@ $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt: $(TMP_DIR)/ensembl
 
 # vcf2maf canonical transcripts
 common_input/isoform_overrides_uniprot.txt:
-	curl '$(VCF2MAF_RAW_URL)/d$(VERSION)/input $(VERSION)/export $(VERSION)/tmpata/isoform_overrides_uniprot_from_biomart_91' | sed 's/^#//' > $@
+	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_uniprot_from_biomart_91' | sed 's/^#//' > $@
 
 common_input/isoform_overrides_at_mskcc.txt:
 	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_at_mskcc' | sed 's/^#//' | sed 's/dmp_refseq_id/refseq_id/' | sed 's/isoform_override/enst_id/g' > $@
