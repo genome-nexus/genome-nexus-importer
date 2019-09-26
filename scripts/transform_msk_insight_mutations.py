@@ -117,9 +117,9 @@ def main(input_somatic, input_germline, input_biallelic, input_qc_pass):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("input_somatic",
-                        help="insight/somatic_mutations_by_tumortype_merge_fixed.txt")
+                        help="insight/somatic_mutations_by_tumortype_merge.txt")
     parser.add_argument("input_germline",
-                        help="insight/mutations_by_tumortype_merge.txt")
+                        help="insight/mutations_cnv_by_tumortype_merge.txt")
     parser.add_argument("input_biallelic",
                         help="insight/biallelic_by_tumortype_merge.txt")
     parser.add_argument("input_qc_pass",
