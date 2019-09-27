@@ -96,12 +96,24 @@ def generate_id(df):
                df["variant_allele"].map(str)
 
 
+# workaround for mixed NAs and integers
+# see https://stackoverflow.com/questions/39666308/pd-read-csv-by-default-treats-integers-like-floats
+def fix_na_values(df):
+    df[["Start_Position", "End_Position"]] = df[["Start_Position", "End_Position"]].fillna(-1).astype(int)
+
+
+def parse_file(input, sep):
+    df = pd.read_csv(input, sep=sep)
+    fix_na_values(df)
+    return df
+
+
 def main(input_somatic, input_germline, input_biallelic, input_qc_pass):
     # parse mutations file
-    somatic_mutations_df = pd.read_csv(input_somatic, sep='\t')
-    germline_mutations_df = pd.read_csv(input_germline, sep='\t')
-    biallelic_mutations_df = pd.read_csv(input_biallelic, sep='\t')
-    qc_pass_mutations_df = pd.read_csv(input_qc_pass, sep='\t')
+    somatic_mutations_df = parse_file(input_somatic, sep='\t')
+    germline_mutations_df = parse_file(input_germline, sep='\t')
+    biallelic_mutations_df = parse_file(input_biallelic, sep='\t')
+    qc_pass_mutations_df = parse_file(input_qc_pass, sep='\t')
     # process original input
     somatic_mutations_df = process_data_frame(somatic_mutations_df, "somatic")
     germline_mutations_df = process_data_frame(germline_mutations_df, "germline")
