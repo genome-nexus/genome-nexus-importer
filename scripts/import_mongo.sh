@@ -37,4 +37,4 @@ import ptm.experimental <(gunzip -c ${DIR}/../data/ptm/export/ptm.json.gz) '--ty
 echo "Executing human-specific import steps"
 
 import hotspot.mutation ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/hotspots_v2_and_3d.txt '--type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
-import insight.mutation <(gunzip -c ${DIR}/../data/insight/export/mutations.json.gz) '--type json'
+import signal.mutation <(gunzip -c ${DIR}/../data/signal/export/mutations.json.gz) '--type json'
