@@ -36,9 +36,9 @@ TMP_DIR=$(VERSION)/tmp
 # Ensembl REST query size. Lower this if Ensembl returns Timeout errors.
 QSIZE=1000
 
-# Generate JSON content for msk-insight mutations
-insight/export/mutations.json.gz: insight/input/somatic_mutations_by_tumortype_merge.txt insight/input/mutations_cnv_by_tumortype_merge.txt insight/input/biallelic_by_tumortype_merge.txt insight/input/mutations_QCpass_by_tumortype_merge.txt
-	python3 ../scripts/transform_msk_insight_mutations.py $^ | gzip > $@
+# Generate JSON content for signal-db mutations
+signal/export/mutations.json.gz: signal/input/somatic_mutations_by_tumortype_merge.txt signal/input/mutations_cnv_by_tumortype_merge.txt signal/input/biallelic_by_tumortype_merge.txt signal/input/mutations_QCpass_by_tumortype_merge.txt
+	python3 ../scripts/transform_signal_db_mutations.py $^ | gzip > $@
 
 # Fetch CCDS files
 common_input/CCDS2Sequence.current.txt:
