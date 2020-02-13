@@ -175,6 +175,11 @@ common_input/mouse/MGI_Gene_Model_Coord.rpt:
 $(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_geneids.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_pfam.txt:
 	Rscript --vanilla ../scripts/retrieve_biomart_tables.R $(SPECIES) $(VERSION)/input/
 
+# download OncoKB cancer genes list
+# need to set ONCOKB_TOKEN first by "export ONCOKB_TOKEN="
+common_input/oncokb_cancer_genes_list_from_API.json: 
+	curl "https://www.oncokb.org/api/v1/utils/cancerGeneList" -H "accept: application/json" -H "Authorization: Bearer $(ONCOKB_TOKEN)" | python -m json.tool > $@
+
 # create directories if not extistent
 dirs: $(VERSION)/input $(VERSION)/export
 $(VERSION)/input $(VERSION)/export $(VERSION)/tmp:
@@ -190,7 +195,7 @@ input:
 	test $(VERSION)
 
 all: input dirs $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt
-	cp $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt $(VERSION)/export/
+	cp $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt $(TMP_DIR)/ensembl_biomart_transcripts.json.gz common_input/pfamA.txt common_input/hotspots_v2_and_3d.txt common_input/oncokb_cancer_genes_list_from_API.json $(VERSION)/export/
 
 # For mouse various steps of this Makefile are not applicable. Therefore this is a mouse specific recipe.
 mouse: input dirs $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt

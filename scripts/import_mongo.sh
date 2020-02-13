@@ -38,3 +38,6 @@ echo "Executing human-specific import steps"
 
 import hotspot.mutation ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/hotspots_v2_and_3d.txt '--type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
 import signal.mutation <(gunzip -c ${DIR}/../data/signal/export/mutations.json.gz) '--type json'
+
+# import oncokb cancer genes list
+import oncokb.gene ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/oncokb_cancer_genes_list_from_API.json '--type json --jsonArray'
