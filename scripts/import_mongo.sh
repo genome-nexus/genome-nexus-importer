@@ -5,10 +5,30 @@ set -e
 MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27017/annotator"}
 REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION:-"grch37_ensembl92"}
 SPECIES=${SPECIES:-"homo_sapiens"}
+AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME:-"genome-nexus-mongo-dump"}
+AWS_S3_BUCKET_DUMP_DIR=${AWS_S3_BUCKET_DUMP_DIR:-"dump/genome-nexus"}
+SKIP_MONGODUMP_RESTORE=${SKIP_MONGODUMP_RESTORE:-"0"}
 
 echo "MONGO_URI:" ${MONGO_URI}
 echo "REF_ENSEMBL_VERSION:" ${REF_ENSEMBL_VERSION}
 echo "SPECIES:" ${SPECIES}
+echo "AWS_BUCKET_NAME:" ${AWS_S3_BUCKET_NAME}
+echo "AWS_S3_BUCKET_DUMP_DIR:" ${AWS_S3_BUCKET_DUMP_DIR}
+
+# Get name of latest mongodump, extract contents, and run mongorestore
+#  mongo dump directory path is set in Dockerfile
+if [ -z "${AWS_BUCKET_NAME}" ] || [ -z "${AWS_S3_BUCKET_DUMP_DIR}" ] ; then
+    SKIP_MONGODUMP_RESTORE="1"
+fi
+
+if [ "${SKIP_MONGODUMP_RESTORE}" == "0" ] ; then
+    cd /mongodump
+    wget https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${AWS_S3_BUCKET_DUMP_DIR}/latest_mongo_dump.txt
+    LATEST_MONGODUMP_FILENAME=$(cat latest_mongo_dump.txt)
+    wget https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/${AWS_S3_BUCKET_DUMP_DIR}/$LATEST_MONGODUMP_FILENAME
+    tar -xzvf $LATEST_MONGODUMP_FILENAME
+    mongorestore --uri ${MONGO_URI} --verbose dump
+fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -41,3 +61,4 @@ import signal.mutation <(gunzip -c ${DIR}/../data/signal/export/mutations.json.g
 
 # import oncokb cancer genes list
 import oncokb.gene ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/oncokb_cancer_genes_list_from_API.json '--type json --jsonArray'
+
