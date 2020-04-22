@@ -1,9 +1,16 @@
-FROM mongo:3.6.2
+# This base image starts up mongo
+# This version needs to correspond with the helm chart version
+FROM bitnami/mongodb:4.0.12
 
-# Easier to copy everything and remove unused directories, as there's no --parent parameter in docker COPY
+# Use .dockerignore file to ignore unwanted files
+# These files are used by import_mongo.sh to initialize mongo
+# Creating directories as root
+# Set user back to the one in base image
+USER root
+RUN mkdir -p /data
 COPY data/ /data/
-RUN rm -rf /data/*/input /data/*/tmp
+USER 1001
 
 # Import data into mongodb
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
-CMD ["mongod"]
+
