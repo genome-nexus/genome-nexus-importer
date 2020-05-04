@@ -6,6 +6,7 @@ data. Data for several reference genomes and Ensembl releases is available in
 the `data` folder.
 
 The parent image is Bitnami's mongodb image, found [here](https://hub.docker.com/r/bitnami/mongodb/). 
+
 Current installed MongoDB version: **4.0.12**
 
 ## Using the mongo database
