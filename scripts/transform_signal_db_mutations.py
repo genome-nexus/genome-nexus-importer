@@ -103,7 +103,8 @@ def fix_na_values(df):
 
 
 def parse_file(input, sep):
-    df = pd.read_csv(input, sep=sep)
+    # make sure that chromosome is always parsed as string
+    df = pd.read_csv(input, sep=sep, dtype = {"Chromosome" : object})
     fix_na_values(df)
     return df
 
