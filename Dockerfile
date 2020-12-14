@@ -17,4 +17,7 @@ COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
 RUN /setup.sh
 
 FROM bitnami/mongodb:${MONGODBVERSION}
-COPY --from=build /bitnami/mongodb /bitnami/mongodb
+COPY --from=build /bitnami/mongodb /bitnami/seed
+COPY /scripts/startup.sh /startup.sh
+
+CMD [ "/startup.sh" ]
