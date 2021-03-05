@@ -180,6 +180,13 @@ $(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_genei
 common_input/oncokb_cancer_genes_list_from_API.json: 
 	curl "https://www.oncokb.org/api/v1/utils/cancerGeneList" -H "accept: application/json" -H "Authorization: Bearer $(ONCOKB_TOKEN)" | python -m json.tool > $@
 
+# download GRCh37 ClinVar VCF file from NCBI
+clinvar/input/clinvar_grch37.vcf:
+	curl "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz" | gunzip -c > $@
+# download GRCh39 ClinVar VCF file from NCBI
+clinvar/input/clinvar_grch38.vcf:
+	curl "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz" | gunzip -c > $@
+
 # create directories if not extistent
 dirs: $(VERSION)/input $(VERSION)/export
 $(VERSION)/input $(VERSION)/export $(VERSION)/tmp:
