@@ -41,3 +41,10 @@ import signal.mutation <(gunzip -c ${DIR}/../data/signal/export/mutations.json.g
 
 # import oncokb cancer genes list
 import oncokb.gene ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/oncokb_cancer_genes_list_from_API.json '--type json --jsonArray'
+
+# import ClinVar
+if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* ]]; then
+	import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch37.txt.gz) '--type tsv --headerline'
+elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
+    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch38.txt.gz) '--type tsv --headerline'
+fi
