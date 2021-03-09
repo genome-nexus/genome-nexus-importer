@@ -7,7 +7,7 @@ def __main__():
    parser = argparse.ArgumentParser()
    parser.add_argument('input_vcf', help='Input VCF file, for example:../data/clinvar/input/clinvar_grch37.vcf')
    parser.add_argument('out_tsv', help='Output file, for example:../data/clinvar/tsv/clinvar_grch37.tsv')
-   parser.add_argument('--fields', help='List all needed fields and separate by comma. Avalivable fields: Chromosome, Start_Position, End_Position, Reference_Allele, Alternate_Allele, ClinVar_ID, Quality, Filter, AF_ESP, AF_EXAC, AF_TGP, ALLELEID, CLNDISDB, CLNDISDBINCL, CLNDN, CLNDNINCL, CLNHGVS, CLNREVSTAT, CLNSIG, CLNSIGCONF, CLNSIGINCL, CLNVC, CLNVCSO, CLNVI, DBVARID, GENEINFO, MC, ORIGIN, RS, SSR', required=False, default=None)
+   parser.add_argument('--fields', help='Select fields and separate by comma. Avalivable fields: Chromosome, Start_Position, End_Position, Reference_Allele, Alternate_Allele, ClinVar_ID, Quality, Filter, AF_ESP, AF_EXAC, AF_TGP, ALLELEID, CLNDISDB, CLNDISDBINCL, CLNDN, CLNDNINCL, CLNHGVS, CLNREVSTAT, CLNSIG, CLNSIGCONF, CLNSIGINCL, CLNVC, CLNVCSO, CLNVI, DBVARID, GENEINFO, MC, ORIGIN, RS, SSR', required=False, default=None)
    args = parser.parse_args()
    vcf2tsv(args.input_vcf, args.out_tsv, args.fields)
 
@@ -138,6 +138,3 @@ def vcf2tsv(input_vcf, out_tsv, fields):
    subprocess.run('gzip -f ' + str(out_tsv), shell=True)
 
 if __name__=="__main__": __main__()
-
-
-   
