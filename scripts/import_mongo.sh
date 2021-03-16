@@ -44,7 +44,7 @@ import oncokb.gene ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/oncokb_cancer_ge
 
 # import ClinVar
 if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* ]]; then
-	import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch37.txt.gz) '--type tsv --headerline'
+    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch37.txt.gz) '--type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
 elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
-    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch38.txt.gz) '--type tsv --headerline'
+    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch38.txt.gz) '--type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
 fi

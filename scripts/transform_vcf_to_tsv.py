@@ -1,19 +1,18 @@
 import argparse
 import pandas as pd 
 from cyvcf2 import VCF
-import subprocess
 
 def __main__():
    parser = argparse.ArgumentParser()
    parser.add_argument('input_vcf', help='Input VCF file, for example:../data/clinvar/input/clinvar_grch37.vcf')
    parser.add_argument('out_tsv', help='Output file, for example:../data/clinvar/tsv/clinvar_grch37.tsv')
-   parser.add_argument('--fields', help='Select fields and separate by comma. Avalivable fields: Chromosome, Start_Position, End_Position, Reference_Allele, Alternate_Allele, ClinVar_ID, Quality, Filter, AF_ESP, AF_EXAC, AF_TGP, ALLELEID, CLNDISDB, CLNDISDBINCL, CLNDN, CLNDNINCL, CLNHGVS, CLNREVSTAT, CLNSIG, CLNSIGCONF, CLNSIGINCL, CLNVC, CLNVCSO, CLNVI, DBVARID, GENEINFO, MC, ORIGIN, RS, SSR', required=False, default=None)
+   parser.add_argument('--fields', help='Select fields and separate by comma. Avalivable fields: chromosome, start_position, end_position, reference_allele, alternate_allele, clinvar_id, quality, filter, af_esp, af_exac, af_tgp, alleleid, clndisdb, clndisdbincl, clndn, clndnincl, clnhgvs, clnrevstat, clnsig, clnsigconf, clnsigincl, clnvc, clnvcso, clnvi, dbvarid, geneinfo, mc, origin, rs, ssr', required=False, default=None)
    args = parser.parse_args()
    vcf2tsv(args.input_vcf, args.out_tsv, args.fields)
 
 def get_genomic_location(variant):
    genomic_location = []
-   genomic_location.append(variant.CHROM)
+   genomic_location.append(str(variant.CHROM))
    if len(variant.ALT) == 1:
       if len(variant.REF) == 1 and len(variant.ALT[0]) == 1:
          # SNP
@@ -60,7 +59,7 @@ def get_genomic_location(variant):
          # var
          genomic_location.append(variant.ALT[0])
    else:
-      # multiple variant allele, or no variant allele
+      # multiple variant allele(ALT:G,T), or no variant allele(ALT:.), see examples in VCF format specification: https://samtools.github.io/hts-specs/VCFv4.1.pdf
       # start position
       genomic_location.append(str('-1'))
       # end position
@@ -83,11 +82,11 @@ def parse_INFO_column(vcf, column_types):
 
 def vcf2tsv(input_vcf, out_tsv, fields):
    vcf = VCF(input_vcf, gts012 = True)
-   fixed_columns_header = ['Chromosome','Start_Position','End_Position','Reference_Allele','Alternate_Allele','ClinVar_ID','Quality','Filter']
+   fixed_columns_header = ['chromosome','start_position','end_position','reference_allele','alternate_allele','clinvar_id','quality','filter']
    column_types = {}
    
    info_columns_header = parse_INFO_column(vcf, column_types)
-   header = fixed_columns_header + info_columns_header
+   header = fixed_columns_header + list(map(str.lower, info_columns_header))
    # select what fields will be included
    # will keep all fields if not specified
    fields_list = fields.lower().split(",") if fields != None else map(str.lower, header)
@@ -102,13 +101,13 @@ def vcf2tsv(input_vcf, out_tsv, fields):
       
       # Quality
       if variant.QUAL is None:
-         tsv_fields.append('')
+         tsv_fields.append(None)
       else:
          tsv_fields.append(str("{0:.2f}".format(variant.QUAL)))
 
       # Filter
       if variant.FILTER is None:
-         tsv_fields.append('')
+         tsv_fields.append(None)
       else:
          tsv_fields.append(str(variant.FILTER))
       
@@ -119,7 +118,7 @@ def vcf2tsv(input_vcf, out_tsv, fields):
             tsv_fields.append(",".join(str(n) for n in variant_info.get(info_field)))
          else:
             if variant_info.get(info_field) is None:
-               tsv_fields.append('')
+               tsv_fields.append(None)
             else:
                if column_types[info_field] == 'Float':
                   tsv_fields.append(str("{0:.5f}".format(variant_info.get(info_field))))
@@ -134,7 +133,8 @@ def vcf2tsv(input_vcf, out_tsv, fields):
          continue
       else:
          df = df.drop(column, axis=1)
+   # set column type
+   df.rename(columns=lambda x: x + ".string()" if x == "chromosome" else x + ".auto()", inplace=True)
    df.to_csv(out_tsv, sep="\t", index=False)
-   subprocess.run('gzip -f ' + str(out_tsv), shell=True)
 
 if __name__=="__main__": __main__()
