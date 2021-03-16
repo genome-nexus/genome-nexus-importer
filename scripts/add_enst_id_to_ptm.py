@@ -80,14 +80,15 @@ def add_enst_column_to_ptm_files(ccds_to_uniprot_dict, ccds_to_enst_dict, ptm_in
     pd.concat(frames).to_json(sys.stdout, orient='records', lines=True)
 
 
-def main(ccds_to_uniprot, ccds_to_sequence, ptm_input_dir):
+def main(ccds_to_uniprot, ccds_to_sequence, ccds_to_sequence_override, ptm_input_dir):
     # parse ccds mapping files
     ccds_to_uniprot_df = pd.read_csv(ccds_to_uniprot, sep='\t')
     ccds_to_sequence_df = pd.read_csv(ccds_to_sequence, sep='\t')
+    ccds_to_sequence_override_df = pd.read_csv(ccds_to_sequence_override, sep='\t')
 
     # create dictionaries
     ccds_to_uniprot_dict = index_ccds_ids_by_uniprot(ccds_to_uniprot_df)
-    ccds_to_enst_dict = index_enst_by_ccds_ids(ccds_to_sequence_df)
+    ccds_to_enst_dict = index_enst_by_ccds_ids(pd.concat([ccds_to_sequence_df, ccds_to_sequence_override_df]))
 
     # add ENST to PTM files
     add_enst_column_to_ptm_files(ccds_to_uniprot_dict, ccds_to_enst_dict, ptm_input_dir)
@@ -99,8 +100,10 @@ if __name__ == "__main__":
                         help="common_input/CCDS2UniProtKB.current.txt")
     parser.add_argument("ccds_to_sequence",
                         help="common_input/CCDS2Sequence.current.txt")
+    parser.add_argument("ccds_to_sequence_override",
+                        help="common_input/CCDS2Sequence.override.txt")
     parser.add_argument("ptm_input_dir",
                         help="ptm/input")
     args = parser.parse_args()
 
-    main(args.ccds_to_uniprot, args.ccds_to_sequence, args.ptm_input_dir)
+    main(args.ccds_to_uniprot, args.ccds_to_sequence, args.ccds_to_sequence_override, args.ptm_input_dir)

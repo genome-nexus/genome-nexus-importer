@@ -1,0 +1,2 @@
+#ccds	original_member	current_member	source	nucleotide_ID	protein_ID	status_in_CCDS	sequence_status
+CCDS5863.1	1	1	EBI,WTSI	ENST00000288602.6	ENSP00000288602.6	Accepted	1

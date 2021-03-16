@@ -115,7 +115,7 @@ ptm/input/Ubiquitination.txt:
 	curl $(DB_PTM_URL)/Ubiquitination.txt.gz | gunzip -c > $@
 
 # Generate single PTM output from multiple input
-ptm/export/ptm.json.gz: common_input/CCDS2UniProtKB.current.txt common_input/CCDS2Sequence.current.txt ptm/input
+ptm/export/ptm.json.gz: common_input/CCDS2UniProtKB.current.txt common_input/CCDS2Sequence.current.txt common_input/CCDS2Sequence.override.txt ptm/input
 	python3 ../scripts/add_enst_id_to_ptm.py $^ | gzip > $@
 
 # This will take a while. Only max 1000 transcripts can be retrieved per POST request. Temporary results are saved in
