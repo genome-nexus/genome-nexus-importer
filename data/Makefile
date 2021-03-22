@@ -180,6 +180,22 @@ $(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_genei
 common_input/oncokb_cancer_genes_list_from_API.json: 
 	curl "https://www.oncokb.org/api/v1/utils/cancerGeneList" -H "accept: application/json" -H "Authorization: Bearer $(ONCOKB_TOKEN)" | python -m json.tool > $@
 
+# ClinVar version
+# The latest version date number can be found on https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ and https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/
+CLINVAR_VERSION=20210308
+# download GRCh37 ClinVar VCF file from NCBI
+clinvar/input/clinvar_grch37_input.vcf.gz:
+	curl "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_${CLINVAR_VERSION}.vcf.gz" > $@
+# generate GRCh37 ClinVar tsv file
+clinvar/export/clinvar_grch37.txt.gz:
+	gunzip -k ../data/clinvar/input/clinvar_grch37_input.vcf.gz && python ../scripts/transform_vcf_to_tsv.py ../data/clinvar/input/clinvar_grch37_input.vcf ../data/clinvar/export/clinvar_grch37.txt --fields chromosome,start_position,end_position,reference_allele,alternate_allele,clinvar_id,clnsig,clnsigconf && gzip ../data/clinvar/export/clinvar_grch37.txt && rm ../data/clinvar/input/clinvar_grch37_input.vcf
+# download GRCh38 ClinVar VCF file from NCBI
+clinvar/input/clinvar_grch38_input.vcf.gz:
+	curl "ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar_${CLINVAR_VERSION}.vcf.gz" > $@
+# generate GRCh38 ClinVar tsv file
+clinvar/export/clinvar_grch38.txt.gz:
+	gunzip -k ../data/clinvar/input/clinvar_grch38_input.vcf.gz && python ../scripts/transform_vcf_to_tsv.py ../data/clinvar/input/clinvar_grch38_input.vcf ../data/clinvar/export/clinvar_grch38.txt --fields chromosome,start_position,end_position,reference_allele,alternate_allele,clinvar_id,clnsig,clnsigconf && gzip ../data/clinvar/export/clinvar_grch38.txt && rm ../data/clinvar/input/clinvar_grch38_input.vcf
+
 # create directories if not extistent
 dirs: $(VERSION)/input $(VERSION)/export
 $(VERSION)/input $(VERSION)/export $(VERSION)/tmp:
