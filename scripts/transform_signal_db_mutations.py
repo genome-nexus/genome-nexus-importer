@@ -57,7 +57,8 @@ def generate_tumor_type_stats(mutation_row, sig_col_names):
             "lst": mutation_row["lst"],
             "ntelomeric_ai": mutation_row["ntelomeric_ai"],
             "fraction_loh": mutation_row["fraction_loh"],
-        }
+        },
+        "n_germline_homozygous": mutation_row["n_germline_homozygous"]
     }
 
 
@@ -124,7 +125,8 @@ def process_all_variant_freq_df(mutations_df, mutation_status):
                        "Reference_Allele",
                        "Alternate_Allele",
                        "Mutation_Status",
-                       "general_population_stats"]]
+                       "general_population_stats",
+                       "n_germline_homozygous"]]
     # rename columns for JSON format
     df.columns = ["hugo_gene_symbol",
                   "chromosome",
@@ -133,7 +135,8 @@ def process_all_variant_freq_df(mutations_df, mutation_status):
                   "reference_allele",
                   "variant_allele",
                   "mutation_status",
-                  "general_population_stats"]
+                  "general_population_stats",
+                  "n_germline_homozygous"]
     return df
 
 
@@ -235,6 +238,10 @@ def merge_mutations(germline_mutations_df,
                     all_variants_freq_index,
                     "general_population_stats",
                     "general_population_stats")
+    add_column_data(germline_mutations_df,
+                    all_variants_freq_index,
+                    "n_germline_homozygous",
+                    "n_germline_homozygous")
     add_column_data(germline_mutations_df,
                     msk_expert_review_index,
                     "msk_expert_review",
