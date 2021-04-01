@@ -45,7 +45,7 @@ $(filter-out %.gz, %): %.gz
 
 # Generate JSON content for signal-db mutations
 signal/export/mutations.json.gz: signal/input/somatic_mutations_by_tumortype_merge.txt signal/input/mutations_cnv_by_tumortype_merge.txt signal/input/biallelic_by_tumortype_merge.txt signal/input/mutations_QCpass_by_tumortype_merge.txt signal/input/signaldb_all_variants_frequencies.txt signal/input/signaldb_msk_expert_review_variants.txt signal/input/signaldb_variants_by_cancertype_summary_statistics.txt
-	python ../scripts/transform_signal_db_mutations.py $^ | gzip > $@
+	python3 ../scripts/transform_signal_db_mutations.py $^ | gzip > $@
 
 # Fetch CCDS files
 common_input/CCDS2Sequence.current.txt:

@@ -224,7 +224,7 @@ if __name__ == '__main__':
     parser.add_argument("ensembl_biomart_ccds",
                         help="input/ensembl_biomart_ccds.txt")
     parser.add_argument("enst_to_uniprot",
-                        help="../uniprot/export/grch37_ensembl92_enst_to_uniprot_mapping_id.txt or ../uniprot/export/grch38_ensembl92_enst_to_uniprot_mapping_id.txt")
+                        help="../uniprot/export/grch37_ensembl92_enst_to_uniprot_mapping_id.txt or ../uniprot/export/grch38_ensembl92_enst_to_uniprot_mapping_id.txt or ../uniprot/export/grch38_ensembl95_enst_to_uniprot_mapping_id.txt")
     parser.add_argument("vcf2maf_isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("vcf2maf_isoform_overrides_mskcc",
