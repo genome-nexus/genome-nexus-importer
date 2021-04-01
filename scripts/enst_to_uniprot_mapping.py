@@ -1,7 +1,7 @@
 # 1. Mapping by protein sequence: ENST -> ENSP -> Ensembl sequence = UniProt sequence -> UniProt id
 # Sequence from Ensembl:
-# GRCh37: http://ftp.ensembl.org/pub/grch37/release-101/fasta/homo_sapiens/pep/
-# GRCh38: http://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/pep/
+# GRCh37: http://ftp.ensembl.org/pub/grch37/release-101/fasta/homo_sapiens/pep/ rename to ensembl_grch37.fa.gz
+# GRCh38: http://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/pep/ rename to ensembl_grch38.fa.gz
 # Sequence from UniProt: https://www.uniprot.org/uniprot/?query=+reviewed%3Ayes+AND+organism%3A%22Homo+sapiens+%28Human%29+%5B9606%5D%22&sort=score
 # 2. handle multiple UniProt cases
 # Biomart mapping
@@ -84,13 +84,14 @@ def get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome
         else:
             end = start + chunk
         ensp_list = []
+        print("Fetching BioMart for variant #" + str(start) + " to #" + str(end) + ', ' + str(max_length) + ' in total')
         for i in range(start, end):
             if df_transcript['ensp_id'][i] != '':
                 ensp_list.append(df_transcript['ensp_id'][i])
         if len(ensp_list) == 0:
             start = start + chunk
             continue
-        if genome_build.lower() == 'grch37':
+        if 'grch37' in genome_build.lower():
             url = "http://grch37.ensembl.org/biomart/martservice?query=%3C?xml%20version=%221.0%22%20encoding=%22UTF-8%22?%3E%20%3C!DOCTYPE%20Query%3E%20%3CQuery%20%20virtualSchemaName%20=%20%22default%22%20formatter%20=%20%22TSV%22%20header%20=%20%220%22%20uniqueRows%20=%20%220%22%20count%20=%20%22%22%20datasetConfigVersion%20=%20%220.6%22%20%3E%20%3CDataset%20name%20=%20%22hsapiens_gene_ensembl%22%20interface%20=%20%22default%22%20%3E%20%3CFilter%20name%20=%20%22ensembl_peptide_id%22%20value%20=%20%22" + ','.join(ensp_list) + "%22/%3E%20%3CAttribute%20name%20=%20%22uniprotswissprot%22%20/%3E%20%3CAttribute%20name%20=%20%22ensembl_peptide_id%22%20/%3E%20%3C/Dataset%3E%20%3C/Query%3E"
         else:
             url = "http://www.ensembl.org/biomart/martservice?query=%3C?xml%20version=%221.0%22%20encoding=%22UTF-8%22?%3E%20%3C!DOCTYPE%20Query%3E%20%3CQuery%20%20virtualSchemaName%20=%20%22default%22%20formatter%20=%20%22TSV%22%20header%20=%20%220%22%20uniqueRows%20=%20%220%22%20count%20=%20%22%22%20datasetConfigVersion%20=%20%220.6%22%20%3E%20%3CDataset%20name%20=%20%22hsapiens_gene_ensembl%22%20interface%20=%20%22default%22%20%3E%20%3CFilter%20name%20=%20%22ensembl_peptide_id%22%20value%20=%20%22" + ','.join(ensp_list) + "%22/%3E%20%3CAttribute%20name%20=%20%22uniprotswissprot%22%20/%3E%20%3CAttribute%20name%20=%20%22ensembl_peptide_id%22%20/%3E%20%3C/Dataset%3E%20%3C/Query%3E"
@@ -107,13 +108,13 @@ def get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome
         start = start + chunk
 
 
-def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, genome_build):
-    # Todo: this is not working, need fix
-    subprocess.run('ungzip -f ' + str(ensembl_biomart_transcripts), shell=True) 
-    
+def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, genome_build_version):
     # extract transcripts
     transcript = open(ensembl_biomart_transcripts)
-
+    if 'grch37' in genome_build_version.lower():
+        genome_build = 'grch37'
+    else:
+        genome_build = 'grch38'
     # get result dataframe from transcript json file
     df_transcript = None
     transcript_ids = []
@@ -147,7 +148,7 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, g
 
 
     # get correction mapping
-    curation_map = 'curation_map_' + genome_build.lower() + '.tsv'
+    curation_map = '../data/uniprot/input/reviewed_map_' + genome_build.lower() + '.tsv'
     df_transcript_to_uniprot_correction_mapping = pd.read_csv(curation_map, sep='\t')
     correction_dict = dict()
     df_transcript_to_uniprot_correction_mapping.apply(lambda row: generate_dict(row['ensp_id'], row['Final_mapping_uniprot_id'], correction_dict), axis=1)
@@ -175,8 +176,8 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, g
     print (str(map_to_uniprot_by_biomart) + " transcripts can be mapped by BioMart: " + str(map_to_uniprot_by_biomart / total_transcripts * 100) + "%")
 
     # Save output file
-    full_mapping_file_name = genome_build + '_enst_to_uniprot_mapping_full.txt'
-    id_mapping_file_name = genome_build + '_enst_to_uniprot_mapping_id.txt'
+    full_mapping_file_name = '../data/uniprot/export/' + genome_build_version + '_enst_to_uniprot_mapping_full.txt'
+    id_mapping_file_name = '../data/uniprot/export/' + genome_build_version + '_enst_to_uniprot_mapping_id.txt'
 
     df_transcript.to_csv(full_mapping_file_name, index=False, sep='\t', header=True)
     df_transcript.to_csv(id_mapping_file_name, columns=['enst_id','reviewed_uniprot_accession'], index=False, sep='\t', header=True)
@@ -184,12 +185,12 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, g
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("ensembl_biomart_transcripts",
-                        help="../data/grch37_ensembl92/export/ensembl_biomart_transcripts.json.gz")
+                        help="../data/grch37_ensembl92/export/ensembl_biomart_transcripts.json")
     parser.add_argument("ensembl_fasta",
-                        help="../data/uniprot/input/ensembl_grch37.fa.gz")
+                        help="../data/uniprot/input/ensembl_grch37.fa")
     parser.add_argument("uniprot_id_with_sequence",
                         help="../data/uniprot/input/uniprot_id_with_sequence.tab")
-    parser.add_argument("genome_build",
-                        help="grch37 or grch38")
+    parser.add_argument("genome_build_version",
+                        help="grch37_ensembl92 or grch38_ensembl92 or grch38_ensembl95")
     args = parser.parse_args()
-    main(args.ensembl_biomart_transcripts, args.ensembl_fasta, args.uniprot_id_with_sequence, args.genome_build)
+    main(args.ensembl_biomart_transcripts, args.ensembl_fasta, args.uniprot_id_with_sequence, args.genome_build_version)

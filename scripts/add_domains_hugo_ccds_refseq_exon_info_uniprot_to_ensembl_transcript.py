@@ -153,11 +153,29 @@ def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_msk
     return transcripts
 
 
+def add_uniprot(transcripts, uniprot):
+    """Add one Uniprot id for each transcript. There is only one per transcript."""
+    uniprot.columns = [u.lower().replace(' ', '_') for u in uniprot.columns]
+    uniprot = uniprot[~pd.isnull(uniprot["reviewed_uniprot_accession"])]
+    # assume each transcript has only one Uniprot ID
+    assert(any(uniprot["enst_id"].duplicated()) == False)
+    uniprot = uniprot.set_index("enst_id")
+
+    def get_uniprot_for_transcript(x):
+        try:
+            return uniprot.loc[x].values[0]
+        except KeyError:
+            return np.nan
+
+    transcripts["uniprot_id"] = transcripts.index.map(get_uniprot_for_transcript)
+    return transcripts
+
 def main(ensembl_biomart_transcripts,
          ensembl_transcript_info,
          ensembl_biomart_pfam,
          ensembl_biomart_refseq,
          ensembl_biomart_ccds,
+         enst_to_uniprot,
          isoform_overrides_uniprot,
          isoform_overrides_mskcc,
          ensembl_biomart_transcripts_json):
@@ -183,6 +201,10 @@ def main(ensembl_biomart_transcripts,
     transcripts = add_nested_transcript_info(transcripts, transcript_info)
     transcripts = add_nested_pfam_domains(transcripts, pfam_domains)
 
+    # Add Uniprot id
+    enst_to_uniprot_map = pd.read_csv(enst_to_uniprot, sep='\t')
+    transcripts = add_uniprot(transcripts, enst_to_uniprot_map)
+
     # print records as json
     transcripts.reset_index().to_json(ensembl_biomart_transcripts_json,
                                       orient='records', lines=True, compression='gzip')
@@ -201,6 +223,8 @@ if __name__ == '__main__':
                         help="input/ensembl_biomart_refseq.txt")
     parser.add_argument("ensembl_biomart_ccds",
                         help="input/ensembl_biomart_ccds.txt")
+    parser.add_argument("enst_to_uniprot",
+                        help="../uniprot/export/grch37_ensembl92_enst_to_uniprot_mapping_id.txt or ../uniprot/export/grch38_ensembl92_enst_to_uniprot_mapping_id.txt")
     parser.add_argument("vcf2maf_isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("vcf2maf_isoform_overrides_mskcc",
@@ -214,6 +238,7 @@ if __name__ == '__main__':
          args.ensembl_biomart_pfam,
          args.ensembl_biomart_refseq,
          args.ensembl_biomart_ccds,
+         args.enst_to_uniprot,
          args.vcf2maf_isoform_overrides_uniprot,
          args.vcf2maf_isoform_overrides_mskcc,
          args.ensembl_biomart_transcripts_json)
