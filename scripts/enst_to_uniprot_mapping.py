@@ -64,10 +64,7 @@ def count_uniprot_id(uniprot):
         return uniprot.count(",") + 1
 
 def is_matched_id(uniprot_sequence, uniprot_biomart):
-    if uniprot_sequence == uniprot_biomart:
-        return True
-    else:
-        return False
+    return uniprot_sequence == uniprot_biomart
     
 def final_mapping(correction_mapping, ensp, uniprot):
     if ensp in correction_mapping:
