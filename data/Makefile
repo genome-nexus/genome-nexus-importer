@@ -36,6 +36,13 @@ TMP_DIR=$(VERSION)/tmp
 # Ensembl REST query size. Lower this if Ensembl returns Timeout errors.
 QSIZE=1000
 
+# Genome build(grch37 or grch38). Use in Uniprot mapping
+GENOME_BUILD=$(firstword $(subst _, ,$(VERSION)))
+
+# Generic rule to unzip prerequisite files
+$(filter-out %.gz, %): %.gz
+	gunzip $<
+
 # Generate JSON content for signal-db mutations
 signal/export/mutations.json.gz: signal/input/somatic_mutations_by_tumortype_merge.txt signal/input/mutations_cnv_by_tumortype_merge.txt signal/input/biallelic_by_tumortype_merge.txt signal/input/mutations_QCpass_by_tumortype_merge.txt signal/input/signaldb_all_variants_frequencies.txt signal/input/signaldb_msk_expert_review_variants.txt signal/input/signaldb_variants_by_cancertype_summary_statistics.txt
 	python3 ../scripts/transform_signal_db_mutations.py $^ | gzip > $@
@@ -136,9 +143,9 @@ $(TMP_DIR)/$(SPECIES).gff3.gz:
 $(TMP_DIR)/ensembl_transcript_info.txt: $(TMP_DIR)/$(SPECIES).gff3.gz
 	python3 ../scripts/transform_gff_to_tsv_for_exon_info_from_ensembl.py $^ $@
 
-# Add HGNC symbols, exons, UTRs and PFAM domains to Ensembl Transcript
-$(TMP_DIR)/ensembl_biomart_transcripts.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt
-	python3 ../scripts/add_domains_hugo_ccds_refseq_exon_info_to_ensembl_transcript.py $^ $@
+# Add HGNC symbols, exons, UTRs, PFAM domains and Uniprot id to Ensembl Transcript
+$(TMP_DIR)/ensembl_biomart_transcripts.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt uniprot/export/$(VERSION)_enst_to_uniprot_mapping_id.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt
+	python3 ../scripts/add_domains_hugo_ccds_refseq_exon_info_uniprot_to_ensembl_transcript.py $^ $@
 
 # for mouse a specific recipe without overrides
 $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt
@@ -153,6 +160,9 @@ $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensemb
 # mouse version. A different script is called that set the canonicals based on Ensembl lookup.
 $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/mouse/MRK_ENSEMBL.rpt common_input/mouse/MGI_Gene_Model_Coord.rpt
 	python3 ../scripts/make_canonical_transcript_mouse.py $^ $@
+
+uniprot_mapping: $(VERSION)/export/ensembl_biomart_transcripts.json uniprot/input/ensembl_$(GENOME_BUILD).fa uniprot/input/uniprot_id_with_sequence.tab $(VERSION)
+	python3 ../scripts/enst_to_uniprot_mapping.py $^
 
 # vcf2maf canonical transcripts
 common_input/isoform_overrides_uniprot.txt:
