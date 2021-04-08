@@ -32,6 +32,7 @@ def generate_dict(key, value, dictionary):
     if key not in dictionary:
         dictionary[key] = []
     dictionary[key].append(value)
+
 def generate_uniprot_protein_length(ensp, dictionary, sequence_to_uniprot_dict):
     if ensp in dictionary:
         seq = dictionary[ensp][0]
