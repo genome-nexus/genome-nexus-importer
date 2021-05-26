@@ -58,16 +58,8 @@ def get_genomic_location(variant):
          genomic_location.append(variant.REF)
          # var
          genomic_location.append(variant.ALT[0])
-   else:
-      # multiple variant allele(ALT:G,T), or no variant allele(ALT:.), see examples in VCF format specification: https://samtools.github.io/hts-specs/VCFv4.1.pdf
-      # start position
-      genomic_location.append(str('-1'))
-      # end position
-      genomic_location.append(str('-1'))
-      # ref
-      genomic_location.append(variant.REF)
-      # var
-      genomic_location.append(",".join(str(n) for n in variant.ALT))
+      # skip if it's multiple variant allele(ALT:G,T), or no variant allele(ALT:.), see examples in VCF format specification: https://samtools.github.io/hts-specs/VCFv4.1.pdf
+
    return genomic_location
 
 def parse_INFO_column(vcf, column_types):
