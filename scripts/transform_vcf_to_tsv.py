@@ -13,7 +13,7 @@ def __main__():
 def get_genomic_location(variant):
    genomic_location = []
    genomic_location.append(str(variant.CHROM))
-   if len(variant.ALT) == 1:
+   if len(variant.ALT) == 1 and len(variant.ALT[0]) > 0 and len(variant.REF) > 0:
       if len(variant.REF) == 1 and len(variant.ALT[0]) == 1:
          # SNP
          # 1	877523	C	G -> 1,877523,877523,C,G   
@@ -25,7 +25,7 @@ def get_genomic_location(variant):
          genomic_location.append(variant.REF)
          # var
          genomic_location.append(variant.ALT[0])
-      elif len(variant.REF) > 1 and len(variant.ALT[0]) == 1:
+      elif len(variant.REF) > 1 and len(variant.ALT[0]) == 1 and variant.REF[0:1] == variant.ALT[0][0:1]:
          # DEL
          # 1 3342785 AAACGGT	A -> 1,3342786,3342791,AACGGT,-
          # start position
@@ -36,7 +36,7 @@ def get_genomic_location(variant):
          genomic_location.append(variant.REF[1:])
          # var
          genomic_location.append('-')
-      elif len(variant.REF) == 1 and len(variant.ALT[0]) > 1:
+      elif len(variant.REF) == 1 and len(variant.ALT[0]) > 1 and variant.REF[0:1] == variant.ALT[0][0:1]:
          # INS 
          # 1	6529194	C	CTCT -> 1,6529194,6529195,-,TCT
          # start position
@@ -50,6 +50,7 @@ def get_genomic_location(variant):
       else:
          # DELINS
          # 1	12062157	AG	CT -> 1,12062157,12062158,AG,CT
+         # 1	173797451	T	CC -> 1,173797451,173797451,T,CC
          # start position
          genomic_location.append(str(variant.POS))
          # end position
@@ -59,7 +60,6 @@ def get_genomic_location(variant):
          # var
          genomic_location.append(variant.ALT[0])
       # skip if it's multiple variant allele(ALT:G,T), or no variant allele(ALT:.), see examples in VCF format specification: https://samtools.github.io/hts-specs/VCFv4.1.pdf
-
    return genomic_location
 
 def parse_INFO_column(vcf, column_types):
@@ -87,37 +87,39 @@ def vcf2tsv(input_vcf, out_tsv, fields):
    for variant in vcf:
       # add genomic location fields to row element
       tsv_fields = get_genomic_location(variant)
-
-      # Variant ID
-      tsv_fields.append(str(variant.ID))
-      
-      # Quality
-      if variant.QUAL is None:
-         tsv_fields.append(None)
-      else:
-         tsv_fields.append(str("{0:.2f}".format(variant.QUAL)))
-
-      # Filter
-      if variant.FILTER is None:
-         tsv_fields.append(None)
-      else:
-         tsv_fields.append(str(variant.FILTER))
-      
-      # INFO
-      variant_info = variant.INFO
-      for info_field in sorted(info_columns_header):
-         if type(variant_info.get(info_field)) is list or type(variant_info.get(info_field)) is tuple:
-            tsv_fields.append(",".join(str(n) for n in variant_info.get(info_field)))
+      # only keep data with full genomic location (e.g. skip when ref is missing)
+      if (len(tsv_fields)) > 1:
+         # Variant ID
+         tsv_fields.append(str(variant.ID))
+         
+         # Quality
+         if variant.QUAL is None:
+            tsv_fields.append(None)
          else:
-            if variant_info.get(info_field) is None:
-               tsv_fields.append(None)
+            tsv_fields.append(str("{0:.2f}".format(variant.QUAL)))
+
+         # Filter
+         if variant.FILTER is None:
+            tsv_fields.append(None)
+         else:
+            tsv_fields.append(str(variant.FILTER))
+         
+         # INFO
+         variant_info = variant.INFO
+         for info_field in sorted(info_columns_header):
+            if type(variant_info.get(info_field)) is list or type(variant_info.get(info_field)) is tuple:
+               tsv_fields.append(",".join(str(n) for n in variant_info.get(info_field)))
             else:
-               if column_types[info_field] == 'Float':
-                  tsv_fields.append(str("{0:.5f}".format(variant_info.get(info_field))))
+               if variant_info.get(info_field) is None:
+                  tsv_fields.append(None)
                else:
-                  tsv_fields.append(str(variant_info.get(info_field)))
-      
-      tsv_data.append(tsv_fields)
+                  if column_types[info_field] == 'Float':
+                     tsv_fields.append(str("{0:.5f}".format(variant_info.get(info_field))))
+                  else:
+                     tsv_fields.append(str(variant_info.get(info_field)))
+         tsv_data.append(tsv_fields)
+      else:
+         continue
    # write tsv data into DataFrame, then drop unused columns
    df = pd.DataFrame(tsv_data, columns=header)
    for column in df.columns:
