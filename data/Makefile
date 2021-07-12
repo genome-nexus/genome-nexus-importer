@@ -161,7 +161,7 @@ $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensemb
 $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/mouse/MRK_ENSEMBL.rpt common_input/mouse/MGI_Gene_Model_Coord.rpt
 	python3 ../scripts/make_canonical_transcript_mouse.py $^ $@
 
-uniprot_mapping: $(VERSION)/export/ensembl_biomart_transcripts.json uniprot/input/ensembl_$(GENOME_BUILD).fa uniprot/input/uniprot_id_with_sequence.tab $(VERSION)
+uniprot_mapping: $(VERSION)/export/ensembl_biomart_transcripts.json uniprot/input/Homo_sapiens.$(GENOME_BUILD).pep.all.fa uniprot/input/uniprot_reviewed.fasta $(VERSION)
 	python3 ../scripts/enst_to_uniprot_mapping.py $^
 
 # vcf2maf canonical transcripts

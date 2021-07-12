@@ -26,6 +26,7 @@ import time
 from collections import OrderedDict
 import argparse
 import subprocess
+import Levenshtein
 
 # generate sequence to uniprot id dictionary
 def generate_dict(key, value, dictionary):
@@ -33,43 +34,24 @@ def generate_dict(key, value, dictionary):
         dictionary[key] = []
     dictionary[key].append(value)
 
-def generate_uniprot_protein_length(ensp, dictionary, sequence_to_uniprot_dict):
-    if ensp in dictionary:
-        seq = dictionary[ensp][0]
-        if seq in sequence_to_uniprot_dict:
-            return str(len(seq))
-    return ''
-
-def generate_identical_sequence(row):
-    return len(row['uniprot_protein_length']) != 0
-
-def generate_uniprot_id(ensp, dictionary, sequence_to_uniprot_dict, uniprot_set):
-    if ensp in dictionary:
-        seq = dictionary[ensp][0]
-        if seq in sequence_to_uniprot_dict:
-            uniprot_set.add(seq)
-            uniprot = ','.join(sequence_to_uniprot_dict[seq])
-            return uniprot
-    return ''
-
 def generate_biomart_uniprot(ensp, dictionary):
     if ensp in dictionary:
         return dictionary[ensp]
     return ''
 
-def count_uniprot_id(uniprot):
-    if uniprot == "":
-        return 0
+def is_matched(uniprot_id_with_isoform, uniprot_biomart):
+    if ',' in uniprot_id_with_isoform:
+        return False
     else:
-        return uniprot.count(",") + 1
+        if '-' in uniprot_id_with_isoform:
+            uniprot_id = uniprot_id_with_isoform.split('-')[0]
+        else:
+            uniprot_id = uniprot_id_with_isoform
 
-def is_matched_id(uniprot_sequence, uniprot_biomart):
-    return uniprot_sequence == uniprot_biomart
-    
-def final_mapping(correction_mapping, ensp, uniprot):
-    if ensp in correction_mapping:
-        return correction_mapping[ensp][0]
-    return uniprot
+        if uniprot_id == uniprot_biomart:
+            return True
+        else:
+            return False
 
 def get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome_build):
     start = 0
@@ -105,8 +87,78 @@ def get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome
             biomart_ensp_to_uniprot_dict[ensp] = uniprot
         start = start + chunk
 
+def find_uniprot_ids_with_one_levenshtein_distance(ensembl_sequence, ensp_id, sequence_length_dict, sequence_to_uniprot_dict):
+    if ensembl_sequence:
+        potential_uniprot_sequences = sequence_length_dict.get(len(ensembl_sequence))
+    else:
+        return None
+    
+    uniprot_ids = []
+    if potential_uniprot_sequences:
+        for uniprot_sequence in potential_uniprot_sequences:
+            if Levenshtein.distance(ensembl_sequence, uniprot_sequence) == 1:
+                uniprot_ids.append(','.join(sequence_to_uniprot_dict.get(uniprot_sequence)))
+    if len(uniprot_ids) == 0:
+        return None
+    else:
+        return uniprot_ids
 
-def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, genome_build_version):
+# get uniprot id(isoform) from ensp_to_sequence_dict and add into transcript dataframe
+def get_uniprot_id_with_isoform(ensp, dictionary, sequence_to_uniprot_dict):
+    if ensp in dictionary:
+        seq = dictionary[ensp]
+        if seq in sequence_to_uniprot_dict:
+            uniprot = ','.join(sequence_to_uniprot_dict[seq])
+            return uniprot
+    return ''
+
+def multiple_uniprot_ids_compare_with_biomart(uniprot_id_with_isoform, biomart_uniprot_id, reviewed_mapping_dict):
+    uniprot_ids = uniprot_id_with_isoform.split(',')
+    final_uniprot_id = None
+    for uniprot_id in uniprot_ids:
+        if '-' in uniprot_id:
+            uniprot_id_no_isoform = uniprot_id.split('-')[0]
+        else:
+            uniprot_id_no_isoform = uniprot_id
+        if uniprot_id_no_isoform == biomart_uniprot_id:
+            final_uniprot_id = uniprot_id
+    return final_uniprot_id
+
+def curation(uniprot_id_with_isoform, biomart_uniprot_id, ensp_id, ensp_to_sequence_dict, reviewed_mapping_dict):
+    final_uniprot_id = None
+    ensembl_sequence = ensp_to_sequence_dict.get(ensp_id)
+        
+    # 0 uniprot ids, 0 or 1 biomart
+    if not uniprot_id_with_isoform:
+        uniprot_ids_with_one_levenshtein_distance = find_uniprot_ids_with_one_levenshtein_distance(ensembl_sequence, ensp_id)
+        if uniprot_ids_with_one_levenshtein_distance and len(uniprot_ids_with_one_levenshtein_distance) == 1:
+            final_uniprot_id = uniprot_ids_with_one_levenshtein_distance[0]
+        elif uniprot_ids_with_one_levenshtein_distance and len(uniprot_ids_with_one_levenshtein_distance) > 1 and biomart_uniprot_id and biomart_uniprot_id in uniprot_ids_with_one_levenshtein_distance:
+            final_uniprot_id = multiple_uniprot_ids_compare_with_biomart(','.join(uniprot_ids_with_one_levenshtein_distance), biomart_uniprot_id)
+    
+    else:
+        uniprot_ids_with_isoform = uniprot_id_with_isoform.split(',')
+        # 1 uniprot id, 0 or 1 biomart
+        if len(uniprot_ids_with_isoform) == 1:
+            final_uniprot_id = uniprot_ids_with_isoform[0]
+
+        # multiple uniprot ids, 0 or 1 biomart
+        elif len(uniprot_ids_with_isoform) > 1:
+            if biomart_uniprot_id and biomart_uniprot_id in uniprot_ids_with_isoform:
+                final_uniprot_id = multiple_uniprot_ids_compare_with_biomart(uniprot_id_with_isoform, biomart_uniprot_id)
+
+    # if no uniprot id could be mapped, try to find from previous mapping
+    if not final_uniprot_id:
+        if ensp_id in reviewed_mapping_dict:
+            final_uniprot_id = reviewed_mapping_dict.get(ensp_id)
+    
+    if not final_uniprot_id or ',' in final_uniprot_id:
+        final_uniprot_id = ''
+
+    return final_uniprot_id
+
+
+def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_sequence_with_isoform, genome_build_version):
     # extract transcripts
     transcript = open(ensembl_biomart_transcripts)
     if 'grch37' in genome_build_version.lower():
@@ -128,40 +180,66 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, g
     d = {'enst_id': transcript_ids, 'ensp_id': protein_ids, 'ensembl_protein_length': protein_lengths, 'ccds_id': ccds_ids }
     df_transcript = pd.DataFrame(d)
 
-    # generate ensembl sequence map
+    # generate ensembl sequence map from ensembl fasta file
     fasta_sequences = SeqIO.parse(open(ensembl_fasta),'fasta')
-    ensembl_to_sequence_dict = dict()
+    ensp_to_sequence_dict = dict()
     for fasta in fasta_sequences:
         id, sequence = fasta.id, str(fasta.seq)
-        # ensembl_to_sequence_dict[ensp] = [sequence, sub_version]
-        ensembl_to_sequence_dict[id[:-2]] = [sequence, id[len(id) - 1: len(id)]]
+        # ensp_to_sequence_dict[ensp] = sequence
+        ensp_to_sequence_dict[id.split('.')[0]] = sequence
 
-    # get sequence from uniprot
-    df_uniprot_id_with_sequence = pd.read_csv(uniprot_id_with_sequence, sep='\t')
-    sequence_to_uniprot_dict = dict()
-    df_uniprot_id_with_sequence.apply(lambda row: generate_dict(row['Sequence'], row['Entry'], sequence_to_uniprot_dict), axis=1)
-    uniprot_set = set()
+    # generate uniprot sequence(with isoform) dictionary from uniprot fasta file    
+    fasta_sequences_uniprot_isoform = SeqIO.parse(open(uniprot_sequence_with_isoform),'fasta')
+    sequence_to_uniprot_dict = dict() # todo some dicts are not using anywhere
+    uniprot_to_gene_dict = dict()
+    uniprot_isoform_dict = dict()
+    uniprot_no_isoform_set = set()
+    sequence_length_dict = dict()
+    for fasta in fasta_sequences_uniprot_isoform:
+        id, sequence = fasta.id, str(fasta.seq)
+        if sequence not in sequence_to_uniprot_dict:
+            sequence_to_uniprot_dict[sequence] = []
+        # sequence_to_uniprot_dict[sequence] = [uniprot_ids]
+        sequence_to_uniprot_dict[sequence].append(id.split('|')[1])
+        
+        # sequence_length_dict[length] = [sequence]
+        sequence_length = len(sequence)
+        if sequence_length not in sequence_length_dict:
+            sequence_length_dict[sequence_length] = []
+        sequence_length_dict[sequence_length].append(sequence)
+        
+        if '-' in id.split('|')[1]:
+            id_temp = id.split('|')[1].split('-')[0]
+        else:
+            id_temp = id.split('|')[1]
+        uniprot_to_gene_dict[id_temp] = id.split('|')[2].split('_')[0]
+        uniprot_no_isoform_set.add(id_temp)
+        
+        if id_temp not in uniprot_isoform_dict:
+            uniprot_isoform_dict[id_temp] = []
+        uniprot_isoform_dict[id_temp].append(id.split('|')[1])
+    
+    # get uniprot from biomart and generate a map
     biomart_ensp_to_uniprot_dict = dict()
     get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome_build)
+    
 
-
-    # get correction mapping
-    curation_map = '../data/uniprot/input/reviewed_map_' + genome_build.lower() + '.tsv'
-    df_transcript_to_uniprot_correction_mapping = pd.read_csv(curation_map, sep='\t')
-    correction_dict = dict()
-    df_transcript_to_uniprot_correction_mapping.apply(lambda row: generate_dict(row['ensp_id'], row['Final_mapping_uniprot_id'], correction_dict), axis=1)
-    df_transcript['uniprot_protein_length'] = df_transcript.apply(lambda row: generate_uniprot_protein_length(row['ensp_id'], ensembl_to_sequence_dict, sequence_to_uniprot_dict), axis = 1)
-    df_transcript['identical_sequence'] = df_transcript.apply(generate_identical_sequence, axis = 1)
-    df_transcript['uniprot_id'] = df_transcript.apply(lambda row: generate_uniprot_id(row['ensp_id'], ensembl_to_sequence_dict, sequence_to_uniprot_dict, uniprot_set), axis = 1)
+    # get reviewed mapping(previous mapping), generate reviewed_mapping_dict
+    reviewed_map = '../data/uniprot/input/reviewed_map_' + genome_build.lower() + '.tsv'
+    df_reviewed_map = pd.read_csv(reviewed_map, sep='\t')
+    reviewed_mapping_dict = dict()
+    df_reviewed_map.apply(lambda row: generate_dict(row['ensp_id'], row['Final_mapping_uniprot_id'], reviewed_mapping_dict), axis=1)
+    
+    # 
     df_transcript['biomart_uniprot_id'] = df_transcript.apply(lambda row: generate_biomart_uniprot(row['ensp_id'], biomart_ensp_to_uniprot_dict), axis = 1)
-    df_transcript['uniprot_id_count'] = df_transcript.apply(lambda row: count_uniprot_id(row['uniprot_id']), axis = 1)
-    df_transcript['is_matched'] = df_transcript.apply(lambda row: is_matched_id(row['uniprot_id'], row['biomart_uniprot_id']), axis = 1)
-    df_transcript['reviewed_uniprot_accession'] = df_transcript.apply(lambda row: final_mapping(correction_dict, row['ensp_id'], row['uniprot_id']), axis = 1)
+    df_transcript['uniprot_id_with_isoform'] = df_transcript.apply(lambda row: get_uniprot_id_with_isoform(row['ensp_id'], ensp_to_sequence_dict, sequence_to_uniprot_dict), axis = 1)
+    df_transcript['is_matched'] = df_transcript.apply(lambda row: is_matched(row['uniprot_id_with_isoform'], row['biomart_uniprot_id']), axis = 1)
+    df_transcript['final_uniprot_id'] = df_transcript.apply(lambda row: curation(row['uniprot_id_with_isoform'], row['biomart_uniprot_id'], row['ensp_id'], ensp_to_sequence_dict, reviewed_mapping_dict), axis = 1)
 
     # summary
     total_transcripts = np.count_nonzero(df_transcript['enst_id'])
     have_ensp = np.count_nonzero(df_transcript['ensp_id'])
-    map_to_uniprot = np.count_nonzero(df_transcript['uniprot_id'])
+    map_to_uniprot = np.count_nonzero(df_transcript['final_uniprot_id'])
     map_to_uniprot_by_biomart = np.count_nonzero(df_transcript['biomart_uniprot_id'])
 
     print ("Results:")
@@ -170,7 +248,6 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, g
     print (str(map_to_uniprot) + " have been mapped to uniprot successfully")
     print (str(map_to_uniprot/have_ensp * 100) + "% of ensp can be mapped to uniprot, " + str(map_to_uniprot/total_transcripts * 100) + "% overall success rate")
     print ("there are " + str(len(sequence_to_uniprot_dict)) + " unique sequence from 20375 uniprot")
-    print (str(len(uniprot_set)) + " sequences can be mapped: " + str(len(uniprot_set)/len(sequence_to_uniprot_dict)*100) + "%")
     print (str(map_to_uniprot_by_biomart) + " transcripts can be mapped by BioMart: " + str(map_to_uniprot_by_biomart / total_transcripts * 100) + "%")
 
     # Save output file
@@ -178,16 +255,16 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_id_with_sequence, g
     id_mapping_file_name = '../data/uniprot/export/' + genome_build_version + '_enst_to_uniprot_mapping_id.txt'
 
     df_transcript.to_csv(full_mapping_file_name, index=False, sep='\t', header=True)
-    df_transcript.to_csv(id_mapping_file_name, columns=['enst_id','reviewed_uniprot_accession'], index=False, sep='\t', header=True)
+    df_transcript.to_csv(id_mapping_file_name, columns=['enst_id','final_uniprot_id'], index=False, sep='\t', header=True)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("ensembl_biomart_transcripts",
                         help="../data/grch37_ensembl92/export/ensembl_biomart_transcripts.json")
     parser.add_argument("ensembl_fasta",
-                        help="../data/uniprot/input/ensembl_grch37.fa")
-    parser.add_argument("uniprot_id_with_sequence",
-                        help="../data/uniprot/input/uniprot_id_with_sequence.tab")
+                        help="../data/uniprot/input/Homo_sapiens.GRCh37.pep.all.fa")
+    parser.add_argument("uniprot_sequence_with_isoform",
+                        help="../data/uniprot/input/uniprot_reviewed.fasta")
     parser.add_argument("genome_build_version",
                         help="grch37_ensembl92 or grch38_ensembl92 or grch38_ensembl95")
     args = parser.parse_args()
