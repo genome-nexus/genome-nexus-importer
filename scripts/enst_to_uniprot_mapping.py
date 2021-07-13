@@ -1,8 +1,8 @@
 # 1. Mapping by protein sequence: ENST -> ENSP -> Ensembl sequence = UniProt sequence -> UniProt id
 # Sequence from Ensembl:
-# GRCh37: http://ftp.ensembl.org/pub/grch37/release-101/fasta/homo_sapiens/pep/ rename to ensembl_grch37.fa.gz
-# GRCh38: http://ftp.ensembl.org/pub/release-101/fasta/homo_sapiens/pep/ rename to ensembl_grch38.fa.gz
-# Sequence from UniProt: https://www.uniprot.org/uniprot/?query=+reviewed%3Ayes+AND+organism%3A%22Homo+sapiens+%28Human%29+%5B9606%5D%22&sort=score
+# GRCh37: http://ftp.ensembl.org/pub/grch37/release-104/fasta/homo_sapiens/pep/ rename to ensembl_grch37.fa.gz
+# GRCh38: http://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/pep/ rename to Homo_sapiens.grch37.pep.all.fa.gz or Homo_sapiens.grch38.pep.all.fa.gz
+# Sequence from UniProt: https://www.uniprot.org/uniprot/?query=+reviewed%3Ayes+AND+organism%3A%22Homo+sapiens+%28Human%29+%5B9606%5D%22&sort=score, download FASTA (canonical + isoform)
 # 2. handle multiple UniProt cases
 # Biomart mapping
 # GRCh37: https://grch37.ensembl.org/biomart/martview/145410cb02e693b9da427f9c3dffe61f
@@ -124,17 +124,17 @@ def multiple_uniprot_ids_compare_with_biomart(uniprot_id_with_isoform, biomart_u
             final_uniprot_id = uniprot_id
     return final_uniprot_id
 
-def curation(uniprot_id_with_isoform, biomart_uniprot_id, ensp_id, ensp_to_sequence_dict, reviewed_mapping_dict):
+def curation(uniprot_id_with_isoform, biomart_uniprot_id, ensp_id, ensp_to_sequence_dict, reviewed_mapping_dict, sequence_length_dict, sequence_to_uniprot_dict):
     final_uniprot_id = None
     ensembl_sequence = ensp_to_sequence_dict.get(ensp_id)
         
     # 0 uniprot ids, 0 or 1 biomart
     if not uniprot_id_with_isoform:
-        uniprot_ids_with_one_levenshtein_distance = find_uniprot_ids_with_one_levenshtein_distance(ensembl_sequence, ensp_id)
+        uniprot_ids_with_one_levenshtein_distance = find_uniprot_ids_with_one_levenshtein_distance(ensembl_sequence, ensp_id, sequence_length_dict, sequence_to_uniprot_dict)
         if uniprot_ids_with_one_levenshtein_distance and len(uniprot_ids_with_one_levenshtein_distance) == 1:
             final_uniprot_id = uniprot_ids_with_one_levenshtein_distance[0]
         elif uniprot_ids_with_one_levenshtein_distance and len(uniprot_ids_with_one_levenshtein_distance) > 1 and biomart_uniprot_id and biomart_uniprot_id in uniprot_ids_with_one_levenshtein_distance:
-            final_uniprot_id = multiple_uniprot_ids_compare_with_biomart(','.join(uniprot_ids_with_one_levenshtein_distance), biomart_uniprot_id)
+            final_uniprot_id = multiple_uniprot_ids_compare_with_biomart(','.join(uniprot_ids_with_one_levenshtein_distance), biomart_uniprot_id, reviewed_mapping_dict)
     
     else:
         uniprot_ids_with_isoform = uniprot_id_with_isoform.split(',')
@@ -145,7 +145,7 @@ def curation(uniprot_id_with_isoform, biomart_uniprot_id, ensp_id, ensp_to_seque
         # multiple uniprot ids, 0 or 1 biomart
         elif len(uniprot_ids_with_isoform) > 1:
             if biomart_uniprot_id and biomart_uniprot_id in uniprot_ids_with_isoform:
-                final_uniprot_id = multiple_uniprot_ids_compare_with_biomart(uniprot_id_with_isoform, biomart_uniprot_id)
+                final_uniprot_id = multiple_uniprot_ids_compare_with_biomart(uniprot_id_with_isoform, biomart_uniprot_id, reviewed_mapping_dict)
 
     # if no uniprot id could be mapped, try to find from previous mapping
     if not final_uniprot_id:
@@ -234,7 +234,7 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_sequence_with_isofo
     df_transcript['biomart_uniprot_id'] = df_transcript.apply(lambda row: generate_biomart_uniprot(row['ensp_id'], biomart_ensp_to_uniprot_dict), axis = 1)
     df_transcript['uniprot_id_with_isoform'] = df_transcript.apply(lambda row: get_uniprot_id_with_isoform(row['ensp_id'], ensp_to_sequence_dict, sequence_to_uniprot_dict), axis = 1)
     df_transcript['is_matched'] = df_transcript.apply(lambda row: is_matched(row['uniprot_id_with_isoform'], row['biomart_uniprot_id']), axis = 1)
-    df_transcript['final_uniprot_id'] = df_transcript.apply(lambda row: curation(row['uniprot_id_with_isoform'], row['biomart_uniprot_id'], row['ensp_id'], ensp_to_sequence_dict, reviewed_mapping_dict), axis = 1)
+    df_transcript['final_uniprot_id'] = df_transcript.apply(lambda row: curation(row['uniprot_id_with_isoform'], row['biomart_uniprot_id'], row['ensp_id'], ensp_to_sequence_dict, reviewed_mapping_dict, sequence_length_dict, sequence_to_uniprot_dict), axis = 1)
 
     # summary
     total_transcripts = np.count_nonzero(df_transcript['enst_id'])
@@ -268,4 +268,4 @@ if __name__ == "__main__":
     parser.add_argument("genome_build_version",
                         help="grch37_ensembl92 or grch38_ensembl92 or grch38_ensembl95")
     args = parser.parse_args()
-    main(args.ensembl_biomart_transcripts, args.ensembl_fasta, args.uniprot_id_with_sequence, args.genome_build_version)
+    main(args.ensembl_biomart_transcripts, args.ensembl_fasta, args.uniprot_sequence_with_isoform, args.genome_build_version)

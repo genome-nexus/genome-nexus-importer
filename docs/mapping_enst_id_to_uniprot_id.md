@@ -33,17 +33,37 @@
 - First extract "uniprot_id" from "uniprot_id_with_isoform", which would be the substring before "-"(e.g. for "Q9Y3S1-3", we will compare "Q9Y3S1" with biomart uniprot, because biomart uniprot doesn't have isoform). If they match then return true in column "is_matched", otherwise return false.
 - add results to column: is_matched
 ##### 2.7. Curation
-- 2.7.1 If only one uniprot id in "uniprot_id_with_isoform"
-    - use "uniprot_id_with_isoform" as final mapping id
-- If multiple uniprot ids in "uniprot_id_with_isoform"
-    - 2.7.2 if biomart uniprot id is one of the uniprot ids: use corresponding uniprot id (biomart uniprot id + isoform) 
-    - 2.7.3 if no results got from above(), try to find uniprot sequence with the same length and levenshtein distance == 1
-      - it's possible that multiple uniprot ids are found by sequence length, for now I don't see any of them, but it's better to handle it as well (TODO)
-- 2.7.4 if no uniprot id in "uniprot_id_with_isoform", try to find uniprot sequence with the same length and levenshtein distance == 1
-    - if multiple uniprot ids were mapping by sequence length, apply "2.7.2" to find a single mapping. If no single uniprot id could be mapped by "2.7.2", leave it empty
-- 2.7.5 (Do we want this?)If this transcript was manually curated before (record as "step 2.1.2" and "step 2.2.1" in comment, in file 1.7)
-    - what ever mapping result is, use previous mapping id
-    - add results to column: final_mapping
+| Mapping | | | | | | | | |
+| ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | :------: |
+| Number of uniprot ids mapped by sequence | 0 | 0 | 1 | 1 | 1 | multiple | multiple | multiple |
+| Number of uniprot ids from Biomart | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 1 |
+| Biomart uniprot is one of the uniprot sequence ids (or equals) | no | no | no | equals | no | no | yes (biomart is one of uniprot sequence mapping) | no |
+| Find sequence mapping with the same sequence length and levenshtein distance == 1 | yes | yes | no | no | no | no | no | no |
+| Return result | Mapping result from same sequence length and levenshtein distance == 1 | Mapping result from same sequence length and levenshtein distance == 1 | Uniprot sequence mapping result | Uniprot sequence mapping result | Uniprot sequence mapping result | No matching (return empty string) | Find biomart uniprot id in uniprot sequence list (have different isoforms) and return the one that has biomart id (with isoform if possible) | No matching (return empty string) |
+
+- 2.7.1 If 0 uniprot ids in "uniprot_id_with_isoform"
+    - Find sequence mapping with the same sequence length and levenshtein distance == 1
+    - It's still possible that multiple ids will be found by the same sequence length and levenshtein distance == 1, for those cases:
+
+| Mapping |  | | | | |
+| ------ | ------ | ------ | ------ | ------ | ------ |
+| Number of uniprot ids mapped by sequence | 0 | 1 | multiple | multiple | multiple |
+| Number of uniprot ids from Biomart | na | na | 0 | 1 | 1 |
+| Biomart uniprot is one of the uniprot sequence ids (or equals) | na | na | no | yes (biomart is one of uniprot seuqnce mapping) | no |
+| Return result | No matching (return empty string) | Mapping result from same sequence length and levenshtein distance == 1 | No matching (return empty string) | Find biomart uniprot id in uniprot sequence list (have different isoforms) and return the one that has biomart id (with isoform if possible) | No matching (return empty string) |
+
+- 2.7.2 If 1 uniprot id in "uniprot_id_with_isoform"
+    - Return "uniprot_id_with_isoform"
+- 2.7.3 If multiple uniprot ids in "uniprot_id_with_isoform"
+    - 0 biomart uniprot id:
+      - Return empty string
+    - biomart uniprot id is one of the ids in "uniprot_id_with_isoform"
+      - Return biomart + isoform (if possible)
+    - biomart uniprot id is NOT one of the ids in "uniprot_id_with_isoform"
+      - Return empty string
+- 2.7.4 If no ids found from above, return results from previous reviewed mapping
+- 2.7.5 If still have multiple ids for some reasons, return empty string
+- add results to column: final_mapping
 ##### 2.8. Mark columns that needs manual curation
 - "is_matched" = True, "final_mapping" is empty: 
     - case 1: no ensp_id - no need for manual curation

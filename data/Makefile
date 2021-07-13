@@ -161,8 +161,8 @@ $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensemb
 $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/mouse/MRK_ENSEMBL.rpt common_input/mouse/MGI_Gene_Model_Coord.rpt
 	python3 ../scripts/make_canonical_transcript_mouse.py $^ $@
 
-uniprot_mapping: $(VERSION)/export/ensembl_biomart_transcripts.json uniprot/input/Homo_sapiens.$(GENOME_BUILD).pep.all.fa uniprot/input/uniprot_reviewed.fasta $(VERSION)
-	python3 ../scripts/enst_to_uniprot_mapping.py $^
+uniprot_mapping: 
+	gunzip -k $(VERSION)/export/ensembl_biomart_transcripts.json.gz && gunzip -k uniprot/input/Homo_sapiens.$(GENOME_BUILD).pep.all.fa.gz && gunzip -k uniprot/input/uniprot_reviewed.fasta.gz && python ../scripts/enst_to_uniprot_mapping.py $(VERSION)/export/ensembl_biomart_transcripts.json uniprot/input/Homo_sapiens.$(GENOME_BUILD).pep.all.fa uniprot/input/uniprot_reviewed.fasta $(VERSION) $^ && rm $(VERSION)/export/ensembl_biomart_transcripts.json && rm uniprot/input/Homo_sapiens.$(GENOME_BUILD).pep.all.fa && rm uniprot/input/uniprot_reviewed.fasta 
 
 # vcf2maf canonical transcripts
 common_input/isoform_overrides_uniprot.txt:
