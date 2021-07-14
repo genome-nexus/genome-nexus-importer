@@ -32,7 +32,9 @@
 ##### 2.6. Compare "uniprot_id_with_isoform" with "uniprot_biomart". 
 - First extract "uniprot_id" from "uniprot_id_with_isoform", which would be the substring before "-"(e.g. for "Q9Y3S1-3", we will compare "Q9Y3S1" with biomart uniprot, because biomart uniprot doesn't have isoform). If they match then return true in column "is_matched", otherwise return false.
 - add results to column: is_matched
-##### 2.7. Curation
+##### 2.7. Generate reviewed mapping dictionay(1.7) - `reviewed_mapping_dict`
+- key: enst, value: uniprot_id
+##### 2.8. Curation
 | Mapping | | | | | | | | |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | :------: |
 | Number of uniprot ids mapped by sequence | 0 | 0 | 1 | 1 | 1 | multiple | multiple | multiple |
@@ -61,9 +63,10 @@
       - Return biomart + isoform (if possible)
     - biomart uniprot id is NOT one of the ids in "uniprot_id_with_isoform"
       - Return empty string
-- 2.7.4 If no ids found from above, return results from previous reviewed mapping
+- 2.7.4 If no ids found from above, return results from `reviewed_mapping_dict`
 - 2.7.5 If still have multiple ids for some reasons, return empty string
 - add results to column: final_uniprot_id
+
 ### 3. Generate mapping
 run Makefile:
 ```
@@ -75,15 +78,12 @@ make uniprot_mapping
     - Columns: enst_id, ensp_id, ensembl_protein_length, ccds_id, biomart_uniprot_id, uniprot_id_with_isoform, is_matched, final_uniprot_id
 - `grchxx_ensemblxx_enst_to_uniprot_mapping_id.txt` only contains enst_id and final_uniprot_id
 
-### 5. Update
-- Ensembl fasta file:
-    - Version: release-104
-    - GRCh37: http://ftp.ensembl.org/pub/grch37/release-104/fasta/homo_sapiens/pep/ rename to Homo_sapiens.grch37.pep.all.fa.gz
-    - GRCh38: http://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/pep/ rename to Homo_sapiens.grch38.pep.all.fa.gz
-- Sequence from UniProt: https://www.uniprot.org/uniprot/?query=+reviewed%3Ayes+AND+organism%3A%22Homo+sapiens+%28Human%29+%5B9606%5D%22&sort=score, download FASTA (canonical + isoform)
-- Reviewed map:
-    - GRCh37: https://docs.google.com/spreadsheets/d/14PN6RtFq_GTAu8OKNUyUNKJ_fj7OlcEhDjbMdapqqo8/edit#gid=133083142
-    - GRCh38: https://docs.google.com/spreadsheets/d/1slDx9zorUuA-xsmH1i9_6CIGjQB1GIgDlWDU5gw6f9I/edit#gid=1399879714
+### 5. Update files
+- Homo_sapiens.grch37.pep.all.fa.gz: http://ftp.ensembl.org/pub/grch37/release-104/fasta/homo_sapiens/pep/
+- Homo_sapiens.grch38.pep.all.fa.gz: http://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/pep/
+- uniprot_reviewed.fasta.gz: https://www.uniprot.org/uniprot/?query=+reviewed%3Ayes+AND+organism%3A%22Homo+sapiens+%28Human%29+%5B9606%5D%22&sort=score, download FASTA (canonical + isoform)
+- reviewed_map_grch37.tsv(no need to update): https://docs.google.com/spreadsheets/d/14PN6RtFq_GTAu8OKNUyUNKJ_fj7OlcEhDjbMdapqqo8/edit#gid=133083142
+- reviewed_map_grch38.tsv(no need to update): https://docs.google.com/spreadsheets/d/1slDx9zorUuA-xsmH1i9_6CIGjQB1GIgDlWDU5gw6f9I/edit#gid=1399879714
 
 ### 6. Todo list
 - cross reference on uniprot
