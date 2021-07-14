@@ -63,37 +63,27 @@
       - Return empty string
 - 2.7.4 If no ids found from above, return results from previous reviewed mapping
 - 2.7.5 If still have multiple ids for some reasons, return empty string
-- add results to column: final_mapping
-##### 2.8. Mark columns that needs manual curation
-- "is_matched" = True, "final_mapping" is empty: 
-    - case 1: no ensp_id - no need for manual curation
-    - case 2: both biomart and sequence matching have nothing returned - no need for manual curation
-- "is_matched" = True, "final_mapping" is not empty: 
-    - case 1: match successfully by sequence, and have only one uniprot sequence matching - no need for manual curation.
-- "is_matched" = False, "final_mapping" is empty: 
-    - case 1: couldn't get any mapping - need manual curation
-- "is_matched" = False, "final_mapping" is not empty: 
-    - case 1: have mapping results by one of the curation steps - no need for manual curation.
-- exceptions:
-    - have sequence matching(usually it's matching with one of the isoforms, not the canonical sequence), no biomart matching, on ensembl web page it has uniprot matching, but id matching by sequence and ensembl web page are different. e.g. ENST00000293826 ENSP00000293826: [ensembl](http://useast.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=ENSG00000248871;r=17:7549099-7561601;t=ENST00000293826) matches to A0A0A6YY99 and [biomart](http://uswest.ensembl.org/biomart/martview/6b3967a8b19ef08ea5e9574e4fd5972a?VIRTUALSCHEMANAME=default&ATTRIBUTES=hsapiens_gene_ensembl.default.feature_page.ensembl_gene_id|hsapiens_gene_ensembl.default.feature_page.ensembl_gene_id_version|hsapiens_gene_ensembl.default.feature_page.ensembl_transcript_id|hsapiens_gene_ensembl.default.feature_page.ensembl_transcript_id_version|hsapiens_gene_ensembl.default.feature_page.uniprotswissprot|hsapiens_gene_ensembl.default.feature_page.ensembl_peptide_id|hsapiens_gene_ensembl.default.feature_page.ensembl_peptide_id_version&FILTERS=hsapiens_gene_ensembl.default.filters.ensembl_peptide_id."ENSP00000293826"&VISIBLEPANEL=resultspanel) matches with nothing, by sequence it's O43508-2
-- add results to column: need_manual_curation
-##### 2.9. Get all uniprot ids that couldn't map to a transcript
-- Generate a dictionary with all uniprot ids that sussessfully mapping to a transcript - `uniprot_in_transcript_list`
-- Generate a uniprot dataframe with all uniprot ids(1.1) - `df_all_uniprot_with_isoform`
-    - columns: uniprot_id, gene 
-- Go over all available uniprot ids and check if the uniprot id matches with a transcript
-    - add results to column: matched 
-- Go over all available uniprot ids and check if this uniprot id matches with it's canonical isoform (probably not useful)
-    - add results to column: match_with_canonical
-- Check if the uniprot id is a cancer gene, return true for cancer genes
-    - add results to column: is_cancer_gene
+- add results to column: final_uniprot_id
+### 3. Generate mapping
+run Makefile:
+```
+make uniprot_mapping
+```
 
-##### 2.10. Find sequence difference for uniprot ids that couldn't match
-- Generate a dictionary from transcript dataframe: biomart uniprot id to ensp - `uniprot_to_ensp_dict`.
-- Find potential ensp ids for uniprot ids that couldn't match by lookup in uniprot_to_ensp_dict
-    - add results to column: ensp_from_biomart
-- For each ensp in column "ensp_from_biomart", find sequence difference between ensembl sequence and uniprot sequence. Because from biomart it's corresonding uniprot id doesn't have isoform, so we also check all isoforms associate with this uniprot id. If an isoform of uniprot sequence could match, we print out 
-    - add retuslts to column: sequence_difference
+### 4. Output
+- `grchxx_ensemblxx_enst_to_uniprot_mapping_full.txt` is the mapping output with all columns. 
+    - Columns: enst_id, ensp_id, ensembl_protein_length, ccds_id, biomart_uniprot_id, uniprot_id_with_isoform, is_matched, final_uniprot_id
+- `grchxx_ensemblxx_enst_to_uniprot_mapping_id.txt` only contains enst_id and final_uniprot_id
 
-### 3. Todo list
+### 5. Update
+- Ensembl fasta file:
+    - Version: release-104
+    - GRCh37: http://ftp.ensembl.org/pub/grch37/release-104/fasta/homo_sapiens/pep/ rename to Homo_sapiens.grch37.pep.all.fa.gz
+    - GRCh38: http://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/pep/ rename to Homo_sapiens.grch38.pep.all.fa.gz
+- Sequence from UniProt: https://www.uniprot.org/uniprot/?query=+reviewed%3Ayes+AND+organism%3A%22Homo+sapiens+%28Human%29+%5B9606%5D%22&sort=score, download FASTA (canonical + isoform)
+- Reviewed map:
+    - GRCh37: https://docs.google.com/spreadsheets/d/14PN6RtFq_GTAu8OKNUyUNKJ_fj7OlcEhDjbMdapqqo8/edit#gid=133083142
+    - GRCh38: https://docs.google.com/spreadsheets/d/1slDx9zorUuA-xsmH1i9_6CIGjQB1GIgDlWDU5gw6f9I/edit#gid=1399879714
+
+### 6. Todo list
 - cross reference on uniprot

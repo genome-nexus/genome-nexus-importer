@@ -1,7 +1,8 @@
 # 1. Mapping by protein sequence: ENST -> ENSP -> Ensembl sequence = UniProt sequence -> UniProt id
 # Sequence from Ensembl:
-# GRCh37: http://ftp.ensembl.org/pub/grch37/release-104/fasta/homo_sapiens/pep/ rename to ensembl_grch37.fa.gz
-# GRCh38: http://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/pep/ rename to Homo_sapiens.grch37.pep.all.fa.gz or Homo_sapiens.grch38.pep.all.fa.gz
+# GRCh37: http://ftp.ensembl.org/pub/grch37/release-104/fasta/homo_sapiens/pep/ 
+# GRCh38: http://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/pep/ 
+# rename to Homo_sapiens.grch37.pep.all.fa.gz or Homo_sapiens.grch38.pep.all.fa.gz
 # Sequence from UniProt: https://www.uniprot.org/uniprot/?query=+reviewed%3Ayes+AND+organism%3A%22Homo+sapiens+%28Human%29+%5B9606%5D%22&sort=score, download FASTA (canonical + isoform)
 # 2. handle multiple UniProt cases
 # Biomart mapping
