@@ -150,7 +150,7 @@ def curation(uniprot_id_with_isoform, biomart_uniprot_id, ensp_id, ensp_to_seque
     # if no uniprot id could be mapped, try to find from previous mapping
     if not final_uniprot_id:
         if ensp_id in reviewed_mapping_dict:
-            final_uniprot_id = reviewed_mapping_dict.get(ensp_id)
+            final_uniprot_id = reviewed_mapping_dict.get(ensp_id)[0]
     
     if not final_uniprot_id or ',' in final_uniprot_id:
         final_uniprot_id = ''
