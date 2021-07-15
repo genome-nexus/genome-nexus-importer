@@ -20,6 +20,7 @@
 # GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/homo_sapiens/Homo_sapiens.GRCh38.95.gff3.gz
 # GFF3_URL=ftp://ftp.ensembl.org/pub/release-95/gff3/mus_musculus/Mus_musculus.GRCm38.95.gff3.gz
 # ------------------------------------------------------------------------------------------------------------------
+SHELL:=/bin/bash
 
 # default species is homo_sapiens unless overridden [mus_musculus]
 SPECIES=homo_sapiens
@@ -161,9 +162,8 @@ $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensemb
 $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/mouse/MRK_ENSEMBL.rpt common_input/mouse/MGI_Gene_Model_Coord.rpt
 	python3 ../scripts/make_canonical_transcript_mouse.py $^ $@
 
-uniprot_mapping: $(VERSION)/export/ensembl_biomart_transcripts.json uniprot/input/ensembl_$(GENOME_BUILD).fa uniprot/input/uniprot_id_with_sequence.tab $(VERSION)
-	python3 ../scripts/enst_to_uniprot_mapping.py $^
-
+uniprot_mapping: $(VERSION)/export/ensembl_biomart_transcripts.json.gz uniprot/input/Homo_sapiens.$(GENOME_BUILD).pep.all.fa.gz uniprot/input/uniprot_reviewed.fasta.gz
+	python ../scripts/enst_to_uniprot_mapping.py <(gunzip -c $(word 1, $^)) <(gunzip -c $(word 2, $^)) <(gunzip -c $(word 3, $^)) $(VERSION)
 # vcf2maf canonical transcripts
 common_input/isoform_overrides_uniprot.txt:
 	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_uniprot_from_biomart_91' | sed 's/^#//' > $@
