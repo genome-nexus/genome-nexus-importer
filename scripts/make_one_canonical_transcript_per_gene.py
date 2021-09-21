@@ -78,13 +78,13 @@ def ignore_certain_genes(x):
         'rmrpp1', 'hla-as1', 'pramef16', 'arid4b-it1', 'ctglf8p', 'htr4-it1',
         'nicn1-as1', 'pramef3', 'c9orf38', 'tbc1d4-as1', 'rmrpp3', 'magi2-it1',
         'rmrpp2', 'rmrpp4', 'ercc6-pgbd3', 'tbce-as1', 'hpvc1', 'fam231a',
-        'fam231b', 'fam231c', 'fam231d'}
+        'fam231b', 'fam231c', 'fam231d','oclm', 'sphar', 'c1orf134', 'cripak', 'npcdr1', 'gvqw1'}
 
     return set({i for i in x if i not in ignore_genes})
 
 
 def main(ensembl_biomart_geneids_transcript_info,
-         cbioportal_gene_info,
+         hgnc_complete_set,
          isoform_overrides_uniprot,
          isoform_overrides_at_mskcc,
          isoform_overrides_genome_nexus,
@@ -101,7 +101,7 @@ def main(ensembl_biomart_geneids_transcript_info,
     custom = pd.read_csv(isoform_overrides_genome_nexus, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    hgnc_df = pd.read_csv(cbioportal_gene_info, sep='\t', dtype=object)
+    hgnc_df = pd.read_csv(hgnc_complete_set, sep='\t', dtype=object)
 
     # Convert new column names to old stable column names. If this is not done properly, Genome Nexus and any other
     # downstream applications break
@@ -117,7 +117,7 @@ def main(ensembl_biomart_geneids_transcript_info,
                            'uniprot_ids': 'uniprot_id',
                            'ensembl_id': 'ensembl_gene_id'}
     hgnc_df.rename(columns=column_name_mapping, inplace=True)
-
+    hgnc_df = hgnc_df[hgnc_df['approved_name'] != 'entry withdrawn'].copy()
     hugos = hgnc_df['approved_symbol'].unique()
     hgnc_df = hgnc_df.set_index('approved_symbol')
     # assume each row has approved symbol
@@ -134,9 +134,8 @@ def main(ensembl_biomart_geneids_transcript_info,
     # ignore hugo symbols from ensembl data dump (includes prev symbols and synonyms)
     syns = hgnc_df.synonyms.str.strip('"').str.split("|").dropna()
     syns = set(itertools.chain.from_iterable(syns))
-    # TODO: investigate whether we should keep these
-    # previous_symbols = hgnc_df.previous_symbols.str.strip('"').str.split("|").dropna()
-    # previous_symbols = set(itertools.chain.from_iterable(previous_symbols))
+    previous_symbols = hgnc_df.previous_symbols.str.strip('"').str.split("|").dropna()
+    previous_symbols = set(itertools.chain.from_iterable(previous_symbols))
 
     # there is overlap between symbols, synonyms and previous symbols
     # therefore use logic in above order when querying
@@ -147,8 +146,8 @@ def main(ensembl_biomart_geneids_transcript_info,
     # all cancer genes and hugo symbols in ensembl data dump should be
     # contained in hgnc approved symbols and synonyms
     # c12orf9 is only in sanger's cancer gene census and has been withdrawn
-    assert(len(lowercase_set(set(cgs)) - set(['c12orf9']) - lowercase_set(set(hugos).union(syns))) == 0)
-    no_symbols_in_hgnc = lowercase_set(transcript_info_df.hgnc_symbol.dropna().unique()) - lowercase_set(set(hugos).union(syns))
+    assert(len(lowercase_set(set(cgs)) - set(['c12orf9']) - lowercase_set(set(hugos).union(syns).union(previous_symbols))) == 0)
+    no_symbols_in_hgnc = lowercase_set(transcript_info_df.hgnc_symbol.dropna().unique()) - lowercase_set(set(hugos).union(syns).union(previous_symbols))
     assert(len(ignore_certain_genes(ignore_rna_gene(no_symbols_in_hgnc))) == 0)
 
     transcript_info_df = transcript_info_df.set_index('hgnc_symbol')
@@ -197,8 +196,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("ensembl_biomart_geneids_transcript_info",
                         help="tmp/ensembl_biomart_geneids.transcript_info.txt")
-    parser.add_argument("cbioportal_gene_info",
-                        help="common_input/cbioportal_gene_info_20190122.txt")
+    parser.add_argument("hgnc_complete_set",
+                        help="common_input/hgnc_complete_set_20210218.txt")
     parser.add_argument("isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("isoform_overrides_at_mskcc",
@@ -210,7 +209,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args.ensembl_biomart_geneids_transcript_info,
-         args.cbioportal_gene_info,
+         args.hgnc_complete_set,
          args.isoform_overrides_uniprot,
          args.isoform_overrides_at_mskcc,
          args.isoform_overrides_genome_nexus,

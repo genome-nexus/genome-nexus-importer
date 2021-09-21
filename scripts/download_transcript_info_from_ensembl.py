@@ -119,15 +119,15 @@ def lookup_transcripts(gene_info, tmp_dir, jobs, query_size, grch37=True):
     filename_re = re.compile('transcript_info_([0-9]*)-([0-9]*)\.txt$')
     tmp_files = [fn for fn in os.listdir(tmp_dir) if re.match(filename_re, fn)!=None]
     for fn in tmp_files:
-        transcript_info_chunk = pd.read_csv(os.path.join(tmp_dir, fn), sep='\t', dtype=str, index_col=0)
+        transcript_info_chunk = pd.read_csv(os.path.join(tmp_dir, fn), sep='\t', index_col=0)
         transcript_info = transcript_info.append(transcript_info_chunk, ignore_index=False)
 
     # Prepare transcript info table for merging. Sort and remove duplicate indices.
     transcript_info.sort_index(inplace=True)
     transcript_info = transcript_info.loc[~transcript_info.index.duplicated(keep='first')]
-    transcript_info['is_canonical'] = transcript_info['is_canonical'].astype(str)
-    transcript_info['is_canonical'].fillna('0', inplace=True)
-    transcript_info['is_canonical'].replace({'1.0': '1', '0.0': '0'}, inplace=True)
+    transcript_info['is_canonical'].fillna(False, inplace=True)
+    transcript_info['is_canonical'] = transcript_info['is_canonical'].astype(bool)
+    transcript_info['is_canonical'].replace({True: '1', False: '0'}, inplace=True)
 
     return transcript_info
 
