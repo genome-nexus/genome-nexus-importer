@@ -1,4 +1,4 @@
-pandas==0.23.1
+pandas==1.3.1
 nose==1.3.7
 requests==2.21.0
 csvkit==1.0.3

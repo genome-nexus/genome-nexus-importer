@@ -155,7 +155,8 @@ $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz: $(TMP_DIR)/ensembl_biomart
 # give default/canonical geneid/transcript based on given hugo symbol takes
 # about 50m to run (TODO: this can be easily optimized)
 # isoform_overrides_genome_nexus.txt is made for genome nexus, others files are generated for vcf2maf
-$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20190122.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt common_input/isoform_overrides_genome_nexus.txt
+# Please note: we should keep hgnc_complete_set_20210218 in sync with https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/hgnc_complete_set.txt
+$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20210218.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt common_input/isoform_overrides_genome_nexus.txt
 	python3 ../scripts/make_one_canonical_transcript_per_gene.py $^ $@
 
 # mouse version. A different script is called that set the canonicals based on Ensembl lookup.

@@ -156,7 +156,7 @@ def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_msk
 def add_uniprot(transcripts, uniprot):
     """Add one Uniprot id for each transcript. There is only one per transcript."""
     uniprot.columns = [u.lower().replace(' ', '_') for u in uniprot.columns]
-    uniprot = uniprot[~pd.isnull(uniprot["reviewed_uniprot_accession"])]
+    uniprot = uniprot[~pd.isnull(uniprot["final_uniprot_id"])]
     # assume each transcript has only one Uniprot ID
     assert(any(uniprot["enst_id"].duplicated()) == False)
     uniprot = uniprot.set_index("enst_id")

@@ -73,9 +73,12 @@ def ignore_rna_gene(x):
 
 
 def ignore_certain_genes(x):
-    ignore_genes = {'fam25hp', 'rmrpp1', 'hla-as1', 'pramef16', 'arid4b-it1',
-    'ctglf8p', 'htr4-it1', 'nicn1-as1', 'pramef3', 'c9orf38', 'tbc1d4-as1',
-    'rmrpp3', 'magi2-it1', 'rmrpp2', 'rmrpp4', 'ercc6-pgbd3', 'tbce-as1', 'hpvc1', 'fam231a', 'fam231b', 'fam231c', 'fam231d'}
+    ignore_genes = \
+        {'cspg4p8','bach1-it1','tmem155','akap2','fam21d','palm2','fam25hp',
+        'rmrpp1', 'hla-as1', 'pramef16', 'arid4b-it1', 'ctglf8p', 'htr4-it1',
+        'nicn1-as1', 'pramef3', 'c9orf38', 'tbc1d4-as1', 'rmrpp3', 'magi2-it1',
+        'rmrpp2', 'rmrpp4', 'ercc6-pgbd3', 'tbce-as1', 'hpvc1', 'fam231a',
+        'fam231b', 'fam231c', 'fam231d','oclm', 'sphar', 'c1orf134', 'cripak', 'npcdr1', 'gvqw1'}
 
     return set({i for i in x if i not in ignore_genes})
 
@@ -111,9 +114,9 @@ def main(ensembl_biomart_geneids_transcript_info,
                            'entrez_id': 'entrez_gene_id',
                            'ena': 'accession_numbers',
                            'refseq_accession': 'refseq_ids',
-                           'uniprot_ids': 'uniprot_id'}
+                           'uniprot_ids': 'uniprot_id',
+                           'ensembl_id': 'ensembl_gene_id'}
     hgnc_df.rename(columns=column_name_mapping, inplace=True)
-
     hgnc_df = hgnc_df[hgnc_df['approved_name'] != 'entry withdrawn'].copy()
     hugos = hgnc_df['approved_symbol'].unique()
     hgnc_df = hgnc_df.set_index('approved_symbol')
@@ -194,7 +197,7 @@ if __name__ == "__main__":
     parser.add_argument("ensembl_biomart_geneids_transcript_info",
                         help="tmp/ensembl_biomart_geneids.transcript_info.txt")
     parser.add_argument("hgnc_complete_set",
-                        help="common_input/hgnc_complete_set_20190122.txt")
+                        help="common_input/hgnc_complete_set_20210218.txt")
     parser.add_argument("isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("isoform_overrides_at_mskcc",
