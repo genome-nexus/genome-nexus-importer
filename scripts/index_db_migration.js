@@ -1,7 +1,7 @@
+// Command to run script: "mongo < index_db_migration.js"
 db.adminCommand('listDatabases')
 db = db.getSiblingDB('annotator')
 db.getCollectionNames()
-
 searchCollection = db.getCollection('index');
 const effectPriority = {};
 effectPriority["transcript_ablation"] = 1; // A feature ablation whereby the deleted region includes a transcript feature
@@ -62,21 +62,21 @@ const AA3TO1 = [
     ['Thr', 'T'], ['Trp', 'W'], ['Tyr', 'Y'], ['Val', 'V'], ['Xxx', 'X'], ['Ter', '*']
 ];
 db.getCollection('vep.annotation').find().forEach( function(annotation) {
+    let record = {
+        _id: annotation._id,
+        variant: annotation._id,
+        hugoSymbol: [],
+        hgvsp: [],
+        hgvsc: [],
+        cdna: [],
+        hgvspShort: [],
+        rsid: [],
+    };
     if (annotation.transcript_consequences && annotation.transcript_consequences.length > 0) {
-        let record = {
-            _id: annotation._id,
-            variant: annotation._id,
-            gene_symbol: [],
-            hgvsp: [],
-            hgvsc: [],
-            cdna: [],
-            hgvspShort: [],
-            rsid: [],
-        };
         for (let transcriptConsequence of annotation.transcript_consequences) {
-            // gene_symbol
-            if (transcriptConsequence.gene_symbol && !record.gene_symbol.includes(transcriptConsequence.gene_symbol)) {
-                record.gene_symbol.push(transcriptConsequence.gene_symbol);
+            // Hugo symbol
+            if (transcriptConsequence.gene_symbol && !record.hugoSymbol.includes(transcriptConsequence.gene_symbol)) {
+                record.hugoSymbol.push(transcriptConsequence.gene_symbol);
             }
             // hgvsp
             if (transcriptConsequence.hgvsp && !record.hgvsp.includes(transcriptConsequence.hgvsp)) {
@@ -112,7 +112,7 @@ db.getCollection('vep.annotation').find().forEach( function(annotation) {
                     let variantClassification = highestPriorityConsequence || annotation.mostSevereConsequence;
                     // if variant is not splice, resolve from hgvsp
                     if (!(variantClassification && variantClassification.toLowerCase().contains("splice"))) {
-                        hgvspShort = transcriptConsequence.hgvsp.split(':p.')[1];
+                        hgvspShort = transcriptConsequence.hgvsp.split(':')[1];
                         for (let i = 0; i < 24; i++) {
                             if (hgvspShort.includes(AA3TO1[i][0])) {
                                 let replace = AA3TO1[i][0];
@@ -128,6 +128,13 @@ db.getCollection('vep.annotation').find().forEach( function(annotation) {
                 }
             }
         }
-        searchCollection.insert(record);
     }
- })
+    searchCollection.insert(record);
+})
+printjson("Migration done!");
+db.getCollection('index').createIndex({'variant':1});
+db.getCollection('index').createIndex({'hugoSymbol':1});
+db.getCollection('index').createIndex({'hgvspShort':1});
+db.getCollection('index').createIndex({'hgvsp':1});
+db.getCollection('index').createIndex({'cdna':1});
+db.getCollection('index').createIndex({'hgvsc':1});
