@@ -10,7 +10,6 @@ FROM bitnami/mongodb:${MONGODBVERSION} as build
 USER root
 RUN mkdir -p /data
 COPY data/ /data/
-USER 1001
 
 # Import data into mongodb
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
@@ -19,5 +18,9 @@ RUN /setup.sh
 FROM bitnami/mongodb:${MONGODBVERSION}
 COPY --from=build /bitnami/mongodb /bitnami/seed
 COPY /scripts/startup.sh /startup.sh
+
+USER root
+RUN chown -R 1001 /bitnami/seed
+USER 1001
 
 CMD [ "/startup.sh" ]
