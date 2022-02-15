@@ -1,6 +1,8 @@
 # This base image starts up mongo
 # This version needs to correspond with the helm chart version
 ARG MONGODBVERSION=4.0.12
+ARG REF_ENSEMBL_VERSION=grch37_ensembl92
+ARG SPECIES=homo_sapiens
 FROM bitnami/mongodb:${MONGODBVERSION} as build
 
 # Use .dockerignore file to ignore unwanted files
