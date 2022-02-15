@@ -50,17 +50,19 @@ elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
 fi
 
 # import mutation assessor
-echo "Downloading Mutation assessor data"
+if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* ]]; then
+    echo "Downloading Mutation assessor data"
 
-curl http://mutationassessor.org/r3/MA_scores_rel3_hg19_full.tar.gz -o ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
+    curl http://mutationassessor.org/r3/MA_scores_rel3_hg19_full.tar.gz -o ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
 
-echo "Extracting Mutation assessor data"
-tar -xvf ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
-rm ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
+    echo "Extracting Mutation assessor data"
+    tar -xvf ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
+    rm ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
 
-echo "Transforming Mutation assessor data"
-sed -i -e 's/"Mutation","RefGenome variant","Gene","Uniprot","Info","Uniprot variant","Func. Impact","FI score"/_id,rgaa,gene,uprot,info,var,F_impact,F_score/g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
-sed -i -e 's/hg19,//g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
+    echo "Transforming Mutation assessor data"
+    sed -i -e 's/"Mutation","RefGenome variant","Gene","Uniprot","Info","Uniprot variant","Func. Impact","FI score"/_id,rgaa,gene,uprot,info,var,F_impact,F_score/g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
+    sed -i -e 's/hg19,//g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
 
-echo "Importing Mutation assessor data"
-for filename in MA_scores_rel3_hg19_full/*.csv; do import mutation_assessor.annotation $filename '--type csv --headerline' && rm $filename; done
+    echo "Importing Mutation assessor data"
+    for filename in MA_scores_rel3_hg19_full/*.csv; do import mutation_assessor.annotation $filename '--type csv --headerline' && rm $filename; done
+fi
