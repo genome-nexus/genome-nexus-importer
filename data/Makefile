@@ -25,8 +25,8 @@ SHELL:=/bin/bash
 # default species is homo_sapiens unless overridden [mus_musculus]
 SPECIES=homo_sapiens
 
-# Specify the URL prefix for vcf2maf to retrieve `isoform_overrides_uniprot.txt` and `isoform_overrides_at_mskcc.txt`
-VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/2b4cb6aefca4a46402d06beb3690d7e86cc1856e
+# Specify the URL prefix for vcf2maf to retrieve `isoform_overrides_uniprot.txt`, `isoform_overrides_at_mskcc_grch37.txt` and `isoform_overrides_at_mskcc_grch38.txt`
+VCF2MAF_RAW_URL=https://raw.githubusercontent.com/mskcc/vcf2maf/73369616c232b969a2b7b85e9ef9b84949bcc6a4
 
 # dbPTM Base URL:
 DB_PTM_URL=http://dbptm.mbc.nctu.edu.tw/download/experiment
@@ -39,6 +39,12 @@ QSIZE=1000
 
 # Genome build(grch37 or grch38). Use in Uniprot mapping
 GENOME_BUILD=$(firstword $(subst _, ,$(VERSION)))
+
+ifeq ($(GENOME_BUILD), grch38)
+  MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch38.txt
+else
+  MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch37.txt
+endif
 
 # Generic rule to unzip prerequisite files
 $(filter-out %.gz, %): %.gz
@@ -145,7 +151,7 @@ $(TMP_DIR)/ensembl_transcript_info.txt: $(TMP_DIR)/$(SPECIES).gff3.gz
 	python3 ../scripts/transform_gff_to_tsv_for_exon_info_from_ensembl.py $^ $@
 
 # Add HGNC symbols, exons, UTRs, PFAM domains and Uniprot id to Ensembl Transcript
-$(TMP_DIR)/ensembl_biomart_transcripts.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt uniprot/export/$(VERSION)_enst_to_uniprot_mapping_id.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt
+$(TMP_DIR)/ensembl_biomart_transcripts.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt uniprot/export/$(VERSION)_enst_to_uniprot_mapping_id.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME)
 	python3 ../scripts/add_domains_hugo_ccds_refseq_exon_info_uniprot_to_ensembl_transcript.py $^ $@
 
 # for mouse a specific recipe without overrides
@@ -156,7 +162,7 @@ $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz: $(TMP_DIR)/ensembl_biomart
 # about 50m to run (TODO: this can be easily optimized)
 # isoform_overrides_genome_nexus.txt is made for genome nexus, others files are generated for vcf2maf
 # Please note: we should keep hgnc_complete_set_20210218 in sync with https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/hgnc_complete_set.txt
-$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20210218.txt common_input/isoform_overrides_uniprot.txt common_input/isoform_overrides_at_mskcc.txt common_input/isoform_overrides_genome_nexus.txt
+$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20210218.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME) common_input/isoform_overrides_genome_nexus.txt
 	python3 ../scripts/make_one_canonical_transcript_per_gene.py $^ $@
 
 # mouse version. A different script is called that set the canonicals based on Ensembl lookup.
@@ -167,10 +173,13 @@ uniprot_mapping: $(VERSION)/export/ensembl_biomart_transcripts.json.gz uniprot/i
 	python ../scripts/enst_to_uniprot_mapping.py <(gunzip -c $(word 1, $^)) <(gunzip -c $(word 2, $^)) <(gunzip -c $(word 3, $^)) $(VERSION)
 # vcf2maf canonical transcripts
 common_input/isoform_overrides_uniprot.txt:
-	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_uniprot_from_biomart_91' | sed 's/^#//' > $@
+	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_uniprot' | sed 's/^#//' > $@
 
-common_input/isoform_overrides_at_mskcc.txt:
+common_input/isoform_overrides_at_mskcc_grch37.txt:
 	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_at_mskcc' | sed 's/^#//' | sed 's/dmp_refseq_id/refseq_id/' | sed 's/isoform_override/enst_id/g' > $@
+
+common_input/isoform_overrides_at_mskcc_grch38.txt:
+	curl '$(VCF2MAF_RAW_URL)/data/isoform_overrides_at_mskcc_grch38' | sed 's/^#//' | sed 's/dmp_refseq_id/refseq_id/' | sed 's/isoform_override/enst_id/g' > $@
 
 # download PfamA.txt if not already available
 common_input/pfamA.txt:
@@ -229,3 +238,6 @@ mouse: input dirs $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $
 	cp $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt $(VERSION)/export/ && mv $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_mgi.txt $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt && mv $(VERSION)/export/ensembl_biomart_transcripts_mouse.json.gz $(VERSION)/export/ensembl_biomart_transcripts.json.gz
 
 .PHONY: all mouse
+
+testisoform:
+	@echo $(MSKCC_ISOFORM_OVERRIDES_FILE_NAME)
