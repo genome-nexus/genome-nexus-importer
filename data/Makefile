@@ -238,6 +238,3 @@ mouse: input dirs $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $
 	cp $(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_mgi.txt $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz common_input/pfamA.txt $(VERSION)/export/ && mv $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_mgi.txt $(VERSION)/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt && mv $(VERSION)/export/ensembl_biomart_transcripts_mouse.json.gz $(VERSION)/export/ensembl_biomart_transcripts.json.gz
 
 .PHONY: all mouse
-
-testisoform:
-	@echo $(MSKCC_ISOFORM_OVERRIDES_FILE_NAME)
