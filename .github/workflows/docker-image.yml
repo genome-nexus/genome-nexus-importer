@@ -45,6 +45,7 @@ jobs:
       - name: 'Docker build with cache'
         uses: whoan/docker-build-with-cache-action@v5
         with:
+          build_extra_args: '{"--build-arg": "ARG_REF_ENSEMBL_VERSION=grch38_ensembl95"}'
           username: "${{ secrets.DOCKER_USERNAME }}"
           password: "${{ secrets.DOCKER_PASSWORD }}"
           image_name: genomenexus/gn-mongo

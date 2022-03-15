@@ -12,6 +12,9 @@ RUN mkdir -p /data
 COPY data/ /data/
 USER 1001
 
+ARG ARG_REF_ENSEMBL_VERSION
+ENV REF_ENSEMBL_VERSION=${ARG_REF_ENSEMBL_VERSION}
+
 # Import data into mongodb
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
 RUN /setup.sh
