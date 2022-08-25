@@ -11,6 +11,7 @@ import difflib
 import os
 import transform_gff_to_tsv_for_exon_info_from_ensembl
 import gzip
+import hotspots.update_hotspots_to_grch38
 
 
 class TransformTestCase(unittest.TestCase):
@@ -48,3 +49,15 @@ class TransformTestCase(unittest.TestCase):
         gff_input_file_name = 'test_files/transform_gff_to_tsv/sub_Homo_Sapiens.gff3.gz'
         transform_gff_to_tsv_for_exon_info_from_ensembl.transform_gff_to_tsv(gff_input_file_name, out_file_name)
         self.assertFileGenerated(out_file_name, 'test_files/transform_gff_to_tsv/ensembl_transcript_info.txt.gz')
+
+    def test_get_gene_and_transcript_map(self):
+        hugo_and_transcript_map = hotspots.update_hotspots_to_grch38.get_gene_and_transcript_map('data/grch38_ensembl95/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt')
+        self.assertEqual('ENST00000646891', hugo_and_transcript_map['BRAF']['mskcc_canonical_transcript'])
+        self.assertEqual('ENST00000288602', hugo_and_transcript_map['BRAF']['uniprot_canonical_transcript'])
+
+    def test_validate_new_transcript_id(self):
+        result = hotspots.update_hotspots_to_grch38.validate_new_transcript_id('ENST00000288602', 'ENST00000646891')
+        self.assertTrue(result)
+
+        result = hotspots.update_hotspots_to_grch38.validate_new_transcript_id('ENST00000275493', 'ENST00000646891')
+        self.assertFalse(result)
