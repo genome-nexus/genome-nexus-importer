@@ -21,33 +21,38 @@ Logs and outputs:
 
 Links to used API docs: 
  - https://rest.ensembl.org/documentation/info/sequence_id
- - https://grch38.genomenexus.org/swagger-ui.html 
- - https://www.cbioportal.org/api/swagger-ui/index.html
-"""
+ """
 
 
 import argparse
 import requests
 import pandas as pd
 
+from requests.adapters import HTTPAdapter, Retry
+s = requests.Session()
+retries = Retry(total=5,
+                backoff_factor=0.1,
+                status_forcelist=[ 500, 502, 503, 504 ])
+s.mount('https://', HTTPAdapter(max_retries=retries))
 
 ENSEMBL_GRCH38_SERVER = "https://rest.ensembl.org"
 ENSEMBL_GRCH37_SERVER = "https://grch37.rest.ensembl.org"
-CBIOPORTAL_SERVER = "https://www.cbioportal.org"
-GENOME_NEXUS_GRCH38_SERVER = "https://grch38.genomenexus.org"
+nr_ensembl_ws_calls = 1
 
 protein_sequence_cache = {}
-
 
 def get_translated_protein_sequence(ensembl_server: str, transcript_id: str) -> str:
     """ Returns the translated protein sequence for the given transcript id.
         Returns None if the webservice failed with a 400 type code.
     """
+    global nr_ensembl_ws_calls
     cache_key = "{0}_{1}".format(ensembl_server, transcript_id)
     if cache_key in protein_sequence_cache:
         return protein_sequence_cache[cache_key]
     api_url = "{0}/sequence/id/{1}?type=protein".format(ensembl_server, transcript_id) 
-    response = requests.get(api_url, headers={ "Content-Type" : "text/plain"})
+    response = s.get(api_url, headers={ "Content-Type" : "text/plain"}, timeout=2)
+    nr_ensembl_ws_calls += 1
+    print("=-------------Nr ws calls {0}. Response code {1}".format(nr_ensembl_ws_calls, response.status_code))
     if not response.ok:
         if response.status_code >= 400 and response.status_code < 500:
             print("transcript id {0} is not found on {1}".format(transcript_id, ensembl_server))
