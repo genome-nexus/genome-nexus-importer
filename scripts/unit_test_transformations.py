@@ -82,12 +82,11 @@ class TransformTestCase(unittest.TestCase):
                                                                                              'scripts/test_files/grch37_ensembl92/export/small_hotspots_v2_and_3d.txt')
                                                                                              #'data/grch37_ensembl92/export/hotspots_v2_and_3d.txt')
         # iterate over all rows and check if each expected change occured, e.g. for BRAF:
-        # TODO
-
-        # Does NOT work, because the gene occurs in multiple lines:
-        result_df.set_index("hugo_symbol", inplace=True)
-        hugo_based_map = result_df.to_dict(orient="index")
-        self.assertEqual('ENST00000646891', hugo_based_map['BRAF']['transcript_id'])
+        for _, row in result_df.iterrows():
+            hugo_symbol = row['hugo_symbol']
+            if hugo_symbol == "BRAF":
+                transcript_id = row['transcript_id']
+                self.assertEqual('ENST00000646891', transcript_id)
 
 
     def test_find_grch38_transcript_id(self):

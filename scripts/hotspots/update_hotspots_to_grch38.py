@@ -3,7 +3,7 @@
 
 It does so by following a 2 step process:
 1. Parse the file ../../data/grch38_ensembl95/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt
-   and produce a map of hugo symbol X canonical transcript id.
+   to get a map of hugo symbol X canonical transcript id.
 
 2. Use this hugo symbol map and follow these rules to decide whether to REPLACE the transcript id or to DROP the hotspot row:
    2.1. get the grch37 transcript's translated sequence using (here using BRAF's transcripts as an example):
@@ -27,11 +27,9 @@ Links to used API docs:
 
 
 import argparse
-from xmlrpc.client import boolean
-import requests, sys
+import requests
 import pandas as pd
-import logging
-import math
+
 
 ENSEMBL_GRCH38_SERVER = "https://rest.ensembl.org"
 ENSEMBL_GRCH37_SERVER = "https://grch37.rest.ensembl.org"
@@ -39,6 +37,7 @@ CBIOPORTAL_SERVER = "https://www.cbioportal.org"
 GENOME_NEXUS_GRCH38_SERVER = "https://grch38.genomenexus.org"
 
 protein_sequence_cache = {}
+
 
 def get_translated_protein_sequence(ensembl_server: str, transcript_id: str) -> str:
     """ Returns the translated protein sequence for the given transcript id.
@@ -51,6 +50,7 @@ def get_translated_protein_sequence(ensembl_server: str, transcript_id: str) -> 
     response = requests.get(api_url, headers={ "Content-Type" : "text/plain"})
     if not response.ok:
         if response.status_code >= 400 and response.status_code < 500:
+            print("transcript id {0} is not found on {1}".format(transcript_id, ensembl_server))
             return None
         else:
             response.raise_for_status()
@@ -58,7 +58,7 @@ def get_translated_protein_sequence(ensembl_server: str, transcript_id: str) -> 
     return response.text
 
 
-def get_gene_and_transcript_map(hugo_and_transcript_id_file_name: str) -> dict[str, str]:
+def get_gene_and_transcript_map(hugo_and_transcript_id_file_name: str) -> dict:
     """ Returns a map of hugo symbol X canonical transcript id.
     """
     # parse file w/ pandas and build the result map:
@@ -69,7 +69,7 @@ def get_gene_and_transcript_map(hugo_and_transcript_id_file_name: str) -> dict[s
 
 
 def new_transcript_id_is_valid(grch37_transcript_id: str,
-                               proposed_grch38_transcript_id: str) -> boolean:
+                               proposed_grch38_transcript_id: str) -> bool:
     """Compares the translated sequence of the grch37 transcript vs the grch38 one
        and returns True if the sequences match.
        Returns False if the sequences do not match or if the comparison was not
@@ -77,6 +77,8 @@ def new_transcript_id_is_valid(grch37_transcript_id: str,
     """
     grch37_sequence = get_translated_protein_sequence(ENSEMBL_GRCH37_SERVER, grch37_transcript_id)
     grch38_sequence = get_translated_protein_sequence(ENSEMBL_GRCH38_SERVER, proposed_grch38_transcript_id)
+    if grch37_sequence != grch38_sequence:
+        print("Sequences of {0} and {1} do not match".format(grch37_transcript_id, proposed_grch38_transcript_id))
     return grch37_sequence == grch38_sequence
 
 
@@ -88,12 +90,12 @@ def get_new_hugo_symbol(old_hugo_symbol: str, hugo_and_transcript_map: str) -> s
         if type(other_columns['previous_symbols']) == str:
             previous_symbols = [x.strip() for x in other_columns['previous_symbols'].split(',')]
             if old_hugo_symbol in previous_symbols:
-                logging.info("found {0} in 'previous_symbols", old_hugo_symbol)
+                print("found {0} in 'previous_symbols".format(old_hugo_symbol))
                 return new_hugo_symbol
         if type(other_columns['synonyms']) == str:
             synonyms = [x.strip() for x in other_columns['synonyms'].split(',')]
             if old_hugo_symbol in synonyms:
-                logging.info("found {0} in 'synonyms", old_hugo_symbol)
+                print("found {0} in 'synonyms".format(old_hugo_symbol))
                 return new_hugo_symbol
     return None
 
@@ -118,10 +120,12 @@ def generate_updated_grch38_hotspots_info(grch38_hugo_and_transcript_id_file_nam
     hugo_and_transcript_map = get_gene_and_transcript_map(grch38_hugo_and_transcript_id_file_name)
     grch37_hotspots_df = pd.read_csv(grch37_hotspots_2d_3d_file_name, sep='\t', dtype=str)
     
+    rows_to_drop = []
+    nr_updated_rows = 0
     # iterate over the rows and replace with new transcript_id if valid:
     for index, row in grch37_hotspots_df.iterrows():
         hugo_symbol = row['hugo_symbol']
-        logging.info("Processing {0} ...", hugo_symbol)
+        print("Processing {0} ...".format(hugo_symbol))
         grch37_transcript_id = row['transcript_id']
         proposed_grch38_transcript_id = find_grch38_transcript_id(hugo_symbol, hugo_and_transcript_map, grch38_isoform_override_source)
         is_valid = proposed_grch38_transcript_id is not None and \
@@ -130,12 +134,20 @@ def generate_updated_grch38_hotspots_info(grch38_hugo_and_transcript_id_file_nam
         # if valid, replace transcript_id:
         if is_valid:
             if row['transcript_id'] != proposed_grch38_transcript_id:
-                logging.info('Updating transcript of {0} from {1} to {2}', hugo_symbol, row['transcript_id'], proposed_grch38_transcript_id)
+                print('Updating transcript of {0} from {1} to {2}'.format(hugo_symbol, row['transcript_id'], proposed_grch38_transcript_id))
                 row['transcript_id'] = proposed_grch38_transcript_id
+                nr_updated_rows += 1
         else:
-            # drop any row where new transcript_id is not valid:
-            logging.info('Dropping entry for {0}', hugo_symbol)
-            grch37_hotspots_df.drop(index, inplace=True)
+            # mark for dropping any row where new transcript_id is not valid:
+            print('>>>> Dropping entry for {0}'.format(hugo_symbol))
+            rows_to_drop.append(index)
+
+    # drop the rows marked for dropping:
+    print('=========================')
+    print('Dropped {0} rows...'.format(len(rows_to_drop)))
+    print('Updated {0} rows...'.format(nr_updated_rows))
+    print('=========================')
+    grch37_hotspots_df = grch37_hotspots_df.drop(rows_to_drop)
     
     # return the updated dataframe:
     return grch37_hotspots_df
@@ -151,3 +163,9 @@ if __name__ == "__main__":
                         type=str, help="combined grch37 2D and 3D cancerhotspots data file")
     args = parser.parse_args()
 
+    grch37_hotspots_df = generate_updated_grch38_hotspots_info(args.grch38_hugo_and_transcript_id_file_name,
+                                                               args.grch38_isoform_override_source,
+                                                               args.grch37_hotspots_2d_3d_file_name)
+    output_file_name = args.grch37_hotspots_2d_3d_file_name + "_grch38_ported.txt"
+    grch37_hotspots_df.to_csv(output_file_name, sep='\t', index=False)
+    print('Output written to: {0}'.format(output_file_name))
