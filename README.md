@@ -93,5 +93,14 @@ To verify the pipeline ran data for the correct reference genome, you can verify
 the gene, select transcript, and select 'Exons'. This will display all the exons of the transcript and their genomic
 coordinates.
 
+### Update hotspots
+
+The hotspots files are updated by a slightly different `make` process. To update the files,
+run the following command (replacing `VERSION=grch38_ensembl95` with your build of interest):
+```
+cd data/common_input/hotspots
+make all VERSION=grch38_ensembl95
+```
+
 ### Commit, Push and create Pull Request
 When new data has been created, create a PR to Genome-Nexus to add this data to the master branch.

@@ -228,7 +228,7 @@ if __name__ == '__main__':
     parser.add_argument("vcf2maf_isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("vcf2maf_isoform_overrides_mskcc",
-                        help="common_input/isoform_overrides_at_mskcc.txt")
+                        help="common_input/isoform_overrides_at_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
     parser.add_argument("ensembl_biomart_transcripts_json",
                         help="tmp/ensembl_biomart_transcripts.json.gz")
 

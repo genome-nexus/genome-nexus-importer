@@ -88,6 +88,7 @@ def main(ensembl_biomart_geneids_transcript_info,
          isoform_overrides_uniprot,
          isoform_overrides_at_mskcc,
          isoform_overrides_genome_nexus,
+         isoform_overrides_at_oncokb,
          ensembl_biomart_canonical_transcripts_per_hgnc):
     # input files
     transcript_info_df = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t', dtype={'is_canonical':bool})
@@ -99,6 +100,9 @@ def main(ensembl_biomart_geneids_transcript_info,
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
     custom = pd.read_csv(isoform_overrides_genome_nexus, sep='\t')\
+        .rename(columns={'enst_id':'isoform_override'})\
+        .set_index('gene_name'.split())
+    oncokb = pd.read_csv(isoform_overrides_at_oncokb, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
     hgnc_df = pd.read_csv(hgnc_complete_set, sep='\t', dtype=object)
@@ -165,7 +169,7 @@ def main(ensembl_biomart_geneids_transcript_info,
                 get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, x, hgnc_df, 'transcript_stable_id'),
                 get_overrides_transcript([custom], transcript_info_df, x, hgnc_df),
                 get_overrides_transcript([uniprot, custom], transcript_info_df, x, hgnc_df),
-                get_overrides_transcript([mskcc, uniprot, custom], transcript_info_df, x, hgnc_df),
+                get_overrides_transcript([oncokb, mskcc, uniprot, custom], transcript_info_df, x, hgnc_df),
             ],
             index="""
             ensembl_canonical_gene
@@ -201,9 +205,11 @@ if __name__ == "__main__":
     parser.add_argument("isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("isoform_overrides_at_mskcc",
-                        help="common_input/isoform_overrides_at_mskcc.txt")
+                        help="common_input/isoform_overrides_at_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
     parser.add_argument("isoform_overrides_genome_nexus",
                         help="common_input/isoform_overrides_genome_nexus.txt")
+    parser.add_argument("isoform_overrides_at_oncokb",
+                        help="common_input/isoform_overrides_at_oncokb.txt")
     parser.add_argument("ensembl_biomart_canonical_transcripts_per_hgnc",
                         help="tmp/ensembl_biomart_canonical_transcripts_per_hgnc.txt")
     args = parser.parse_args()
@@ -213,4 +219,5 @@ if __name__ == "__main__":
          args.isoform_overrides_uniprot,
          args.isoform_overrides_at_mskcc,
          args.isoform_overrides_genome_nexus,
+         args.isoform_overrides_at_oncokb,
          args.ensembl_biomart_canonical_transcripts_per_hgnc)
