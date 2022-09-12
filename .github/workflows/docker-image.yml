@@ -51,3 +51,27 @@ jobs:
           image_name: genomenexus/gn-mongo
           image_tag: ${{ steps.extract_tag.outputs.image_tag_name }}
           pull_image_and_stages: false
+
+build_and_publish_grcm38:
+    if: github.repository == 'genome-nexus/genome-nexus-importer'
+    runs-on: ubuntu-latest
+    env:
+      Version: grcm38_ensembl95
+    steps:
+      - name: 'Checkout git repo'
+        uses: actions/checkout@v1
+      - name: Extract branch or tag name
+        # The GITHUB_REF variable is like "refs/head/branch_name"
+        # The format of image tag is e.g. v0.12_grch38_ensembl95
+        run: echo "##[set-output name=image_tag_names;]$(echo ${GITHUB_REF##*/}_${Version}"
+        id: extract_tag
+      - name: 'Docker build with cache'
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          build_extra_args: '--build-arg SPECIES=mus_musculus --build-arg REF_ENSEMBL_VERSION=grcm38_ensembl95'
+          username: "${{ secrets.DOCKER_USERNAME }}"
+          password: "${{ secrets.DOCKER_PASSWORD }}"
+          image_name: genomenexus/gn-mongo
+          image_tag: ${{ steps.extract_tags.outputs.image_tag_names }}
+          pull_image_and_stages: false
+          
