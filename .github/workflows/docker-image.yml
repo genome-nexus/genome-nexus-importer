@@ -28,6 +28,29 @@ jobs:
           image_name: genomenexus/gn-mongo
           image_tag: ${{ steps.extract_tags.outputs.image_tag_names }}
           pull_image_and_stages: false
+
+  build_and_publish_grch37_mutationassessor:
+    if: github.repository == 'genome-nexus/genome-nexus-importer'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout git repo'
+        uses: actions/checkout@v1
+      - name: Extract branch or tag name
+        # The GITHUB_REF variable is like "refs/head/branch_name" or
+        # "refs/tag/tag_name". If the tag is prefixed with v, this is a new
+        # version and we want to push it with the tag "latest" as well. One can give 
+        # the same image multiple tags by using ","
+        run: echo "##[set-output name=image_tag_names;]$(echo ${GITHUB_REF##*/} | sed 's/^v/latest,/g')"
+        id: extract_tags
+      - name: 'Docker build with cache'
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          build_extra_args: '--build-arg MUTATIONASSESSOR=true'
+          username: "${{ secrets.DOCKER_USERNAME }}"
+          password: "${{ secrets.DOCKER_PASSWORD }}"
+          image_name: genomenexus/gn-mongo
+          image_tag: ${{ steps.extract_tags.outputs.image_tag_names }}
+          pull_image_and_stages: false
   
   build_and_publish_grch38:
     if: github.repository == 'genome-nexus/genome-nexus-importer'
@@ -51,7 +74,8 @@ jobs:
           image_name: genomenexus/gn-mongo
           image_tag: ${{ steps.extract_tag.outputs.image_tag_name }}
           pull_image_and_stages: false
-  build_and_publish_grcm38:
+
+build_and_publish_grcm38:
     if: github.repository == 'genome-nexus/genome-nexus-importer'
     runs-on: ubuntu-latest
     env:
@@ -67,7 +91,7 @@ jobs:
       - name: 'Docker build with cache'
         uses: whoan/docker-build-with-cache-action@v5
         with:
-          build_extra_args: '--build-arg=SPECIES=mus_musculus --build-arg=REF_ENSEMBL_VERSION=grcm38_ensembl95'
+          build_extra_args: '--build-arg SPECIES=mus_musculus --build-arg REF_ENSEMBL_VERSION=grcm38_ensembl95'
           username: "${{ secrets.DOCKER_USERNAME }}"
           password: "${{ secrets.DOCKER_PASSWORD }}"
           image_name: genomenexus/gn-mongo

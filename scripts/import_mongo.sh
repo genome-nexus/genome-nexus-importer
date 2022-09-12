@@ -5,10 +5,12 @@ set -e
 MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27017/annotator"}
 REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION:-"grch37_ensembl92"}
 SPECIES=${SPECIES:-"homo_sapiens"}
+MUTATIONASSESSOR=${MUTATIONASSESSOR:-"false"}
 
 echo "MONGO_URI:" ${MONGO_URI}
 echo "REF_ENSEMBL_VERSION:" ${REF_ENSEMBL_VERSION}
 echo "SPECIES:" ${SPECIES}
+echo "MUTATIONASSESSOR:" ${MUTATIONASSESSOR}
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -50,7 +52,7 @@ elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
 fi
 
 # import mutation assessor
-if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* ]]; then
+if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* && ${MUTATIONASSESSOR} == true ]]; then
     echo "Downloading Mutation assessor data"
 
     curl http://mutationassessor.org/r3/MA_scores_rel3_hg19_full.tar.gz -o ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
