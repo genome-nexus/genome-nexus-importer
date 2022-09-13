@@ -75,7 +75,7 @@ jobs:
           image_tag: ${{ steps.extract_tag.outputs.image_tag_name }}
           pull_image_and_stages: false
 
-build_and_publish_grcm38:
+  build_and_publish_grcm38:
     if: github.repository == 'genome-nexus/genome-nexus-importer'
     runs-on: ubuntu-latest
     env:
