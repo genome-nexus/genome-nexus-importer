@@ -86,7 +86,7 @@ jobs:
       - name: Extract branch or tag name
         # The GITHUB_REF variable is like "refs/head/branch_name"
         # The format of image tag is e.g. v0.12_grch38_ensembl95
-        run: echo "##[set-output name=image_tag_names;]$(echo ${GITHUB_REF##*/}_${Version}"
+        run: echo "##[set-output name=image_tag_names;]${GITHUB_REF##*/}_${Version}"
         id: extract_tag
       - name: 'Docker build with cache'
         uses: whoan/docker-build-with-cache-action@v5
