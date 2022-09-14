@@ -62,12 +62,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
 
-    hotspots_2d = pd.read_csv(args.hotspots_2d, sep="\t")
+    hotspots_2d = pd.read_csv(args.hotspots_2d, sep="\t", dtype=str)
     hotspots_2d.columns = [c.lower().replace("-","_") for c in hotspots_2d.columns]
-    hotspots_2d['type'] = hotspots_2d.indel_size.fillna(0).apply(lambda x: "in-frame indel" if x > 0 else "single residue")
+    hotspots_2d['type'] = hotspots_2d.indel_size.fillna(0).apply(lambda x: "in-frame indel" if int(x) > 0 else "single residue")
     hotspots_2d.loc[((hotspots_2d.type == "single residue") & hotspots_2d.residue.str.contains("X")), 'type'] = "splice site"
 
-    hotspots_3d = pd.read_csv(args.hotspots_3d, sep="\t")
+    hotspots_3d = pd.read_csv(args.hotspots_3d, sep="\t", dtype=str)
     hotspots_3d.columns = [c.lower().replace("-","_") for c in hotspots_3d.columns]
     # add type column
     hotspots_3d['type'] = '3d'
