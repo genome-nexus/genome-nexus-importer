@@ -125,7 +125,7 @@ def main(ensembl_biomart_geneids_transcript_info,
     assert(len(hugos) == len(hgnc_df))
 
     # only test the cancer genes for oddities (these are very important)
-    cgs = set(pd.read_csv('common_input/oncokb_cancer_genes_list_20170926.txt',sep='\t')['Hugo Symbol'])
+    cgs = set(pd.read_csv('common_input/oncokb_cancer_genes_list.txt',sep='\t')['Hugo Symbol'])
     # each cancer gene stable id should have only one associated cancer gene symbol
     assert(transcript_info_df[transcript_info_df.hgnc_symbol.isin(cgs)].groupby('gene_stable_id').hgnc_symbol.nunique().sort_values().nunique() == 1)
     # each transcript stable id always belongs to only one gene stable id
@@ -198,7 +198,7 @@ if __name__ == "__main__":
     parser.add_argument("ensembl_biomart_geneids_transcript_info",
                         help="tmp/ensembl_biomart_geneids.transcript_info.txt")
     parser.add_argument("hgnc_complete_set",
-                        help="common_input/hgnc_complete_set_20210218.txt")
+                        help="common_input/hgnc_complete_set_20221001.txt")
     parser.add_argument("isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("isoform_overrides_at_mskcc",

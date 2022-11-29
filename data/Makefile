@@ -151,7 +151,7 @@ $(TMP_DIR)/ensembl_transcript_info.txt: $(TMP_DIR)/$(SPECIES).gff3.gz
 	python3 ../scripts/transform_gff_to_tsv_for_exon_info_from_ensembl.py $^ $@
 
 # Add HGNC symbols, exons, UTRs, PFAM domains and Uniprot id to Ensembl Transcript
-$(TMP_DIR)/ensembl_biomart_transcripts.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt uniprot/export/$(VERSION)_enst_to_uniprot_mapping_id.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME)
+$(TMP_DIR)/ensembl_biomart_transcripts.json.gz: $(TMP_DIR)/ensembl_biomart_transcripts.txt $(TMP_DIR)/ensembl_transcript_info.txt $(VERSION)/input/ensembl_biomart_pfam.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_ccds.txt uniprot/export/$(VERSION)_enst_to_uniprot_mapping_id.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME) common_input/hgnc_complete_set_20221001.txt
 	python3 ../scripts/add_domains_hugo_ccds_refseq_exon_info_uniprot_to_ensembl_transcript.py $^ $@
 
 # for mouse a specific recipe without overrides
@@ -161,9 +161,9 @@ $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz: $(TMP_DIR)/ensembl_biomart
 # give default/canonical geneid/transcript based on given hugo symbol takes
 # about 50m to run (TODO: this can be easily optimized)
 # isoform_overrides_genome_nexus.txt is made for genome nexus, others files are generated for vcf2maf
-# Please note: we should keep hgnc_complete_set_20210218 in sync with https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/hgnc_complete_set.txt
+# Please note: we should keep hgnc_complete_set_20221001 in sync with https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/hgnc_complete_set.txt
 # isoform_overrides_oncokb.txt is a list of OncoKB transcripts and genes that differ from msk_override, original file could be downloaded here: https://docs.google.com/spreadsheets/d/1ZZt8x0vvhrwL6VLQRzx3YE7XUOvEM-noQl7v6Tg7lCQ/edit#gid=0
-$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20210218.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME) common_input/isoform_overrides_genome_nexus.txt common_input/isoform_overrides_oncokb.txt
+$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20221001.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME) common_input/isoform_overrides_genome_nexus.txt common_input/isoform_overrides_oncokb.txt
 	python3 ../scripts/make_one_canonical_transcript_per_gene.py $^ $@
 
 # mouse version. A different script is called that set the canonicals based on Ensembl lookup.
@@ -199,7 +199,11 @@ $(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_genei
 # download OncoKB cancer genes list
 # need to set ONCOKB_TOKEN first by "export ONCOKB_TOKEN="
 common_input/oncokb_cancer_genes_list_from_API.json: 
-	curl "https://www.oncokb.org/api/v1/utils/cancerGeneList" -H "accept: application/json" -H "Authorization: Bearer $(ONCOKB_TOKEN)" | python -m json.tool > $@
+	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList" -H "accept: application/json" -H "Authorization: Bearer $(ONCOKB_TOKEN)" | python -m json.tool > $@
+
+common_input/oncokb_cancer_genes_list.txt: 
+	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList.txt" -H "accept: text/plain" -H "Authorization: Bearer $(ONCOKB_TOKEN)" > $@
+
 
 # ClinVar version
 # The latest version date number can be found on https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ and https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/

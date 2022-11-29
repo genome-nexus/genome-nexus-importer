@@ -7,20 +7,34 @@ import numpy as np
 import argparse
 
 
-def add_nested_hgnc(transcripts):
+def add_nested_hgnc(transcripts, hgnc_df):
     """ Make nested object HGNC symbols per transcript"""
 
-    def get_hgnc_symbol(transcript_id):
+    def get_hgnc_symbol(transcript_id, hgnc_dict):
         hgnc_symbols = transcripts.loc[transcript_id]
         if hgnc_symbols.ndim == 1:
             if pd.isnull(hgnc_symbols.hgnc_symbol):
                 return hgnc_symbols.hgnc_symbol
             else:
-                return [hgnc_symbols.hgnc_symbol]
+                if (hgnc_symbols.hgnc_symbol in hgnc_dict):
+                    return [hgnc_dict[hgnc_symbols.hgnc_symbol]]
+                else:
+                    return [hgnc_symbols.hgnc_symbol]
         else:
-            return list(hgnc_symbols.hgnc_symbol.values)
+            symbol_list = []
+            for symbol in hgnc_symbols.hgnc_symbol.values:
+                if (symbol in hgnc_dict):
+                    symbol_list.append(hgnc_dict[symbol])
+                else:
+                    symbol_list.append(symbol)
+            return symbol_list
 
-    hgnc_symbol_list = transcripts.index.drop_duplicates().map(get_hgnc_symbol)
+    hgnc_dict = dict()
+    for index, row in hgnc_df.iterrows():
+        for symbol in row['prev_symbol'].split('|'):
+            hgnc_dict[symbol] = index
+
+    hgnc_symbol_list = transcripts.index.drop_duplicates().map(lambda transcript_id: get_hgnc_symbol(transcript_id, hgnc_dict))
     # make one row per transcript_stable_id by removing hgnc_symbol
     unique_transcripts = transcripts.copy().reset_index()
     del unique_transcripts['hgnc_symbol']
@@ -170,6 +184,14 @@ def add_uniprot(transcripts, uniprot):
     transcripts["uniprot_id"] = transcripts.index.map(get_uniprot_for_transcript)
     return transcripts
 
+# def update_hgnc_symbols(transcripts, hgnc_df):
+#     # Update hgnc simple in transcripts dataframe to new symbols from hgnc_complete_set_20221001.txt
+    
+#     for index, row in transcripts.iterrows():
+#         symbols = row['hgnc_symbols']
+#         if (pd.isna(symbol) == False and symbol in hgnc_dict):
+#             transcripts.loc[index, 'hgnc_symbol'] = hgnc_dict[symbol]
+
 def main(ensembl_biomart_transcripts,
          ensembl_transcript_info,
          ensembl_biomart_pfam,
@@ -178,7 +200,9 @@ def main(ensembl_biomart_transcripts,
          enst_to_uniprot,
          isoform_overrides_uniprot,
          isoform_overrides_mskcc,
-         ensembl_biomart_transcripts_json):
+         hgnc_symbol_set,
+         ensembl_biomart_transcripts_json
+         ):
 
     # Read input and set index column
     transcripts = pd.read_csv(ensembl_biomart_transcripts, sep='\t')
@@ -197,7 +221,8 @@ def main(ensembl_biomart_transcripts,
     transcripts = add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_mskcc)
 
     # Add nested HGNC, exons and PFAM domains
-    transcripts = add_nested_hgnc(transcripts)
+    hgnc_df = pd.read_csv(hgnc_symbol_set, sep='\t', usecols = ['symbol', 'prev_symbol'], index_col=0).dropna()
+    transcripts = add_nested_hgnc(transcripts, hgnc_df)
     transcripts = add_nested_transcript_info(transcripts, transcript_info)
     transcripts = add_nested_pfam_domains(transcripts, pfam_domains)
 
@@ -229,6 +254,7 @@ if __name__ == '__main__':
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("vcf2maf_isoform_overrides_mskcc",
                         help="common_input/isoform_overrides_at_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
+    parser.add_argument("hgnc_symbol_set", help="common_input/hgnc_complete_set_20221001.txt")
     parser.add_argument("ensembl_biomart_transcripts_json",
                         help="tmp/ensembl_biomart_transcripts.json.gz")
 
@@ -241,4 +267,6 @@ if __name__ == '__main__':
          args.enst_to_uniprot,
          args.vcf2maf_isoform_overrides_uniprot,
          args.vcf2maf_isoform_overrides_mskcc,
-         args.ensembl_biomart_transcripts_json)
+         args.hgnc_symbol_set,
+         args.ensembl_biomart_transcripts_json
+         )
