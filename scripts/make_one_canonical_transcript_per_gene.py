@@ -75,7 +75,6 @@ def ignore_rna_gene(x):
 def ignore_certain_genes(x, ignored_genes_file_name):
     with open(ignored_genes_file_name) as ignored_genes_file:
         ignore_genes = [gene.rstrip() for gene in ignored_genes_file]
-        print(ignore_genes)
         return set({i for i in x if i not in ignore_genes})
 
 

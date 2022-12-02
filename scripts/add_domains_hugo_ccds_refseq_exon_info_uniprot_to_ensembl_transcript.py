@@ -184,14 +184,6 @@ def add_uniprot(transcripts, uniprot):
     transcripts["uniprot_id"] = transcripts.index.map(get_uniprot_for_transcript)
     return transcripts
 
-# def update_hgnc_symbols(transcripts, hgnc_df):
-#     # Update hgnc simple in transcripts dataframe to new symbols from hgnc_complete_set_20221001.txt
-    
-#     for index, row in transcripts.iterrows():
-#         symbols = row['hgnc_symbols']
-#         if (pd.isna(symbol) == False and symbol in hgnc_dict):
-#             transcripts.loc[index, 'hgnc_symbol'] = hgnc_dict[symbol]
-
 def main(ensembl_biomart_transcripts,
          ensembl_transcript_info,
          ensembl_biomart_pfam,
