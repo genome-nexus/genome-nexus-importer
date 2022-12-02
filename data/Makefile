@@ -163,7 +163,7 @@ $(TMP_DIR)/ensembl_biomart_transcripts_mouse.json.gz: $(TMP_DIR)/ensembl_biomart
 # isoform_overrides_genome_nexus.txt is made for genome nexus, others files are generated for vcf2maf
 # Please note: we should keep hgnc_complete_set_20221001 in sync with https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/hgnc_complete_set.txt
 # isoform_overrides_oncokb.txt is a list of OncoKB transcripts and genes that differ from msk_override, original file could be downloaded here: https://docs.google.com/spreadsheets/d/1ZZt8x0vvhrwL6VLQRzx3YE7XUOvEM-noQl7v6Tg7lCQ/edit#gid=0
-$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20221001.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME) common_input/isoform_overrides_genome_nexus.txt common_input/isoform_overrides_oncokb.txt
+$(TMP_DIR)/ensembl_biomart_canonical_transcripts_per_hgnc.txt: $(TMP_DIR)/ensembl_canonical_data.txt common_input/hgnc_complete_set_20221001.txt common_input/isoform_overrides_uniprot.txt common_input/$(MSKCC_ISOFORM_OVERRIDES_FILE_NAME) common_input/isoform_overrides_genome_nexus.txt common_input/isoform_overrides_oncokb.txt common_input/ignored_genes.txt
 	python3 ../scripts/make_one_canonical_transcript_per_gene.py $^ $@
 
 # mouse version. A different script is called that set the canonicals based on Ensembl lookup.
