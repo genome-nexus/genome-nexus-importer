@@ -221,6 +221,10 @@ clinvar/input/clinvar_grch38_input.vcf.gz:
 clinvar/export/clinvar_grch38.txt.gz:
 	gunzip -k ../data/clinvar/input/clinvar_grch38_input.vcf.gz && python ../scripts/transform_vcf_to_tsv.py ../data/clinvar/input/clinvar_grch38_input.vcf ../data/clinvar/export/clinvar_grch38.txt --fields chromosome,start_position,end_position,reference_allele,alternate_allele,clinvar_id,clnsig,clnsigconf && gzip ../data/clinvar/export/clinvar_grch38.txt && rm ../data/clinvar/input/clinvar_grch38_input.vcf
 
+# Annotation sources version. When update any annotation sources version, we should update 'common_input/version_info.txt' and re-generate annotation_version.txt
+$(VERSION)/export/annotation_version.txt:
+	python ../scripts/annotation_version_file.py common_input/version_info.txt $(VERSION)/export/annotation_version.txt > $@
+
 # create directories if not extistent
 dirs: $(VERSION)/input $(VERSION)/export
 $(VERSION)/input $(VERSION)/export $(VERSION)/tmp:

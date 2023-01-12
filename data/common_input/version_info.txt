@@ -1,0 +1,13 @@
+name	version	type	id	genome_build	description	url
+VEP	grch37	mirrored	vep	grch37	"VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions."	https://grch37.ensembl.org/info/docs/tools/vep/index.html
+VEP	grch38	mirrored	vep	grch38	"VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions."	https://useast.ensembl.org/info/docs/tools/vep/index.html
+HGNC	22-10-01	mirrored	hgnc	grch37	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+HGNC	22-10-01	mirrored	hgnc	grch38	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+Cancer Hotspots	v2	mirrored	cancer_hotspots	grch37	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
+Cancer Hotspots	v2	mirrored	cancer_hotspots	grch38	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
+3D Hotspots	v2	mirrored	3d_hotspots	grch37	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
+3D Hotspots	v2	mirrored	3d_hotspots	grch38	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
+reVUE	d8a7d01bac02671e74b4522bacfca6e82f360046	mirrored	revue	grch37	A Repository for Variants with Unexpected Effects (VUE) in Cancer	https://www.cancerrevue.org/
+Mutation Assessor	v3	mirrored	mutation_assessor	grch37	"Mutation Assessor predicts the functional impact of amino-acid substitutions in proteins, such as mutations discovered in cancer or missense polymorphisms."	http://mutationassessor.org/r3/
+My Variant Info	"Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html"	external	my_variant_info	grch37	"MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources."	https://myvariant.info
+My Variant Info	"Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html"	external	my_variant_info	grch38	"MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources."	https://myvariant.info

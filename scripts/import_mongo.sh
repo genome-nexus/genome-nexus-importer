@@ -68,3 +68,6 @@ if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* && ${MUTATIONASSESSOR} == true ]]; th
     echo "Importing Mutation assessor data"
     for filename in MA_scores_rel3_hg19_full/*.csv; do import mutation_assessor.annotation $filename '--type csv --headerline' && rm $filename; done
 fi
+
+# import annotation sources version
+import version ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/annotation_version.txt '--drop --type tsv --headerline'
