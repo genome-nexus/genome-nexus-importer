@@ -211,7 +211,7 @@ if __name__ == "__main__":
     parser.add_argument("isoform_overrides_genome_nexus",
                         help="common_input/isoform_overrides_genome_nexus.txt")
     parser.add_argument("isoform_overrides_at_oncokb",
-                        help="common_input/isoform_overrides_at_oncokb.txt")
+                        help="common_input/isoform_overrides_at_oncokb_grch37.txt or common_input/isoform_overrides_at_oncokb_grch38.txt")
     parser.add_argument("ignored_genes_file_name",
                         help="common_input/ignored_genes.txt")
     parser.add_argument("ensembl_biomart_canonical_transcripts_per_hgnc",
