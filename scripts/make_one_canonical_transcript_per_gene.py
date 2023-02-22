@@ -5,64 +5,104 @@ import itertools
 import argparse
 
 
-def get_overrides_transcript(overrides_tables, ensembl_table, hgnc_symbol, hgnc_canonical_genes):
+def get_overrides_transcript(overrides_tables, ensembl_table, ensembl_table_indexed_by_gene_stable_id, hgnc_symbol, hgnc_canonical_genes, overrides_table_names):
     """Find canonical transcript id for given hugo symbol. Overrides_tables is
     a list of different override tables"""
-    for overrides in overrides_tables:
+    for index in range(len(overrides_tables)):
+        overrides = overrides_tables[index]
         try:
             # corner case when there are multiple overrides for a given gene symbol
             if overrides.loc[hgnc_symbol].ndim > 1:
                 transcript = overrides.loc[hgnc_symbol].isoform_override.values[0]
+                isoform_override = overrides_table_names[index]
             else:
                 transcript = overrides.loc[hgnc_symbol].isoform_override
-            return transcript
+                isoform_override = overrides_table_names[index]
+            # return transcript and isoform_override_explanation
+            return transcript, isoform_override
         except KeyError:
             pass
-    else:
-        # get ensembl canonical version otherwise
-        return get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, hgnc_symbol, hgnc_canonical_genes, 'transcript_stable_id')
-
+    # get ensembl canonical version otherwise
+    return get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, ensembl_table_indexed_by_gene_stable_id, hgnc_symbol, hgnc_canonical_genes, 'transcript_stable_id')
 
 def pick_canonical_longest_transcript_from_ensembl_table(ensembl_rows, field):
     """Get canonical transcript id with largest protein length or if there is
     no such thing, pick biggest gene id"""
-    return ensembl_rows.sort_values('is_canonical protein_length gene_stable_id'.split(), ascending=False)[field].values[0]
-
+    return ensembl_rows.sort_values('is_canonical protein_length gene_stable_id'.split(), ascending=False)[field].values[0], "ensembl longest"
 
 def get_ensembl_canonical(ensembl_rows, field):
+
     if (ensembl_rows.ndim == 1 and len(ensembl_rows) == 0) or (ensembl_rows.ndim == 2 and len(ensembl_rows) == 0):
-        return np.nan
+        return np.nan, np.nan
     elif ensembl_rows.ndim == 1:
-        return ensembl_rows[field]
+        # this gene onlyhas one transcript from ensembl_table
+        return ensembl_rows[field], "ensembl only one transcript"
     elif ensembl_rows.ndim == 2:
-        if len(ensembl_rows) == 1:
-            return ensembl_rows[field].values[0]
-        else:
-            return pick_canonical_longest_transcript_from_ensembl_table(ensembl_rows, field)
+        # there are multiple transcripts found by hugo_symbol or ensembl_gene_id
+        # we need to pick the longest transcript in this case
+        return pick_canonical_longest_transcript_from_ensembl_table(ensembl_rows, field)
 
-
-def get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, hgnc_symbol, hgnc_canonical_genes, field):
+def get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, ensembl_table_indexed_by_gene_stable_id, hgnc_symbol, hgnc_canonical_genes, field):
     """Determine canonical transcript based on hgnc mappings to ensembl id.
-    If not possible use ensembl's data."""
+    If not possible use ensembl's data.
+    ensembl_table is the same as ensembl_table_indexed_by_gene_stable_id
+    But ensembl_table has hugo_symbol as index
+    ensembl_table_indexed_by_gene_stable_id has gene_stable_id as index
+    Adding ensembl_table_indexed_by_gene_stable_id to improve performance since this is the most time consuming part
+    """
     try:
+        # try to find hgnc_symbol from hgnc_canonical_genes
+        # it should only have one row returned, otherwise raise an exception
         hgnc_gene_rows = hgnc_canonical_genes.loc[hgnc_symbol]
     except KeyError:
         raise(Exception("Unknown hugo symbol"))
-
     if hgnc_gene_rows.ndim == 1:
-        result = get_ensembl_canonical(ensembl_table[ensembl_table.gene_stable_id == hgnc_gene_rows.ensembl_gene_id], field)
-        if pd.isnull(result):
-            # use ensembl data to find canonical transcript if nan is found
+        try:
+            # from the only one record found in hgnc_canonical_genes, we could have the ensembl_gene_id from the record
+            # find transcripts from ensembl_table (same as ensembl_table_indexed_by_gene_stable_id) by searching ensembl_gene_id
+            # here we use ensembl_table_indexed_by_gene_stable_id instead to increase performance
+            # get_ensembl_canonical returns one transcript from all transcripts found by ensembl_gene_id
+            return get_ensembl_canonical(ensembl_table_indexed_by_gene_stable_id.loc[hgnc_gene_rows.ensembl_gene_id], field)
+        except KeyError:
+            # if couldn't find any transcripts by ensembl_gene_id, switch to searching by hgnc_symbol
             # there's actually 222 of these (see notebook)
             try:
                 return get_ensembl_canonical(ensembl_table.loc[hgnc_symbol], field)
             except KeyError:
-                return np.nan
-        else:
-            return result
+                return np.nan, np.nan
     else:
         raise(Exception("One hugo symbol expected in hgnc_canonical_genes"))
 
+def get_transcript_id_and_explaination(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, oncokb, mskcc, uniprot, custom):
+    ensembl_canonical_gene, ensembl_canonical_gene_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'gene_stable_id')
+    ensembl_canonical_transcript, ensembl_canonical_transcript_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'transcript_stable_id')
+    genome_nexus_overrides_transcript, genome_nexus_overrides_transcript_explanation = get_overrides_transcript([custom], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["genome nexus isoform override"])
+    uniprot_overrides_transcript, uniprot_overrides_transcript_explanation = get_overrides_transcript([custom, uniprot], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, [ "manually override", "uniprot isoform override"])
+    mskcc_overrides_transcript, mskcc_overrides_transcript_explanation = get_overrides_transcript([oncokb, mskcc, custom, uniprot], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["oncokb isoform override", "mskcc isoform override", "manually override", "uniprot isoform override"])
+    return pd.Series([
+                ensembl_canonical_gene,
+                ensembl_canonical_transcript,
+                ensembl_canonical_transcript_explanation,
+                genome_nexus_overrides_transcript,
+                genome_nexus_overrides_transcript_explanation,
+                uniprot_overrides_transcript,
+                uniprot_overrides_transcript_explanation,
+                mskcc_overrides_transcript,
+                mskcc_overrides_transcript_explanation
+            ],
+            index="""
+            ensembl_canonical_gene
+            ensembl_canonical_transcript
+            ensembl_canonical_transcript_explanation
+            genome_nexus_canonical_transcript
+            genome_nexus_canonical_transcript_explanation
+            uniprot_canonical_transcript
+            uniprot_canonical_transcript_explanation
+            mskcc_canonical_transcript
+            mskcc_canonical_transcript_explanation
+            """
+            .split()
+        )
 
 def lowercase_set(x):
     return set({i.lower() for i in x})
@@ -100,7 +140,7 @@ def main(ensembl_biomart_geneids_transcript_info,
         .set_index('gene_name'.split())
     oncokb = pd.read_csv(isoform_overrides_at_oncokb, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
-        .set_index('gene_name'.split())
+        .set_index('hugo_symbol'.split())
     hgnc_df = pd.read_csv(hgnc_complete_set, sep='\t', dtype=object)
 
     # Convert new column names to old stable column names. If this is not done properly, Genome Nexus and any other
@@ -124,7 +164,7 @@ def main(ensembl_biomart_geneids_transcript_info,
     assert(len(hugos) == len(hgnc_df))
 
     # only test the cancer genes for oddities (these are very important)
-    cgs = set(pd.read_csv('common_input/oncokb_cancer_genes_list.txt',sep='\t')['Hugo Symbol'])
+    cgs = set(pd.read_csv('../data/common_input/oncokb_cancer_genes_list.txt',sep='\t')['Hugo Symbol'])
     # each cancer gene stable id should have only one associated cancer gene symbol
     assert(transcript_info_df[transcript_info_df.hgnc_symbol.isin(cgs)].groupby('gene_stable_id').hgnc_symbol.nunique().sort_values().nunique() == 1)
     # each transcript stable id always belongs to only one gene stable id
@@ -156,7 +196,12 @@ def main(ensembl_biomart_geneids_transcript_info,
         '------ End of new genes list ------\n')
     assert(len(new_genes) == 0)
 
-    transcript_info_df = transcript_info_df.set_index('hgnc_symbol')
+    transcript_info_df = transcript_info_df.set_index('hgnc_symbol').sort_index()
+    transcript_info_indexed_by_gene_stable_id = transcript_info_df
+    # duplicate a temp column to use as index
+    transcript_info_indexed_by_gene_stable_id["gene_stable_id_temp"] = transcript_info_df['gene_stable_id']
+    transcript_info_indexed_by_gene_stable_id = transcript_info_indexed_by_gene_stable_id.set_index('gene_stable_id_temp').sort_index()
+
     # for testing use
     # NSD3 replaces WHSC1L1
     # AATF has uniprot canonical transcript, not hgnc ensembl gene id, but
@@ -164,24 +209,7 @@ def main(ensembl_biomart_geneids_transcript_info,
     # hugos = ['KRT18P53', 'NSD3', 'AATF']
 
     # TODO Optimize this part, as this part takes most time
-    one_transcript_per_hugo_symbol = pd.Series(hugos).apply(lambda x:
-        pd.Series(
-            [
-                get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, x, hgnc_df, 'gene_stable_id'),
-                get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, x, hgnc_df, 'transcript_stable_id'),
-                get_overrides_transcript([custom], transcript_info_df, x, hgnc_df),
-                get_overrides_transcript([uniprot, custom], transcript_info_df, x, hgnc_df),
-                get_overrides_transcript([oncokb, mskcc, uniprot, custom], transcript_info_df, x, hgnc_df),
-            ],
-            index="""
-            ensembl_canonical_gene
-            ensembl_canonical_transcript
-            genome_nexus_canonical_transcript
-            uniprot_canonical_transcript
-            mskcc_canonical_transcript
-            """.split()
-        )
-    )
+    one_transcript_per_hugo_symbol = pd.Series(hugos).apply(lambda x: get_transcript_id_and_explaination(transcript_info_df, transcript_info_indexed_by_gene_stable_id, x, hgnc_df, oncokb, mskcc, uniprot, custom ))
     one_transcript_per_hugo_symbol.index = hugos
     one_transcript_per_hugo_symbol.index.name = 'hgnc_symbol'
 
@@ -209,9 +237,9 @@ if __name__ == "__main__":
     parser.add_argument("isoform_overrides_at_mskcc",
                         help="common_input/isoform_overrides_at_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
     parser.add_argument("isoform_overrides_genome_nexus",
-                        help="common_input/isoform_overrides_genome_nexus.txt")
+                        help="common_input/isoform_overrides_genome_nexus_grch37.txt or common_input/isoform_overrides_genome_nexus_grch38.txt")
     parser.add_argument("isoform_overrides_at_oncokb",
-                        help="common_input/isoform_overrides_at_oncokb.txt")
+                        help="common_input/isoform_overrides_oncokb_grch37.txt or common_input/isoform_overrides_oncokb_grch38.txt")
     parser.add_argument("ignored_genes_file_name",
                         help="common_input/ignored_genes.txt")
     parser.add_argument("ensembl_biomart_canonical_transcripts_per_hgnc",
