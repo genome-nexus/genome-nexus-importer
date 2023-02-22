@@ -1,4 +1,4 @@
-isoform	ref_seq	entrez_gene_id	hugo_symbol	oncogene	highest_sensitive_level	highest_resistance_level	summary	background	tsg	highest_resistanc_level
+enst_id	ref_seq	entrez_gene_id	hugo_symbol	oncogene	highest_sensitive_level	highest_resistance_level	summary	background	tsg	highest_resistanc_level
 ENST00000318560	NM_005157.4	25	ABL1	True	1	R1			False	R1
 ENST00000502732	NM_007314.3	27	ABL2	True					False	
 ENST00000321945	NM_139076.2	84142	ABRAXAS1	False					True	

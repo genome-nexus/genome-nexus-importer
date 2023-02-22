@@ -12,9 +12,9 @@ def main(oncokb_isoform_overrides_file_name, reference_genome):
     oncokb_df.drop(list(oncokb_df.filter(regex =drop_columns_name)), axis = 1, inplace = True)
     column_name_mapping = {"background": "background",
                             "entrezGeneId": "entrez_gene_id",
-                            "grch37Isoform": "isoform",
+                            "grch37Isoform": "enst_id",
                             "grch37RefSeq": "ref_seq",
-                            "grch38Isoform": "isoform",
+                            "grch38Isoform": "enst_id",
                             "grch38RefSeq": "ref_seq",
                             "highestResistancLevel": "highest_resistanc_level",
                             "highestResistanceLevel": "highest_resistance_level",
