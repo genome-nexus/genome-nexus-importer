@@ -2,9 +2,12 @@ import argparse
 import requests
 import pandas as pd
 
-def main(reference_genome):
+def main(oncokb_isoform_overrides_file):
     # check if genome is grch37 (hg19), drop grch38 columns if reference_genome is grch37
-    drop_columns_name = 'grch38' if reference_genome == 'grch37' else 'grch37'
+    if 'grch37' in oncokb_isoform_overrides_file:
+        drop_columns_name = 'grch38'
+    else:
+        drop_columns_name = 'grch37'
 
     url ='https://www.oncokb.org/api/v1/utils/allCuratedGenes?includeEvidence=false'
     oncokb_df = pd.json_normalize(requests.get(url).json())
@@ -24,12 +27,12 @@ def main(reference_genome):
                             "summary": "summary",
                             "tsg": "tsg"}
     oncokb_df.rename(columns=column_name_mapping, inplace=True)
-    oncokb_df.to_csv('common_input/isoform_overrides_oncokb_' + reference_genome + '.txt', sep='\t', index=False)
+    oncokb_df.to_csv(oncokb_isoform_overrides_file, sep='\t', index=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("reference_genome",
-                        help="grch37 or grch38")
+    parser.add_argument("oncokb_isoform_overrides_file",
+                        help="isoform_overrides_oncokb_grch37.txt or isoform_overrides_oncokb_grch38.txt")
     args = parser.parse_args()
 
-    main(args.reference_genome)
+    main(args.oncokb_isoform_overrides_file)

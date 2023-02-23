@@ -42,10 +42,8 @@ GENOME_BUILD=$(firstword $(subst _, ,$(VERSION)))
 
 ifeq ($(GENOME_BUILD), grch38)
   MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch38.txt
-  ONCOKB_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_oncokb_grch38.txt
 else
   MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch37.txt
-  ONCOKB_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_oncokb_grch37.txt
 endif
 
 # Generic rule to unzip prerequisite files
@@ -207,10 +205,10 @@ common_input/oncokb_cancer_genes_list.txt:
 	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList.txt" -H "accept: text/plain" -H "Authorization: Bearer $(ONCOKB_TOKEN)" > $@
 
 common_input/isoform_overrides_oncokb_grch37.txt:
-	python ../scripts/download_oncokb_isoform_overrides.py grch37
+	python ../scripts/download_oncokb_isoform_overrides.py $@
 
 common_input/isoform_overrides_oncokb_grch38.txt:
-	python ../scripts/download_oncokb_isoform_overrides.py grch38
+	python ../scripts/download_oncokb_isoform_overrides.py $@ 
 
 # ClinVar version
 # The latest version date number can be found on https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ and https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/
