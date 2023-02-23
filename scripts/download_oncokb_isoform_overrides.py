@@ -2,7 +2,7 @@ import argparse
 import requests
 import pandas as pd
 
-def main(oncokb_isoform_overrides_file_name, reference_genome):
+def main(reference_genome):
     # check if genome is grch37 (hg19), drop grch38 columns if reference_genome is grch37
     drop_columns_name = 'grch38' if reference_genome == 'grch37' else 'grch37'
 
@@ -24,14 +24,12 @@ def main(oncokb_isoform_overrides_file_name, reference_genome):
                             "summary": "summary",
                             "tsg": "tsg"}
     oncokb_df.rename(columns=column_name_mapping, inplace=True)
-    oncokb_df.to_csv('common_input/' + oncokb_isoform_overrides_file_name, sep='\t', index=False)
+    oncokb_df.to_csv('common_input/isoform_overrides_oncokb_' + reference_genome + '.txt', sep='\t', index=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("oncokb_isoform_overrides_file_name",
-                        help="oncokb_isoform_overrides_grch37.txt or oncokb_isoform_overrides_grch38.txt")
     parser.add_argument("reference_genome",
                         help="grch37 or grch38")
     args = parser.parse_args()
 
-    main(args.oncokb_isoform_overrides_file_name, args.reference_genome)
+    main(args.reference_genome)
