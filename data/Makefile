@@ -204,6 +204,11 @@ common_input/oncokb_cancer_genes_list_from_API.json:
 common_input/oncokb_cancer_genes_list.txt: 
 	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList.txt" -H "accept: text/plain" -H "Authorization: Bearer $(ONCOKB_TOKEN)" > $@
 
+common_input/isoform_overrides_oncokb_grch37.txt:
+	python ../scripts/download_oncokb_isoform_overrides.py grch37 > $@
+
+common_input/isoform_overrides_oncokb_grch38.txt:
+	python ../scripts/download_oncokb_isoform_overrides.py grch38 > $@ 
 
 # ClinVar version
 # The latest version date number can be found on https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ and https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/
