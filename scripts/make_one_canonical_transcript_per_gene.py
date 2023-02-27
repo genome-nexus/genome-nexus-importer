@@ -73,7 +73,7 @@ def get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, en
     else:
         raise(Exception("One hugo symbol expected in hgnc_canonical_genes"))
 
-def get_transcript_id_and_explaination(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, oncokb, mskcc, uniprot, custom):
+def get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, oncokb, mskcc, uniprot, custom):
     ensembl_canonical_gene, ensembl_canonical_gene_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'gene_stable_id')
     ensembl_canonical_transcript, ensembl_canonical_transcript_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'transcript_stable_id')
     genome_nexus_overrides_transcript, genome_nexus_overrides_transcript_explanation = get_overrides_transcript([custom], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["genome nexus isoform override"])
@@ -209,7 +209,7 @@ def main(ensembl_biomart_geneids_transcript_info,
     # hugos = ['KRT18P53', 'NSD3', 'AATF']
 
     # TODO Optimize this part, as this part takes most time
-    one_transcript_per_hugo_symbol = pd.Series(hugos).apply(lambda x: get_transcript_id_and_explaination(transcript_info_df, transcript_info_indexed_by_gene_stable_id, x, hgnc_df, oncokb, mskcc, uniprot, custom ))
+    one_transcript_per_hugo_symbol = pd.Series(hugos).apply(lambda x: get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexed_by_gene_stable_id, x, hgnc_df, oncokb, mskcc, uniprot, custom ))
     one_transcript_per_hugo_symbol.index = hugos
     one_transcript_per_hugo_symbol.index.name = 'hgnc_symbol'
 
