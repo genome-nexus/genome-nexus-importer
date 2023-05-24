@@ -10,6 +10,13 @@ args = commandArgs(trailingOnly=TRUE)
 # set working dir to the correct genome/version input dir
 species <- args[1]
 path <- args[2]
+genome_build <- args[3]
+
+if (genome_build == "grch37") {
+  host_url = "https://grch37.ensembl.org"
+} else {
+  host_url = "https://www.ensembl.org"
+}
 
 stopifnot(species %in% c('homo_sapiens', 'mus_musculus'))
 
@@ -19,7 +26,7 @@ species <- ifelse(species=='homo_sapiens', 'hsapiens', 'mmusculus')
 # select mart
 # listEnsembl()
 
-ensembl <- useMart(biomart='ensembl', dataset=paste0(species, '_gene_ensembl'))
+ensembl <- useMart(biomart='ensembl', host=host_url, dataset=paste0(species, '_gene_ensembl'))
 
 # list datasets and attributes
 # listDatasets(ensembl)

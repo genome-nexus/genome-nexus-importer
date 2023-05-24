@@ -198,7 +198,7 @@ common_input/mouse/MGI_Gene_Model_Coord.rpt:
 	wget http://www.informatics.jax.org/downloads/reports/MGI_Gene_Model_Coord.rpt -O $@
 
 $(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_geneids.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_pfam.txt:
-	Rscript --vanilla ../scripts/retrieve_biomart_tables.R $(SPECIES) $(VERSION)/input/
+	Rscript --vanilla ../scripts/retrieve_biomart_tables.R $(SPECIES) $(VERSION)/input/ $(GENOME_BUILD)
 
 # download OncoKB cancer genes list
 # need to set ONCOKB_TOKEN first by "export ONCOKB_TOKEN="
