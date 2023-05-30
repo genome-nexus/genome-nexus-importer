@@ -903,3 +903,4 @@ smim11b
 mkrn3-as1
 kcne1b
 cbsl
+sik3-it1
