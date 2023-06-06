@@ -26,8 +26,8 @@ database. When running this script, please specify:
 
 Example:
 ```bash
-MONGO_URI="mongodb://127.0.0.1:27017/annotator"
-REF_ENSEMBL_VERSION="grch37_ensembl92"
+export MONGO_URI="mongodb://127.0.0.1:27017/annotator"
+export REF_ENSEMBL_VERSION="grch37_ensembl92"
 ./scripts/import_mongo.sh
 ```
 
