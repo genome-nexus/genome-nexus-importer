@@ -1,7 +1,7 @@
 // Command to run script: "mongo < index_db_migration.js"
-db.adminCommand('listDatabases')
-db = db.getSiblingDB('annotator')
-db.getCollectionNames()
+db.adminCommand('listDatabases');
+db = db.getSiblingDB('annotator');
+db.getCollectionNames();
 searchCollection = db.getCollection('index');
 const effectPriority = {};
 effectPriority["transcript_ablation"] = 1; // A feature ablation whereby the deleted region includes a transcript feature
