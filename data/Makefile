@@ -216,6 +216,7 @@ common_input/isoform_overrides_oncokb_grch38.txt:
 
 # ClinVar version
 # The latest version date number can be found on https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ and https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/
+# Version number in version_info.txt needs to be in sync
 CLINVAR_VERSION=20230722
 # download GRCh37 ClinVar VCF file from NCBI
 clinvar/input/clinvar_grch37_input.vcf.gz:
