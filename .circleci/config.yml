@@ -25,6 +25,11 @@ version: 2.1
 
 jobs:
   build_and_publish_grch37_mutationassessor:
+    filters:
+      branches:
+        only: /.*/
+      tags:
+        only: /.*/
     docker:
       - image: cimg/go:1.17
     # large is the best image for free tier users
@@ -43,11 +48,6 @@ jobs:
           docker build -t $IMAGE:$TAG .
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker push $IMAGE:$TAG
-    filters:
-      branches:
-        only: /.*/
-      tags:
-        only: /.*/
 
 # workflows:
 #   version: 2
