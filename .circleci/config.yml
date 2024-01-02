@@ -22,21 +22,46 @@ version: 2.1
 #             . venv/bin/activate
 #             cd scripts
 #             nosetests
-orbs:
-  docker: circleci/docker@1.7.0
-workflows:
-  version: 2
+
+jobs:
   build_and_publish_grch37_mutationassessor:
-    jobs:
-      - docker/publish:
-          executor: ubuntu
-          image: leexdocker/gn-mongodb
-          tag: ${CIRCLE_TAG}_mutationassessor
-          extra_build_args: '--build-arg MUTATIONASSESSOR=false'
-          username: ${DOCKER_USERNAME}
-          password: ${DOCKER_PASSWORD}
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
+    docker:
+      - image: cimg/go:1.17
+    # large is the best image for free tier users
+    resource_class: large 
+    steps:
+      - checkout
+      # ... steps for building/testing app ...
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      # build and push Docker image
+      - run: |
+          TAG=${CIRCLE_TAG}_mutationassessor
+          IMAGE=leexdocker/gn-mongodb
+          docker build -t $IMAGE:$TAG .
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          docker push $IMAGE:$TAG
+    filters:
+      branches:
+        only: /.*/
+      tags:
+        only: /.*/
+
+# workflows:
+#   version: 2
+#   build_and_publish_grch37_mutationassessor:
+#     jobs:
+#       - docker/publish:
+#           executor: ubuntu
+#           image: leexdocker/gn-mongodb
+#           tag: ${CIRCLE_TAG}_mutationassessor
+#           extra_build_args: '--build-arg MUTATIONASSESSOR=false'
+#           username: ${DOCKER_USERNAME}
+#           password: ${DOCKER_PASSWORD}
+#           filters:
+#             branches:
+#               only: /.*/
+#             tags:
+#               only: /.*/
