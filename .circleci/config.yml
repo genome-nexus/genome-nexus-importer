@@ -36,7 +36,7 @@ jobs:
           name: Get Git tag
           command: |
             git fetch --tags
-            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v/latest,/g')' >> "$BASH_ENV"
+            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v//g')' >> "$BASH_ENV"
             source "$BASH_ENV"
             echo $GIT_TAG
       - setup_remote_docker:
