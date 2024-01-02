@@ -41,7 +41,7 @@ jobs:
           TAG=${CIRCLE_TAG}_mutationassessor
           IMAGE=leexdocker/gn-mongodb
           docker build -t $IMAGE:$TAG .
-          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+          echo ${{ DOCKER_PASSWORD }} | docker login -u ${{ DOCKER_USERNAME }} --password-stdin
           docker push $IMAGE:$TAG
 
 workflows:
