@@ -22,32 +22,37 @@ version: 2.1
 #             . venv/bin/activate
 #             cd scripts
 #             nosetests
-workflows:
+
+jobs:
   build_and_publish_grch37_mutationassessor:
+    docker:
+      - image: cimg/go:1.17
+    # large is the best image for free tier users
+    resource_class: large 
+    steps:
+      - checkout
+      # ... steps for building/testing app ...
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      # build and push Docker image
+      - run: |
+          TAG=${CIRCLE_TAG}_mutationassessor
+          IMAGE=leexdocker/gn-mongodb
+          docker build -t $IMAGE:$TAG .
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          docker push $IMAGE:$TAG
+
+workflows:
+  build:
     jobs:
-      build_and_publish:
-        filters:
-          branches:
-            only:
-              - /.*/
-        docker:
-          - image: cimg/go:1.17
-        # large is the best image for free tier users
-        resource_class: large 
-        steps:
-          - checkout
-          # ... steps for building/testing app ...
+      - build_and_publish_grch37_mutationassessor:
+          filters:
+            branches:
+              only:
+                - /.*/
 
-          - setup_remote_docker:
-              docker_layer_caching: true
-
-          # build and push Docker image
-          - run: |
-              TAG=${CIRCLE_TAG}_mutationassessor
-              IMAGE=leexdocker/gn-mongodb
-              docker build -t $IMAGE:$TAG .
-              echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-              docker push $IMAGE:$TAG
 
 # workflows:
 #   version: 2
