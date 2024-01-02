@@ -32,6 +32,12 @@ jobs:
     steps:
       - checkout
       # ... steps for building/testing app ...
+      - run:
+          name: Get Git tag
+          command: |
+            git fetch --tags
+            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))' >> $BASH_ENV
+            echo $GIT_TAG
 
       - setup_remote_docker:
           docker_layer_caching: true
@@ -50,9 +56,9 @@ workflows:
     jobs:
       - build_and_publish_grch37_mutationassessor:
           filters:
-            # branches:
-            #   only:
-            #     - /.*/
+            branches:
+              only:
+                - /.*/
             tags:
               only: /.*/
 
