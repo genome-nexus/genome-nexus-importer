@@ -44,7 +44,7 @@ jobs:
 
       # build and push Docker image
       - run: |
-          TAG=${GIT_TAG}_mutationassessor
+          TAG=$GIT_TAG_mutationassessor
           IMAGE=leexdocker/gn-mongodb
           echo ${CIRCLE_BRANCH} && echo ${GIT_TAG} && echo ${DOCKER_PASSWORD} && echo ${DOCKER_USERNAME}
           docker build -t $IMAGE:$TAG --build-arg MUTATIONASSESSOR=false .
