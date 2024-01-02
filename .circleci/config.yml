@@ -1,24 +1,42 @@
-version: 2
-jobs:
-  build:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/python:3.6.1
-    steps:
-      - checkout
-      - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "scripts/requirements.txt" }}
-      - run:
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r scripts/requirements.txt
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "scripts/requirements.txt" }}
-          paths:
-            - "venv"
-      - run:
-          command: |
-            . venv/bin/activate
-            cd scripts
-            nosetests
+version: 2.1
+# jobs:
+#   build:
+#     working_directory: ~/repo
+#     docker:
+#       - image: circleci/python:3.6.1
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           key: deps1-{{ .Branch }}-{{ checksum "scripts/requirements.txt" }}
+#       - run:
+#           command: |
+#             python3 -m venv venv
+#             . venv/bin/activate
+#             pip install -r scripts/requirements.txt
+#       - save_cache:
+#           key: deps1-{{ .Branch }}-{{ checksum "scripts/requirements.txt" }}
+#           paths:
+#             - "venv"
+#       - run:
+#           command: |
+#             . venv/bin/activate
+#             cd scripts
+#             nosetests
+orbs:
+  docker: circleci/docker@1.7.0
+workflows:
+  version: 2
+  build_and_publish_grch37_mutationassessor:
+    jobs:
+      - docker/publish:
+          executor: ubuntu
+          image: leexdocker/gn-mongodb
+          tag: ${CIRCLE_TAG}_mutationassessor
+          extra_build_args: '--build-arg MUTATIONASSESSOR=false'
+          username: ${DOCKER_USERNAME}
+          password: ${DOCKER_PASSWORD}
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
