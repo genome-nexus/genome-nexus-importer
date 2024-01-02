@@ -56,9 +56,9 @@ workflows:
     jobs:
       - build_and_publish_grch37_mutationassessor:
           filters:
-            # branches:
-            #   only:
-            #     - /.*/
+            branches:
+              ignore:
+                - /.*/
             tags:
               only: /.*/
 
