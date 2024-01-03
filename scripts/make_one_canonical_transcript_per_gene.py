@@ -224,7 +224,7 @@ if __name__ == "__main__":
     parser.add_argument("ensembl_biomart_geneids_transcript_info",
                         help="tmp/ensembl_biomart_geneids.transcript_info.txt")
     parser.add_argument("hgnc_complete_set",
-                        help="common_input/hgnc_complete_set_2023-12-26.txt")
+                        help="common_input/hgnc_complete_set_2023-10.txt")
     parser.add_argument("isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("isoform_overrides_at_mskcc",

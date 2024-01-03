@@ -1,8 +1,8 @@
 name	version	type	id	genome_build	description	url
 VEP	grch37	mirrored	vep	grch37	VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions.	https://grch37.ensembl.org/info/docs/tools/vep/index.html
 VEP	grch38	mirrored	vep	grch38	VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions.	https://useast.ensembl.org/info/docs/tools/vep/index.html
-HGNC	2023-12	mirrored	hgnc	grch37	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
-HGNC	2023-12	mirrored	hgnc	grch38	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+HGNC	2023-10	mirrored	hgnc	grch37	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+HGNC	2023-10	mirrored	hgnc	grch38	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
 Cancer Hotspots	v2	mirrored	cancer_hotspots	grch37	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
 Cancer Hotspots	v2	mirrored	cancer_hotspots	grch38	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
 3D Hotspots	v2	mirrored	3d_hotspots	grch37	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
