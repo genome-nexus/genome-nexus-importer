@@ -31,7 +31,7 @@ def add_nested_hgnc(transcripts, hgnc_df):
 
     hgnc_dict = dict()
     for index, row in hgnc_df.iterrows():
-        for symbol in row['prev_symbol'].split('|'):
+        for symbol in row['synonyms'].split('|'):
             hgnc_dict[symbol] = index
 
     hgnc_symbol_list = transcripts.index.drop_duplicates().map(lambda transcript_id: get_hgnc_symbol(transcript_id, hgnc_dict))
@@ -213,7 +213,7 @@ def main(ensembl_biomart_transcripts,
     transcripts = add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_mskcc)
 
     # Add nested HGNC, exons and PFAM domains
-    hgnc_df = pd.read_csv(hgnc_symbol_set, sep='\t', usecols = ['symbol', 'prev_symbol'], index_col=0).dropna()
+    hgnc_df = pd.read_csv(hgnc_symbol_set, sep='\t', usecols = ['symbol', 'synonyms'], index_col=0).dropna()
     transcripts = add_nested_hgnc(transcripts, hgnc_df)
     transcripts = add_nested_transcript_info(transcripts, transcript_info)
     transcripts = add_nested_pfam_domains(transcripts, pfam_domains)
@@ -246,7 +246,7 @@ if __name__ == '__main__':
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("vcf2maf_isoform_overrides_mskcc",
                         help="common_input/isoform_overrides_at_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
-    parser.add_argument("hgnc_symbol_set", help="common_input/hgnc_complete_set_2023-04-01.txt")
+    parser.add_argument("hgnc_symbol_set", help="common_input/hgnc_complete_set_2023-10.txt")
     parser.add_argument("ensembl_biomart_transcripts_json",
                         help="tmp/ensembl_biomart_transcripts.json.gz")
 

@@ -904,3 +904,6 @@ mkrn3-as1
 kcne1b
 cbsl
 sik3-it1
+upp2-it1
+dnajb5p1
+slc7a2-it1
