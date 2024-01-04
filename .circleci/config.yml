@@ -1,60 +1,125 @@
 version: 2.1
-# jobs:
-#   build:
-#     working_directory: ~/repo
-#     docker:
-#       - image: circleci/python:3.6.1
-#     steps:
-#       - checkout
-#       - restore_cache:
-#           key: deps1-{{ .Branch }}-{{ checksum "scripts/requirements.txt" }}
-#       - run:
-#           command: |
-#             python3 -m venv venv
-#             . venv/bin/activate
-#             pip install -r scripts/requirements.txt
-#       - save_cache:
-#           key: deps1-{{ .Branch }}-{{ checksum "scripts/requirements.txt" }}
-#           paths:
-#             - "venv"
-#       - run:
-#           command: |
-#             . venv/bin/activate
-#             cd scripts
-#             nosetests
-
 jobs:
-  build_and_publish_grch37_mutationassessor:
+  build_and_publish_grch37:
     docker:
       - image: cimg/go:1.17
-    # large is the best image for free tier users
     resource_class: large 
     steps:
       - checkout
-      # ... steps for building/testing app ...
+      # steps for building/testing app
       - run:
           name: Get Git tag
           command: |
             git fetch --tags
             echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v//g')' >> "$BASH_ENV"
             source "$BASH_ENV"
-            echo $GIT_TAG
       - setup_remote_docker:
           docker_layer_caching: true
-
       # build and push Docker image
-      # For test only, change to genomenexus docker account!!!
+      - run: |
+          TAG=${GIT_TAG}
+          IMAGE=genomenexus/gn-mongo
+          docker build -t $IMAGE:$TAG .
+          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+          docker push $IMAGE:$TAG
+  
+  build_and_publish_grch37_mutationassessor:
+    docker:
+      - image: cimg/go:1.17
+    resource_class: large 
+    steps:
+      - checkout
+      # steps for building/testing app
+      - run:
+          name: Get Git tag
+          command: |
+            git fetch --tags
+            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v//g')' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - setup_remote_docker:
+          docker_layer_caching: true
+      # build and push Docker image
       - run: |
           TAG=${GIT_TAG}_mutationassessor
-          IMAGE=leexdocker/gn-mongodb
+          IMAGE=genomenexus/gn-mongo
           docker build -t $IMAGE:$TAG --build-arg MUTATIONASSESSOR=true .
+          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+          docker push $IMAGE:$TAG
+
+  build_and_publish_grch38:
+    docker:
+      - image: cimg/go:1.17
+    resource_class: large 
+    steps:
+      - checkout
+      # steps for building/testing app
+      - run:
+          name: Get Git tag
+          command: |
+            git fetch --tags
+            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v//g')' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - setup_remote_docker:
+          docker_layer_caching: true
+      # build and push Docker image
+      - run: |
+          TAG=${GIT_TAG}_grch38_ensembl95
+          IMAGE=genomenexus/gn-mongo
+          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 .
+          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+          docker push $IMAGE:$TAG
+  
+  build_and_publish_grcm38:
+    docker:
+      - image: cimg/go:1.17
+    resource_class: large 
+    steps:
+      - checkout
+      # steps for building/testing app
+      - run:
+          name: Get Git tag
+          command: |
+            git fetch --tags
+            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v//g')' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - setup_remote_docker:
+          docker_layer_caching: true
+      # build and push Docker image
+      - run: |
+          TAG=${GIT_TAG}_grcm38_ensembl95
+          IMAGE=genomenexus/gn-mongo
+          docker build -t $IMAGE:$TAG --build-arg SPECIES=mus_musculus --build-arg ARG_REF_ENSEMBL_VERSION=grcm38_ensembl95 .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
           docker push $IMAGE:$TAG
 
 workflows:
   build:
     jobs:
+      - build_and_publish_grch37:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /.*/
+
       - build_and_publish_grch37_mutationassessor:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /.*/
+
+      - build_and_publish_grch38:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /.*/
+              
+      - build_and_publish_grcm38:
           filters:
             branches:
               ignore:
