@@ -146,13 +146,18 @@ def main(ensembl_biomart_geneids_transcript_info,
     # Convert new column names to old stable column names. If this is not done properly, Genome Nexus and any other
     # downstream applications break
     # TODO: Update Genome Nexus to accept the latest HGNC column names so that remapping is not necessary.
-    column_name_mapping = {
+    column_name_mapping = {'name': 'approved_name',
                            'symbol': 'approved_symbol',
-                           'synonyms': 'synonyms',
+                           'prev_symbol': 'previous_symbols',
+                           'alias_symbol': 'synonyms',
                            'location': 'chromosome',
                            'entrez_id': 'entrez_gene_id',
+                           'ena': 'accession_numbers',
+                           'refseq_accession': 'refseq_ids',
+                           'uniprot_ids': 'uniprot_id',
                            'ensembl_id': 'ensembl_gene_id'}
     hgnc_df.rename(columns=column_name_mapping, inplace=True)
+    hgnc_df = hgnc_df[hgnc_df['approved_name'] != 'entry withdrawn'].copy()
     hugos = hgnc_df['approved_symbol'].unique()
     hgnc_df = hgnc_df.set_index('approved_symbol')
     # assume each row has approved symbol
@@ -167,8 +172,10 @@ def main(ensembl_biomart_geneids_transcript_info,
 
     # create hgnc_symbol to gene id mapping
     # ignore hugo symbols from ensembl data dump (includes prev symbols and synonyms)
-    synonyms = hgnc_df.synonyms.str.strip('"').str.split("|").dropna()
-    synonyms = set(itertools.chain.from_iterable(synonyms))
+    syns = hgnc_df.synonyms.str.strip('"').str.split("|").dropna()
+    syns = set(itertools.chain.from_iterable(syns))
+    previous_symbols = hgnc_df.previous_symbols.str.strip('"').str.split("|").dropna()
+    previous_symbols = set(itertools.chain.from_iterable(previous_symbols))
 
     # there is overlap between symbols, synonyms and previous symbols
     # therefore use logic in above order when querying
@@ -179,8 +186,8 @@ def main(ensembl_biomart_geneids_transcript_info,
     # all cancer genes and hugo symbols in ensembl data dump should be
     # contained in hgnc approved symbols and synonyms
     # c12orf9 is only in sanger's cancer gene census and has been withdrawn
-    assert(len(lowercase_set(set(cgs)) - set(['c12orf9']) - lowercase_set(set(hugos).union(synonyms))) == 0)
-    no_symbols_in_hgnc = lowercase_set(transcript_info_df.hgnc_symbol.dropna().unique()) - lowercase_set(set(hugos).union(synonyms))
+    assert(len(lowercase_set(set(cgs)) - set(['c12orf9']) - lowercase_set(set(hugos).union(syns).union(previous_symbols))) == 0)
+    no_symbols_in_hgnc = lowercase_set(transcript_info_df.hgnc_symbol.dropna().unique()) - lowercase_set(set(hugos).union(syns).union(previous_symbols))
     new_genes = ignore_certain_genes(ignore_rna_gene(no_symbols_in_hgnc),ignored_genes_file_name)
     if len(new_genes) != 0:
         print('------ New genes need to be added into ignored_genes.txt ------\n' +
