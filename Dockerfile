@@ -18,6 +18,7 @@ ARG MUTATIONASSESSOR=false
 
 # Import data into mongodb
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
+COPY scripts/setup.sh /setup.sh
 RUN /setup.sh
 
 FROM bitnami/mongodb:${MONGODBVERSION}
