@@ -1,4 +1,10 @@
 #!/bin/bash
+# Copy from https://github.com/docker-library/mongo/blob/56dd5c86b7a329b944845ea782fb98a3384d8d4e/4.0/docker-entrypoint.sh
+# Changed last line from:
+# exec "$@"
+# to:
+# cp -r /data/db/ /seed
+# This makes the builder terminate instead of run mongod after the initialization and saves the data to a save place (otherwise they are being deleted)
 set -Eeuo pipefail
 
 if [ "${1:0:1}" = '-' ]; then
