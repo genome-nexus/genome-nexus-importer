@@ -3,5 +3,6 @@ VEP	grch38	mirrored	vep	VEP determines the effect of your variants(SNPs, inserti
 HGNC	2023-10	mirrored	hgnc	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
 Cancer Hotspots	v2	mirrored	cancer_hotspots	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
 3D Hotspots	v2	mirrored	3d_hotspots	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
+Mutation Assessor	v4	mirrored	mutation_assessor	Mutation Assessor predicts the functional impact of amino-acid substitutions in proteins, such as mutations discovered in cancer or missense polymorphisms.	http://mutationassessor.org/r3/
 My Variant Info	Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html	external	my_variant_info	MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources.	https://myvariant.info
 ClinVar	20230722	mirrored	clinvar	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
