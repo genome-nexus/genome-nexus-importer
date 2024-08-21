@@ -4,6 +4,7 @@ on:
     branches: 
       - master
       - demo-*
+  pull_request:
 # Only use GitHub Actions for testing, because the Docker image with Mutation Assessor data is too big to be built and pushed.
 # CircleCI builds and pushes the images to Docker Hub for every new release.
 jobs:
@@ -13,6 +14,8 @@ jobs:
     steps:
       - name: 'Checkout git repo'
         uses: actions/checkout@v1
+      - name: Install xz-utils
+        run: sudo apt-get update && sudo apt-get install -y xz-utils
       - name: Extract branch or tag name
         # The GITHUB_REF variable is like "refs/head/branch_name" or
         # "refs/tag/tag_name". If the tag is prefixed with v, this is a new
@@ -35,6 +38,8 @@ jobs:
     steps:
       - name: 'Checkout git repo'
         uses: actions/checkout@v1
+      - name: Install xz-utils
+        run: sudo apt-get update && sudo apt-get install -y xz-utils
       - name: Extract branch or tag name
         # The GITHUB_REF variable is like "refs/head/branch_name"
         # The format of image tag is e.g. v0.12_grch38_ensembl95
