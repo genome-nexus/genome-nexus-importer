@@ -17,7 +17,6 @@ ARG SPECIES=homo_sapiens
 ARG MUTATIONASSESSOR=false
 
 # Import data into mongodb
-RUN apt-get update && apt-get install -y xz-utils
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
 RUN /setup.sh
 
