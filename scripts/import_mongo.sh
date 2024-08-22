@@ -63,25 +63,25 @@ do
     filename=$(basename $url)
     # Download file and extract it
     echo "Downloading $filename"
-    curl $url -o ${DIR}/${filename}
+    curl $url -o ${DIR}/../data/common_input/${filename}
     echo "Download completed."
 
     echo "Extracting $filename"
-    gunzip ${DIR}/${filename}
+    gunzip ${DIR}/../data/common_input/${filename}
     mutation_assessor_tsv_file="${filename%.gz}"
 
     echo "Transforming $mutation_assessor_tsv_file"
     # Rename the columns
-    sed -i '' 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/$mutation_assessor_tsv_file
+    sed -i '' 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/$mutation_assessor_tsv_file
     # Add a new column "_id" (uniprotId,hgvspShort)
-    awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/$mutation_assessor_tsv_file > ${DIR}/processed_$mutation_assessor_tsv_file
+    awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/$mutation_assessor_tsv_file > ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
 
     # Import the data into MongoDB
     echo "Importing $mutation_assessor_tsv_file"
-    import mutation_assessor.annotation ${DIR}/processed_$mutation_assessor_tsv_file "--type tsv --headerline"
+    import mutation_assessor.annotation ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file "--type tsv --headerline"
 
-    rm ${DIR}/processed_$mutation_assessor_tsv_file
-    rm ${DIR}/$mutation_assessor_tsv_file
+    rm ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
+    rm ${DIR}/../data/common_input/$mutation_assessor_tsv_file
 done
 
 # import annotation sources version
