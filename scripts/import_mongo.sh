@@ -59,15 +59,11 @@ curl https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_gen
 echo "Download completed."
 
 echo "Extracting Mutation assessor data"
-apt install -y xz-utils
-echo xz-utils version
-exho $(xz --version)
-xz -k ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.xz
+gunzip ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.gz
 
 echo "Transforming Mutation assessor data"
 sed -i '' 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv
 awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv > processed_mutaiton_assessor_tsv_file.tsv
-rm ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.xz
 rm ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv
 
 echo "Importing Mutation assessor data"
