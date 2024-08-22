@@ -74,7 +74,7 @@ do
     # Rename the columns
     sed -i 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/$mutation_assessor_tsv_file
     # Add a new column "_id" (uniprotId,hgvspShort)
-    awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/$mutation_assessor_tsv_file > ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
+    awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/../data/common_input/$mutation_assessor_tsv_file > ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
 
     # Import the data into MongoDB
     echo "Importing $mutation_assessor_tsv_file"
