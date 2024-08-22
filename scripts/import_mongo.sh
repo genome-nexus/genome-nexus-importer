@@ -55,7 +55,7 @@ fi
 echo "Downloading Mutation assessor data"
 # Data source: https://drive.google.com/file/d/1V6r65xJFF5fJ7b9JHwqkvCe8wWDrIBhd/view. 
 # The copy is stored in S3 bucket: ttps://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.xz
-curl https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.xz -o ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.xz
+curl https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.gz -o ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.gz
 echo "Download completed."
 
 echo "Extracting Mutation assessor data"
