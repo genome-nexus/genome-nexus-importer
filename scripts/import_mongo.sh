@@ -59,9 +59,9 @@ curl https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_gen
 echo "Download completed."
 
 echo "Extracting Mutation assessor data"
-apt update && apt install -y xz-utils
+apt install -y xz-utils
 echo xz-utils version
-xz --version
+exho $(xz --version)
 xz -k ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.xz
 
 echo "Transforming Mutation assessor data"
