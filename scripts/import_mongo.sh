@@ -52,23 +52,37 @@ elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
 fi
 
 # import mutation assessor
-echo "Downloading Mutation assessor data"
-# Data source: https://drive.google.com/file/d/1V6r65xJFF5fJ7b9JHwqkvCe8wWDrIBhd/view. 
-# The copy is stored in S3 bucket: ttps://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.xz
-curl https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.gz -o ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.gz
-echo "Download completed."
+declare -a mutation_assessor_files=(
+    "https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor_v4_1.tsv.gz"
+    "https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor_v4_2.tsv.gz"
+    "https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor_v4_3.tsv.gz"
+    "https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor_v4_4.tsv.gz"
+)
+for url in "${mutation_assessor_files[@]}"
+do
+    filename=$(basename $url)
+    # Download file and extract it
+    echo "Downloading $filename"
+    curl $url -o ${DIR}/${filename}
+    echo "Download completed."
 
-echo "Extracting Mutation assessor data"
-gunzip ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.gz
+    echo "Extracting $filename"
+    gunzip ${DIR}/${filename}
+    mutation_assessor_tsv_file="${filename%.gz}"
 
-echo "Transforming Mutation assessor data"
-sed -i '' 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv
-awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv > processed_mutaiton_assessor_tsv_file.tsv
-rm ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv
+    echo "Transforming $mutation_assessor_tsv_file"
+    # Rename the columns
+    sed -i '' 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/$mutation_assessor_tsv_file
+    # Add a new column "_id" (uniprotId,hgvspShort)
+    awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/$mutation_assessor_tsv_file > ${DIR}/processed_$mutation_assessor_tsv_file
 
-echo "Importing Mutation assessor data"
-import mutation_assessor.annotation processed_mutaiton_assessor_tsv_file.tsv "--type tsv --headerline"
-rm processed_mutaiton_assessor_tsv_file.tsv
+    # Import the data into MongoDB
+    echo "Importing $mutation_assessor_tsv_file"
+    import mutation_assessor.annotation ${DIR}/processed_$mutation_assessor_tsv_file "--type tsv --headerline"
+
+    rm ${DIR}/processed_$mutation_assessor_tsv_file
+    rm ${DIR}/$mutation_assessor_tsv_file
+done
 
 # import annotation sources version
 import version ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/annotation_version.txt '--drop --type tsv --headerline'
