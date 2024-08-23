@@ -4,6 +4,7 @@ on:
     branches: 
       - master
       - demo-*
+  pull_request:
 # Only use GitHub Actions for testing, because the Docker image with Mutation Assessor data is too big to be built and pushed.
 # CircleCI builds and pushes the images to Docker Hub for every new release.
 jobs:
