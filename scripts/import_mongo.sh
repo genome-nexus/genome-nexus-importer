@@ -19,7 +19,7 @@ import() {
     file=$2
     extraoptions=$3
 
-    mongoimport --uri ${MONGO_URI} --collection $collection $extraoptions --file $file
+    mongoimport --uri ${MONGO_URI} --collection $collection $extraoptions --file $file --batchSize 1000
 }
 
 if [[ ! -d "${DIR}/../data/${REF_ENSEMBL_VERSION}" ]]; then
