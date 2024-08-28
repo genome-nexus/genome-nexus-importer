@@ -1,14 +1,13 @@
 #!/bin/bash
 
-DIR=/bitnami/mongodb
+DIR=/data/db
 
-if [ -d "$DIR/data/db" ]; then
+if [ -d "$DIR/journal" ]; then
     echo "Data directory exists. Skipping."
 else
     echo "Data directory not existing. Initializing seed in $DIR"
-    rm -rf $DIR/db
-    cp -r /bitnami/seed/* $DIR
+    rm -rf $DIR/*
+    cp -r /seed/db/* $DIR
 fi
 
-/setup.sh
-/run.sh
+docker-entrypoint.sh mongod
