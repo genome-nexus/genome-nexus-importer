@@ -52,24 +52,22 @@ elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
 fi
 
 # import mutation assessor
-echo "Downloading Mutation assessor data"
-# Data source: https://drive.google.com/file/d/1V6r65xJFF5fJ7b9JHwqkvCe8wWDrIBhd/view. 
-# The copy is stored in S3 bucket: ttps://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.xz
-curl https://genome-nexus-static-data.s3.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.xz -o ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.xz
-echo "Download completed."
+if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* && ${MUTATIONASSESSOR} == true ]]; then
+    echo "Downloading Mutation assessor data"
 
-echo "Extracting Mutation assessor data"
-unxz -k ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.xz
+    curl http://mutationassessor.org/r3/MA_scores_rel3_hg19_full.tar.gz -o ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
 
-echo "Transforming Mutation assessor data"
-sed -i '' 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv
-awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv > processed_mutaiton_assessor_tsv_file.tsv
-rm ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.xz
-rm ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv
+    echo "Extracting Mutation assessor data"
+    tar -xvf ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
+    rm ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
 
-echo "Importing Mutation assessor data"
-import mutation_assessor.annotation processed_mutaiton_assessor_tsv_file.tsv "--type tsv --headerline"
-rm processed_mutaiton_assessor_tsv_file.tsv
+    echo "Transforming Mutation assessor data"
+    sed -i -e 's/"Mutation","RefGenome variant","Gene","Uniprot","Info","Uniprot variant","Func. Impact","FI score"/_id,rgaa,gene,uprot,info,var,F_impact,F_score/g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
+    sed -i -e 's/hg19,//g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
+
+    echo "Importing Mutation assessor data"
+    for filename in MA_scores_rel3_hg19_full/*.csv; do import mutation_assessor.annotation $filename '--type csv --headerline' && rm $filename; done
+fi
 
 # import annotation sources version
 import version ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/annotation_version.txt '--drop --type tsv --headerline'
