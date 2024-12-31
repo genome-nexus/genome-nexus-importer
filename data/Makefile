@@ -40,6 +40,10 @@ QSIZE=1000
 # Genome build(grch37 or grch38). Use in Uniprot mapping
 GENOME_BUILD=$(firstword $(subst _, ,$(VERSION)))
 
+# OncoKB version. Used for downloading OncoKB cancer gene list and generating isoform overrides table. 
+# Check OncoKB website for the latest version number.
+ONCOKB_VERSION=v4.24
+
 ifeq ($(GENOME_BUILD), grch38)
   MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch38.txt
   ONCOKB_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_oncokb_grch38.txt
@@ -203,16 +207,16 @@ $(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_genei
 # download OncoKB cancer genes list
 # need to set ONCOKB_TOKEN first by "export ONCOKB_TOKEN="
 common_input/oncokb_cancer_genes_list_from_API.json: 
-	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList" -H "accept: application/json" -H "Authorization: Bearer $(ONCOKB_TOKEN)" | python -m json.tool > $@
+	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList?version=$(ONCOKB_VERSION)" -H "accept: application/json" -H "Authorization: Bearer $(ONCOKB_TOKEN)" | python -m json.tool > $@
 
 common_input/oncokb_cancer_genes_list.txt: 
-	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList.txt" -H "accept: text/plain" -H "Authorization: Bearer $(ONCOKB_TOKEN)" > $@
+	curl -X 'GET' "https://www.oncokb.org/api/v1/utils/cancerGeneList.txt?version=$(ONCOKB_VERSION)" -H "accept: text/plain" -H "Authorization: Bearer $(ONCOKB_TOKEN)" > $@
 
 common_input/isoform_overrides_oncokb_grch37.txt:
-	python ../scripts/download_oncokb_isoform_overrides.py grch37 > $@
+	python ../scripts/download_oncokb_isoform_overrides.py grch37 $(ONCOKB_VERSION)> $@
 
 common_input/isoform_overrides_oncokb_grch38.txt:
-	python ../scripts/download_oncokb_isoform_overrides.py grch38 > $@ 
+	python ../scripts/download_oncokb_isoform_overrides.py grch38 $(ONCOKB_VERSION)> $@ 
 
 # ClinVar version
 # The latest version date number can be found on https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/ and https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/
