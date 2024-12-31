@@ -2,11 +2,11 @@ import argparse
 import requests
 import pandas as pd
 
-def main(reference_genome):
+def main(reference_genome, version):
     # check if genome is grch37 (hg19), drop grch38 columns if reference_genome is grch37
     drop_columns_name = 'grch38' if reference_genome == 'grch37' else 'grch37'
 
-    url ='https://www.oncokb.org/api/v1/utils/allCuratedGenes?includeEvidence=false'
+    url ='https://www.oncokb.org/api/v1/utils/allCuratedGenes?includeEvidence=false&version=' + version
     oncokb_df = pd.json_normalize(requests.get(url).json())
 
     oncokb_df.drop(list(oncokb_df.filter(regex =drop_columns_name)), axis = 1, inplace = True)
@@ -30,6 +30,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("reference_genome",
                         help="grch37 or grch38")
+    parser.add_argument("version", help="OncoKB version"),
     args = parser.parse_args()
 
-    main(args.reference_genome)
+    main(args.reference_genome, args.version)

@@ -5,3 +5,4 @@ Cancer Hotspots	v2	mirrored	cancer_hotspots	A resource for statistically signifi
 3D Hotspots	v2	mirrored	3d_hotspots	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
 My Variant Info	Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html	external	my_variant_info	MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources.	https://myvariant.info
 ClinVar	20230722	mirrored	clinvar	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
+OncoKB	v4.24	mirrored	oncokb	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
