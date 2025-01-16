@@ -1,31 +1,34 @@
-# This base image starts up mongo
-# This version needs to correspond with the helm chart version
 ARG MONGODBVERSION=4.0.12
-FROM bitnami/mongodb:${MONGODBVERSION} as build
 
-# Use .dockerignore file to ignore unwanted files
-# These files are used by import_mongo.sh to initialize mongo
-# Creating directories as root
-# Set user back to the one in base image
-USER root
-RUN mkdir -p /data
-COPY data/ /data/
+FROM bitnami/mongodb:${MONGODBVERSION}
 
+# Define build arguments
 ARG ARG_REF_ENSEMBL_VERSION
 ENV REF_ENSEMBL_VERSION=${ARG_REF_ENSEMBL_VERSION}
 ARG SPECIES=homo_sapiens
+# Define additional annotation resources arguments
 ARG MUTATIONASSESSOR=false
 
-# Import data into mongodb
-COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
-RUN /setup.sh
-
-FROM bitnami/mongodb:${MONGODBVERSION}
-COPY --from=build /bitnami/mongodb /bitnami/seed
-COPY /scripts/startup.sh /startup.sh
-
 USER root
-RUN chown -R 1001 /bitnami/seed
+
+# Create directories for scripts and data storage and copy data to directory inside the container
+RUN mkdir -p /scripts /data
+COPY data/ /data/
+COPY scripts/startup.sh /scripts/
+
+# Make all scripts in the /scripts directory executable
+RUN chmod +x /scripts/*.sh
+
+# Change ownership of the /data directory and its contents to non-root user 1001
+RUN chown -R 1001 /data
+
+# Switch to the non-root user
 USER 1001
 
-CMD [ "/startup.sh" ]
+# Copy the MongoDB initialization script into the /docker-entrypoint-initdb.d/ directory
+# This directory is automatically scanned and executed by MongoDB during the first database initialization
+COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
+
+# Set the default command to execute the custom startup script when the container runs
+# The startup script arranges the setup and start of MongoDB
+CMD [ "/scripts/startup.sh" ]
