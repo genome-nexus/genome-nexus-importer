@@ -46,30 +46,47 @@ import oncokb.gene ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/oncokb_cancer_ge
 
 # import ClinVar
 if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* ]]; then
-    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch37.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
+    curl https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/clinvar_grch37.txt.gz -o ${DIR}/../data/common_input/clinvar_grch37.txt.gz
+    import clinvar.mutation <(gunzip -c ${DIR}/../data/common_input/clinvar_grch37.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
 elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
-    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch38.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
+    curl https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/clinvar_grch38.txt.gz -o ${DIR}/../data/common_input/clinvar_grch38.txt.gz
+    import clinvar.mutation <(gunzip -c ${DIR}/../data/common_input/clinvar_grch38.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
 fi
 
 # import mutation assessor
+declare -a mutation_assessor_files=(
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_1.tsv.gz"
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_2.tsv.gz"
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_3.tsv.gz"
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_4.tsv.gz"
+)
 if [[${MUTATIONASSESSOR} == "true" ]]; then
-    echo "Downloading Mutation assessor data from S3"   
-    # Download from S3
+    for url in "${mutation_assessor_files[@]}"
+    do
+        filename=$(basename $url)
+        # Download file from s3 and extract it
+        echo "Downloading $filename"
 
-    curl https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor4_for_genome_nexus.tsv.gz -o ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.gz
-    echo "Download completed."
-    
-    echo "Extracting Mutation assessor data"
-    gunzip ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv.gz
+        curl $url -o ${DIR}/../data/common_input/${filename}
+        echo "Download completed."
 
-    echo "Transforming Mutation assessor data"
-    sed -i 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv    
-    awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv > ${DIR}/../data/common_input/processed_mutaiton_assessor_tsv_file.tsv
-    rm ${DIR}/../data/common_input/mutationassessor4_for_genome_nexus.tsv
+        echo "Extracting $filename"
+        gunzip ${DIR}/../data/common_input/${filename}
+        mutation_assessor_tsv_file="${filename%.gz}"
+        
+        echo "Transforming $mutation_assessor_tsv_file"
+        # Rename the columns
+        sed -i 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/$mutation_assessor_tsv_file
+        # Add a new column "_id" (uniprotId,hgvspShort)
+        awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/../data/common_input/$mutation_assessor_tsv_file > ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
 
-    echo "Importing Mutation assessor data"
-    import mutation_assessor.annotation ${DIR}/../data/common_input/processed_mutaiton_assessor_tsv_file.tsv "--type tsv --headerline"
-    rm ${DIR}/../data/common_input/processed_mutaiton_assessor_tsv_file.tsv
+        # Import the data into MongoDB
+        echo "Importing $mutation_assessor_tsv_file"
+        import mutation_assessor.annotation ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file "--type tsv --headerline"
+
+        rm ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
+        rm ${DIR}/../data/common_input/$mutation_assessor_tsv_file
+    done
 fi
 
 # import annotation sources version
