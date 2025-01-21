@@ -54,7 +54,7 @@ def main(gff_file, ensembl_transcript_info):
                     rows.append(entry_dict)
 
     # By first appending it to a list and only adding it to a DF once, performance is greatly improved
-    transcript_info = transcript_info.append(rows, ignore_index=True, sort=False)
+    transcript_info = pd.concat([transcript_info, pd.DataFrame(rows)], ignore_index=True, sort=False)
     transcript_info.to_csv(ensembl_transcript_info, sep='\t', index=False)
     return
 
