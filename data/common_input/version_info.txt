@@ -12,8 +12,8 @@ My Variant Info	Includes many annotation sources, see https://docs.myvariant.inf
 My Variant Info	Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html	external	my_variant_info	grch38	MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources.	https://myvariant.info
 ClinVar	20250106	mirrored	clinvar	grch37	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
 ClinVar	20250106	mirrored	clinvar	grch38	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
-OncoKB	v4.24	mirrored	oncokb	grch37	OncoKB is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
-OncoKB	v4.24	mirrored	oncokb	grch38	OncoKB is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
+OncoKB	v4.24	mirrored	oncokb	grch37	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
+OncoKB	v4.24	mirrored	oncokb	grch38	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
 PDB	latest	external	pdb	grch37	A resource for the three-dimensional structural data of large biological molecules such as proteins and nucleic acids.	https://www.rcsb.org/
 PDB	latest	external	pdb	grch38	A resource for the three-dimensional structural data of large biological molecules such as proteins and nucleic acids.	https://www.rcsb.org/
 xrefs	latest	external	xrefs	grch37	Xref endpoint is a lookup of Ensembl Identifiers and retrieve their external references in other databases	http://grch37.rest.ensembl.org/
