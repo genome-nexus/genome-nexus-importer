@@ -220,7 +220,7 @@ def main(ensembl_biomart_geneids_transcript_info,
 
     # Replace '|' to ', ' to be in the correct format for Genome Nexus
     # TODO: Update Genome Nexus to accept the latest HGNC format so that replacement is not necessary.
-    merged.replace({'\|': ', '}, inplace=True, regex=True)
+    merged = merged.astype(str).replace({'\\|': ', '}, regex=True)
 
     # Write file
     merged.to_csv(ensembl_biomart_canonical_transcripts_per_hgnc, sep='\t', index=False)

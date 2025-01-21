@@ -52,7 +52,7 @@ def add_nested_transcript_info(transcripts, transcript_info):
     """ Make nested object with exons and UTR per transcript. """
 
     def get_list_of_info_dicts(transcript_group):
-        list_of_info_dicts = transcript_group.to_dict(orient='record')
+        list_of_info_dicts = transcript_group.to_dict(orient='records')
         for info_dict in list_of_info_dicts:
             # remove key that's already in the index of group by
             del info_dict['transcript_id']

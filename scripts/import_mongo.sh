@@ -46,27 +46,47 @@ import oncokb.gene ${DIR}/../data/${REF_ENSEMBL_VERSION}/export/oncokb_cancer_ge
 
 # import ClinVar
 if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* ]]; then
-    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch37.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
+    curl https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/clinvar_grch37.txt.gz -o ${DIR}/../data/common_input/clinvar_grch37.txt.gz
+    import clinvar.mutation <(gunzip -c ${DIR}/../data/common_input/clinvar_grch37.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
 elif [[ ${REF_ENSEMBL_VERSION} == *"grch38"* ]]; then
-    import clinvar.mutation <(gunzip -c ${DIR}/../data/clinvar/export/clinvar_grch38.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
+    curl https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/clinvar_grch38.txt.gz -o ${DIR}/../data/common_input/clinvar_grch38.txt.gz
+    import clinvar.mutation <(gunzip -c ${DIR}/../data/common_input/clinvar_grch38.txt.gz) '--drop --type tsv --headerline --columnsHaveTypes --parseGrace autoCast'
 fi
 
 # import mutation assessor
-if [[ ${REF_ENSEMBL_VERSION} == *"grch37"* && ${MUTATIONASSESSOR} == true ]]; then
-    echo "Downloading Mutation assessor data"
+declare -a mutation_assessor_files=(
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_1.tsv.gz"
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_2.tsv.gz"
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_3.tsv.gz"
+    "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_4.tsv.gz"
+)
+if [[${MUTATIONASSESSOR} == "true" ]]; then
+    for url in "${mutation_assessor_files[@]}"
+    do
+        filename=$(basename $url)
+        # Download file from s3 and extract it
+        echo "Downloading $filename"
 
-    curl http://mutationassessor.org/r3/MA_scores_rel3_hg19_full.tar.gz -o ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
+        curl $url -o ${DIR}/../data/common_input/${filename}
+        echo "Download completed."
 
-    echo "Extracting Mutation assessor data"
-    tar -xvf ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
-    rm ${DIR}/../data/common_input/MA_scores_rel3_hg19_full.tar.gz
+        echo "Extracting $filename"
+        gunzip ${DIR}/../data/common_input/${filename}
+        mutation_assessor_tsv_file="${filename%.gz}"
+        
+        echo "Transforming $mutation_assessor_tsv_file"
+        # Rename the columns
+        sed -i 's/uniprotId\tSV\thgvspShort\tF_score\tF_impact\tMSA\tMAV/uniprotId\tsv\thgvspShort\tf_score\tf_impact\tmsa\tmav/' ${DIR}/../data/common_input/$mutation_assessor_tsv_file
+        # Add a new column "_id" (uniprotId,hgvspShort)
+        awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' ${DIR}/../data/common_input/$mutation_assessor_tsv_file > ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
 
-    echo "Transforming Mutation assessor data"
-    sed -i -e 's/"Mutation","RefGenome variant","Gene","Uniprot","Info","Uniprot variant","Func. Impact","FI score"/_id,rgaa,gene,uprot,info,var,F_impact,F_score/g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
-    sed -i -e 's/hg19,//g' MA_scores_rel3_hg19_full/MA_scores_rel3_hg19_chr*
+        # Import the data into MongoDB
+        echo "Importing $mutation_assessor_tsv_file"
+        import mutation_assessor.annotation ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file "--type tsv --headerline"
 
-    echo "Importing Mutation assessor data"
-    for filename in MA_scores_rel3_hg19_full/*.csv; do import mutation_assessor.annotation $filename '--type csv --headerline' && rm $filename; done
+        rm ${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file
+        rm ${DIR}/../data/common_input/$mutation_assessor_tsv_file
+    done
 fi
 
 # import annotation sources version

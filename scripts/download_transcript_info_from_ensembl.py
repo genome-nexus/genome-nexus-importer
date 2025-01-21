@@ -120,7 +120,7 @@ def lookup_transcripts(gene_info, tmp_dir, jobs, query_size, grch37=True):
     tmp_files = [fn for fn in os.listdir(tmp_dir) if re.match(filename_re, fn)!=None]
     for fn in tmp_files:
         transcript_info_chunk = pd.read_csv(os.path.join(tmp_dir, fn), sep='\t', index_col=0)
-        transcript_info = transcript_info.append(transcript_info_chunk, ignore_index=False)
+        transcript_info = pd.concat([transcript_info, transcript_info_chunk], ignore_index=False)
 
     # Prepare transcript info table for merging. Sort and remove duplicate indices.
     transcript_info.sort_index(inplace=True)

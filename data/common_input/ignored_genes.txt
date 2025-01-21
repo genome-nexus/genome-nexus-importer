@@ -907,3 +907,6 @@ sik3-it1
 upp2-it1
 dnajb5p1
 slc7a2-it1
+arhgef19-as1
+dlx6-as2
+lyst-as1

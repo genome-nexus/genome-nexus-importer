@@ -60,6 +60,28 @@ For R there is only the dependency on the biomaRt library.
 R -e "source('https://bioconductor.org/biocLite.R'); biocLite('biomaRt')"
 ```
 
+#### Updating versions
+##### data/<ref_genome_ensembl_version>/input
+Delete old input files, new files will be generated while running `Makefile`. 
+If you want to update data to a specific verison, check [Ensembl Archieves](https://useast.ensembl.org/info/website/archives/index.html) to find the corresponding url and replace `host_url` in the `retrieve_biomart_tables.R`. Please note only GRCh38 supports versioning url, GRCh37 can only point to `https://grch37.ensembl.org/` which uses the latest version.
+
+##### Onocokb isoform overrides
+Delete old files, new files will be downloaded by `download_oncokb_isoform_overrides.py` while running `Makefile`. Please make sure to set `ONCOKB_VERSION=` in `Makefile`. Also this version need to be updated in `/data/common_input/version_info.txt`.
+
+##### Clinvar
+Delete old input and output files, new files can be genrated by manually run:
+```
+make clinvar/input/clinvar_grch37_input.vcf.gz
+make clinvar/export/clinvar_grch37.txt.gz
+make clinvar/input/clinvar_grch38_input.vcf.gz
+make clinvar/export/clinvar_grch38.txt.gz
+
+``` 
+The latest version date number can be found on [https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/) and [https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/), please make sure to provide correct `CLINVAR_VERSION=` in `Makefile` (for exampel: `CLINVAR_VERSION=20250106`). This new version number also needs to be added in `/data/common_input/version_info.txt`.
+
+##### HGNC
+`/data/common_inpu/hgnc_xxxx.txt` should keep in sync with [https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/hgnc_complete_set.txt](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/hgnc_complete_set.txt). When updating HGNC file, download new file from the github, rename to `hgnc_xxxx.txt` (`xxxx` indicates the version, for example v2024.10.1). Please also update this new file name in `Makefile` where the files is used, and update the version in `/data/common_input/version_info.txt`.
+
 #### Running
 Run the import pipeline using the command below. This will take a few hours to complete.
 ```bash
