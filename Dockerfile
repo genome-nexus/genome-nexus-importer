@@ -32,6 +32,13 @@ USER 1001
 # This directory is automatically scanned and executed by MongoDB during the first database initialization
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
 
+# Store environment variables in a file
+# When deploying using bitnami chart, env might be overridden when starting the container, use a file to persist custom env
+RUN echo "export REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION}" >> /scripts/persisted_env.sh && \
+    echo "export SPECIES=${SPECIES}" >> /scripts/persisted_env.sh && \
+    echo "export MUTATIONASSESSOR=${MUTATIONASSESSOR}" >> /scripts/persisted_env.sh && \
+    chmod +x /scripts/persisted_env.sh
+
 # Set the default command to execute the custom startup script when the container runs
 # The startup script arranges the setup and start of MongoDB
 CMD [ "/scripts/startup.sh" ]
