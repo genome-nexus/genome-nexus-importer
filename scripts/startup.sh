@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Load persisted environment variables
+if [ -f /scripts/persisted_env.sh ]; then
+    source ./persisted_env.sh
+fi
+
 DIR=/bitnami/mongodb
 
 # Start MongoDB in background

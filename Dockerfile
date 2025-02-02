@@ -22,6 +22,13 @@ COPY scripts/startup.sh /scripts/
 # Make all scripts in the /scripts directory executable
 RUN chmod +x /scripts/*.sh
 
+# Store environment variables in a file
+# When deploying using bitnami chart, env might be overridden when starting the container, use a file to persist custom env
+RUN echo "export REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION}" >> /scripts/persisted_env.sh && \
+    echo "export SPECIES=${SPECIES}" >> /scripts/persisted_env.sh && \
+    echo "export MUTATIONASSESSOR=${MUTATIONASSESSOR}" >> /scripts/persisted_env.sh && \
+    chmod +x /scripts/persisted_env.sh
+
 # Change ownership of the /data directory and its contents to non-root user 1001
 RUN chown -R 1001 /data
 

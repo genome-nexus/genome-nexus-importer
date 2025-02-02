@@ -60,7 +60,7 @@ declare -a mutation_assessor_files=(
     "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_3.tsv.gz"
     "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_4.tsv.gz"
 )
-if [[${MUTATIONASSESSOR} == "true" ]]; then
+if [[ ${MUTATIONASSESSOR} == "true" ]]; then
     for url in "${mutation_assessor_files[@]}"
     do
         filename=$(basename $url)
