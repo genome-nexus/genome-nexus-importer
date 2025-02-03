@@ -3,7 +3,7 @@ set -e
 
 # Load persisted environment variables
 if [ -f /scripts/persisted_env.sh ]; then
-    source ./persisted_env.sh
+    source /scripts/persisted_env.sh
 fi
 
 DIR=/bitnami/mongodb
