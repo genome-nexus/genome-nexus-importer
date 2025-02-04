@@ -29,6 +29,7 @@ jobs:
           build_args: |
             ARG_REF_ENSEMBL_VERSION=${{ matrix.REF_ENSEMBL_VERSION }}
             MUTATIONASSESSOR=${{ matrix.MUTATIONASSESSOR }}
+          no_cache: true
           push_image_and_stages: false
       - name: Run container and capture environment variables
         run: |
