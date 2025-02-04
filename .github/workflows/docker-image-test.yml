@@ -1,0 +1,47 @@
+name: Docker Image CI
+on:
+  push:
+    branches: 
+      - demo-*
+  pull_request:
+# Only use GitHub Actions for testing, because the Docker image with Mutation Assessor data is too big to be built and pushed.
+# CircleCI builds and pushes the images to Docker Hub for every new release.
+jobs:
+  build_and_test_grch37:
+    if: github.repository == 'genome-nexus/genome-nexus-importer'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - ref_ensembl_version: grch37_ensembl92
+            mutationassessor: "false"
+          - ref_ensembl_version: grch37_ensembl92
+            mutationassessor: "true"
+    steps:
+      - name: 'Checkout git repo'
+        uses: actions/checkout@v1
+      - name: 'Docker build with cache'
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          image_name: genomenexus/gn-mongo
+          image_tag: latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }}
+          build_extra_args: '--build-arg=ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }} --build-arg=MUTATIONASSESSOR=${{ matrix.mutationassessor }}'
+          no_cache: true
+          push_image_and_stages: false
+      - name: Run container and capture environment variables
+        run: |
+          # Run the container overriding the default entrypoint to simply print environment variables.
+          docker run --rm --entrypoint env genomenexus/gn-mongo:latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }} > env_output.txt
+          echo "Environment variables from container:"
+          cat env_output.txt
+      - name: Verify environment variables
+        run: |
+          if ! grep -q "REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}" env_output.txt; then
+            echo "Error: REF_ENSEMBL_VERSION is not set correctly. Expected: '${{ matrix.ref_ensembl_version }}'"
+            exit 1
+          fi
+          if ! grep -q "MUTATIONASSESSOR=${{ matrix.mutationassessor }}" env_output.txt; then
+            echo "Error: MUTATIONASSESSOR is not set correctly. Expected: '${{ matrix.mutationassessor }}'"
+            exit 1
+          fi
+  
