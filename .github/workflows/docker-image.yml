@@ -26,9 +26,7 @@ jobs:
         with:
           image_name: genomenexus/gn-mongo
           image_tag: latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }}
-          build_args: |
-            ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}
-            MUTATIONASSESSOR=${{ matrix.mutationassessor }}
+          build_extra_args: '{"--build-arg": ["ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}", "MUTATIONASSESSOR=${{ matrix.mutationassessor }}"]}'
           no_cache: true
           push_image_and_stages: false
       - name: Run container and capture environment variables
