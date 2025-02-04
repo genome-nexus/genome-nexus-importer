@@ -33,7 +33,7 @@ jobs:
       - name: Run container and capture environment variables
         run: |
           # Run the container overriding the default entrypoint to simply print environment variables.
-          docker run --rm --entrypoint env genomenexus/gn-mongo:latest-${{ matrix.REF_ENSEMBL_VERSION }}-${{ matrix.MUTATIONASSESSOR }} > env_output.txt
+          docker run --rm --entrypoint env genomenexus/gn-mongo:latest-${{ matrix.REF_ENSEMBL_VERSION }}-mutation_assessor_${{ matrix.MUTATIONASSESSOR }}} > env_output.txt
           echo "Environment variables from container:"
           cat env_output.txt
       - name: Verify environment variables
