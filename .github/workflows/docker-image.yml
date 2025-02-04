@@ -25,7 +25,10 @@ jobs:
         uses: whoan/docker-build-with-cache-action@v5
         with:
           image_name: genomenexus/gn-mongo
-          image_tag: latest-${{ matrix.REF_ENSEMBL_VERSION }}-${{ matrix.MUTATIONASSESSOR }}
+          image_tag: latest-${{ matrix.REF_ENSEMBL_VERSION }}-mutation_assessor_${{ matrix.MUTATIONASSESSOR }}
+          build_args: |
+            ARG_REF_ENSEMBL_VERSION=${{ matrix.REF_ENSEMBL_VERSION }}
+            MUTATIONASSESSOR=${{ matrix.MUTATIONASSESSOR }}
           push_image_and_stages: false
       - name: Run container and capture environment variables
         run: |
@@ -35,8 +38,14 @@ jobs:
           cat env_output.txt
       - name: Verify environment variables
         run: |
-          grep "REF_ENSEMBL_VERSION=${{ matrix.REF_ENSEMBL_VERSION }}" env_output.txt
-          grep "MUTATIONASSESSOR=${{ matrix.MUTATIONASSESSOR }}" env_output.txt
+          if ! grep -q "REF_ENSEMBL_VERSION=${{ matrix.REF_ENSEMBL_VERSION }}" env_output.txt; then
+            echo "Error: REF_ENSEMBL_VERSION is not set correctly. Expected: '${{ matrix.REF_ENSEMBL_VERSION }}'"
+            exit 1
+          fi
+          if ! grep -q "MUTATIONASSESSOR=${{ matrix.MUTATIONASSESSOR }}" env_output.txt; then
+            echo "Error: MUTATIONASSESSOR is not set correctly. Expected: '${{ matrix.MUTATIONASSESSOR }}'"
+            exit 1
+          fi
   
   # build_and_publish_grch38:
   #   if: github.repository == 'genome-nexus/genome-nexus-importer'
