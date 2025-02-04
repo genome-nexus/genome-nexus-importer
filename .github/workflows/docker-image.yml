@@ -14,10 +14,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - REF_ENSEMBL_VERSION: grch37_ensembl92
-            MUTATIONASSESSOR: false
-          - REF_ENSEMBL_VERSION: grch37_ensembl92
-            MUTATIONASSESSOR: true
+          - ref_ensembl_version: grch37_ensembl92
+            mutationassessor: "false"
+          - ref_ensembl_version: grch37_ensembl92
+            mutationassessor: "true"
     steps:
       - name: 'Checkout git repo'
         uses: actions/checkout@v1
@@ -25,26 +25,26 @@ jobs:
         uses: whoan/docker-build-with-cache-action@v5
         with:
           image_name: genomenexus/gn-mongo
-          image_tag: latest-${{ matrix.REF_ENSEMBL_VERSION }}-mutation_assessor_${{ matrix.MUTATIONASSESSOR }}
+          image_tag: latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }}
           build_args: |
-            ARG_REF_ENSEMBL_VERSION=${{ matrix.REF_ENSEMBL_VERSION }}
-            MUTATIONASSESSOR=${{ matrix.MUTATIONASSESSOR }}
+            ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}
+            MUTATIONASSESSOR=${{ matrix.mutationassessor }}
           no_cache: true
           push_image_and_stages: false
       - name: Run container and capture environment variables
         run: |
           # Run the container overriding the default entrypoint to simply print environment variables.
-          docker run --rm --entrypoint env genomenexus/gn-mongo:latest-${{ matrix.REF_ENSEMBL_VERSION }}-mutation_assessor_${{ matrix.MUTATIONASSESSOR }} > env_output.txt
+          docker run --rm --entrypoint env genomenexus/gn-mongo:latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }} > env_output.txt
           echo "Environment variables from container:"
           cat env_output.txt
       - name: Verify environment variables
         run: |
-          if ! grep -q "REF_ENSEMBL_VERSION=${{ matrix.REF_ENSEMBL_VERSION }}" env_output.txt; then
-            echo "Error: REF_ENSEMBL_VERSION is not set correctly. Expected: '${{ matrix.REF_ENSEMBL_VERSION }}'"
+          if ! grep -q "REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}" env_output.txt; then
+            echo "Error: REF_ENSEMBL_VERSION is not set correctly. Expected: '${{ matrix.ref_ensembl_version }}'"
             exit 1
           fi
-          if ! grep -q "MUTATIONASSESSOR=${{ matrix.MUTATIONASSESSOR }}" env_output.txt; then
-            echo "Error: MUTATIONASSESSOR is not set correctly. Expected: '${{ matrix.MUTATIONASSESSOR }}'"
+          if ! grep -q "MUTATIONASSESSOR=${{ matrix.mutationassessor }}" env_output.txt; then
+            echo "Error: MUTATIONASSESSOR is not set correctly. Expected: '${{ matrix.mutationassessor }}'"
             exit 1
           fi
   
