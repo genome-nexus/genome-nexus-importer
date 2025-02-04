@@ -2,7 +2,6 @@ name: Docker Image CI
 on:
   push:
     branches: 
-      - master
       - demo-*
   pull_request:
 # Only use GitHub Actions for testing, because the Docker image with Mutation Assessor data is too big to be built and pushed.
@@ -46,45 +45,3 @@ jobs:
             exit 1
           fi
   
-  # build_and_publish_grch38:
-  #   if: github.repository == 'genome-nexus/genome-nexus-importer'
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     Version: grch38_ensembl95
-  #   steps:
-  #     - name: 'Checkout git repo'
-  #       uses: actions/checkout@v1
-  #     - name: Extract branch or tag name
-  #       # The GITHUB_REF variable is like "refs/head/branch_name"
-  #       # The format of image tag is e.g. v0.12_grch38_ensembl95
-  #       run: echo "##[set-output name=image_tag_name;]${GITHUB_REF##*/}_${Version}"
-  #       id: extract_tag
-  #     - name: 'Docker build with cache'
-  #       uses: whoan/docker-build-with-cache-action@v5
-  #       with:
-  #         build_extra_args: '{"--build-arg": "ARG_REF_ENSEMBL_VERSION=grch38_ensembl95"}'
-  #         image_name: genomenexus/gn-mongo
-  #         image_tag: ${{ steps.extract_tag.outputs.image_tag_name }}
-  #         push_image_and_stages: false
-
-  # build_and_publish_grcm38:
-  #   if: github.repository == 'genome-nexus/genome-nexus-importer'
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     Version: grcm38_ensembl95
-  #   steps:
-  #     - name: 'Checkout git repo'
-  #       uses: actions/checkout@v1
-  #     - name: Extract branch or tag name
-  #       # The GITHUB_REF variable is like "refs/head/branch_name"
-  #       # The format of image tag is e.g. v0.12_grch38_ensembl95
-  #       run: echo "##[set-output name=image_tag_names;]$(echo ${GITHUB_REF##*/}_${Version})"
-  #       id: extract_tags
-  #     - name: 'Docker build with cache'
-  #       uses: whoan/docker-build-with-cache-action@v5
-  #       with:
-  #         build_extra_args: '--build-arg SPECIES=mus_musculus --build-arg REF_ENSEMBL_VERSION=grcm38_ensembl95'
-  #         image_name: genomenexus/gn-mongo
-  #         image_tag: ${{ steps.extract_tags.outputs.image_tag_names }}
-  #         push_image_and_stages: false
-          
