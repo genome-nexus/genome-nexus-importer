@@ -65,7 +65,7 @@ jobs:
       - run: |
           TAG=${GIT_TAG}_grch38_ensembl95
           IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 .
+          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 --build-arg MUTATIONASSESSOR=true .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
           docker push $IMAGE:$TAG
   
