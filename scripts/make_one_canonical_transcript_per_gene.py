@@ -77,8 +77,9 @@ def get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexe
     ensembl_canonical_gene, ensembl_canonical_gene_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'gene_stable_id')
     ensembl_canonical_transcript, ensembl_canonical_transcript_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'transcript_stable_id')
     genome_nexus_overrides_transcript, genome_nexus_overrides_transcript_explanation = get_overrides_transcript([custom], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["genome nexus isoform override"])
-    uniprot_overrides_transcript, uniprot_overrides_transcript_explanation = get_overrides_transcript([custom, uniprot], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, [ "manually override", "uniprot isoform override"])
-    mskcc_overrides_transcript, mskcc_overrides_transcript_explanation = get_overrides_transcript([oncokb, mskcc, custom, uniprot], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["oncokb isoform override", "mskcc isoform override", "manually override", "uniprot isoform override"])
+    uniprot_overrides_transcript, uniprot_overrides_transcript_explanation = get_overrides_transcript([uniprot], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, [ "uniprot isoform override"])
+    mskcc_overrides_transcript, mskcc_overrides_transcript_explanation = get_overrides_transcript([mskcc], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["mskcc isoform override"])
+    oncokb_orrides_transcript, oncokb_orrides_transcript_explanation = get_overrides_transcript([oncokb], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["oncokb isoform override"])
     return pd.Series([
                 ensembl_canonical_gene,
                 ensembl_canonical_transcript,
@@ -88,7 +89,9 @@ def get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexe
                 uniprot_overrides_transcript,
                 uniprot_overrides_transcript_explanation,
                 mskcc_overrides_transcript,
-                mskcc_overrides_transcript_explanation
+                mskcc_overrides_transcript_explanation,
+                oncokb_orrides_transcript,
+                oncokb_orrides_transcript_explanation
             ],
             index="""
             ensembl_canonical_gene
@@ -100,6 +103,8 @@ def get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexe
             uniprot_canonical_transcript_explanation
             mskcc_canonical_transcript
             mskcc_canonical_transcript_explanation
+            oncokb_canonical_transcript
+            oncokb_canonical_transcript_explanation
             """
             .split()
         )
