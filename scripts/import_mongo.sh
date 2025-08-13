@@ -66,7 +66,7 @@ import() {
   local file="$2"
   local extraoptions="${3:-}"
 
-  mongoimport --uri "$MONGO_URI" --db "$MONGO_DB" --collection "$collection" $extraoptions --file "$file"
+  mongoimport --uri "$MONGO_URI" --collection "$collection" $extraoptions --file "$file"
 }
 
 import_if_needed() {
