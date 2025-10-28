@@ -24,6 +24,19 @@ hotspots_v2_and_3d_grch37.txt_grch38_ported.txt: hotspots_v2_and_3d_grch37.txt
 ../../grch37_ensembl92/export/hotspots_v2_and_3d.txt: hotspots_v2_and_3d_grch37.txt
 	cp $< $@
 
+ENSEMBL_GENE_IDS=../../$(VERSION)/input/ensembl_biomart_geneids.txt
+HGNC_FILE=../hgnc_v2024.10.1.txt
+OVERRIDES_FILE=../isoform_overrides_at_mskcc_grch37.txt
+RESIDUE_CHANGES_FILE=mskcc_isoform_residue_changes.txt
+../../grch37_ensembl111/export/hotspots_v2_and_3d.txt: $(HGNC_FILE) $(OVERRIDES_FILE) $(RESIDUE_CHANGES_FILE) $(ENSEMBL_GENE_IDS) hotspots_v2_and_3d_grch37.txt
+	python ../../../scripts/hotspots/overwrite_transcript_and_residue_to_mskcc_isoform.py \
+	  --hgnc $(HGNC_FILE) \
+	  --overrides $(OVERRIDES_FILE) \
+	  --residue_changes $(RESIDUE_CHANGES_FILE) \
+	  --biomart $(ENSEMBL_GENE_IDS) \
+	  --hotspots hotspots_v2_and_3d_grch37.txt \
+	  --out ../../grch37_ensembl111/export/hotspots_v2_and_3d.txt
+
 ../../grch38_ensembl92/export/hotspots_v2_and_3d.txt: hotspots_v2_and_3d_grch37.txt_grch38_ported.txt
 	cp $< $@
 
