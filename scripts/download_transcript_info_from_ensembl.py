@@ -47,7 +47,11 @@ def get_transcript_info(transcript, ensembl_transcript_response):
     # on a newer Ensembl release than the input files. Restarting the pipeline will attempt to continue.
     try:
         is_canonical = ensembl_transcript_response[transcript]['is_canonical']
-
+        try:
+            transcript_id_version = int(ensembl_transcript_response[transcript]['version'])
+        except KeyError:
+            transcript_id_version = np.nan
+            
         try:
             protein_stable_id = ensembl_transcript_response[transcript]['Translation']['id']
         except KeyError:
@@ -60,15 +64,14 @@ def get_transcript_info(transcript, ensembl_transcript_response):
             protein_length = np.nan
 
     except TypeError:
-        # print('Transcript %s has no response from Ensembl API, perhaps API is on newer Ensembl Release and ID is '
-        #       'deprecated.' % transcript)
         is_canonical = np.nan
+        transcript_id_version = np.nan
         protein_stable_id = np.nan
         protein_length = np.nan
 
     return pd.Series(
-        [is_canonical, protein_stable_id, protein_length],
-        index='is_canonical protein_stable_id protein_length'.split()
+        [is_canonical, int(transcript_id_version) if not pd.isna(transcript_id_version) else np.nan, protein_stable_id, protein_length],
+        index='is_canonical transcript_id_version protein_stable_id protein_length'.split()
     )
 
 
@@ -97,8 +100,8 @@ def lookup_transcripts(gene_info, tmp_dir, jobs, query_size, grch37=True):
 
     last_job = len(gene_info)
 
-    transcripts_all = gene_info['transcript_stable_id']
-    transcript_info = pd.DataFrame({'is_canonical':[], 'protein_stable_id':[], 'protein_length':[]})
+    transcripts_all = gene_info['versioned_transcript_id']
+    transcript_info = pd.DataFrame({'is_canonical':[], 'transcript_id_version':[], 'protein_stable_id':[], 'protein_length':[]})
 
     # Iterate over transcripts
     for low_index in range(0, last_job, query_size):

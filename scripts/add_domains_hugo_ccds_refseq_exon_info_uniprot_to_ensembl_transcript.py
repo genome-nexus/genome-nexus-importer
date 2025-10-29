@@ -6,6 +6,15 @@ import pandas as pd
 import numpy as np
 import argparse
 
+def main_transcript_id(enst_or_versioned: str) -> str:
+    return enst_or_versioned.split(".", 1)[0] if isinstance(enst_or_versioned, str) else enst_or_versioned
+
+def normalize_cols(df: pd.DataFrame) -> pd.DataFrame:
+    df.columns = [c.lower().replace(" ", "_") for c in df.columns]
+    # unify transcript_id_version column name from multiple sources
+    if "transcript_id" in df.columns:
+        df.rename(columns={"transcript_id": "transcript_stable_id"}, inplace=True)
+    return df
 
 def add_nested_hgnc(transcripts, hgnc_df):
     """ Make nested object HGNC symbols per transcript"""
@@ -38,12 +47,13 @@ def add_nested_hgnc(transcripts, hgnc_df):
     # make one row per transcript_stable_id by removing hgnc_symbol
     unique_transcripts = transcripts.copy().reset_index()
     del unique_transcripts['hgnc_symbol']
-    unique_transcripts = unique_transcripts.drop_duplicates()
+    # remove duplicated transcripts
+    unique_transcripts = unique_transcripts.drop_duplicates(subset=['versioned_transcript_id'], keep='first')
     # should only be one row per transcript now
     assert (len(unique_transcripts) == len(transcripts.index.drop_duplicates()))
     # should have the same order after dropping duplicates as
     # hgnc_symbol_list
-    assert (0 == (unique_transcripts.transcript_stable_id != transcripts.index.drop_duplicates()).sum())
+    assert (0 == (unique_transcripts.versioned_transcript_id != transcripts.index.drop_duplicates()).sum())
     unique_transcripts['hgnc_symbols'] = hgnc_symbol_list
     return unique_transcripts.set_index("transcript_stable_id")
 
@@ -54,39 +64,35 @@ def add_nested_transcript_info(transcripts, transcript_info):
     def get_list_of_info_dicts(transcript_group):
         list_of_info_dicts = transcript_group.to_dict(orient='records')
         for info_dict in list_of_info_dicts:
-            # remove key that's already in the index of group by
-            del info_dict['transcript_id']
+            info_dict.pop('transcript_stable_id', None)
 
-            # For UTRs, remove rank
-            if info_dict['type'] in ['five_prime_UTR', 'three_prime_UTR']:
-                del info_dict['id']
-                del info_dict['rank']
-                del info_dict['version']
+            # For UTRs, remove rank fields present only in Ensembl payload
+            if info_dict.get('type') in ['five_prime_utr', 'three_prime_utr']:
+                info_dict.pop('id', None)
+                info_dict.pop('rank', None)
+                info_dict.pop('version', None)
 
-            if info_dict['type'] == 'exon':
-                del info_dict['type']
+            if info_dict.get('type') == 'exon':
+                info_dict.pop('type', None)
 
         return list_of_info_dicts
 
     # Split in exons and UTRs
-    exon_info = transcript_info.loc[transcript_info.type == 'exon']
-    utr_info = transcript_info.loc[transcript_info.type.isin(['five_prime_UTR', 'three_prime_UTR'])]
+    exon_info = transcript_info.loc[transcript_info.type.str.lower() == 'exon']
+    utr_info = transcript_info.loc[transcript_info.type.str.lower().isin(['five_prime_utr', 'three_prime_utr'])]
 
-    # Per transcriptID, take all exons and create a list of exons dictionaries. Save all these lists in a series.
-    series_of_lists_of_exon_dicts = exon_info.groupby('transcript_id').apply(get_list_of_info_dicts)
-    series_of_lists_of_utr_dicts = utr_info.groupby('transcript_id').apply(get_list_of_info_dicts)
+    # Group by main transcript id
+    series_of_lists_of_exon_dicts = exon_info.groupby('transcript_stable_id', dropna=False).apply(get_list_of_info_dicts)
+    series_of_lists_of_utr_dicts  = utr_info.groupby('transcript_stable_id', dropna=False).apply(get_list_of_info_dicts)
 
-    # Add a list of exon dictionaries to every transcript
     transcripts['exons'] = transcripts.index.map(series_of_lists_of_exon_dicts)
-    transcripts['utrs'] = transcripts.index.map(series_of_lists_of_utr_dicts)
-
+    transcripts['utrs']  = transcripts.index.map(series_of_lists_of_utr_dicts)
     return transcripts
 
 
 def add_nested_pfam_domains(transcripts, pfam_domains):
     """ Add nested PFAM domains"""
-    pfam_domains.columns = [c.lower().replace(' ', '_') for c in pfam_domains.columns]
-    domain_grouped = pfam_domains.groupby("transcript_stable_id")
+    domain_grouped = pfam_domains.groupby("versioned_transcript_id", dropna=False)
 
     def get_domain_for_transcript(x):
         try:
@@ -104,30 +110,22 @@ def add_nested_pfam_domains(transcripts, pfam_domains):
 def add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides_mskcc):
     """Add one refseq id for each transcript. There can be multiple. Pick
     highest number transcript id in that case."""
-    refseq.columns = [c.lower().replace(' ', '_') for c in refseq.columns]
-    refseq_grouped = refseq.groupby("transcript_stable_id")
+    refseq = normalize_cols(refseq)
+    refseq_grouped = refseq.groupby("versioned_transcript_id", dropna=False)
 
-    def get_refseq_for_transcript(x):
-        # use previously assigned uniprot refseq id
+    def get_refseq_for_transcript(enst_versioned):
+        bare = main_transcript_id(enst_versioned)
+        # Maybe retire uniprot?
+        for ov in (isoform_overrides_mskcc, isoform_overrides_uniprot):
+            try:
+                override_refseq_id = ov.loc[bare, 'refseq_id']
+                if isinstance(override_refseq_id, str) and override_refseq_id:
+                    return override_refseq_id.split('.')[0]
+            except KeyError:
+                pass
+        # from biomart table (by ENST.X)
         try:
-            override_refseq_id = isoform_overrides_uniprot.loc[x]['refseq_id']
-            if hasattr(override_refseq_id, 'split'):
-                return override_refseq_id.split('.')[0]
-        except KeyError:
-            pass
-
-        # use previously assigned mskcc refseq id
-        try:
-            override_refseq_id = isoform_overrides_mskcc.loc[x]['refseq_id']
-            if hasattr(override_refseq_id, 'split'):
-                return override_refseq_id.split('.')[0]
-        except KeyError:
-            pass
-
-        try:
-            # Fix for: https://github.com/pandas-dev/pandas/issues/9466
-            # use groupby to get indices, loc is slow for non-unique
-            return refseq.iloc[refseq_grouped.groups[x]]['refseq_mrna_id'].sort_values(ascending=False).values[0]
+            return refseq.iloc[refseq_grouped.groups[enst_versioned]]['refseq_mrna_id'].sort_values(ascending=False).values[0]
         except KeyError:
             return np.nan
 
@@ -137,29 +135,24 @@ def add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides
 
 def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_mskcc):
     """Add one ccds id for each transcript. There is only one per transcript."""
-    ccds.columns = [c.lower().replace(' ', '_') for c in ccds.columns]
+    ccds = normalize_cols(ccds)
     ccds = ccds[~pd.isnull(ccds["ccds_id"])]
-    # assume each transcript has only one CCDS
-    assert(any(ccds["transcript_stable_id"].duplicated()) == False)
-    ccds = ccds.set_index("transcript_stable_id")
+    # assume each transcript ENST.X has only one CCDS
+    assert not any(ccds["versioned_transcript_id"].duplicated())
+    ccds = ccds.set_index("versioned_transcript_id")
 
-    def get_ccds_for_transcript(x):
+    def get_ccds_for_transcript(enst_versioned):
+        bare = main_transcript_id(enst_versioned)
+        # Maybe retire uniprot?
+        for ov in (isoform_overrides_mskcc, isoform_overrides_uniprot):
+            try:
+                override_ccdsid = ov.loc[bare, 'ccds_id']
+                if isinstance(override_ccdsid, str) and override_ccdsid:
+                    return override_ccdsid.split('.')[0]
+            except KeyError:
+                pass
         try:
-            override_ccdsid = isoform_overrides_uniprot.loc[x]['ccds_id']
-            if hasattr(override_ccdsid, 'split'):
-                return override_ccdsid.split('.')[0]
-        except KeyError:
-            pass
-
-        try:
-            override_ccdsid = isoform_overrides_mskcc.loc[x]['ccds_id']
-            if hasattr(override_ccdsid, 'split'):
-                return override_ccdsid.split('.')[0]
-        except KeyError:
-            pass
-
-        try:
-            return ccds.loc[x].values[0]
+            return ccds.loc[enst_versioned].values[0]
         except KeyError:
             return np.nan
 
@@ -168,20 +161,33 @@ def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_msk
 
 
 def add_uniprot(transcripts, uniprot):
-    """Add one Uniprot id for each transcript. There is only one per transcript."""
-    uniprot.columns = [u.lower().replace(' ', '_') for u in uniprot.columns]
+    """Add one Uniprot id for each transcript.
+       Prefer versioned join if file provides versioned transcript ID,
+       else fall back to bare ENST join."""
+    uniprot = normalize_cols(uniprot)
     uniprot = uniprot[~pd.isnull(uniprot["final_uniprot_id"])]
-    # assume each transcript has only one Uniprot ID
-    assert(any(uniprot["enst_id"].duplicated()) == False)
-    uniprot = uniprot.set_index("enst_id")
 
-    def get_uniprot_for_transcript(x):
-        try:
-            return uniprot.loc[x].values[0]
-        except KeyError:
-            return np.nan
+    if "versioned_transcript_id" in uniprot.columns:
+        # prefer versioned mapping
+        assert not any(uniprot["versioned_transcript_id"].duplicated())
+        uniprot = uniprot.set_index("versioned_transcript_id")
+        def get_up(enst_versioned):
+            try:
+                return uniprot.loc[enst_versioned].values[0]
+            except KeyError:
+                return np.nan
+        transcripts["uniprot_id"] = transcripts.index.map(get_up)
+    else:
+        # legacy: only enst_id (bare)
+        assert not any(uniprot["enst_id"].duplicated())
+        uniprot = uniprot.set_index("enst_id")
+        def get_up(enst_versioned):
+            try:
+                return uniprot.loc[main_transcript_id(enst_versioned)].values[0]
+            except KeyError:
+                return np.nan
+        transcripts["uniprot_id"] = transcripts.index.map(get_up)
 
-    transcripts["uniprot_id"] = transcripts.index.map(get_uniprot_for_transcript)
     return transcripts
 
 def main(ensembl_biomart_transcripts,
@@ -196,11 +202,20 @@ def main(ensembl_biomart_transcripts,
          ensembl_biomart_transcripts_json
          ):
 
-    # Read input and set index column
-    transcripts = pd.read_csv(ensembl_biomart_transcripts, sep='\t')
-    transcript_info = pd.read_csv(ensembl_transcript_info, sep="\t")
-    pfam_domains = pd.read_csv(ensembl_biomart_pfam, sep='\t')
-    transcripts.set_index('transcript_stable_id', inplace=True)
+    # Read & normalize
+    transcripts = normalize_cols(pd.read_csv(ensembl_biomart_transcripts, sep="\t", dtype=str))
+    transcript_info = normalize_cols(pd.read_csv(ensembl_transcript_info, sep="\t", dtype=str))
+    pfam_domains = normalize_cols(pd.read_csv(ensembl_biomart_pfam, sep="\t", dtype=str))
+
+    # Make sure we have full version and bare id in transcripts
+    # Expect transcripts to already include transcript_id_version (ENST.X) and transcript_stable_id (bare)
+    if "versioned_transcript_id" not in transcripts.columns:
+        raise RuntimeError("transcripts file missing versioned_transcript_id")
+
+    transcripts["main_transcript_id"] = transcripts.get("transcript_stable_id", transcripts["versioned_transcript_id"]).map(main_transcript_id)
+
+    # Use versioned id as the index for all downstream joins that support versions
+    transcripts.set_index("versioned_transcript_id", inplace=True, drop=True)
 
     # import refseq
     refseq = pd.read_csv(ensembl_biomart_refseq, sep="\t")
@@ -212,17 +227,26 @@ def main(ensembl_biomart_transcripts,
     ccds = pd.read_csv(ensembl_biomart_ccds, sep="\t")
     transcripts = add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_mskcc)
 
-    # Add nested HGNC, exons and PFAM domains
+    # Add nested PFAM domains
+    transcripts = add_nested_pfam_domains(transcripts, pfam_domains)
+
+    # Add nested HGNC, exons and 
     hgnc_df = pd.read_csv(hgnc_symbol_set, sep='\t', usecols = ['symbol', 'prev_symbol'], index_col=0).dropna()
     transcripts = add_nested_hgnc(transcripts, hgnc_df)
+
+    # transcripts.index is main id from now
     transcripts = add_nested_transcript_info(transcripts, transcript_info)
-    transcripts = add_nested_pfam_domains(transcripts, pfam_domains)
 
     # Add Uniprot id
     enst_to_uniprot_map = pd.read_csv(enst_to_uniprot, sep='\t')
     transcripts = add_uniprot(transcripts, enst_to_uniprot_map)
 
+    transcripts = transcripts.copy()
     # print records as json
+    transcripts.drop(columns=['versioned_transcript_id'], inplace=True)
+
+    # show 1 instead of 1.0
+    transcripts["transcript_version"] = transcripts["transcript_version"].astype(float).astype(int).astype(str)
     transcripts.reset_index().to_json(ensembl_biomart_transcripts_json,
                                       orient='records', lines=True, compression='gzip')
 
@@ -245,8 +269,8 @@ if __name__ == '__main__':
     parser.add_argument("vcf2maf_isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("vcf2maf_isoform_overrides_mskcc",
-                        help="common_input/isoform_overrides_at_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
-    parser.add_argument("hgnc_symbol_set", help="common_input/hgnc_complete_set_2023-10.txt")
+                        help="common_input/mskcc_isoform_overrides_grch37.txt")
+    parser.add_argument("hgnc_symbol_set", help="common_input/hgnc_v2024.10.1.txt")
     parser.add_argument("ensembl_biomart_transcripts_json",
                         help="tmp/ensembl_biomart_transcripts.json.gz")
 
