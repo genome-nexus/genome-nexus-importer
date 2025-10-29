@@ -19,7 +19,7 @@ jobs:
       - run: |
           TAG=${GIT_TAG}
           IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG .
+          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
           docker push $IMAGE:$TAG
   
@@ -42,7 +42,7 @@ jobs:
       - run: |
           TAG=${GIT_TAG}_mutationassessor
           IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg MUTATIONASSESSOR=true .
+          docker build -t $IMAGE:$TAG --build-arg MUTATIONASSESSOR=true --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
           docker push $IMAGE:$TAG
 
