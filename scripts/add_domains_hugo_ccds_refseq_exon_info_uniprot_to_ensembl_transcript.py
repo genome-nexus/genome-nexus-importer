@@ -246,7 +246,7 @@ def main(ensembl_biomart_transcripts,
     transcripts.drop(columns=['versioned_transcript_id'], inplace=True)
 
     # show 1 instead of 1.0
-    transcripts["transcript_version"] = transcripts["transcript_version"].astype(float).astype(int).astype(str)
+    transcripts["transcript_id_version"] = transcripts["transcript_id_version"].astype(float).astype(int).astype(str)
     transcripts.reset_index().to_json(ensembl_biomart_transcripts_json,
                                       orient='records', lines=True, compression='gzip')
 

@@ -61,7 +61,7 @@ const AA3TO1 = [
     ['Leu', 'L'], ['Lys', 'K'], ['Met', 'M'], ['Phe', 'F'], ['Pro', 'P'], ['Ser', 'S'],
     ['Thr', 'T'], ['Trp', 'W'], ['Tyr', 'Y'], ['Val', 'V'], ['Xxx', 'X'], ['Ter', '*']
 ];
-db.getCollection('vep.annotation').find().forEach( function(annotation) {
+db.getCollection('vep.annotation').find().batchSize(500).forEach( function(annotation) {
     let record = {
         _id: annotation._id,
         variant: annotation._id,
