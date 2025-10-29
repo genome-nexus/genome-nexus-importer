@@ -1,0 +1,17 @@
+name	version	type	id	description	url
+VEP	grch37	mirrored	vep	"VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions."	https://grch37.ensembl.org/info/docs/tools/vep/index.html
+HGNC	hgnc_v2024.10.1	mirrored	hgnc	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+Cancer Hotspots	v2	mirrored	cancer_hotspots	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
+3D Hotspots	v2	mirrored	3d_hotspots	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
+reVUE	https://github.com/knowledgesystems/reVUE-data/blob/main/generated/VUEs.json	mirrored	revue	A Repository for Variants with Unexpected Effects (VUE) in Cancer	https://www.cancerrevue.org/
+My Variant Info	"Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html"	external	my_variant_info	"MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources."	https://myvariant.info
+ClinVar	20250106	mirrored	clinvar	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
+OncoKB	v4.24	mirrored	oncokb	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
+PDB	latest	external	pdb	A resource for the three-dimensional structural data of large biological molecules such as proteins and nucleic acids.	https://www.rcsb.org/
+xrefs	latest	external	xrefs	Xref endpoint is a lookup of Ensembl Identifiers and retrieve their external references in other databases	http://grch37.rest.ensembl.org/
+PFAM	32.0	mirrored	pfam	A database of protein families that includes their annotations and multiple sequence alignments generated using hidden Markov models.	https://www.ebi.ac.uk/interpro/
+PTM	dbPTM 2019	mirrored	ptm	A resource for protein post-translational modifications (PTMs).	https://awi.cuhk.edu.cn/dbPTM/
+SignalDB	https://www.nature.com/articles/s41588-021-00949-1	mirrored	signal	The SIGNAL resource integrates germline and somatic alterations identified by clinical sequencing of active cancer patients. 	https://www.signaldb.org/
+Polyphen-2	2.2.3, release 405c	external	polyphen	"PolyPhen-2 predicts the effect of an amino acid substitution on the structure and function of a protein using sequence homology, Pfam annotations, 3D structures from PDB where available, and a number of other databases and tools (including DSSP, ncoils etc.)"	http://genetics.bwh.harvard.edu/pph2/
+Sift	6.2.1	external	sift	SIFT predicts whether an amino acid substitution is likely to affect protein function based on sequence homology and the physico-chemical similarity between the alternate amino acids.	http://sift.bii.a-star.edu.sg/
+Mutation Assessor	v4	mirrored	mutation_assessor	"Mutation Assessor predicts the functional impact of amino-acid substitutions in proteins, such as mutations discovered in cancer or missense polymorphisms."	http://mutationassessor.org/r3/

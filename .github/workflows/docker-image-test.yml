@@ -13,9 +13,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - ref_ensembl_version: grch37_ensembl92
+          - ref_ensembl_version: grch37_ensembl111
             mutationassessor: "false"
-          - ref_ensembl_version: grch37_ensembl92
+          - ref_ensembl_version: grch37_ensembl111
             mutationassessor: "true"
     steps:
       - name: 'Checkout git repo'

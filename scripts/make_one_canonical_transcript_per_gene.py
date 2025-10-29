@@ -4,6 +4,41 @@ import numpy as np
 import itertools
 import argparse
 
+def normalize_version_string(x):
+    if pd.isna(x):
+        return None
+    s = str(x).strip()
+    if not s or s.lower() in {"nan", "none"}:
+        return None
+    if s.endswith(".0"):
+        s = s[:-2]
+    return s if s.isdigit() else None
+
+def split_enst_id(enst):
+    # split enst id, e.g. ENST00000123456.7 -> 'ENST00000123456','7'
+    if enst is None or pd.isna(enst):
+        return None, None
+    s = str(enst).strip()
+    if "." in s:
+        b, v = s.split(".", 1)
+        return b, normalize_version_string(v)
+    return s, None
+
+def find_transcript_version(transcript_info_df, base_enst):
+    if not base_enst:
+        return np.nan
+    rows = transcript_info_df[transcript_info_df['transcript_stable_id'] == base_enst]
+    if rows.empty:
+        return np.nan
+    # Prefer transcript_id_version, else parse from versioned_transcript_id
+    if 'transcript_id_version' in rows:
+        version = rows['transcript_id_version'].apply(normalize_version_string).dropna()
+    else:
+        version = pd.Series([], dtype=object)
+    if version.empty and 'versioned_transcript_id' in rows:
+        version = rows['versioned_transcript_id'].astype(str).str.extract(r'\.(\d+)$')[0].dropna()
+    uniq = sorted({v for v in version if isinstance(v, str) and v.isdigit()}, key=lambda x: int(x))
+    return uniq[-1] if uniq else np.nan
 
 def get_overrides_transcript(overrides_tables, ensembl_table, ensembl_table_indexed_by_gene_stable_id, hgnc_symbol, hgnc_canonical_genes, overrides_table_names):
     """Find canonical transcript id for given hugo symbol. Overrides_tables is
@@ -73,40 +108,66 @@ def get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, en
     else:
         raise(Exception("One hugo symbol expected in hgnc_canonical_genes"))
 
-def get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, oncokb, mskcc, uniprot, custom):
+def get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, mskcc, uniprot, custom):
     ensembl_canonical_gene, ensembl_canonical_gene_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'gene_stable_id')
-    ensembl_canonical_transcript, ensembl_canonical_transcript_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'transcript_stable_id')
+    ensembl_canonical_transcript, ensembl_canonical_transcript_explanation = get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, 'versioned_transcript_id')
     genome_nexus_overrides_transcript, genome_nexus_overrides_transcript_explanation = get_overrides_transcript([custom], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["genome nexus isoform override"])
-    uniprot_overrides_transcript, uniprot_overrides_transcript_explanation = get_overrides_transcript([uniprot], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, [ "uniprot isoform override"])
+    uniprot_overrides_transcript, uniprot_overrides_transcript_explanation = get_overrides_transcript([uniprot], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["uniprot isoform override"])
     mskcc_overrides_transcript, mskcc_overrides_transcript_explanation = get_overrides_transcript([mskcc], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["mskcc isoform override"])
-    oncokb_orrides_transcript, oncokb_orrides_transcript_explanation = get_overrides_transcript([oncokb], transcript_info_df, transcript_info_indexed_by_gene_stable_id, hugo_symbol, hgnc_df, ["oncokb isoform override"])
+
+    ensembl_transcript_id_base, ensembl_transcript_id_version = split_enst_id(ensembl_canonical_transcript)
+    gn_transcript_id_base,  gn_transcript_id_version  = split_enst_id(genome_nexus_overrides_transcript)
+    uniprot_transcript_id_base, uniprot_transcript_id_version = split_enst_id(uniprot_overrides_transcript)
+    mskcc_transcript_id_base, mskcc_transcript_id_version = split_enst_id(mskcc_overrides_transcript)
+
+    if not ensembl_transcript_id_version:
+        ensembl_transcript_id_version = find_transcript_version(transcript_info_df, ensembl_transcript_id_base)
+    if not gn_transcript_id_version:
+        gn_transcript_id_version = find_transcript_version(transcript_info_df, gn_transcript_id_base)
+    if not uniprot_transcript_id_version:
+        uniprot_transcript_id_version = find_transcript_version(transcript_info_df, uniprot_transcript_id_base)
+    if not mskcc_transcript_id_version:
+        mskcc_transcript_id_version = find_transcript_version(transcript_info_df, mskcc_transcript_id_base)
+
+    try:
+        if 'note' in mskcc.columns:
+            m = mskcc.loc[hugo_symbol]
+            note = m['note'].iloc[0] if isinstance(m, pd.DataFrame) else m.get('note')
+            if isinstance(note, str) and note.strip():
+                mskcc_overrides_transcript_explanation = f"{mskcc_overrides_transcript_explanation}; {note.strip()}"
+    except KeyError:
+        pass
+
     return pd.Series([
                 ensembl_canonical_gene,
-                ensembl_canonical_transcript,
+                ensembl_transcript_id_base,
+                ensembl_transcript_id_version,
                 ensembl_canonical_transcript_explanation,
-                genome_nexus_overrides_transcript,
+                gn_transcript_id_base,
+                gn_transcript_id_version,
                 genome_nexus_overrides_transcript_explanation,
-                uniprot_overrides_transcript,
+                uniprot_transcript_id_base,
+                uniprot_transcript_id_version,
                 uniprot_overrides_transcript_explanation,
-                mskcc_overrides_transcript,
-                mskcc_overrides_transcript_explanation,
-                oncokb_orrides_transcript,
-                oncokb_orrides_transcript_explanation
+                mskcc_transcript_id_base,
+                mskcc_transcript_id_version,
+                mskcc_overrides_transcript_explanation
             ],
             index="""
             ensembl_canonical_gene
             ensembl_canonical_transcript
+            ensembl_canonical_transcript_version
             ensembl_canonical_transcript_explanation
             genome_nexus_canonical_transcript
+            genome_nexus_canonical_transcript_version
             genome_nexus_canonical_transcript_explanation
             uniprot_canonical_transcript
+            uniprot_canonical_transcript_version
             uniprot_canonical_transcript_explanation
             mskcc_canonical_transcript
+            mskcc_canonical_transcript_version
             mskcc_canonical_transcript_explanation
-            oncokb_canonical_transcript
-            oncokb_canonical_transcript_explanation
-            """
-            .split()
+            """.split()
         )
 
 def lowercase_set(x):
@@ -128,11 +189,12 @@ def main(ensembl_biomart_geneids_transcript_info,
          isoform_overrides_uniprot,
          isoform_overrides_at_mskcc,
          isoform_overrides_genome_nexus,
-         isoform_overrides_at_oncokb,
          ignored_genes_file_name,
          ensembl_biomart_canonical_transcripts_per_hgnc):
     # input files
-    transcript_info_df = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t', dtype={'is_canonical':bool})
+    transcript_info_df = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t', dtype={'is_canonical':bool, 'transcript_id_version': object})
+    if 'transcript_id_version' in transcript_info_df.columns:
+        transcript_info_df['transcript_id_version'] = transcript_info_df['transcript_id_version'].apply(normalize_version_string)
     transcript_info_df = transcript_info_df.drop_duplicates()
     uniprot = pd.read_csv(isoform_overrides_uniprot, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
@@ -143,9 +205,6 @@ def main(ensembl_biomart_geneids_transcript_info,
     custom = pd.read_csv(isoform_overrides_genome_nexus, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
         .set_index('gene_name'.split())
-    oncokb = pd.read_csv(isoform_overrides_at_oncokb, sep='\t')\
-        .rename(columns={'enst_id':'isoform_override'})\
-        .set_index('hugo_symbol'.split())
     hgnc_df = pd.read_csv(hgnc_complete_set, sep='\t', dtype=object)
 
     # Convert new column names to old stable column names. If this is not done properly, Genome Nexus and any other
@@ -214,7 +273,7 @@ def main(ensembl_biomart_geneids_transcript_info,
     # hugos = ['KRT18P53', 'NSD3', 'AATF']
 
     # TODO Optimize this part, as this part takes most time
-    one_transcript_per_hugo_symbol = pd.Series(hugos).apply(lambda x: get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexed_by_gene_stable_id, x, hgnc_df, oncokb, mskcc, uniprot, custom ))
+    one_transcript_per_hugo_symbol = pd.Series(hugos).apply(lambda x: get_transcript_id_and_explanation(transcript_info_df, transcript_info_indexed_by_gene_stable_id, x, hgnc_df, mskcc, uniprot, custom ))
     one_transcript_per_hugo_symbol.index = hugos
     one_transcript_per_hugo_symbol.index.name = 'hgnc_symbol'
 
@@ -236,15 +295,13 @@ if __name__ == "__main__":
     parser.add_argument("ensembl_biomart_geneids_transcript_info",
                         help="tmp/ensembl_biomart_geneids.transcript_info.txt")
     parser.add_argument("hgnc_complete_set",
-                        help="common_input/hgnc_complete_set_2023-10.txt")
+                        help="common_input/hgnc_v2024.10.1.txt")
     parser.add_argument("isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("isoform_overrides_at_mskcc",
-                        help="common_input/isoform_overrides_at_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
+                        help="common_input/isoform_overrides_mskcc_grch37.txt or common_input/isoform_overrides_at_mskcc_grch38.txt")
     parser.add_argument("isoform_overrides_genome_nexus",
                         help="common_input/isoform_overrides_genome_nexus_grch37.txt or common_input/isoform_overrides_genome_nexus_grch38.txt")
-    parser.add_argument("isoform_overrides_at_oncokb",
-                        help="common_input/isoform_overrides_oncokb_grch37.txt or common_input/isoform_overrides_oncokb_grch38.txt")
     parser.add_argument("ignored_genes_file_name",
                         help="common_input/ignored_genes.txt")
     parser.add_argument("ensembl_biomart_canonical_transcripts_per_hgnc",
@@ -256,6 +313,5 @@ if __name__ == "__main__":
          args.isoform_overrides_uniprot,
          args.isoform_overrides_at_mskcc,
          args.isoform_overrides_genome_nexus,
-         args.isoform_overrides_at_oncokb,
          args.ignored_genes_file_name,
          args.ensembl_biomart_canonical_transcripts_per_hgnc)

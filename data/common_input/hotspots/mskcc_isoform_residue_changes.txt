@@ -1,0 +1,3 @@
+transcript_id	hugo_symbol	original_residue	revised_residue
+ENST00000356175	NF1	R1870	R1849
+ENST00000356175	NF1	R2450	R2429
