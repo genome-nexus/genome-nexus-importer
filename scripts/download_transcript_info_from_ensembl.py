@@ -46,31 +46,29 @@ def get_transcript_info(transcript, ensembl_transcript_response):
     # Attempt to parse API response. Sometimes the transcript does not have an API response, probably because the API is
     # on a newer Ensembl release than the input files. Restarting the pipeline will attempt to continue.
     try:
-        is_canonical = ensembl_transcript_response[transcript]['is_canonical']
-        try:
-            transcript_id_version = int(ensembl_transcript_response[transcript]['version'])
-        except KeyError:
-            transcript_id_version = np.nan
-            
-        try:
-            protein_stable_id = ensembl_transcript_response[transcript]['Translation']['id']
-        except KeyError:
-            protein_stable_id = np.nan
+        data = ensembl_transcript_response.get(transcript, {})
+        is_canonical = data.get('is_canonical', np.nan)
 
-        try:
-            protein_length = int(ensembl_transcript_response[transcript]['Translation']['length'])
-        except KeyError:
-            protein_length = np.nan
+        transcript_id_version = str(data.get('version')) if 'version' in data else np.nan
 
-    except TypeError:
+        translation = data.get('Translation', {})
+        protein_stable_id = translation.get('id', np.nan)
+
+        # ensure protein_length is integer (or NaN)
+        protein_length = translation.get('length', np.nan)
+        protein_length = (
+            int(protein_length) if not pd.isna(protein_length) else np.nan
+        )
+
+    except (TypeError, KeyError):
         is_canonical = np.nan
         transcript_id_version = np.nan
         protein_stable_id = np.nan
         protein_length = np.nan
 
     return pd.Series(
-        [is_canonical, int(transcript_id_version) if not pd.isna(transcript_id_version) else np.nan, protein_stable_id, protein_length],
-        index='is_canonical transcript_id_version protein_stable_id protein_length'.split()
+        [is_canonical, transcript_id_version, protein_stable_id, protein_length],
+        index=['is_canonical', 'transcript_id_version', 'protein_stable_id', 'protein_length']
     )
 
 
