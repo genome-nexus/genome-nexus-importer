@@ -12,10 +12,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - ref_ensembl_version: grch37_ensembl92
+          - ref_ensembl_version: grch37_ensembl111
             mutationassessor: "false"
-          - ref_ensembl_version: grch37_ensembl92
-            mutationassessor: "true"
+          # - ref_ensembl_version: grch37_ensembl111
+          #   mutationassessor: "true"
     env:
       IMAGE_NAME: genomenexus/gn-mongo
       READABLE_TAG: latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }}
