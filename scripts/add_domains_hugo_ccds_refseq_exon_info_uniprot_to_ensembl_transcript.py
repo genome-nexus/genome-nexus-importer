@@ -245,6 +245,8 @@ def main(ensembl_biomart_transcripts,
 
     # show 1 instead of 1.0
     transcripts["transcript_id_version"] = transcripts["transcript_id_version"].astype(float).astype(int).astype(str)
+    # ensure protein_length is integer (or NaN)
+    transcripts["protein_length"] = pd.to_numeric(transcripts["protein_length"], errors='coerce').astype('Int64')
     transcripts.reset_index().to_json(ensembl_biomart_transcripts_json,
                                       orient='records', lines=True, compression='gzip')
 
