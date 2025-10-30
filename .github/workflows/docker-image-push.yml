@@ -1,0 +1,47 @@
+name: Docker Image CI
+on:
+  push:
+    branches:
+      - demo-*
+# Only use GitHub Actions for testing, because the Docker image with Mutation Assessor data is too big to be built and pushed.
+# CircleCI builds and pushes the images to Docker Hub for every new release.
+jobs:
+  build_and_push_grch37:
+    if: github.repository == 'genome-nexus/genome-nexus-importer'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - ref_ensembl_version: grch37_ensembl92
+            mutationassessor: "false"
+          - ref_ensembl_version: grch37_ensembl92
+            mutationassessor: "true"
+    env:
+      IMAGE_NAME: genomenexus/gn-mongo
+      READABLE_TAG: latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }}
+      SHA_TAG: sha-${{ github.sha }}-${{ matrix.ref_ensembl_version }}-ma_${{ matrix.mutationassessor }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ env.READABLE_TAG }}
+            ${{ env.IMAGE_NAME }}:${{ env.SHA_TAG }}
+          build-args: |
+            ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}
+            MUTATIONASSESSOR=${{ matrix.mutationassessor }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
