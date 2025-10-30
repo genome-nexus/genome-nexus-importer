@@ -58,8 +58,7 @@ def get_transcript_info(transcript, ensembl_transcript_response):
             protein_stable_id = np.nan
 
         try:
-            # store as string to prevent integer -> float
-            protein_length = str(ensembl_transcript_response[transcript]['Translation']['length'])
+            protein_length = int(ensembl_transcript_response[transcript]['Translation']['length'])
         except KeyError:
             protein_length = np.nan
 

@@ -212,8 +212,6 @@ def main(ensembl_biomart_transcripts,
     if "versioned_transcript_id" not in transcripts.columns:
         raise RuntimeError("transcripts file missing versioned_transcript_id")
 
-    transcripts["main_transcript_id"] = transcripts.get("transcript_stable_id", transcripts["versioned_transcript_id"]).map(main_transcript_id)
-
     # Use versioned id as the index for all downstream joins that support versions
     transcripts.set_index("versioned_transcript_id", inplace=True, drop=True)
 
