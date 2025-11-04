@@ -6,7 +6,7 @@ Cancer Hotspots	v2	mirrored	cancer_hotspots	A resource for statistically signifi
 reVUE	https://github.com/knowledgesystems/reVUE-data/blob/main/generated/VUEs.json	mirrored	revue	A Repository for Variants with Unexpected Effects (VUE) in Cancer	https://www.cancerrevue.org/
 My Variant Info	"Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html"	external	my_variant_info	"MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources."	https://myvariant.info
 ClinVar	20250106	mirrored	clinvar	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
-OncoKB	v4.24	mirrored	oncokb	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
+OncoKB	v5.3	mirrored	oncokb	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
 PDB	latest	external	pdb	A resource for the three-dimensional structural data of large biological molecules such as proteins and nucleic acids.	https://www.rcsb.org/
 xrefs	latest	external	xrefs	Xref endpoint is a lookup of Ensembl Identifiers and retrieve their external references in other databases	http://grch37.rest.ensembl.org/
 PFAM	32.0	mirrored	pfam	A database of protein families that includes their annotations and multiple sequence alignments generated using hidden Markov models.	https://www.ebi.ac.uk/interpro/
