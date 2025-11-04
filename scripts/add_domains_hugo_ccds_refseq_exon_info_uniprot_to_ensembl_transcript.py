@@ -212,8 +212,6 @@ def main(ensembl_biomart_transcripts,
     if "versioned_transcript_id" not in transcripts.columns:
         raise RuntimeError("transcripts file missing versioned_transcript_id")
 
-    transcripts["main_transcript_id"] = transcripts.get("transcript_stable_id", transcripts["versioned_transcript_id"]).map(main_transcript_id)
-
     # Use versioned id as the index for all downstream joins that support versions
     transcripts.set_index("versioned_transcript_id", inplace=True, drop=True)
 
@@ -247,6 +245,8 @@ def main(ensembl_biomart_transcripts,
 
     # show 1 instead of 1.0
     transcripts["transcript_id_version"] = transcripts["transcript_id_version"].astype(float).astype(int).astype(str)
+    # ensure protein_length is integer (or NaN)
+    transcripts["protein_length"] = pd.to_numeric(transcripts["protein_length"], errors='coerce').astype('Int64')
     transcripts.reset_index().to_json(ensembl_biomart_transcripts_json,
                                       orient='records', lines=True, compression='gzip')
 
