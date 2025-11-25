@@ -46,10 +46,33 @@ jobs:
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
           docker push $IMAGE:$TAG
 
+  build_and_publish_grch37_slim:
+    docker:
+      - image: cimg/go:1.17
+    resource_class: large
+    steps:
+      - checkout
+      # steps for building/testing app
+      - run:
+          name: Get Git tag
+          command: |
+            git fetch --tags
+            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v//g')' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - setup_remote_docker:
+          docker_layer_caching: true
+      # build and push Docker image
+      - run: |
+          TAG=${GIT_TAG}_slim
+          IMAGE=genomenexus/gn-mongo
+          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 --build-arg SLIM_MODE=true .
+          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+          docker push $IMAGE:$TAG
+
   build_and_publish_grch38:
     docker:
       - image: cimg/go:1.17
-    resource_class: large 
+    resource_class: large
     steps:
       - checkout
       # steps for building/testing app
@@ -69,10 +92,33 @@ jobs:
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
           docker push $IMAGE:$TAG
   
+  build_and_publish_grch38_slim:
+    docker:
+      - image: cimg/go:1.17
+    resource_class: large
+    steps:
+      - checkout
+      # steps for building/testing app
+      - run:
+          name: Get Git tag
+          command: |
+            git fetch --tags
+            echo 'export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1) | sed 's/^v//g')' >> "$BASH_ENV"
+            source "$BASH_ENV"
+      - setup_remote_docker:
+          docker_layer_caching: true
+      # build and push Docker image
+      - run: |
+          TAG=${GIT_TAG}_grch38_ensembl95_slim
+          IMAGE=genomenexus/gn-mongo
+          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 --build-arg SLIM_MODE=true .
+          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+          docker push $IMAGE:$TAG
+
   build_and_publish_grcm38:
     docker:
       - image: cimg/go:1.17
-    resource_class: large 
+    resource_class: large
     steps:
       - checkout
       # steps for building/testing app
@@ -111,6 +157,14 @@ workflows:
             tags:
               only: /.*/
 
+      - build_and_publish_grch37_slim:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /.*/
+
       - build_and_publish_grch38:
           filters:
             branches:
@@ -118,7 +172,15 @@ workflows:
                 - /.*/
             tags:
               only: /.*/
-              
+
+      - build_and_publish_grch38_slim:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /.*/
+
       - build_and_publish_grcm38:
           filters:
             branches:

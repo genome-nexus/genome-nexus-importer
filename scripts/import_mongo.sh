@@ -2,14 +2,15 @@
 set -e
 
 # ---------- Config & defaults ----------
-MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27017/annotator"}
+MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27018/annotator"}
 # Explicit DB name if you set it; else infer from URI path (fallback to 'annotator')
 MONGO_DB=${MONGO_DB:-$(echo "$MONGO_URI" | awk -F/ '{print $4}' | awk -F\? '{print $1}')}
 MONGO_DB=${MONGO_DB:-annotator}
 
-REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION:-"grch37_ensembl92"}
+REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION:-"grch37_ensembl111"}
 SPECIES=${SPECIES:-"homo_sapiens"}
 MUTATIONASSESSOR=${MUTATIONASSESSOR:-"false"}
+SLIM_MODE=${SLIM_MODE:-"false"}
 
 # Comma-separated list of collections to force-update even if they already exist
 COLLECTION_UPDATE_LIST_RAW=${COLLECTION_UPDATE_LIST:-""}
@@ -19,6 +20,7 @@ echo "MONGO_DB: ${MONGO_DB}"
 echo "REF_ENSEMBL_VERSION: ${REF_ENSEMBL_VERSION}"
 echo "SPECIES: ${SPECIES}"
 echo "MUTATIONASSESSOR: ${MUTATIONASSESSOR}"
+echo "SLIM_MODE: ${SLIM_MODE}"
 echo "COLLECTION_UPDATE_LIST: ${COLLECTION_UPDATE_LIST_RAW}"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -88,8 +90,16 @@ fi
 # ---------- Core imports ----------
 import_if_needed "ensembl.biomart_transcripts" <(gunzip -c "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/ensembl_biomart_transcripts.json.gz") '--drop --type json'
 import_if_needed "ensembl.canonical_transcript_per_hgnc" "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/ensembl_biomart_canonical_transcripts_per_hgnc.txt" '--drop --type tsv --headerline'
-import_if_needed "pfam.domain" "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/pfamA.txt" '--drop --type tsv --headerline'
-import_if_needed "ptm.experimental" <(gunzip -c "${DIR}/../data/ptm/export/ptm.json.gz") '--drop --type json'
+
+# Exit early if slim mode (only import ensembl.biomart_transcripts, ensembl.canonical_transcript_per_hgnc, and version)
+if [[ "$SLIM_MODE" == "true" ]]; then
+  echo "[INFO] SLIM_MODE enabled. Only keep ensembl.biomart_transcripts, ensembl.canonical_transcript_per_hgnc, and version."
+  # Import annotation sources version with only VEP and HGNC rows
+  echo "[INFO] Filtering annotation_version.txt to only include VEP and HGNC for slim mode."
+  import version <(awk 'NR==1 || /^VEP\t/ || /^HGNC\t/' "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/annotation_version.txt") '--drop --type tsv --headerline'
+  # Stop running the script afterwards
+  exit 0
+fi
 
 # Exit early if non-human
 if [[ "$SPECIES" != "homo_sapiens" ]]; then
@@ -98,6 +108,9 @@ if [[ "$SPECIES" != "homo_sapiens" ]]; then
 fi
 
 echo "[INFO] Executing human-specific import steps"
+
+import_if_needed "pfam.domain" "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/pfamA.txt" '--drop --type tsv --headerline'
+import_if_needed "ptm.experimental" <(gunzip -c "${DIR}/../data/ptm/export/ptm.json.gz") '--drop --type json'
 
 import_if_needed "hotspot.mutation" "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/hotspots_v2_and_3d.txt" '--drop --type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
 import_if_needed "signal.mutation" <(gunzip -c "${DIR}/../data/signal/export/mutations.json.gz") '--drop --type json'
