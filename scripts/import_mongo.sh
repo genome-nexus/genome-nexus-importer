@@ -2,7 +2,7 @@
 set -e
 
 # ---------- Config & defaults ----------
-MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27018/annotator"}
+MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27017/annotator"}
 # Explicit DB name if you set it; else infer from URI path (fallback to 'annotator')
 MONGO_DB=${MONGO_DB:-$(echo "$MONGO_URI" | awk -F/ '{print $4}' | awk -F\? '{print $1}')}
 MONGO_DB=${MONGO_DB:-annotator}
