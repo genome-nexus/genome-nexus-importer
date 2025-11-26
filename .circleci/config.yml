@@ -40,7 +40,7 @@ jobs:
           docker_layer_caching: true
       # build and push Docker image
       - run: |
-          TAG=${GIT_TAG}_mutationassessor
+          TAG=${GIT_TAG}-mutationassessor
           IMAGE=genomenexus/gn-mongo
           docker build -t $IMAGE:$TAG --build-arg MUTATIONASSESSOR=true --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
@@ -63,7 +63,7 @@ jobs:
           docker_layer_caching: true
       # build and push Docker image
       - run: |
-          TAG=${GIT_TAG}_slim
+          TAG=${GIT_TAG}-slim
           IMAGE=genomenexus/gn-mongo
           docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 --build-arg SLIM_MODE=true .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
@@ -86,7 +86,7 @@ jobs:
           docker_layer_caching: true
       # build and push Docker image
       - run: |
-          TAG=${GIT_TAG}_grch38_ensembl95
+          TAG=${GIT_TAG}-grch38-ensembl95
           IMAGE=genomenexus/gn-mongo
           docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 --build-arg MUTATIONASSESSOR=true .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
@@ -109,7 +109,7 @@ jobs:
           docker_layer_caching: true
       # build and push Docker image
       - run: |
-          TAG=${GIT_TAG}_grch38_ensembl95_slim
+          TAG=${GIT_TAG}-grch38-ensembl95-slim
           IMAGE=genomenexus/gn-mongo
           docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 --build-arg SLIM_MODE=true .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
@@ -132,7 +132,7 @@ jobs:
           docker_layer_caching: true
       # build and push Docker image
       - run: |
-          TAG=${GIT_TAG}_grcm38_ensembl95
+          TAG=${GIT_TAG}-grcm38-ensembl95
           IMAGE=genomenexus/gn-mongo
           docker build -t $IMAGE:$TAG --build-arg SPECIES=mus_musculus --build-arg ARG_REF_ENSEMBL_VERSION=grcm38_ensembl95 .
           echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
