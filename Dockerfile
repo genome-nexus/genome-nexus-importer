@@ -11,6 +11,8 @@ ENV SPECIES=${SPECIES}
 # Define additional annotation resources arguments
 ARG MUTATIONASSESSOR=false
 ENV MUTATIONASSESSOR=${MUTATIONASSESSOR}
+ARG SLIM_MODE=false
+ENV SLIM_MODE=${SLIM_MODE}
 
 USER root
 
@@ -27,6 +29,7 @@ RUN chmod +x /scripts/*.sh
 RUN echo "export REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION}" >> /scripts/persisted_env.sh && \
     echo "export SPECIES=${SPECIES}" >> /scripts/persisted_env.sh && \
     echo "export MUTATIONASSESSOR=${MUTATIONASSESSOR}" >> /scripts/persisted_env.sh && \
+    echo "export SLIM_MODE=${SLIM_MODE}" >> /scripts/persisted_env.sh && \
     chmod +x /scripts/persisted_env.sh
 
 # Change ownership of the /data directory and its contents to non-root user 1001
