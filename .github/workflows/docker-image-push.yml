@@ -3,11 +3,13 @@ on:
   push:
     branches:
       - demo-*
+      - patch-*
 # Only use GitHub Actions for testing, because the Docker image with Mutation Assessor data is too big to be built and pushed.
 # CircleCI builds and pushes the images to Docker Hub for every new release.
+# For patch-* branches, builds slim images for patch releases.
 jobs:
   build_and_push_grch37:
-    if: github.repository == 'genome-nexus/genome-nexus-importer'
+    if: github.repository == 'genome-nexus/genome-nexus-importer' && !startsWith(github.ref, 'refs/heads/patch-')
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -42,6 +44,46 @@ jobs:
           build-args: |
             ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}
             MUTATIONASSESSOR=${{ matrix.mutationassessor }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+
+  build_and_push_slim_patch:
+  # Define versions for slim images to be built for patch releases
+    if: github.repository == 'genome-nexus/genome-nexus-importer' && startsWith(github.ref, 'refs/heads/patch-')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - ref_ensembl_version: grch37_ensembl111
+            tag_suffix: slim
+            patch_version: "1.0"
+          - ref_ensembl_version: grch38_ensembl95
+            tag_suffix: grch38_ensembl95_slim
+            patch_version: "0.32"
+    env:
+      IMAGE_NAME: genomenexus/gn-mongo
+      PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ env.PATCH_TAG }}
+          build-args: |
+            ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}
+            SLIM_MODE=true
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
