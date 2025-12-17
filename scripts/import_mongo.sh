@@ -140,6 +140,7 @@ if [[ "${MUTATIONASSESSOR}" == "true" ]]; then
       "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_3.tsv.gz"
       "https://genome-nexus-static-data.s3.us-east-1.amazonaws.com/mutationassessor_v4_4.tsv.gz"
     )
+    first_file=true
     for url in "${mutation_assessor_files[@]}"; do
       filename=$(basename "$url")
       echo "Downloading $filename"
@@ -154,7 +155,14 @@ if [[ "${MUTATIONASSESSOR}" == "true" ]]; then
       awk -F'\t' 'BEGIN{OFS="\t"} NR==1{print "_id",$0; next} {print $1","$3,$0}' "${DIR}/../data/common_input/$mutation_assessor_tsv_file" > "${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file"
 
       echo "Importing $mutation_assessor_tsv_file"
-      import "mutation_assessor.annotation" "${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file" "--drop --type tsv --headerline"
+      
+      import_opts="--type tsv --headerline"
+      if [ "$first_file" = true ]; then
+        import_opts="--drop $import_opts"
+        first_file=false
+      fi
+
+      import "mutation_assessor.annotation" "${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file" "$import_opts"
 
       rm "${DIR}/../data/common_input/processed_$mutation_assessor_tsv_file" "${DIR}/../data/common_input/$mutation_assessor_tsv_file"
     done
