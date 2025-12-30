@@ -46,11 +46,9 @@ ONCOKB_VERSION=v5.3
 
 ifeq ($(GENOME_BUILD), grch38)
   MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch38.txt
-  ONCOKB_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_oncokb_grch38.txt
   GENOME_NEXUS_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_genome_nexus_grch38.txt
 else
   MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch37.txt
-  ONCOKB_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_oncokb_grch37.txt
   GENOME_NEXUS_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_genome_nexus_grch37.txt
 endif
 
