@@ -3,6 +3,10 @@ Check list for transcript updating:
     -	The new transcript needs to be on Ensembl111 and has sub version
     -	Genome Nexus and OncoKB should make the updates at the same time.
 -	Update Genome Nexus Importer mskcc isoform list, document changes in the changelog
+-   Regenerate all files (follow documents [here](https://github.com/genome-nexus/genome-nexus-importer/blob/master/README.md))
+    -   grch37_ensemblXX
+    -   grch38_ensemblXX
+    -   hotspots
 -	Making a new Genome Nexus mongodb release, update all Genome Nexus instances to use the latest image
     -	annotation.genomenexus.org
     -	www.genomenexus.org
