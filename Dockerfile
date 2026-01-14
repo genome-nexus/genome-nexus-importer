@@ -1,6 +1,6 @@
-ARG MONGODBVERSION=4.0.12
+ARG MONGODBVERSION=8.2.3
 
-FROM bitnamilegacy/mongodb:${MONGODBVERSION}
+FROM public.ecr.aws/bitnami/mongodb:${MONGODBVERSION}
 
 # Define build arguments
 ARG ARG_REF_ENSEMBL_VERSION
