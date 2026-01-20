@@ -1,6 +1,6 @@
 ARG MONGODBVERSION=8.2.3
 
-FROM public.ecr.aws/bitnami/mongodb:${MONGODBVERSION}
+FROM mongo:${MONGODBVERSION}
 
 # Define build arguments
 ARG ARG_REF_ENSEMBL_VERSION
@@ -14,28 +14,25 @@ ENV MUTATIONASSESSOR=${MUTATIONASSESSOR}
 ARG SLIM_MODE=false
 ENV SLIM_MODE=${SLIM_MODE}
 
-USER root
-
-# Create directories for scripts and data storage and copy data to directory inside the container
+# Create directories for scripts and data storage
 RUN mkdir -p /scripts /data
+
+# Copy data to directory inside the container
 COPY data/ /data/
 
 # Store environment variables in a file for persistence
-# When deploying using bitnami chart, env might be overridden, use a file to persist custom env
 RUN echo "export REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION}" >> /scripts/persisted_env.sh && \
     echo "export SPECIES=${SPECIES}" >> /scripts/persisted_env.sh && \
     echo "export MUTATIONASSESSOR=${MUTATIONASSESSOR}" >> /scripts/persisted_env.sh && \
     echo "export SLIM_MODE=${SLIM_MODE}" >> /scripts/persisted_env.sh && \
     chmod +x /scripts/persisted_env.sh
 
-# Change ownership of the /data directory and its contents to non-root user 1001
-RUN chown -R 1001 /data /scripts
+# Change ownership to mongodb user (official image uses mongodb:mongodb)
+RUN chown -R mongodb:mongodb /data /scripts
 
-# Switch to the non-root user
-USER 1001
-
-# Copy the MongoDB initialization script into the /docker-entrypoint-initdb.d/ directory
+# Copy the MongoDB initialization script
+# This directory is automatically scanned and executed by MongoDB during first database initialization
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/import_mongo.sh
 
-# Bypass broken Bitnami entrypoint - use the run.sh directly
-ENTRYPOINT ["/opt/bitnami/scripts/mongodb/run.sh"]
+# Use default MongoDB entrypoint - no need to override
