@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Load persisted environment variables (set during Docker build)
+if [ -f /scripts/persisted_env.sh ]; then
+    source /scripts/persisted_env.sh
+fi
+
 # ---------- Config & defaults ----------
 MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27017/annotator"}
 # Explicit DB name if you set it; else infer from URI path (fallback to 'annotator')
