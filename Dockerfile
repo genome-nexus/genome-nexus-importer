@@ -1,4 +1,4 @@
-ARG MONGODBVERSION=8.2.3
+ARG MONGODBVERSION=7.0.28
 
 FROM mongo:${MONGODBVERSION}
 
@@ -12,10 +12,13 @@ ENV SPECIES=${SPECIES}
 ARG MUTATIONASSESSOR=false
 ENV MUTATIONASSESSOR=${MUTATIONASSESSOR}
 ARG SLIM_MODE=false
-ENV SLIM_MODE=${SLIM_MODE}
+ENV SLIM_MODE=true
+
+# Install required tools for import script (curl for downloads, gzip for decompression)
+RUN apt-get update && apt-get install -y curl gzip && rm -rf /var/lib/apt/lists/*
 
 # Create directories for scripts and data storage
-RUN mkdir -p /scripts /data
+RUN mkdir -p /scripts /data /data/common_input
 
 # Copy data to directory inside the container
 COPY data/ /data/
@@ -35,4 +38,12 @@ RUN chown -R mongodb:mongodb /data /scripts
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
 RUN chmod +x /docker-entrypoint-initdb.d/import_mongo.sh
 
-# Use default MongoDB entrypoint - no need to override
+# Create log directory for our custom init
+RUN mkdir -p /var/log/mongodb && chown mongodb:mongodb /var/log/mongodb
+
+# Copy custom entrypoint wrapper to fix race condition
+COPY docker-entrypoint-wrapper.sh /usr/local/bin/docker-entrypoint-wrapper.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint-wrapper.sh
+
+# Use custom entrypoint that adds delay after init
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint-wrapper.sh"]
