@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Load persisted environment variables (set during Docker build)
+if [ -f /scripts/persisted_env.sh ]; then
+    source /scripts/persisted_env.sh
+fi
+
 # ---------- Config & defaults ----------
 MONGO_URI=${MONGO_URI:-"mongodb://127.0.0.1:27017/annotator"}
 # Explicit DB name if you set it; else infer from URI path (fallback to 'annotator')
@@ -39,10 +44,10 @@ in_update_list() {
 
 collection_exists() {
   local col="$1"
-  # Use the mongo shell to check if the collection exists in MONGO_DB
+  # Use the mongosh shell to check if the collection exists in MONGO_DB
   # Returns "1" if present, "0" otherwise.
   local js="db.getSiblingDB('${MONGO_DB}').getCollectionNames().indexOf('${col}') !== -1 ? '1' : '0'"
-  mongo "$MONGO_URI" --quiet --eval "$js"
+  mongosh "$MONGO_URI" --quiet --eval "$js"
 }
 
 should_import() {

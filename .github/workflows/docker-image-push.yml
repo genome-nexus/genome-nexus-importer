@@ -55,15 +55,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - ref_ensembl_version: grch37_ensembl111
+          - ref_ensembl_version: grch37_ensembl92
             tag_suffix: slim
-            patch_version: "1.0"
+            patch_version: "0.32"
           - ref_ensembl_version: grch38_ensembl95
-            tag_suffix: grch38_ensembl95_slim
+            tag_suffix: slim
             patch_version: "0.32"
     env:
       IMAGE_NAME: genomenexus/gn-mongo
-      PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}
+      PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}_mongodb_7.0.28_rc1
 
     steps:
       - uses: actions/checkout@v4
