@@ -60,7 +60,7 @@ jobs:
             patch_version: "0.32"
           - ref_ensembl_version: grch38_ensembl95
             tag_suffix: slim
-            patch_version: "0.32"
+            patch_version: "0.32_grch38_ensembl95"
     env:
       IMAGE_NAME: genomenexus/gn-mongo
       PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}_mongodb_7.0.28_rc1
