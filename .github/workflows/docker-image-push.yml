@@ -50,7 +50,7 @@ jobs:
 
   build_and_push_slim_patch:
   # Define versions for slim images to be built for patch releases
-    if: github.repository == 'genome-nexus/genome-nexus-importer' && startsWith(github.ref, 'refs/heads/patch-')
+    if: startsWith(github.ref, 'refs/heads/patch-')
     runs-on: ubuntu-latest
     strategy:
       matrix:
