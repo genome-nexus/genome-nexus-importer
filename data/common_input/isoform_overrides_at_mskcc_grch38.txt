@@ -44,7 +44,7 @@ BCL2L11	NM_138621.5	ENST00000393256.8	oncokb transcript, MANE select
 BCL6	NM_001706.4	ENST00000232014.8	oncokb transcript
 BCOR	NM_001123385.2	ENST00000378444.9	oncokb transcript, MANE select
 BIRC3	NM_001165.5	ENST00000263464.9	oncokb transcript, MANE select
-BIVM-ERCC5	NM_001204425.2	ENST00000639435.1	
+BIVM-ERCC5	NM_001204425.2	ENST00000639435.1	in original mskcc_isoform_overrides_grch38, gene not in MANE select
 BLM	NM_000057.4	ENST00000355112.8	oncokb transcript, MANE select
 BMPR1A	NM_004329.3	ENST00000372037.8	oncokb transcript, MANE select
 BRAF	NM_004333.6	ENST00000646891.2	oncokb transcript, MANE select
@@ -63,7 +63,7 @@ CCND1	NM_053056.3	ENST00000227507.3	oncokb transcript, MANE select
 CCND2	NM_001759.4	ENST00000261254.8	oncokb transcript, MANE select
 CCND3	NM_001760.5	ENST00000372991.9	oncokb transcript, MANE select
 CCNE1	NM_001238.4	ENST00000262643.8	oncokb transcript, MANE select
-CCNQ	NM_152274.5	ENST00000576892.8	MANE transcript, MANE select
+CCNQ	NM_152274.5	ENST00000576892.8	oncokb transcript, MANE select
 CD274	NM_014143.4	ENST00000381577.4	oncokb transcript, MANE select
 CD276	NM_001024736.2	ENST00000318443.10	oncokb transcript, MANE select
 CD79A	NM_001783.4	ENST00000221972.8	oncokb transcript, MANE select
@@ -228,7 +228,7 @@ INPP4A	NM_001134225.2	ENST00000409851.8	oncokb transcript, MANE select
 INPP4B	NM_001101669.3	ENST00000262992.9	oncokb transcript, MANE select
 INPPL1	NM_001567.4	ENST00000298229.7	oncokb transcript, MANE select
 INSR	NM_000208.4	ENST00000302850.10	oncokb transcript, MANE select
-INSRR	NM_014215.3	ENST00000368195.4	MANE transcript, MANE select
+INSRR	NM_014215.3	ENST00000368195.4	in original mskcc_isoform_overrides_grch38, MANE select
 IRF4	NM_002460.4	ENST00000380956.9	oncokb transcript, MANE select
 IRS1	NM_005544.3	ENST00000305123.6	oncokb transcript, MANE select
 IRS2	NM_003749.3	ENST00000375856.5	oncokb transcript, MANE select
@@ -370,7 +370,7 @@ PRKCI	NM_002740.6	ENST00000295797.5	oncokb transcript, MANE select
 PRKD1	NM_002742.3	ENST00000331968.11	oncokb transcript, MANE select
 PRKN	NM_004562.3	ENST00000366898.6	oncokb transcript, MANE select
 PTCH1	NM_000264.5	ENST00000331920.11	oncokb transcript, MANE select
-PTDSS1	NM_014754.3	ENST00000517309.6	MANE transcript, MANE select
+PTDSS1	NM_014754.3	ENST00000517309.6	in original mskcc_isoform_overrides_grch38, MANE select
 PTEN	NM_000314.8	ENST00000371953.8	oncokb transcript, MANE select
 PTP4A1	NM_003463.5	ENST00000626021.3	oncokb transcript, MANE select
 PTPN11	NM_002834.5	ENST00000351677.7	oncokb transcript, MANE select
@@ -402,7 +402,7 @@ RHEB	NM_005614.4	ENST00000262187.10	oncokb transcript, MANE select
 RHOA	NM_001664.4	ENST00000418115.6	oncokb transcript, MANE select
 RICTOR	NM_152756.5	ENST00000357387.8	oncokb transcript, MANE select
 RIT1	NM_006912.6	ENST00000368323.8	oncokb transcript, MANE select
-RNF34	NM_025126.4	ENST00000361234.10	MANE select
+RNF34	NM_025126.4	ENST00000361234.10	in original mskcc_isoform_overrides_grch38, MANE select
 RNF43	NM_017763.6	ENST00000407977.7	oncokb transcript, MANE select
 ROS1	NM_002944.2	ENST00000368508.7	oncokb transcript
 RPS6KA4	NM_003942.3	ENST00000334205.9	oncokb transcript, MANE select
@@ -416,7 +416,7 @@ RUNX1	NM_001754.4	ENST00000300305.7	oncokb transcript
 RXRA	NM_002957.6	ENST00000481739.2	oncokb transcript, MANE select
 RYBP	NM_012234.5	ENST00000477973.5	oncokb transcript
 SCG5	NM_001144757.3	ENST00000300175.9	oncokb transcript, MANE select
-SDCCAG8	NM_006642.5	ENST00000366541.8	MANE transcript, MANE select
+SDCCAG8	NM_006642.5	ENST00000366541.8	in original mskcc_isoform_overrides_grch38, MANE select
 SDHA	NM_004168.4	ENST00000264932.11	oncokb transcript, MANE select
 SDHAF2	NM_017841.4	ENST00000301761.7	oncokb transcript, MANE select
 SDHB	NM_003000.3	ENST00000375499.8	oncokb transcript, MANE select
@@ -481,7 +481,7 @@ TMEM127	NM_017849.4	ENST00000258439.8	oncokb transcript, MANE select
 TMPRSS2	NM_001135099.1	ENST00000398585.7	oncokb transcript
 TNFAIP3	NM_006290.3	ENST00000237289.8	oncokb transcript
 TNFRSF14	NM_003820.4	ENST00000355716.5	oncokb transcript, MANE select
-TOE1	NM_025077.4	ENST00000372090.6	MANE transcript, MANE select
+TOE1	NM_025077.4	ENST00000372090.6	in original mskcc_isoform_overrides_grch38, MANE select
 TOP1	NM_003286.4	ENST00000361337.3	oncokb transcript, MANE select
 TP53	NM_000546.6	ENST00000269305.9	oncokb transcript, MANE select
 TP53BP1	NM_001141980.3	ENST00000382044.9	oncokb transcript, MANE select
@@ -498,7 +498,7 @@ USP8	NM_005154.5	ENST00000307179.9	oncokb transcript, MANE select
 VEGFA	NM_001171623.1	ENST00000523873.5	oncokb transcript
 VHL	NM_000551.4	ENST00000256474.3	oncokb transcript, MANE select
 VTCN1	NM_024626.4	ENST00000369458.8	oncokb transcript, MANE select
-WDR74	NM_018093.3	ENST00000529106.5	
+WDR74	NM_001369450.1	ENST00000278856.9	in original mskcc_isoform_overrides_grch38, changes to MANE select as they have the same protein sequence
 WT1	NM_024426.6	ENST00000452863.10	oncokb transcript, MANE select
 WWTR1	NM_015472.6	ENST00000360632.8	oncokb transcript, MANE select
 XIAP	NM_001167.3	ENST00000355640.3	oncokb transcript
