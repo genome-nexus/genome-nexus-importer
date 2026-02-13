@@ -1,11 +1,11 @@
 name	version	type	id	description	url
 VEP	grch37	mirrored	vep	"VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions."	https://grch37.ensembl.org/info/docs/tools/vep/index.html
-HGNC	hgnc_v2024.10.1	mirrored	hgnc	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+HGNC	hgnc_v2025.10.7	mirrored	hgnc	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
 Cancer Hotspots	v2	mirrored	cancer_hotspots	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
 3D Hotspots	v2	mirrored	3d_hotspots	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
 reVUE	https://github.com/knowledgesystems/reVUE-data/blob/main/generated/VUEs.json	mirrored	revue	A Repository for Variants with Unexpected Effects (VUE) in Cancer	https://www.cancerrevue.org/
 My Variant Info	"Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html"	external	my_variant_info	"MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources."	https://myvariant.info
-ClinVar	20250106	mirrored	clinvar	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
+ClinVar	20260208	mirrored	clinvar	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
 OncoKB	v5.3	mirrored	oncokb	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
 PDB	latest	external	pdb	A resource for the three-dimensional structural data of large biological molecules such as proteins and nucleic acids.	https://www.rcsb.org/
 xrefs	latest	external	xrefs	Xref endpoint is a lookup of Ensembl Identifiers and retrieve their external references in other databases	http://grch37.rest.ensembl.org/
