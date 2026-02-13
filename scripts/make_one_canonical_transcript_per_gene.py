@@ -51,7 +51,7 @@ def get_overrides_transcript(overrides_tables, ensembl_table, ensembl_table_inde
                 transcript = overrides.loc[hgnc_symbol].isoform_override.values[0]
                 isoform_override = overrides_table_names[index]
             else:
-                transcript = overrides.loc[hgnc_symbol].isoform_override
+                transcript = overrides.loc[hgnc_symbol]['isoform_override']
                 isoform_override = overrides_table_names[index]
             # return transcript and isoform_override_explanation
             return transcript, isoform_override
@@ -295,7 +295,7 @@ if __name__ == "__main__":
     parser.add_argument("ensembl_biomart_geneids_transcript_info",
                         help="tmp/ensembl_biomart_geneids.transcript_info.txt")
     parser.add_argument("hgnc_complete_set",
-                        help="common_input/hgnc_v2024.10.1.txt")
+                        help="common_input/hgnc_complete_set_oct_07_2025.txt")
     parser.add_argument("isoform_overrides_uniprot",
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("isoform_overrides_at_mskcc",

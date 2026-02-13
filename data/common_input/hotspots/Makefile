@@ -25,7 +25,7 @@ hotspots_v2_and_3d_grch37.txt_grch38_ported.txt: hotspots_v2_and_3d_grch37.txt
 	cp $< $@
 
 ENSEMBL_GENE_IDS=../../$(VERSION)/input/ensembl_biomart_geneids.txt
-HGNC_FILE=../hgnc_v2024.10.1.txt
+HGNC_FILE=../hgnc_complete_set_oct_07_2025.txt
 OVERRIDES_FILE=../isoform_overrides_at_mskcc_grch37.txt
 RESIDUE_CHANGES_FILE=mskcc_isoform_residue_changes.txt
 ../../grch37_ensembl111/export/hotspots_v2_and_3d.txt: $(HGNC_FILE) $(OVERRIDES_FILE) $(RESIDUE_CHANGES_FILE) $(ENSEMBL_GENE_IDS) hotspots_v2_and_3d_grch37.txt
