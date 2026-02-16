@@ -32,7 +32,7 @@ if [ ! -f "/data/db/.mongodb_initialized" ]; then
         case "$f" in
             *.sh)
                 echo "Running $f"
-                . "$f"
+                bash "$f"
                 ;;
             *.js)
                 echo "Running $f"
