@@ -64,7 +64,7 @@ jobs:
             patch_version: "0.32_grch38_ensembl95"
     env:
       IMAGE_NAME: genomenexus/gn-mongo
-      PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}_mongodb_7.0.28_rc1
+      PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}_mongodb_7.0.28_rc2
 
     steps:
       - uses: actions/checkout@v4
