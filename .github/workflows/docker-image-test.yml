@@ -19,15 +19,22 @@ jobs:
             mutationassessor: "true"
     steps:
       - name: 'Checkout git repo'
-        uses: actions/checkout@v1
-      - name: 'Docker build with cache'
-        uses: whoan/docker-build-with-cache-action@v5
+        uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: 'Docker build'
+        uses: docker/build-push-action@v6
         with:
-          image_name: genomenexus/gn-mongo
-          image_tag: latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }}
-          build_extra_args: '--build-arg=ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }} --build-arg=MUTATIONASSESSOR=${{ matrix.mutationassessor }}'
-          no_cache: true
-          push_image_and_stages: false
+          context: .
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: genomenexus/gn-mongo:latest-${{ matrix.ref_ensembl_version }}-mutation_assessor_${{ matrix.mutationassessor }}
+          build-args: |
+            ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}
+            MUTATIONASSESSOR=${{ matrix.mutationassessor }}
+          provenance: false
       - name: Run container and capture environment variables
         run: |
           # Run the container overriding the default entrypoint to simply print environment variables.
