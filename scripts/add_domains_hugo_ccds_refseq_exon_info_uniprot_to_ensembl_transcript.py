@@ -270,7 +270,7 @@ if __name__ == '__main__':
                         help="common_input/isoform_overrides_uniprot.txt")
     parser.add_argument("vcf2maf_isoform_overrides_mskcc",
                         help="common_input/mskcc_isoform_overrides_grch37.txt")
-    parser.add_argument("hgnc_symbol_set", help="common_input/hgnc_v2024.10.1.txt")
+    parser.add_argument("hgnc_symbol_set", help="common_input/hgnc_complete_set_oct_07_2025.txt")
     parser.add_argument("ensembl_biomart_transcripts_json",
                         help="tmp/ensembl_biomart_transcripts.json.gz")
 

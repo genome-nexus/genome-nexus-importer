@@ -1,8 +1,8 @@
 name	version	type	id	genome_build	description	url
 VEP	grch37	mirrored	vep	grch37	VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions.	https://grch37.ensembl.org/info/docs/tools/vep/index.html
 VEP	grch38	mirrored	vep	grch38	VEP determines the effect of your variants(SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions.	https://useast.ensembl.org/info/docs/tools/vep/index.html
-HGNC	2024-10	mirrored	hgnc	grch37	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
-HGNC	2024-10	mirrored	hgnc	grch38	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+HGNC	hgnc_v2025.10.7	mirrored	hgnc	grch37	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
+HGNC	hgnc_v2025.10.7	mirrored	hgnc	grch38	The resource for approved human gene nomenclature. Genome Nexus uses HGNC gene symbols in annotation	http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/
 Cancer Hotspots	v2	mirrored	cancer_hotspots	grch37	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
 Cancer Hotspots	v2	mirrored	cancer_hotspots	grch38	A resource for statistically significant mutations in cancer 	https://www.cancerhotspots.org
 3D Hotspots	v2	mirrored	3d_hotspots	grch37	A resource for statistically significant mutations clustering in 3d protein structures in cancer	https://www.3dhotspots.org/
@@ -10,8 +10,8 @@ Cancer Hotspots	v2	mirrored	cancer_hotspots	grch38	A resource for statistically 
 reVUE	https://github.com/knowledgesystems/reVUE-data/blob/main/generated/VUEs.json	mirrored	revue	grch37	A Repository for Variants with Unexpected Effects (VUE) in Cancer	https://www.cancerrevue.org/
 My Variant Info	Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html	external	my_variant_info	grch37	MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources.	https://myvariant.info
 My Variant Info	Includes many annotation sources, see https://docs.myvariant.info/en/latest/doc/data.html	external	my_variant_info	grch38	MyVariant.info provides simple-to-use REST web services to query/retrieve variant annotation data, aggregated from many popular data resources.	https://myvariant.info
-ClinVar	20250106	mirrored	clinvar	grch37	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
-ClinVar	20250106	mirrored	clinvar	grch38	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
+ClinVar	20260208	mirrored	clinvar	grch37	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
+ClinVar	20260208	mirrored	clinvar	grch38	ClinVar aggregates information about genomic variation and its relationship to human health.	https://www.ncbi.nlm.nih.gov/clinvar/
 OncoKB	v5.3	mirrored	oncokb	grch37	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
 OncoKB	v4.24	mirrored	oncokb	grch38	OncoKB™ is a precision oncology knowledge base that contains biological and clinical information about genomic alterations in cancer.	https://www.oncokb.org/
 PDB	latest	external	pdb	grch37	A resource for the three-dimensional structural data of large biological molecules such as proteins and nucleic acids.	https://www.rcsb.org/
