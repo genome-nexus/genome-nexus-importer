@@ -1,6 +1,6 @@
-ARG MONGODBVERSION=4.0.12
+ARG MONGODBVERSION=7.0.28
 
-FROM bitnamilegacy/mongodb:${MONGODBVERSION}
+FROM mongo:${MONGODBVERSION}
 
 # Define build arguments
 ARG ARG_REF_ENSEMBL_VERSION
@@ -14,34 +14,36 @@ ENV MUTATIONASSESSOR=${MUTATIONASSESSOR}
 ARG SLIM_MODE=false
 ENV SLIM_MODE=${SLIM_MODE}
 
-USER root
+# Install required tools for import script (curl for downloads, gzip for decompression)
+RUN apt-get update && apt-get install -y curl gzip && rm -rf /var/lib/apt/lists/*
 
-# Create directories for scripts and data storage and copy data to directory inside the container
-RUN mkdir -p /scripts /data
+# Create directories for scripts and data storage
+RUN mkdir -p /scripts /data /data/common_input
+
+# Copy data to directory inside the container
 COPY data/ /data/
-COPY scripts/startup.sh /scripts/
 
-# Make all scripts in the /scripts directory executable
-RUN chmod +x /scripts/*.sh
-
-# Store environment variables in a file
-# When deploying using bitnami chart, env might be overridden when starting the container, use a file to persist custom env
+# Store environment variables in a file for persistence
 RUN echo "export REF_ENSEMBL_VERSION=${REF_ENSEMBL_VERSION}" >> /scripts/persisted_env.sh && \
     echo "export SPECIES=${SPECIES}" >> /scripts/persisted_env.sh && \
     echo "export MUTATIONASSESSOR=${MUTATIONASSESSOR}" >> /scripts/persisted_env.sh && \
     echo "export SLIM_MODE=${SLIM_MODE}" >> /scripts/persisted_env.sh && \
     chmod +x /scripts/persisted_env.sh
 
-# Change ownership of the /data directory and its contents to non-root user 1001
-RUN chown -R 1001 /data
+# Change ownership to mongodb user (official image uses mongodb:mongodb)
+RUN chown -R mongodb:mongodb /data /scripts
 
-# Switch to the non-root user
-USER 1001
-
-# Copy the MongoDB initialization script into the /docker-entrypoint-initdb.d/ directory
-# This directory is automatically scanned and executed by MongoDB during the first database initialization
+# Copy the MongoDB initialization script
+# This directory is automatically scanned and executed by MongoDB during first database initialization
 COPY scripts/import_mongo.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/import_mongo.sh
 
-# Set the default command to execute the custom startup script when the container runs
-# The startup script arranges the setup and start of MongoDB
-CMD [ "/scripts/startup.sh" ]
+# Create log directory for our custom init
+RUN mkdir -p /var/log/mongodb && chown mongodb:mongodb /var/log/mongodb
+
+# Copy custom entrypoint wrapper to fix race condition
+COPY docker-entrypoint-wrapper.sh /usr/local/bin/docker-entrypoint-wrapper.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint-wrapper.sh
+
+# Use custom entrypoint that adds delay after init
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint-wrapper.sh"]

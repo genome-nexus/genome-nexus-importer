@@ -56,14 +56,14 @@ jobs:
       matrix:
         include:
           - ref_ensembl_version: grch37_ensembl111
-            tag_suffix: slim
-            patch_version: "1.0"
+            tag_suffix: grch37_ensembl111
+            patch_version: "1.2"
           - ref_ensembl_version: grch38_ensembl95
-            tag_suffix: grch38_ensembl95_slim
-            patch_version: "0.32"
+            tag_suffix: grch38_ensembl95
+            patch_version: "1.2"
     env:
       IMAGE_NAME: genomenexus/gn-mongo
-      PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}
+      PATCH_TAG: ${{ matrix.patch_version }}_${{ matrix.tag_suffix }}_mongodb_7.0.28_rc1
 
     steps:
       - uses: actions/checkout@v4
@@ -83,7 +83,6 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ env.PATCH_TAG }}
           build-args: |
             ARG_REF_ENSEMBL_VERSION=${{ matrix.ref_ensembl_version }}
-            SLIM_MODE=true
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
