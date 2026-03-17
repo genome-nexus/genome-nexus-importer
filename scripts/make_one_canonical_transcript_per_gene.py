@@ -284,16 +284,14 @@ def main(ensembl_biomart_geneids_transcript_info,
 
     # Check which reference genome it is
     if "grch37" in isoform_overrides_at_mskcc:
-        # Load raw without setting index to preserving enst_id column
-        mskcc_raw = pd.read_csv(isoform_overrides_at_mskcc, sep='\t')
-        if 'refseq_id' in mskcc_raw.columns and 'enst_id' in mskcc_raw.columns:
-            # Create a mapping from base ENST ID -> base RefSeq ID
+        if 'refseq_id' in mskcc.columns and 'isoform_override' in mskcc.columns:
+            # Create a mapping from base ENST ID -> RefSeq ID
             mapping = {}
-            for _, row in mskcc_raw.iterrows():
-                if pd.notna(row['enst_id']) and pd.notna(row['refseq_id']):
-                    bare_enst = str(row['enst_id']).split('.')[0]
-                    bare_refseq = str(row['refseq_id']).split('.')[0]
-                    mapping[bare_enst] = bare_refseq
+            for _, row in mskcc.iterrows():
+                if pd.notna(row['isoform_override']) and pd.notna(row['refseq_id']):
+                    bare_enst = str(row['isoform_override']).split('.')[0]
+                    refseq = str(row['refseq_id'])
+                    mapping[bare_enst] = refseq
             
             # Apply mapping based on the chosen canonical transcript for MSKCC
             refseq_updates = merged['mskcc_canonical_transcript'].map(mapping)
