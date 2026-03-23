@@ -152,7 +152,7 @@ def add_ccds(transcripts, ccds, isoform_overrides_uniprot, isoform_overrides_msk
             except KeyError:
                 pass
         try:
-            return ccds.loc[enst_versioned].values[0]
+            return ccds.loc[enst_versioned, 'ccds_id']
         except KeyError:
             return np.nan
 
@@ -218,7 +218,12 @@ def main(ensembl_biomart_transcripts,
     # import refseq
     refseq = pd.read_csv(ensembl_biomart_refseq, sep="\t")
     isoform_overrides_uniprot = pd.read_csv(isoform_overrides_uniprot, sep="\t").set_index('enst_id')
-    isoform_overrides_mskcc = pd.read_csv(isoform_overrides_mskcc, sep="\t").set_index('enst_id')
+    
+    isoform_overrides_mskcc = pd.read_csv(isoform_overrides_mskcc, sep="\t")
+    if 'enst_id' in isoform_overrides_mskcc.columns:
+        isoform_overrides_mskcc['enst_id'] = isoform_overrides_mskcc['enst_id'].apply(lambda x: str(x).split('.')[0] if pd.notna(x) else x)
+        isoform_overrides_mskcc = isoform_overrides_mskcc.set_index('enst_id')
+        
     transcripts = add_refseq(transcripts, refseq, isoform_overrides_uniprot, isoform_overrides_mskcc)
 
     # import ccds

@@ -282,11 +282,26 @@ def main(ensembl_biomart_geneids_transcript_info,
     del merged['approved_symbol']
     del merged['ensembl_gene_id']
 
-    # Replace '|' to ', ' to be in the correct format for Genome Nexus
-    # TODO: Update Genome Nexus to accept the latest HGNC format so that replacement is not necessary.
-    merged = merged.astype(str).replace({'\\|': ', '}, regex=True)
+    if "grch37" in isoform_overrides_at_mskcc:
+        if 'refseq_id' in mskcc.columns and 'isoform_override' in mskcc.columns:
+            # Create a mapping from base ENST ID -> RefSeq ID
+            mapping = {}
+            for _, row in mskcc.iterrows():
+                if pd.notna(row['isoform_override']) and pd.notna(row['refseq_id']):
+                    bare_enst = str(row['isoform_override']).split('.')[0]
+                    refseq = str(row['refseq_id'])
+                    mapping[bare_enst] = refseq
+            
+            # Apply mapping based on the chosen canonical transcript for MSKCC isoform
+            refseq_updates = merged['mskcc_canonical_transcript'].map(mapping)
+            merged['refseq_ids'] = refseq_updates.combine_first(merged['refseq_ids'])
+            
+    elif "grch38" in isoform_overrides_at_mskcc:
+        # TODO: it will be added once have a isoform_overrides_at_mskcc_grch38.txt
+        pass
 
-    # Write file
+    # Replace '|' to ', ' to be in the correct format
+    merged = merged.astype(str).replace({'\\|': ', '}, regex=True)
     merged.to_csv(ensembl_biomart_canonical_transcripts_per_hgnc, sep='\t', index=False)
 
 
