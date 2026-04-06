@@ -16,12 +16,26 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       # build and push Docker image
-      - run: |
-          TAG=${GIT_TAG}
-          IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 .
-          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-          docker push $IMAGE:$TAG
+      - run:
+          name: Login to Docker Hub
+          command: echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run:
+          name: Set up QEMU and buildx for multi-platform builds
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --use --name multiarch
+            docker buildx inspect --bootstrap
+      - run:
+          name: Build and push multi-platform image
+          command: |
+            TAG=${GIT_TAG}
+            IMAGE=genomenexus/gn-mongo
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 \
+              -t $IMAGE:$TAG \
+              --push \
+              .
   
   build_and_publish_grch37_mutationassessor:
     docker:
@@ -38,13 +52,27 @@ jobs:
             source "$BASH_ENV"
       - setup_remote_docker:
           docker_layer_caching: true
-      # build and push Docker image
-      - run: |
-          TAG=${GIT_TAG}-mutationassessor
-          IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg MUTATIONASSESSOR=true --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 .
-          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-          docker push $IMAGE:$TAG
+      - run:
+          name: Login to Docker Hub
+          command: echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run:
+          name: Set up QEMU and buildx for multi-platform builds
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --use --name multiarch
+            docker buildx inspect --bootstrap
+      - run:
+          name: Build and push multi-platform image
+          command: |
+            TAG=${GIT_TAG}-mutationassessor
+            IMAGE=genomenexus/gn-mongo
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg MUTATIONASSESSOR=true \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 \
+              -t $IMAGE:$TAG \
+              --push \
+              .
 
   build_and_publish_grch37_slim:
     docker:
@@ -61,13 +89,27 @@ jobs:
             source "$BASH_ENV"
       - setup_remote_docker:
           docker_layer_caching: true
-      # build and push Docker image
-      - run: |
-          TAG=${GIT_TAG}-slim
-          IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 --build-arg SLIM_MODE=true .
-          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-          docker push $IMAGE:$TAG
+      - run:
+          name: Login to Docker Hub
+          command: echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run:
+          name: Set up QEMU and buildx for multi-platform builds
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --use --name multiarch
+            docker buildx inspect --bootstrap
+      - run:
+          name: Build and push multi-platform image
+          command: |
+            TAG=${GIT_TAG}-slim
+            IMAGE=genomenexus/gn-mongo
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grch37_ensembl111 \
+              --build-arg SLIM_MODE=true \
+              -t $IMAGE:$TAG \
+              --push \
+              .
 
   build_and_publish_grch38:
     docker:
@@ -84,13 +126,27 @@ jobs:
             source "$BASH_ENV"
       - setup_remote_docker:
           docker_layer_caching: true
-      # build and push Docker image
-      - run: |
-          TAG=${GIT_TAG}-grch38-ensembl95
-          IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 --build-arg MUTATIONASSESSOR=true .
-          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-          docker push $IMAGE:$TAG
+      - run:
+          name: Login to Docker Hub
+          command: echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run:
+          name: Set up QEMU and buildx for multi-platform builds
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --use --name multiarch
+            docker buildx inspect --bootstrap
+      - run:
+          name: Build and push multi-platform image
+          command: |
+            TAG=${GIT_TAG}-grch38-ensembl95
+            IMAGE=genomenexus/gn-mongo
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 \
+              --build-arg MUTATIONASSESSOR=true \
+              -t $IMAGE:$TAG \
+              --push \
+              .
   
   build_and_publish_grch38_slim:
     docker:
@@ -107,13 +163,27 @@ jobs:
             source "$BASH_ENV"
       - setup_remote_docker:
           docker_layer_caching: true
-      # build and push Docker image
-      - run: |
-          TAG=${GIT_TAG}-grch38-ensembl95-slim
-          IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 --build-arg SLIM_MODE=true .
-          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-          docker push $IMAGE:$TAG
+      - run:
+          name: Login to Docker Hub
+          command: echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run:
+          name: Set up QEMU and buildx for multi-platform builds
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --use --name multiarch
+            docker buildx inspect --bootstrap
+      - run:
+          name: Build and push multi-platform image
+          command: |
+            TAG=${GIT_TAG}-grch38-ensembl95-slim
+            IMAGE=genomenexus/gn-mongo
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 \
+              --build-arg SLIM_MODE=true \
+              -t $IMAGE:$TAG \
+              --push \
+              .
 
   build_and_publish_grcm38:
     docker:
@@ -130,13 +200,27 @@ jobs:
             source "$BASH_ENV"
       - setup_remote_docker:
           docker_layer_caching: true
-      # build and push Docker image
-      - run: |
-          TAG=${GIT_TAG}-grcm38-ensembl95
-          IMAGE=genomenexus/gn-mongo
-          docker build -t $IMAGE:$TAG --build-arg SPECIES=mus_musculus --build-arg ARG_REF_ENSEMBL_VERSION=grcm38_ensembl95 .
-          echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
-          docker push $IMAGE:$TAG
+      - run:
+          name: Login to Docker Hub
+          command: echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
+      - run:
+          name: Set up QEMU and buildx for multi-platform builds
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+            docker buildx create --use --name multiarch
+            docker buildx inspect --bootstrap
+      - run:
+          name: Build and push multi-platform image
+          command: |
+            TAG=${GIT_TAG}-grcm38-ensembl95
+            IMAGE=genomenexus/gn-mongo
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              --build-arg SPECIES=mus_musculus \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grcm38_ensembl95 \
+              -t $IMAGE:$TAG \
+              --push \
+              .
 
 workflows:
   build:
