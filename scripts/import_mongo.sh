@@ -42,7 +42,7 @@ collection_exists() {
   # Use the mongo shell to check if the collection exists in MONGO_DB
   # Returns "1" if present, "0" otherwise.
   local js="db.getSiblingDB('${MONGO_DB}').getCollectionNames().indexOf('${col}') !== -1 ? '1' : '0'"
-  mongo "$MONGO_URI" --quiet --eval "$js"
+  mongosh "$MONGO_URI" --quiet --eval "$js"
 }
 
 should_import() {

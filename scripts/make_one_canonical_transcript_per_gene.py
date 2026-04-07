@@ -228,7 +228,9 @@ def main(ensembl_biomart_geneids_transcript_info,
     assert(len(hugos) == len(hgnc_df))
 
     # only test the cancer genes for oddities (these are very important)
-    cgs = set(pd.read_csv('common_input/oncokb_cancer_genes_list.txt',sep='\t')['Hugo Symbol'])
+    oncokb_file = 'common_input/oncokb_cancer_genes_list.txt'
+    oncokb_df = pd.read_csv(oncokb_file, sep='\t')
+    cgs = set(oncokb_df['Hugo Symbol'])
     # each cancer gene stable id should have only one associated cancer gene symbol
     assert(transcript_info_df[transcript_info_df.hgnc_symbol.isin(cgs)].groupby('gene_stable_id').hgnc_symbol.nunique().sort_values().nunique() == 1)
     # each transcript stable id always belongs to only one gene stable id
@@ -247,9 +249,41 @@ def main(ensembl_biomart_geneids_transcript_info,
     # assert(len(set(hugos).intersection(syns)) == 0) # 495
     # assert(len(set(hugos).intersection(previous_symbols)) == 0) #227
 
+    # Build reverse lookup: old/alias symbol -> current HGNC approved symbol
+    prev_to_approved = {}
+    for approved_sym, prev_list in hgnc_df.previous_symbols.str.strip('"').str.split("|").dropna().items():
+        for ps in prev_list:
+            ps = ps.strip()
+            if ps:
+                prev_to_approved[ps.lower()] = approved_sym
+    alias_to_approved = {}
+    for approved_sym, alias_list in hgnc_df.synonyms.str.strip('"').str.split("|").dropna().items():
+        for s in alias_list:
+            s = s.strip()
+            if s:
+                alias_to_approved[s.lower()] = approved_sym
+
     # all cancer genes and hugo symbols in ensembl data dump should be
     # contained in hgnc approved symbols and synonyms
     # c12orf9 is only in sanger's cancer gene census and has been withdrawn
+    missing_cgs = lowercase_set(set(cgs)) - {'c12orf9'} - lowercase_set(set(hugos).union(syns).union(previous_symbols))
+    if missing_cgs:
+        print('------ Outdated OncoKB cancer gene symbols (updating to latest HGNC) ------')
+        symbol_updates = {}
+        for old_sym_lower in sorted(missing_cgs):
+            old_sym = next(s for s in cgs if s.lower() == old_sym_lower)
+            new_sym = prev_to_approved.get(old_sym_lower) or alias_to_approved.get(old_sym_lower)
+            if new_sym:
+                print(f'  {old_sym} -> {new_sym}')
+                symbol_updates[old_sym] = new_sym
+            else:
+                print(f'  {old_sym} -> NOT FOUND in HGNC (manual review needed)')
+        if symbol_updates:
+            oncokb_df['Hugo Symbol'] = oncokb_df['Hugo Symbol'].replace(symbol_updates)
+            oncokb_df.to_csv(oncokb_file, sep='\t', index=False)
+            print(f'Updated {oncokb_file} with {len(symbol_updates)} symbol change(s)')
+            cgs = set(oncokb_df['Hugo Symbol'])
+        print('------ End of outdated symbols ------')
     assert(len(lowercase_set(set(cgs)) - set(['c12orf9']) - lowercase_set(set(hugos).union(syns).union(previous_symbols))) == 0)
     no_symbols_in_hgnc = lowercase_set(transcript_info_df.hgnc_symbol.dropna().unique()) - lowercase_set(set(hugos).union(syns).union(previous_symbols))
     new_genes = ignore_certain_genes(ignore_rna_gene(no_symbols_in_hgnc),ignored_genes_file_name)
@@ -300,8 +334,16 @@ def main(ensembl_biomart_geneids_transcript_info,
         # TODO: it will be added once have a isoform_overrides_at_mskcc_grch38.txt
         pass
 
+    # Convert entrez_gene_id to nullable integer to avoid float representation
+    if 'entrez_gene_id' in merged.columns:
+        merged['entrez_gene_id'] = merged['entrez_gene_id'].astype('Int64')
+
     # Replace '|' to ', ' to be in the correct format
     merged = merged.astype(str).replace({'\\|': ', '}, regex=True)
+
+    # Replace 'nan' and '<NA>' strings (from NaN/NA values) with empty string
+    merged = merged.replace({'nan': '', '<NA>': ''})
+
     merged.to_csv(ensembl_biomart_canonical_transcripts_per_hgnc, sep='\t', index=False)
 
 
