@@ -79,6 +79,7 @@ if __name__ == "__main__":
 
         # Identify v3-only rows: in v3 file but not in v2 file (by hugo_symbol + residue)
         v2_keys = set(zip(hotspots_2d.hugo_symbol, hotspots_2d.residue))
+        v3_keys = set(zip(hotspots_2d_v3.hugo_symbol, hotspots_2d_v3.residue))
         is_v3_only = hotspots_2d_v3.apply(
             lambda row: (row.hugo_symbol, row.residue) not in v2_keys, axis=1
         )
@@ -95,7 +96,38 @@ if __name__ == "__main__":
             print(f"WARNING: {n_still_missing} v3-only hotspots still missing transcript_id:", file=sys.stderr)
             print(v3_only[v3_only.transcript_id.isna()][['hugo_symbol','residue']].to_string(), file=sys.stderr)
 
-        # Combine v2 + v3-only 2D hotspots
+        # For keys present in BOTH v2 and v3, v3 may have revised values (e.g. a corrected
+        # transcript_id) that the v3-only logic above would otherwise silently discard since
+        # it only ever adds genuinely new keys. Replace the v2 row with v3's version wherever
+        # any non-key field differs, and tag it so the revision is visible downstream.
+        shared_keys = v2_keys & v3_keys
+        compare_cols = [c for c in hotspots_2d.columns if c not in ('hugo_symbol', 'residue', 'version')]
+        revised_rows = []
+        for key in sorted(shared_keys):
+            hugo_symbol, residue = key
+            r2 = hotspots_2d[(hotspots_2d.hugo_symbol == hugo_symbol) & (hotspots_2d.residue == residue)].iloc[0]
+            r3 = hotspots_2d_v3[(hotspots_2d_v3.hugo_symbol == hugo_symbol) & (hotspots_2d_v3.residue == residue)].iloc[0]
+            def _differs(a, b):
+                if pd.isna(a) and pd.isna(b):
+                    return False
+                return a != b
+            diffs = {c: (r2[c], r3[c]) for c in compare_cols if c in r3.index and _differs(r2[c], r3[c])}
+            if diffs:
+                print(f"v3 revises existing hotspot {key}: {diffs}", file=sys.stderr)
+                revised = r3.copy()
+                revised['version'] = 'v3-revised'
+                revised_rows.append(revised)
+
+        if revised_rows:
+            revised_df = pd.DataFrame(revised_rows)
+            revised_keys = set(zip(revised_df.hugo_symbol, revised_df.residue))
+            hotspots_2d = hotspots_2d[
+                ~hotspots_2d.apply(lambda row: (row.hugo_symbol, row.residue) in revised_keys, axis=1)
+            ]
+            hotspots_2d = pd.concat([hotspots_2d, revised_df])
+        print(f"Found {len(revised_rows)} hotspots revised by v3 (same gene+residue, different values)", file=sys.stderr)
+
+        # Combine v2 (+ v3 revisions) + v3-only 2D hotspots
         hotspots_2d = pd.concat([hotspots_2d, v3_only])
 
     hotspots_3d = pd.read_csv(args.hotspots_3d, sep="\t", dtype=str)
@@ -131,8 +163,8 @@ if __name__ == "__main__":
         hotspots.loc[hotspots3d_without_transcript_id, 'transcript_id'] = hotspots[hotspots3d_without_transcript_id]["hugo_symbol"].apply(lambda x: hotspots3d_overrides.loc[x])
 
 
-        # no unassigned hugo symbols should be left after assigning missing transcripts for hotspots v2
-        hotspots3d_without_transcript_id = ((hotspots.type != "3d") & pd.isnull(hotspots.transcript_id))
+        # no unassigned hugo symbols should be left after assigning missing transcripts for hotspots 3d
+        hotspots3d_without_transcript_id = ((hotspots.type == "3d") & pd.isnull(hotspots.transcript_id))
         assert(hotspots3d_without_transcript_id.sum() == 0)
     
     # Add transcript_id_version column (empty — populated downstream by isoform override scripts)

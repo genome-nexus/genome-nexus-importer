@@ -30,3 +30,98 @@ The grch37_ensembl111 cancer hotspots transcripts are based on `isoform_override
 - H3C8 (prev HIST1H3G): nan → ENST00000305910
 - PAK5 (prev PAK7): nan → ENST00000353224
 - PTPN11: nan → ENST00000351677
+
+# grch38_ensembl111 changes
+`grch38_ensembl111/export/hotspots_v2_v3_and_3d.txt` is generated from
+`grch37_ensembl111/export/hotspots_v2_v3_and_3d.txt` via `scripts/hotspots/liftover_hotspots_to_grch38.py` - a
+per-residue, alignment-based liftover (see "How to generate from scratch" below for the full pipeline).
+
+Named `hotspots_v2_v3_and_3d.txt` (not `hotspots_v2_and_3d.txt`, the older name still used by some stale/frozen
+copies elsewhere in repo history) because the file now genuinely combines three cancerhotspots.org sources: the
+2D `v2` dataset, the 2D `v3` dataset, and the 3D structural dataset - not just `v2` and 3D as the old name implied.
+
+### Missing cancer hotspots in GRCh38
+- WHR1 (STK19) D89 falls in the first 110 residues, which aren't present in the GRCh38 transcript at all (MANE is missing exon 1). 
+
+
+# Gene name normalization
+All gene names in `v2_multi_type_residue.txt`, `3d_hotspots.txt`, `isoform_overrides_at_mskcc_grch37.txt`, and
+`isoform_overrides_at_mskcc_grch38.txt` were checked against current HGNC symbols and updated where stale (e.g.
+`HIST1H3E` → `H3C6`, `WHSC1` → `NSD2`, `STK19` → `WHR1`, `TCEB1` → `ELOC`, and ~35 others). This matters because the liftover script normalizes a hotspot's gene symbol to its *current* HGNC name before looking up its GRCh38 transcript.
+
+# How to generate `hotspots_v2_v3_and_3d.txt` from scratch
+
+All commands below are run from `data/common_input/hotspots/`.
+
+**1. Fetch the raw hotspot data** (all three are pinned to a specific commit in the `Makefile`'s
+`HOTSPOTS_RAW_URL`/`HOTSPOTS_V3_RAW_URL` - re-pin deliberately, not to a floating branch, since upstream branches
+get renamed/deleted):
+```bash
+make v2_multi_type_residue.txt v3_multi_type_residue.txt 3d_hotspots.txt
+```
+Note: `v3_multi_type_residue.txt` is reduced-precision - only genes with hotspots *not already in v2* get added, so
+delete and re-fetch it (and re-run step 2) whenever the upstream v3 branch moves.
+
+**2. Combine v2 + v3 + 3D into one GRCh37 file:**
+```bash
+make hotspots_v2_v3_and_3d_grch37.txt
+```
+This also applies `isoform_overrides_v2.txt`/`isoform_overrides_3d.txt` (fills in transcript IDs that
+cancerhotspots.org itself left blank for certain genes - check its stderr output for "still missing transcript_id"
+warnings if you add new source data) and filters out low-confidence hotspots (mostly-truncating or 0-1 supporting
+mutations) into `removed_hotspots.txt`.
+
+**3. Swap in MSKCC's preferred GRCh37 transcripts:**
+```bash
+make VERSION=grch37_ensembl111 ../../grch37_ensembl111/export/hotspots_v2_v3_and_3d.txt
+```
+Runs `scripts/hotspots/overwrite_transcript_and_residue_to_mskcc_isoform.py`. Uses
+`isoform_overrides_at_mskcc_grch37.txt` (every candidate transcript per gene is tried and verified by alignment,
+not just renamed blindly - see "GRCh37 override step fixed..." above) plus `mskcc_isoform_residue_changes.txt` as
+a manual escape hatch for anything the automatic alignment can't resolve on its own. Check
+`grch37_override_review.txt` after running - any row there means no override candidate's sequence could be
+verified against that hotspot, so it was conservatively left on its original transcript; it should normally come
+out empty.
+
+**4. Lift over to GRCh38:**
+```bash
+make VERSION=grch38_ensembl111 ../../grch38_ensembl111/export/hotspots_v2_v3_and_3d.txt
+```
+Runs `scripts/hotspots/liftover_hotspots_to_grch38.py` - see "Transcripts verified correct for GRCh38" above for
+how it picks transcripts. Check `grch38_liftover_dropped.txt` after running; every dropped row has a reason
+(`deleted`, `grch37_ref_mismatch`, `aa_changed`, `no_grch38_transcript`, `no_sequence`) - investigate each one (as
+above) rather than assuming the drop is correct.
+
+**5. (Optional) Sync older builds:** `grch37_ensembl92`, `grch38_ensembl92`, and `grch38_ensembl95` don't get their
+own separate hotspot generation anymore - hotspot calls don't depend on which Ensembl release annotated the
+genome, so they just copy whichever of `grch37_ensembl111`/`grch38_ensembl111`'s file matches their genome build:
+```bash
+make ../../grch37_ensembl92/export/hotspots_v2_v3_and_3d.txt
+make ../../grch38_ensembl92/export/hotspots_v2_v3_and_3d.txt
+make ../../grch38_ensembl95/export/hotspots_v2_v3_and_3d.txt
+```
+Each of these re-invokes `make` with `VERSION` pinned to the right upstream build before copying, so they work
+regardless of whether `VERSION` was set for the outer invocation. (The old REST-API-based `update_hotspots_to_grch38.py`
+pathway that used to generate the `grch38_ensembl92`/`95` files independently is no longer used by the Makefile -
+the script file itself is left in place but is no longer wired up.)
+
+**Things to note / watch for when regenerating:**
+- Both the GRCh37 override step and the GRCh38 liftover step share the same alignment/translation logic
+  (`scripts/hotspots/hotspot_transcript_utils.py`) - if you need to change how a position gets translated between
+  transcripts, fix it there once rather than in either script separately.
+- Gene symbols must be current HGNC symbols in `v2_multi_type_residue.txt`, `3d_hotspots.txt`, and both
+  `isoform_overrides_at_mskcc_grch3*.txt` files - an override filed under a stale symbol is silently invisible to
+  the scripts, which normalize to the *current* symbol before looking anything up.
+- A gene can legitimately have more than one row in `isoform_overrides_at_mskcc_grch3{7,8}.txt` (e.g. CDKN2A's two
+  reading frames) - both scripts try all of them per hotspot row; don't collapse duplicates expecting only one to
+  be "right."
+- `grch37_override_review.txt` and `grch38_liftover_dropped.txt` are both empty-by-default expectations, not
+  informational logs - anything in either one means a hotspot couldn't be automatically verified and needs a human
+  to look at it (same as investigating TGFBR2/RAC1/CDKN2A/AKR7L/SYT7 above).
+- `uniprot/input/Homo_sapiens.grch3{7,8}.pep.all.fa.gz` must be release-pinned (same Ensembl release as everything
+  else in this build) - a stale cached FASTA silently produces wrong or missing liftover results with no error.
+- The public MySQL mirror (`ensembldb.ensembl.org`, anonymous) is useful for investigating any gene flagged in
+  `grch38_liftover_dropped.txt`: check `transcript.biotype` there before assuming a transcript doesn't exist for a
+  gene - Ensembl sometimes reclassifies a gene's biotype (e.g. AKR7L's `polymorphic_pseudogene` →
+  `protein_coding_LoF`) rather than removing it outright, and the "missing" transcript may just need a
+  by-alignment (not by-raw-position) check against those less obvious candidates.
