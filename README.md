@@ -68,8 +68,11 @@ R -e "source('https://bioconductor.org/biocLite.R'); biocLite('biomaRt')"
 
 #### Updating versions
 ##### data/<ref_genome_ensembl_version>/input
-Delete old input files, new files will be generated while running `Makefile`. 
-If you want to update data to a specific verison, check [Ensembl Archieves](https://useast.ensembl.org/info/website/archives/index.html) to find the corresponding url and replace `host_url` in the `retrieve_biomart_tables.R`. Please note only GRCh38 supports versioning url, GRCh37 can only point to `https://grch37.ensembl.org/` which uses the latest version.
+Delete old input files, new files will be generated while running `Makefile`.
+
+For `SPECIES=homo_sapiens` with `VERSION=grch38_ensemblNNN`, the `Makefile` retrieves the 4 `ensembl_biomart_*.txt` files via `scripts/retrieve_biomart_tables.py`, which queries Ensembl's public, anonymous MySQL mirror (`ensembldb.ensembl.org`) directly for release `NNN`'s core database. This is the default for GRCh38 because it keeps working even when the corresponding Ensembl archive website/BioMart REST endpoint for that release is down (which happens fairly often for older archived releases) - the mirror serves every release's frozen core database independently of the website. You can also run it standalone: `python3 scripts/retrieve_biomart_tables.py <output_dir> grch38 <ensembl_release>`.
+
+GRCh37 and mouse (`SPECIES=mus_musculus`) still use `retrieve_biomart_tables.R`/biomaRt: GRCh37 is permanently served from a single live host (`https://grch37.ensembl.org`, frozen at Ensembl release 75 server-side, so it isn't affected by archive downtime the same way), and the MySQL script doesn't support mouse. If you need a specific non-GRCh38 historical release and the corresponding archive website is down, check [Ensembl Archives](https://useast.ensembl.org/info/website/archives/index.html) for the right URL and replace `host_url` in `retrieve_biomart_tables.R`.
 
 ##### OncoKB isoform overrides
 Delete old files, new files will be downloaded by `download_oncokb_isoform_overrides.py` while running `Makefile`. Please make sure to set `ONCOKB_VERSION=` in `Makefile`. Also this version need to be updated in `/data/common_input/version_info.txt`.

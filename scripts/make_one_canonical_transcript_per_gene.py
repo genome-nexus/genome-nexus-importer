@@ -97,7 +97,28 @@ def get_ensembl_canonical_transcript_id_from_hgnc_then_ensembl(ensembl_table, en
             # find transcripts from ensembl_table (same as ensembl_table_indexed_by_gene_stable_id) by searching ensembl_gene_id
             # here we use ensembl_table_indexed_by_gene_stable_id instead to increase performance
             # get_ensembl_canonical returns one transcript from all transcripts found by ensembl_gene_id
-            return get_ensembl_canonical(ensembl_table_indexed_by_gene_stable_id.loc[hgnc_gene_rows.ensembl_gene_id], field)
+            rows = ensembl_table_indexed_by_gene_stable_id.loc[hgnc_gene_rows.ensembl_gene_id]
+            # HGNC only stores GRCh38 gene IDs. For GRCh37 builds, a GRCh38 gene ID may
+            # coincidentally exist in the GRCh37 BioMart data as a completely different gene,
+            # causing the wrong transcripts to be selected. Detect this: if the symbol we are
+            # looking for is absent from the rows returned by the HGNC gene ID, but the symbol
+            # DOES exist in GRCh37 under a different gene ID, we must fall back to symbol-based
+            # lookup. We do NOT reject when the symbol is absent from GRCh37 entirely (gene was
+            # renamed between builds) — the HGNC gene ID is still the correct gene in that case.
+            if rows.ndim == 1:
+                symbols_in_rows = {rows.get('hgnc_symbol', '') or ''}
+            else:
+                symbols_in_rows = set(rows['hgnc_symbol'].dropna().unique())
+            if hgnc_symbol not in symbols_in_rows:
+                symbol_found_in_grch37 = False
+                try:
+                    candidate = ensembl_table.loc[hgnc_symbol]
+                    symbol_found_in_grch37 = candidate.ndim == 1 or len(candidate) > 0
+                except KeyError:
+                    pass
+                if symbol_found_in_grch37:
+                    raise KeyError(hgnc_gene_rows.ensembl_gene_id)
+            return get_ensembl_canonical(rows, field)
         except KeyError:
             # if couldn't find any transcripts by ensembl_gene_id, switch to searching by hgnc_symbol
             # there's actually 222 of these (see notebook)
@@ -195,6 +216,10 @@ def main(ensembl_biomart_geneids_transcript_info,
     transcript_info_df = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t', dtype={'is_canonical':bool, 'transcript_id_version': object})
     if 'transcript_id_version' in transcript_info_df.columns:
         transcript_info_df['transcript_id_version'] = transcript_info_df['transcript_id_version'].apply(normalize_version_string)
+    # Older GRCh38 BioMart exports lack versioned_transcript_id; fall back to transcript_stable_id
+    # so the rest of the pipeline can proceed (version numbers will be absent in that case).
+    if 'versioned_transcript_id' not in transcript_info_df.columns:
+        transcript_info_df['versioned_transcript_id'] = transcript_info_df['transcript_stable_id']
     transcript_info_df = transcript_info_df.drop_duplicates()
     uniprot = pd.read_csv(isoform_overrides_uniprot, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
