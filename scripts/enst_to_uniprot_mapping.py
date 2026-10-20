@@ -21,13 +21,18 @@ import pandas as pd
 import numpy as np
 from Bio import SeqIO
 import wget
-import requests
 from io import StringIO
-import time
 from collections import OrderedDict
 import argparse
 import subprocess
 import Levenshtein
+
+MYSQL_HOST = "ensembldb.ensembl.org"
+MYSQL_PORT = "3306"
+MYSQL_USER = "anonymous"
+ASSEMBLY_SUFFIX = {"grch37": "37", "grch38": "38"}
+# GRCh37's core database is permanently frozen at Ensembl release 75.
+FROZEN_DB_RELEASE = {"grch37": "75"}
 
 # generate sequence to uniprot id dictionary
 def generate_dict(key, value, dictionary):
@@ -54,39 +59,31 @@ def is_matched(uniprot_id_with_isoform, uniprot_biomart):
         else:
             return False
 
-def get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome_build):
-    start = 0
-    end = 0
-    max_length = len(df_transcript)
-    chunk = 400
-    while (start < max_length):
-        if (start + chunk) >= max_length:
-            end = max_length
-        else:
-            end = start + chunk
-        ensp_list = []
-        print("Fetching BioMart for variant #" + str(start) + " to #" + str(end) + ', ' + str(max_length) + ' in total')
-        for i in range(start, end):
-            if df_transcript['ensp_id'][i] != '':
-                ensp_list.append(df_transcript['ensp_id'][i])
-        if len(ensp_list) == 0:
-            start = start + chunk
+def get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome_build, ensembl_release):
+    # Queries Ensembl's public, anonymous, read-only MySQL mirror (ensembldb.ensembl.org)
+    # directly for the ENSP -> UniProt/SWISSPROT mapping, instead of the BioMart REST
+    # martservice (which isn't release-pinned and is unreliable/down).
+    db_release = FROZEN_DB_RELEASE.get(genome_build, ensembl_release)
+    database = "homo_sapiens_core_%s_%s" % (db_release, ASSEMBLY_SUFFIX[genome_build])
+    print("Querying %s on %s for ENSP -> UniProt/SWISSPROT mapping..." % (database, MYSQL_HOST))
+    sql = """
+        SELECT tl.stable_id, x.dbprimary_acc
+        FROM translation tl
+        JOIN transcript t ON t.transcript_id = tl.transcript_id
+        JOIN object_xref ox ON ox.ensembl_id = tl.translation_id AND ox.ensembl_object_type = 'Translation'
+        JOIN xref x ON x.xref_id = ox.xref_id
+        JOIN external_db ed ON ed.external_db_id = x.external_db_id AND ed.db_name = 'Uniprot/SWISSPROT'
+        WHERE t.is_current = 1;
+    """
+    result = subprocess.run(
+        ["mysql", "-h", MYSQL_HOST, "-P", MYSQL_PORT, "-u", MYSQL_USER, "-N", "-B", database, "-e", sql],
+        capture_output=True, text=True, check=True,
+    )
+    for line in result.stdout.strip('\n').split('\n'):
+        if not line:
             continue
-        if 'grch37' in genome_build.lower():
-            url = "http://grch37.ensembl.org/biomart/martservice?query=%3C?xml%20version=%221.0%22%20encoding=%22UTF-8%22?%3E%20%3C!DOCTYPE%20Query%3E%20%3CQuery%20%20virtualSchemaName%20=%20%22default%22%20formatter%20=%20%22TSV%22%20header%20=%20%220%22%20uniqueRows%20=%20%220%22%20count%20=%20%22%22%20datasetConfigVersion%20=%20%220.6%22%20%3E%20%3CDataset%20name%20=%20%22hsapiens_gene_ensembl%22%20interface%20=%20%22default%22%20%3E%20%3CFilter%20name%20=%20%22ensembl_peptide_id%22%20value%20=%20%22" + ','.join(ensp_list) + "%22/%3E%20%3CAttribute%20name%20=%20%22uniprotswissprot%22%20/%3E%20%3CAttribute%20name%20=%20%22ensembl_peptide_id%22%20/%3E%20%3C/Dataset%3E%20%3C/Query%3E"
-        else:
-            url = "http://www.ensembl.org/biomart/martservice?query=%3C?xml%20version=%221.0%22%20encoding=%22UTF-8%22?%3E%20%3C!DOCTYPE%20Query%3E%20%3CQuery%20%20virtualSchemaName%20=%20%22default%22%20formatter%20=%20%22TSV%22%20header%20=%20%220%22%20uniqueRows%20=%20%220%22%20count%20=%20%22%22%20datasetConfigVersion%20=%20%220.6%22%20%3E%20%3CDataset%20name%20=%20%22hsapiens_gene_ensembl%22%20interface%20=%20%22default%22%20%3E%20%3CFilter%20name%20=%20%22ensembl_peptide_id%22%20value%20=%20%22" + ','.join(ensp_list) + "%22/%3E%20%3CAttribute%20name%20=%20%22uniprotswissprot%22%20/%3E%20%3CAttribute%20name%20=%20%22ensembl_peptide_id%22%20/%3E%20%3C/Dataset%3E%20%3C/Query%3E"
-        html = requests.get(url).text
-        if "ERROR" in html:
-            print ("retry: " + str(start) + " to " + str(end))
-            time.sleep(10)
-            continue
-        parsed_html = html.split('\n')
-        for uniprot_with_ensp in parsed_html[:-1]:
-            uniprot = uniprot_with_ensp.split('\t')[0]
-            ensp = uniprot_with_ensp.split('\t')[1]
-            biomart_ensp_to_uniprot_dict[ensp] = uniprot
-        start = start + chunk
+        ensp, uniprot = line.split('\t')
+        biomart_ensp_to_uniprot_dict[ensp] = uniprot
 
 def find_uniprot_ids_with_one_levenshtein_distance(ensembl_sequence, ensp_id, sequence_length_dict, sequence_to_uniprot_dict):
     if ensembl_sequence:
@@ -166,6 +163,8 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_sequence_with_isofo
         genome_build = 'grch37'
     else:
         genome_build = 'grch38'
+    release_match = re.search(r'ensembl(\d+)', genome_build_version.lower())
+    ensembl_release = release_match.group(1) if release_match else None
     # get result dataframe from transcript json file
     df_transcript = None
     transcript_ids = []
@@ -222,7 +221,7 @@ def main(ensembl_biomart_transcripts, ensembl_fasta, uniprot_sequence_with_isofo
     
     # get uniprot from biomart and generate a map
     biomart_ensp_to_uniprot_dict = dict()
-    get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome_build)
+    get_uniprot_from_biomart(df_transcript, biomart_ensp_to_uniprot_dict, genome_build, ensembl_release)
     
 
     # get reviewed mapping(previous mapping), generate reviewed_mapping_dict
