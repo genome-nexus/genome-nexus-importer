@@ -112,7 +112,7 @@ echo "[INFO] Executing human-specific import steps"
 import_if_needed "pfam.domain" "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/pfamA.txt" '--drop --type tsv --headerline'
 import_if_needed "ptm.experimental" <(gunzip -c "${DIR}/../data/ptm/export/ptm.json.gz") '--drop --type json'
 
-import_if_needed "hotspot.mutation" "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/hotspots_v2_and_3d.txt" '--drop --type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
+import_if_needed "hotspot.mutation" "${DIR}/../data/${REF_ENSEMBL_VERSION}/export/hotspots_v2_v3_and_3d.txt" '--drop --type tsv --headerline --mode upsert --upsertFields hugo_symbol,residue,type,tumor_count'
 import_if_needed "signal.mutation" <(gunzip -c "${DIR}/../data/signal/export/mutations.json.gz") '--drop --type json'
 
 # import oncokb cancer genes list

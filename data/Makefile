@@ -40,9 +40,25 @@ QSIZE=1000
 # Genome build(grch37 or grch38). Use in Uniprot mapping
 GENOME_BUILD=$(firstword $(subst _, ,$(VERSION)))
 
-# OncoKB version. Used for downloading OncoKB cancer gene list. 
+# Ensembl release number, extracted from VERSION (e.g. grch38_ensembl111 -> 111).
+# Only meaningful for GENOME_BUILD=grch38 - see BIOMART_CMD below.
+ENSEMBL_RELEASE=$(subst ensembl,,$(lastword $(subst _, ,$(VERSION))))
+
+# OncoKB version. Used for downloading OncoKB cancer gene list.
 # Check OncoKB website for the latest version number.
 ONCOKB_VERSION=v7.1
+
+# Default to querying Ensembl's public MySQL mirror directly for homo_sapiens/GRCh38
+# (robust to the Ensembl website/BioMart REST layer being down, which happens often for
+# archived historical releases). Everything else (GRCh37's permanently-live host, and
+# mouse) keeps using retrieve_biomart_tables.R / biomaRt, since GRCh37 is frozen at
+# Ensembl release 75 server-side (so ENSEMBL_RELEASE as derived above wouldn't map to a
+# real database for it) and biomaRt is still needed for mouse support.
+ifeq ($(SPECIES)_$(GENOME_BUILD), homo_sapiens_grch38)
+  BIOMART_CMD=python3 ../scripts/retrieve_biomart_tables.py $(VERSION)/input/ $(GENOME_BUILD) $(ENSEMBL_RELEASE)
+else
+  BIOMART_CMD=Rscript --vanilla ../scripts/retrieve_biomart_tables.R $(SPECIES) $(VERSION)/input/ $(GENOME_BUILD)
+endif
 
 ifeq ($(GENOME_BUILD), grch38)
   MSKCC_ISOFORM_OVERRIDES_FILE_NAME=isoform_overrides_at_mskcc_grch38.txt
@@ -143,7 +159,7 @@ ptm/export/ptm.json.gz: common_input/CCDS2UniProtKB.current.txt common_input/CCD
 # example when the Ensembl API becomes unavailable due to too many requests. If Ensembl REST API returns timeout error,
 # lower the query size (QSIZE).
 $(TMP_DIR)/ensembl_canonical_data.txt: $(VERSION)/input/ensembl_biomart_geneids.txt
-	python ../scripts/download_transcript_info_from_ensembl.py -q $(QSIZE) $< $@
+	python ../scripts/download_transcript_info_from_ensembl.py -q $(QSIZE) --genome-build $(GENOME_BUILD) --ensembl-release $(ENSEMBL_RELEASE) $< $@
 
 $(TMP_DIR)/ensembl_biomart_transcripts.txt: $(TMP_DIR)/ensembl_canonical_data.txt
 	csvcut -tc transcript_stable_id,versioned_transcript_id,transcript_id_version,gene_stable_id,hgnc_symbol,protein_stable_id,protein_length $< | \
@@ -202,7 +218,7 @@ common_input/mouse/MGI_Gene_Model_Coord.rpt:
 	wget http://www.informatics.jax.org/downloads/reports/MGI_Gene_Model_Coord.rpt -O $@
 
 $(VERSION)/input/ensembl_biomart_ccds.txt $(VERSION)/input/ensembl_biomart_geneids.txt $(VERSION)/input/ensembl_biomart_refseq.txt $(VERSION)/input/ensembl_biomart_pfam.txt:
-	Rscript --vanilla ../scripts/retrieve_biomart_tables.R $(SPECIES) $(VERSION)/input/ $(GENOME_BUILD)
+	$(BIOMART_CMD)
 
 # download OncoKB cancer genes list
 # need to set ONCOKB_TOKEN first by "export ONCOKB_TOKEN="

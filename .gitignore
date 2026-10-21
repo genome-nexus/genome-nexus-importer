@@ -5,3 +5,4 @@
 venv/
 data/*/tmp
 scripts/.cache/
+data/common_input/mutation_assessor_v4
