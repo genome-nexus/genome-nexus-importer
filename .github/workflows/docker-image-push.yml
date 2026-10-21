@@ -14,9 +14,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - ref_ensembl_version: grch37_ensembl111
+          - ref_ensembl_version: grch37-ensembl111
             mutationassessor: "false"
-          - ref_ensembl_version: grch37_ensembl111
+          - ref_ensembl_version: grch37-ensembl111
             mutationassessor: "true"
     env:
       IMAGE_NAME: genomenexus/gn-mongo
@@ -57,11 +57,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - ref_ensembl_version: grch37_ensembl111
+          - ref_ensembl_version: grch37-ensembl111
             tag_suffix: slim
             patch_version: "1.0"
-          - ref_ensembl_version: grch38_ensembl111
-            tag_suffix: grch38_ensembl111_slim
+          - ref_ensembl_version: grch38-ensembl111
+            tag_suffix: grch38-ensembl111-slim
             patch_version: "1.0"
     env:
       IMAGE_NAME: genomenexus/gn-mongo

@@ -13,11 +13,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - ref_ensembl_version: grch37_ensembl111
+          - ref_ensembl_version: grch37-ensembl111
             mutationassessor: "false"
-          - ref_ensembl_version: grch37_ensembl111
+          - ref_ensembl_version: grch37-ensembl111
             mutationassessor: "true"
-          - ref_ensembl_version: grch38_ensembl111
+          - ref_ensembl_version: grch38-ensembl111
             mutationassessor: "false"
 
     steps:
