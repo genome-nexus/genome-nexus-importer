@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}
+            TAG=${GIT_TAG}-grch37_ensembl111
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-mutationassessor
+            TAG=${GIT_TAG}-grch37_ensembl111-mutationassessor
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
@@ -101,7 +101,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-slim
+            TAG=${GIT_TAG}-grch37_ensembl111-slim
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
@@ -138,11 +138,11 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-grch38-ensembl95
+            TAG=${GIT_TAG}-grch38_ensembl111
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
-              --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl111 \
               --build-arg MUTATIONASSESSOR=true \
               -t $IMAGE:$TAG \
               --push \
@@ -175,11 +175,11 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-grch38-ensembl95-slim
+            TAG=${GIT_TAG}-grch38_ensembl111-slim
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
-              --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl95 \
+              --build-arg ARG_REF_ENSEMBL_VERSION=grch38_ensembl111 \
               --build-arg SLIM_MODE=true \
               -t $IMAGE:$TAG \
               --push \

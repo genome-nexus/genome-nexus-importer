@@ -7,7 +7,7 @@ on:
 # Only use GitHub Actions for testing, because the Docker image with Mutation Assessor data is too big to be built and pushed.
 # CircleCI builds and pushes the images to Docker Hub for every new release.
 jobs:
-  build_and_test_grch37:
+  build_and_test:
     if: github.repository == 'genome-nexus/genome-nexus-importer'
     runs-on: ubuntu-latest
     strategy:
@@ -17,6 +17,9 @@ jobs:
             mutationassessor: "false"
           - ref_ensembl_version: grch37_ensembl111
             mutationassessor: "true"
+          - ref_ensembl_version: grch38_ensembl111
+            mutationassessor: "false"
+
     steps:
       - name: 'Checkout git repo'
         uses: actions/checkout@v4
