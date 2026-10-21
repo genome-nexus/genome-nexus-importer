@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-grch37_ensembl111
+            TAG=${GIT_TAG}-grch37-ensembl111
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-grch37_ensembl111-mutationassessor
+            TAG=${GIT_TAG}-grch37-ensembl111-mutationassessor
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
@@ -101,7 +101,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-grch37_ensembl111-slim
+            TAG=${GIT_TAG}-grch37-ensembl111-slim
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
@@ -138,7 +138,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-grch38_ensembl111
+            TAG=${GIT_TAG}-grch38-ensembl111
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
@@ -175,7 +175,7 @@ jobs:
       - run:
           name: Build and push multi-platform image
           command: |
-            TAG=${GIT_TAG}-grch38_ensembl111-slim
+            TAG=${GIT_TAG}-grch38-ensembl111-slim
             IMAGE=genomenexus/gn-mongo
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
