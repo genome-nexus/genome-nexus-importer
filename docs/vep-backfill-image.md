@@ -6,10 +6,8 @@ VEP build.
 
 ## Build
 
-Multi-arch is required, not optional. gn-vep is published for both
-architectures, and the backfill runs across both: Pass A lands on the
-`cbio-dev` pool, which is Graviton (`r6g`/`r8g` = arm64), while
-`gn-vep-111-grch38` itself runs on `t3.large` (amd64).
+Published as `genomenexus/gn-vep-backfill:111-grch38-1`, multi-arch
+(`linux/amd64` `sha256:70f9ff62`, `linux/arm64` `sha256:7325db77`).
 
 ```sh
 docker buildx build --platform linux/amd64,linux/arm64 \
@@ -17,11 +15,38 @@ docker buildx build --platform linux/amd64,linux/arm64 \
   -t genomenexus/gn-vep-backfill:111-grch38-1 --push .
 ```
 
-Verify both platforms landed:
+Verify:
 
 ```sh
 docker buildx imagetools inspect genomenexus/gn-vep-backfill:111-grch38-1
 ```
+
+The Docker Hub web API lags behind a push by a few minutes; the registry is
+authoritative if you need to confirm sooner:
+
+```sh
+TOK=$(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:genomenexus/gn-vep-backfill:pull" | jq -r .token)
+curl -s -H "Authorization: Bearer $TOK" \
+  https://registry-1.docker.io/v2/genomenexus/gn-vep-backfill/tags/list
+```
+
+### If you rebuild
+
+Two things make it much faster.
+
+**Tag inside the `gn-vep` repository** rather than a separate one. A registry
+only deduplicates blobs within the *same* repository name, so pushing to a new
+repo re-uploads the entire 12.4 GB base per platform — measured at over half an
+hour. Tagging as `gn-vep:111-grch38-backfill-N` makes every base blob return 200
+from the registry's `HEAD` check, leaving only a few hundred MB to transfer.
+
+**`--platform linux/arm64` alone is sufficient.** The backfill Jobs target the
+`cbio-dev` pool, which is Graviton (`r6g`/`r8g`). amd64 is built only so the
+image remains usable on the amd64 pools; nothing in the backfill needs it.
+
+Build locally rather than in CI. `.github/workflows/docker-image-push.yml` notes
+that GitHub Actions cannot build and push images this size, and its `type=gha`
+cache would exceed the 10 GB limit.
 
 ## What it adds
 

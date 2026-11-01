@@ -5,13 +5,22 @@
 # CLI and 13G of plugin data at /plugin-data; this adds only what the backfill
 # pipeline needs on top.
 #
-# MUST be built multi-arch. gn-vep is published for linux/amd64 and linux/arm64,
-# and Pass A runs on the cbio-dev pool, which is Graviton (r6g/r8g = arm64),
-# while gn-vep-111-grch38 itself sits on t3.large (amd64):
+# Published as genomenexus/gn-vep-backfill:111-grch38-1, multi-arch:
 #
 #   docker buildx build --platform linux/amd64,linux/arm64 \
 #     -f Dockerfile.vep-backfill \
 #     -t genomenexus/gn-vep-backfill:111-grch38-1 --push .
+#
+# If you rebuild, two things make it much faster. Tagging inside the gn-vep
+# repository instead of a separate one lets the registry skip every base blob,
+# since blobs are only deduplicated within the same repository name -- pushing
+# to a new repo re-uploads the full 12.4 GB per platform, which took over half
+# an hour. And linux/arm64 alone is sufficient: the backfill Jobs run on the
+# cbio-dev pool, which is Graviton (r6g/r8g). amd64 is built only so the image
+# is usable on the amd64 pools.
+#
+# Build locally, not in CI: docker-image-push.yml notes that GitHub Actions
+# cannot handle images this size, and its type=gha cache would exceed 10 GB.
 ARG BASE=genomenexus/gn-vep:111-grch38-3.1.1-extended
 FROM ${BASE}
 
