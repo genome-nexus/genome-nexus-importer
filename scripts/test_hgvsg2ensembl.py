@@ -11,7 +11,7 @@ reason this converter exists rather than reusing that function.
 import io
 import unittest
 
-from hgvsg2ensembl import Deferred, convert, run
+from hgvsg2ensembl import Deferred, Faidx, convert, minimise, run
 
 
 class Substitution(unittest.TestCase):
@@ -197,3 +197,89 @@ class Accounting(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class Minimise(unittest.TestCase):
+    """The trim itself, independent of any FASTA."""
+
+    def test_shared_suffix(self):
+        # 1:g.100011882_100011883delinsTT, ref CT -> database mode reports C/T
+        self.assertEqual(minimise(100011882, 100011883, "CT", "TT"),
+                         (100011882, 100011882, "C", "T"))
+
+    def test_becomes_pure_deletion(self):
+        # 1:g.100022945_100022946delinsA, ref GA -> G/-
+        self.assertEqual(minimise(100022945, 100022946, "GA", "A"),
+                         (100022945, 100022945, "G", "-"))
+
+    def test_longer_shared_suffix(self):
+        # 1:g.100015300_100015303delinsTTT, ref AGGT -> AGG/TT
+        self.assertEqual(minimise(100015300, 100015303, "AGGT", "TTT"),
+                         (100015300, 100015302, "AGG", "TT"))
+
+    def test_shared_prefix(self):
+        self.assertEqual(minimise(100, 102, "AGG", "AT"),
+                         (101, 102, "GG", "T"))
+
+    def test_becomes_insertion_start_exceeds_end(self):
+        # Ensembl places an insertion with start = end + 1.
+        s, e, r, a = minimise(100, 101, "AG", "AGT")
+        self.assertEqual((s, e, r, a), (102, 101, "-", "T"))
+        self.assertGreater(s, e)
+
+    def test_nothing_to_trim(self):
+        self.assertEqual(minimise(100, 102, "AGG", "TTC"),
+                         (100, 102, "AGG", "TTC"))
+
+
+class FaidxBackedDelins(unittest.TestCase):
+    """End-to-end trimming through convert(), against a synthetic FASTA."""
+
+    @classmethod
+    def setUpClass(cls):
+        import tempfile, os
+        cls.dir = tempfile.mkdtemp()
+        cls.fa = os.path.join(cls.dir, "ref.fa")
+        # 60bp-per-line FASTA, chr1 = 120 bases of a known pattern
+        seq = ("ACGTACGTAC" * 12)
+        with open(cls.fa, "w") as fh:
+            fh.write(">1\n")
+            for i in range(0, len(seq), 60):
+                fh.write(seq[i:i + 60] + "\n")
+        with open(cls.fa + ".fai", "w") as fh:
+            fh.write("1\t%d\t3\t60\t61\n" % len(seq))
+        cls.seq = seq
+        cls.fasta = Faidx(cls.fa)
+
+    def test_faidx_reads_across_a_line_break(self):
+        # bases 58-63 span the first newline
+        self.assertEqual(self.fasta.fetch("1", 58, 63), self.seq[57:63])
+
+    def test_faidx_single_base(self):
+        self.assertEqual(self.fasta.fetch("1", 1, 1), self.seq[0])
+
+    def test_faidx_out_of_range(self):
+        self.assertIsNone(self.fasta.fetch("1", 119, 130))
+        self.assertIsNone(self.fasta.fetch("nosuchchrom", 1, 2))
+
+    def test_delins_trimmed_with_fasta(self):
+        # ref at 1..2 is "AC"; delins "GC" shares the suffix C -> A/G at 1..1
+        self.assertEqual(convert("1:g.1_2delinsGC", self.fasta),
+                         "1 1 1 A/G + 1:g.1_2delinsGC")
+
+    def test_delins_untrimmed_without_fasta(self):
+        self.assertEqual(convert("1:g.1_2delinsGC"),
+                         "1 1 2 N/GC + 1:g.1_2delinsGC")
+
+    def test_compound_delins_trimmed(self):
+        self.assertEqual(convert("1:g.1_2delACinsGC", self.fasta),
+                         "1 1 1 A/G + 1:g.1_2delACinsGC")
+
+    def test_other_classes_unaffected_by_fasta(self):
+        # Only delins consults the FASTA; everything else is already minimal.
+        for key in ("1:g.5A>C", "1:g.5_7del", "1:g.5_7delACG", "1:g.5_6insTT"):
+            self.assertEqual(convert(key), convert(key, self.fasta), key)
+
+    def test_unknown_chrom_falls_back_to_placeholder(self):
+        self.assertEqual(convert("99:g.1_2delinsGC", self.fasta),
+                         "99 1 2 N/GC + 99:g.1_2delinsGC")

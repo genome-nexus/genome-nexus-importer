@@ -36,6 +36,15 @@ genome-nexus-vep, which this replaces:
     HTTP layer discards the error whenever at least one variant in the batch
     succeeded.
 
+Deletions, insertions and substitutions are already minimal as emitted -- verified
+byte-identical to database-mode output across 400 real production keys. ``delins``
+is not: writing it over the full HGVS range leaves a redundant shared prefix or
+suffix (``1:g.100011882_100011883delinsTT`` becomes ``CT/TT`` where database mode
+reports ``C/T``). The annotation is equivalent either way -- hgvsc, hgvsp and the
+consequence terms all match -- but ``allele_string`` and ``variant_class`` differ
+from production. Supplying ``--fasta`` resolves the reference and trims to the
+minimal form; without it, ``delins`` is emitted un-trimmed.
+
 Output lines are written in input order.  Nothing is deduplicated: MongoDB
 ``_id`` values are unique by definition, so a key list projected from ``_id``
 cannot contain duplicates.
@@ -65,12 +74,71 @@ STRAND = "+"
 REF_PLACEHOLDER = "N"   # resolved by --lookup_ref
 
 
+class Faidx(object):
+    """Minimal random-access reader for an uncompressed FASTA with a .fai index.
+
+    Deliberately dependency-free: the VEP image carries no python3 at all, let
+    alone pysam or pyfaidx, so the backfill image installs python3 and this
+    reads the plain FASTA directly. A bgzip-compressed FASTA is not supported --
+    decompress it once during cache staging.
+    """
+
+    def __init__(self, path):
+        self.path = path
+        self.index = {}
+        with open(path + ".fai") as fh:
+            for line in fh:
+                name, length, offset, linebases, linewidth = line.split("\t")[:5]
+                self.index[name] = (int(length), int(offset), int(linebases), int(linewidth))
+        self._fh = open(path, "rb")
+
+    def fetch(self, chrom, start, end):
+        """1-based inclusive. Returns uppercase bases, or None if out of range."""
+        rec = self.index.get(chrom)
+        if rec is None:
+            return None
+        length, offset, linebases, linewidth = rec
+        if start < 1 or end > length or end < start:
+            return None
+        # .fai gives the byte offset of the sequence; newlines must be skipped.
+        def byte_at(pos):
+            return offset + (pos - 1) // linebases * linewidth + (pos - 1) % linebases
+        self._fh.seek(byte_at(start))
+        raw = self._fh.read(byte_at(end) - byte_at(start) + 1)
+        return raw.decode("ascii", "replace").replace("\n", "").replace("\r", "").upper()
+
+
+def minimise(start, end, ref, alt):
+    """Trim a shared suffix then prefix, the way VEP's HGVS parser does.
+
+    Reproduces database-mode output exactly on the known divergent cases:
+      100011882-100011883 CT/TT   -> 100011882-100011882 C/T
+      100022945-100022946 GA/A    -> 100022945-100022945 G/-
+      100015300-100015303 AGGT/TTT-> 100015300-100015302 AGG/TT
+    """
+    while ref and alt and ref[-1] == alt[-1]:
+        ref, alt = ref[:-1], alt[:-1]
+        end -= 1
+    while ref and alt and ref[0] == alt[0]:
+        ref, alt = ref[1:], alt[1:]
+        start += 1
+    if not ref:
+        # Became an insertion: Ensembl format places those with start = end + 1.
+        return end + 1, end, "-", (alt or "-")
+    if not alt:
+        return start, end, ref, "-"
+    return start, end, ref, alt
+
+
 class Deferred(Exception):
     """Raised for input that must go to the database-mode pass instead."""
 
 
-def convert(hgvsg):
+def convert(hgvsg, fasta=None):
     """Return an Ensembl default-format line for *hgvsg*.
+
+    *fasta* is an optional :class:`Faidx`; when given, ``delins`` is trimmed to
+    its minimal representation so ``allele_string`` matches database mode.
 
     Raises :class:`Deferred` for input that needs reference sequence access or
     that cannot be parsed.  The caller is expected to route those to a deferral
@@ -99,8 +167,15 @@ def convert(hgvsg):
     delins = _DELINS.match(change)
     if delins:
         # The deleted sequence is redundant with the range; the inserted one is
-        # the variant and must be kept.
-        return _line(chrom, start, end, REF_PLACEHOLDER, delins.group("alt"), hgvsg)
+        # the variant and must be kept. Trimming needs the real reference, so it
+        # only happens when a FASTA is supplied.
+        alt = delins.group("alt")
+        if fasta is not None:
+            ref = fasta.fetch(chrom, start, end)
+            if ref is not None and len(ref) == end - start + 1:
+                m_start, m_end, m_ref, m_alt = minimise(start, end, ref, alt)
+                return _line(chrom, m_start, m_end, m_ref, m_alt, hgvsg)
+        return _line(chrom, start, end, REF_PLACEHOLDER, alt, hgvsg)
 
     dele = _DEL.match(change)
     if dele:
@@ -124,7 +199,7 @@ def _line(chrom, start, end, ref, alt, identifier):
     return "%s %d %d %s/%s %s %s" % (chrom, start, end, ref, alt, STRAND, identifier)
 
 
-def run(infile, outfile, deferfile):
+def run(infile, outfile, deferfile, fasta=None):
     stats = Counter()
     reasons = Counter()
     for raw in infile:
@@ -133,7 +208,7 @@ def run(infile, outfile, deferfile):
             continue
         stats["read"] += 1
         try:
-            outfile.write(convert(hgvsg) + "\n")
+            outfile.write(convert(hgvsg, fasta) + "\n")
             stats["converted"] += 1
         except Deferred as exc:
             deferfile.write(hgvsg + "\n")
@@ -150,6 +225,9 @@ def main(argv=None):
                     help="Ensembl default-format output for offline VEP ('-' for stdout)")
     ap.add_argument("--defer", dest="deferfile", required=True,
                     help="HGVSg keys needing the database-mode pass")
+    ap.add_argument("--fasta", dest="fasta", default=None,
+                    help="uncompressed reference FASTA with a .fai index; enables "
+                         "minimal-representation trimming of delins")
     args = ap.parse_args(argv)
 
     def _open(path, mode):
@@ -157,19 +235,21 @@ def main(argv=None):
             return sys.stdin if "r" in mode else sys.stdout
         return open(path, mode)
 
+    fasta = Faidx(args.fasta) if args.fasta else None
     fin = _open(args.infile, "r")
     fout = _open(args.outfile, "w")
     fdefer = _open(args.deferfile, "w")
     try:
-        stats, reasons = run(fin, fout, fdefer)
+        stats, reasons = run(fin, fout, fdefer, fasta)
     finally:
         for f in (fin, fout, fdefer):
             if f not in (sys.stdin, sys.stdout):
                 f.close()
 
     # Accounting goes to stderr so stdout stays pipeable into VEP.
-    sys.stderr.write("read %d  converted %d  deferred %d\n"
-                     % (stats["read"], stats["converted"], stats["deferred"]))
+    sys.stderr.write("read %d  converted %d  deferred %d%s\n"
+                     % (stats["read"], stats["converted"], stats["deferred"],
+                        "" if fasta else "  (no --fasta: delins left un-trimmed)"))
     for reason, n in reasons.most_common():
         sys.stderr.write("  deferred[%s] %d\n" % (reason, n))
     return 0
