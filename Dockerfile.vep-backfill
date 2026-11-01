@@ -1,0 +1,69 @@
+# Image for the Ensembl 111 GRCh38 vep.annotation backfill.
+#
+# Built FROM the gn-vep image that will actually read the cache, so the
+# annotations come from exactly that VEP build. It already carries the VEP 111
+# CLI and 13G of plugin data at /plugin-data; this adds only what the backfill
+# pipeline needs on top.
+#
+# MUST be built multi-arch. gn-vep is published for linux/amd64 and linux/arm64,
+# and Pass A runs on the cbio-dev pool, which is Graviton (r6g/r8g = arm64),
+# while gn-vep-111-grch38 itself sits on t3.large (amd64):
+#
+#   docker buildx build --platform linux/amd64,linux/arm64 \
+#     -f Dockerfile.vep-backfill \
+#     -t genomenexus/gn-vep-backfill:111-grch38-1 --push .
+ARG BASE=genomenexus/gn-vep:111-grch38-3.1.1-extended
+FROM ${BASE}
+
+USER root
+
+# python3 for the converter -- the gn-vep image has no python at all. The
+# converter is deliberately stdlib-only (its faidx reader is hand-rolled), so
+# there is no pip step and no pysam/pyfaidx to build.
+#
+# mongosh runs the covered _id scan; mongodb-database-tools provides mongoimport.
+# Both come from MongoDB's apt repo, which carries amd64 and arm64, rather than
+# arch-specific .deb URLs that would have to be branched on TARGETARCH.
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        python3 jq ca-certificates gnupg curl; \
+    curl -fsSL https://pgp.mongodb.com/server-7.0.asc \
+        | gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg; \
+    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] \
+https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" \
+        > /etc/apt/sources.list.d/mongodb-org-7.0.list; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends mongodb-mongosh mongodb-database-tools; \
+    apt-get purge -y gnupg; \
+    apt-get autoremove -y; \
+    rm -rf /var/lib/apt/lists/*
+
+COPY scripts/hgvsg2ensembl.py          /opt/backfill/
+COPY scripts/scan_vep_annotation_ids.js /opt/backfill/
+COPY scripts/export_vep_annotation_ids.sh /opt/backfill/
+
+# The Jobs invoke hgvsg2ensembl.py by bare name.
+RUN set -eux; \
+    chmod +x /opt/backfill/hgvsg2ensembl.py /opt/backfill/export_vep_annotation_ids.sh; \
+    ln -s /opt/backfill/hgvsg2ensembl.py /usr/local/bin/hgvsg2ensembl.py; \
+    ln -s /opt/backfill/export_vep_annotation_ids.sh /usr/local/bin/export_vep_annotation_ids.sh
+
+# Fail the build rather than the Job if anything is missing or the wrong arch.
+RUN set -eux; \
+    python3 --version; \
+    jq --version; \
+    mongosh --version; \
+    mongoimport --version | head -1; \
+    test -x /opt/vep/src/ensembl-vep/vep; \
+    test -s /plugin-data/homo_sapiens_pangenome_PolyPhen_SIFT_20240502.db; \
+    test -s /plugin-data/AlphaMissense_hg38.tsv.gz; \
+    python3 -c "import sys; sys.path.insert(0,'/opt/backfill'); \
+import hgvsg2ensembl as h; \
+assert h.convert('1:g.100A>C') == '1 100 100 N/C + 1:g.100A>C'; \
+assert h.minimise(100,101,'CT','TT') == (100,100,'C','T'); \
+print('converter self-check OK')"
+
+# Back to the unprivileged user the base image runs as. EFS access points
+# substitute their own POSIX uid/gid, so this writes to the cache volume fine.
+USER vep
